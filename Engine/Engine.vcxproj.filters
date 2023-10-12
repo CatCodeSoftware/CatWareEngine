@@ -30,6 +30,9 @@
     <ClInclude Include="Source\CatWare\Utils\Log.h">
       <Filter>Source\CatWare\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Source\CatWare\Graphics\Window.h">
+      <Filter>Source\CatWare\Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\CatWare\Application.cpp">
@@ -37,6 +40,9 @@
     </ClCompile>
     <ClCompile Include="Source\CatWare\Utils\Log.cpp">
       <Filter>Source\CatWare\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CatWare\Graphics\Window.cpp">
+      <Filter>Source\CatWare\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

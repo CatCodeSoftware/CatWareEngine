@@ -74,13 +74,13 @@
     <OutDir>$(SolutionDir)\Build\</OutDir>
     <IntDir>$(SolutionDir)\Intermediate\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <TargetName>CatWareEngine</TargetName>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\Source</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\Source;$(ProjectDir)\Lib\SDL2\include</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)\Build\</OutDir>
     <IntDir>$(SolutionDir)\Intermediate\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <TargetName>CatWareEngine</TargetName>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\Source</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\Source;$(ProjectDir)\Lib\SDL2\include</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -121,6 +121,9 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>copy $(SolutionDir)$(Platform)\$(Configuration)\SDL2.dll $(OutputPath)</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -137,16 +140,21 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>copy $(SolutionDir)$(Platform)\$(Configuration)\SDL2.dll $(OutputPath)</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Source\CatWare.h" />
     <ClInclude Include="Source\CatWare\Application.h" />
     <ClInclude Include="Source\CatWare\Core.h" />
     <ClInclude Include="Source\CatWare\EntryPoint.h" />
+    <ClInclude Include="Source\CatWare\Graphics\Window.h" />
     <ClInclude Include="Source\CatWare\Utils\Log.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\CatWare\Application.cpp" />
+    <ClCompile Include="Source\CatWare\Graphics\Window.cpp" />
     <ClCompile Include="Source\CatWare\Utils\Log.cpp" />
   </ItemGroup>
   <ItemGroup>

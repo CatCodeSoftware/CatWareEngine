@@ -4,3 +4,4 @@
 #include "CatWare/Application.h"
 #include "CatWare/EntryPoint.h"
 #include "CatWare/Utils/Log.h"
+#include "CatWare/Graphics/Window.h"

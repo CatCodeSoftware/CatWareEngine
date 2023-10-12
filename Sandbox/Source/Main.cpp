@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+using namespace CatWare;
+
 class Sandbox : public CatWare::Application
 {
 public:
@@ -13,6 +15,17 @@ public:
 		CatWare::Logging::InitLoggers( );
 
 		CW_LOG->Warning( "Running application" );
+
+		Window* window = new Window( "Window", 800, 600, false );
+		
+		window->SetCursorShown( false );
+		window->SetCursorLocked( true );
+
+		while ( !window->ShouldClose( ) )
+		{
+			window->HandleWindowEvents( );
+		}
+
 	}
 };
 

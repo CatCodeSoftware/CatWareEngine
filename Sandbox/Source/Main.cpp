@@ -24,6 +24,8 @@ public:
 		while ( !window->ShouldClose( ) )
 		{
 			window->HandleWindowEvents( );
+
+			CW_LOG->Info( "W: %d\nM1: %d\n", Input::IsKeyPressed( Input::KeyCode::KEY_W ), Input::IsMousePressed( 1 ) );
 		}
 
 	}

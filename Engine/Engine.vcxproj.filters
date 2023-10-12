@@ -13,6 +13,9 @@
     <Filter Include="Source\CatWare\Graphics">
       <UniqueIdentifier>{aa4d41c1-b2d1-40d2-8cf2-230588fb6da9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\CatWare\Input">
+      <UniqueIdentifier>{ae441230-cdd2-4aa4-a077-79b0bc4219e6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\CatWare.h">
@@ -33,6 +36,12 @@
     <ClInclude Include="Source\CatWare\Graphics\Window.h">
       <Filter>Source\CatWare\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="Source\CatWare\Input\KeyboardAndMouse.h">
+      <Filter>Source\CatWare\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CatWare\Utils\Vector.h">
+      <Filter>Source\CatWare\Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\CatWare\Application.cpp">
@@ -43,6 +52,9 @@
     </ClCompile>
     <ClCompile Include="Source\CatWare\Graphics\Window.cpp">
       <Filter>Source\CatWare\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CatWare\Input\KeyboardAndMouse.cpp">
+      <Filter>Source\CatWare\Input</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

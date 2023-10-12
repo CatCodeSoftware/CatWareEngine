@@ -1,5 +1,8 @@
 #include "Window.h"
 
+#include "CatWare/Input/KeyboardAndMouse.h"
+#include "CatWare/Utils/Log.h"
+
 namespace CatWare
 {
 	Window::Window( std::string title, unsigned int width, unsigned int height, bool isFullscreen )
@@ -25,6 +28,27 @@ namespace CatWare
 			case SDL_QUIT:
 				shouldClose = true;
 				break;
+
+
+			case SDL_KEYDOWN:
+				Input::SetKeyPressed( e.key.keysym.scancode, true );
+				break;
+
+			case SDL_KEYUP:
+				Input::SetKeyPressed( e.key.keysym.scancode, false );
+				break;
+
+			case SDL_MOUSEBUTTONDOWN:
+				Input::SetMousePressed( e.button.button, true );
+				break;
+
+			case SDL_MOUSEBUTTONUP:
+				Input::SetMousePressed( e.button.button, false );
+				break;
+
+
+			case SDL_MOUSEMOTION:
+				Input::SetMouseMotion( { ( double ) e.motion.x, ( double ) e.motion.y } );
 			}
 		}
 	}

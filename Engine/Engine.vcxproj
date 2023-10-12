@@ -150,11 +150,14 @@
     <ClInclude Include="Source\CatWare\Core.h" />
     <ClInclude Include="Source\CatWare\EntryPoint.h" />
     <ClInclude Include="Source\CatWare\Graphics\Window.h" />
+    <ClInclude Include="Source\CatWare\Input\KeyboardAndMouse.h" />
     <ClInclude Include="Source\CatWare\Utils\Log.h" />
+    <ClInclude Include="Source\CatWare\Utils\Vector.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\CatWare\Application.cpp" />
     <ClCompile Include="Source\CatWare\Graphics\Window.cpp" />
+    <ClCompile Include="Source\CatWare\Input\KeyboardAndMouse.cpp" />
     <ClCompile Include="Source\CatWare\Utils\Log.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -29,7 +29,7 @@ namespace CatWare
 
 		void Logger::Error ( std::string text, ... )
 		{
-			text = "[ " + category + " ] " + text;
+			text = "[ " + category + " ] " + text + "\n";
 
 			va_list args;
 			va_start ( args, text );
@@ -41,7 +41,7 @@ namespace CatWare
 
 		void Logger::Info ( std::string text, ... )
 		{
-			text = "[ " + category + " ] " + text;
+			text = "[ " + category + " ] " + text + "\n";
 
 			va_list args;
 			va_start ( args, text );
@@ -54,7 +54,7 @@ namespace CatWare
 
 		void Logger::Warning ( std::string text, ... )
 		{
-			text = "[ " + category + " ] " + text;
+			text = "[ " + category + " ] " + text + "\n";
 
 			va_list args;
 			va_start ( args, text );

@@ -16,6 +16,10 @@ namespace CatWare
 		this->isFullscreen = isFullscreen;
 	}
 
+	Window::~Window( )
+	{
+		SDL_DestroyWindow( sdlWindow );
+	}
 
 	void Window::HandleWindowEvents( )
 	{

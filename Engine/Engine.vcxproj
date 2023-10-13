@@ -114,7 +114,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);CATWARE_BUILD</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);CATWARE_BUILD;CW_PLATFORM_WIN64</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
@@ -131,7 +131,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);CATWARE_BUILD</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);CATWARE_BUILD;CW_PLATFORM_WIN64</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
@@ -150,13 +150,16 @@
     <ClInclude Include="Source\CatWare\Core.h" />
     <ClInclude Include="Source\CatWare\EntryPoint.h" />
     <ClInclude Include="Source\CatWare\Graphics\Window.h" />
+    <ClInclude Include="Source\CatWare\Input\Binds.h" />
     <ClInclude Include="Source\CatWare\Input\KeyboardAndMouse.h" />
     <ClInclude Include="Source\CatWare\Utils\Log.h" />
     <ClInclude Include="Source\CatWare\Utils\Vector.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\CatWare\Application.cpp" />
+    <ClCompile Include="Source\CatWare\Core.cpp" />
     <ClCompile Include="Source\CatWare\Graphics\Window.cpp" />
+    <ClCompile Include="Source\CatWare\Input\Binds.cpp" />
     <ClCompile Include="Source\CatWare\Input\KeyboardAndMouse.cpp" />
     <ClCompile Include="Source\CatWare\Utils\Log.cpp" />
   </ItemGroup>

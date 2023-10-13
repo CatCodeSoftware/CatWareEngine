@@ -12,6 +12,7 @@ namespace CatWare
 	{
 	public:
 		Window( std::string title, unsigned int width, unsigned int height, bool isFullscreen );
+		~Window( );
 
 		void HandleWindowEvents( );
 

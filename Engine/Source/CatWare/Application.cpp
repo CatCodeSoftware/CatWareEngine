@@ -11,4 +11,18 @@ namespace CatWare
 	{
 
 	}
+
+	void Application::Run( )
+	{
+		window = new Window( "CatWare", 1280, 720, false );
+
+		PostInit( );
+
+		while ( running )
+		{
+			window->HandleWindowEvents( );
+
+			running = !window->ShouldClose( );
+		}
+	}
 }

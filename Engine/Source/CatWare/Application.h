@@ -2,6 +2,8 @@
 
 #include "Core.h"
 
+#include "Graphics/Window.h"
+
 namespace CatWare
 {
 	class CATWARE_API Application
@@ -10,6 +12,15 @@ namespace CatWare
 		Application( );
 		virtual ~Application( );
 
-		virtual void Run( ) = 0;
+		virtual void Run( ) final;
+
+		virtual void PostInit( ) {}
+		virtual void Update( ) {}
+		virtual void Draw( ) {}
+
+	private:
+		bool running = true;
+
+		Window* window;
 	};
 }

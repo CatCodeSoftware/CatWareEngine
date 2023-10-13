@@ -42,6 +42,9 @@
     <ClInclude Include="Source\CatWare\Utils\Vector.h">
       <Filter>Source\CatWare\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Source\CatWare\Input\Binds.h">
+      <Filter>Source\CatWare\Input</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\CatWare\Application.cpp">
@@ -55,6 +58,12 @@
     </ClCompile>
     <ClCompile Include="Source\CatWare\Input\KeyboardAndMouse.cpp">
       <Filter>Source\CatWare\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CatWare\Input\Binds.cpp">
+      <Filter>Source\CatWare\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CatWare\Core.cpp">
+      <Filter>Source\CatWare</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

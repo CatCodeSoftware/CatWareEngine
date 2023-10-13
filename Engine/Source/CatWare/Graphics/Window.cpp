@@ -3,6 +3,8 @@
 #include "CatWare/Input/KeyboardAndMouse.h"
 #include "CatWare/Utils/Log.h"
 
+#include "Renderer/OpenGL/Context.h"
+
 namespace CatWare
 {
 	Window::Window( std::string title, unsigned int width, unsigned int height, bool isFullscreen )
@@ -14,6 +16,9 @@ namespace CatWare
 		this->width = width;
 		this->height = height;
 		this->isFullscreen = isFullscreen;
+
+		// Create rendering context
+		renderingContext = new Rendering::OpenGL::OpenGLContext( sdlWindow ); // only OpenGL for now
 	}
 
 	Window::~Window( )
@@ -55,6 +60,11 @@ namespace CatWare
 				Input::SetMouseMotion( { ( double ) e.motion.x, ( double ) e.motion.y } );
 			}
 		}
+	}
+
+	void Window::SwapBuffers( )
+	{
+		renderingContext->SwapBuffers( );
 	}
 
 

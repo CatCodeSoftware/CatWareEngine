@@ -74,13 +74,13 @@
     <OutDir>$(SolutionDir)\Build\</OutDir>
     <IntDir>$(SolutionDir)\Intermediate\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <TargetName>CatWareEngine</TargetName>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\Source;$(ProjectDir)\Lib\SDL2\include</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\Source;$(ProjectDir)\Lib\SDL2\include;$(ProjectDir)\Lib\Glad\include</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)\Build\</OutDir>
     <IntDir>$(SolutionDir)\Intermediate\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <TargetName>CatWareEngine</TargetName>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\Source;$(ProjectDir)\Lib\SDL2\include</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\Source;$(ProjectDir)\Lib\SDL2\include;$(ProjectDir)\Lib\Glad\include</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -145,10 +145,14 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Lib\Glad\include\glad\glad.h" />
+    <ClInclude Include="Lib\Glad\include\KHR\khrplatform.h" />
     <ClInclude Include="Source\CatWare.h" />
     <ClInclude Include="Source\CatWare\Application.h" />
     <ClInclude Include="Source\CatWare\Core.h" />
     <ClInclude Include="Source\CatWare\EntryPoint.h" />
+    <ClInclude Include="Source\CatWare\Graphics\Renderer\Context.h" />
+    <ClInclude Include="Source\CatWare\Graphics\Renderer\OpenGL\Context.h" />
     <ClInclude Include="Source\CatWare\Graphics\Window.h" />
     <ClInclude Include="Source\CatWare\Input\Binds.h" />
     <ClInclude Include="Source\CatWare\Input\KeyboardAndMouse.h" />
@@ -156,8 +160,10 @@
     <ClInclude Include="Source\CatWare\Utils\Vector.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Lib\Glad\src\glad.c" />
     <ClCompile Include="Source\CatWare\Application.cpp" />
     <ClCompile Include="Source\CatWare\Core.cpp" />
+    <ClCompile Include="Source\CatWare\Graphics\Renderer\OpenGL\Context.cpp" />
     <ClCompile Include="Source\CatWare\Graphics\Window.cpp" />
     <ClCompile Include="Source\CatWare\Input\Binds.cpp" />
     <ClCompile Include="Source\CatWare\Input\KeyboardAndMouse.cpp" />

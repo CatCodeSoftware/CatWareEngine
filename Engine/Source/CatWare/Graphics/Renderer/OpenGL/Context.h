@@ -1,8 +1,9 @@
 #pragma once
 
-#include "CatWare/Graphics/Renderer/Context.h"
+#include <SDL.h>
 
-class SDL_Window;
+#include "CatWare/Core.h"
+#include "CatWare/Graphics/Renderer/Context.h"
 
 namespace CatWare
 {
@@ -10,7 +11,7 @@ namespace CatWare
 	{
 		namespace OpenGL
 		{
-			class OpenGLContext : public RenderingContext
+			class CATWARE_API OpenGLContext : public RenderingContext
 			{
 			public:
 				OpenGLContext( SDL_Window* windowHandle );
@@ -21,6 +22,7 @@ namespace CatWare
 
 			private:
 				SDL_Window* windowHandle;
+				SDL_GLContext glContext;
 			};
 		}
 	}

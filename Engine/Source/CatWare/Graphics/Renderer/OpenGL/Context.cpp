@@ -1,6 +1,8 @@
 #include "Context.h"
 
-#include <SDL.h>
+#include <glad/glad.h>
+
+#include "CatWare/Utils/Log.h"
 
 namespace CatWare
 {
@@ -15,11 +17,21 @@ namespace CatWare
 
 			void OpenGLContext::Init( )
 			{
+				SDL_GL_LoadLibrary( NULL );
+
 				SDL_GL_SetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, 4 );
 				SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, 6 );
 				SDL_GL_SetAttribute( SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE );
 
-				SDL_GL_CreateContext( windowHandle );
+				// Load glad
+				gladLoadGLLoader( &SDL_GL_GetProcAddress );
+
+				glContext = SDL_GL_CreateContext( windowHandle );
+
+				if ( glContext == nullptr )
+				{
+					CW_ENGINE_LOG->Error( "Failed to create OpenGL context: %s", SDL_GetError( ) );
+				}
 			}
 
 			void OpenGLContext::SwapBuffers( )

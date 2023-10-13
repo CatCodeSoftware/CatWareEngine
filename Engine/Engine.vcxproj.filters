@@ -16,6 +16,18 @@
     <Filter Include="Source\CatWare\Input">
       <UniqueIdentifier>{ae441230-cdd2-4aa4-a077-79b0bc4219e6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\CatWare\Graphics\Renderer">
+      <UniqueIdentifier>{1b157823-ad7b-4df5-acfc-3be8135f239e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\CatWare\Graphics\Renderer\OpenGL">
+      <UniqueIdentifier>{c87ab461-4e26-4208-8e14-21e4801ed9fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Extern">
+      <UniqueIdentifier>{2be96884-981b-4d54-adf1-9d715a2c3a3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Extern\Glad">
+      <UniqueIdentifier>{869a04a4-18da-4d98-b88b-cd76a31cf471}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\CatWare.h">
@@ -45,6 +57,18 @@
     <ClInclude Include="Source\CatWare\Input\Binds.h">
       <Filter>Source\CatWare\Input</Filter>
     </ClInclude>
+    <ClInclude Include="Source\CatWare\Graphics\Renderer\Context.h">
+      <Filter>Source\CatWare\Graphics\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Lib\Glad\include\glad\glad.h">
+      <Filter>Extern\Glad</Filter>
+    </ClInclude>
+    <ClInclude Include="Lib\Glad\include\KHR\khrplatform.h">
+      <Filter>Extern\Glad</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CatWare\Graphics\Renderer\OpenGL\Context.h">
+      <Filter>Source\CatWare\Graphics\Renderer\OpenGL</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\CatWare\Application.cpp">
@@ -64,6 +88,12 @@
     </ClCompile>
     <ClCompile Include="Source\CatWare\Core.cpp">
       <Filter>Source\CatWare</Filter>
+    </ClCompile>
+    <ClCompile Include="Lib\Glad\src\glad.c">
+      <Filter>Extern\Glad</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CatWare\Graphics\Renderer\OpenGL\Context.cpp">
+      <Filter>Source\CatWare\Graphics\Renderer\OpenGL</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

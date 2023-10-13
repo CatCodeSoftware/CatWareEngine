@@ -5,6 +5,7 @@
 #include <SDL.h>
 
 #include "CatWare/Core.h"
+#include "Renderer/Context.h"
 
 namespace CatWare
 {
@@ -31,9 +32,12 @@ namespace CatWare
 
 		bool ShouldClose( );
 
+		void SwapBuffers( );
+
 	private:
 		SDL_Window* sdlWindow = nullptr;
-
+		Rendering::RenderingContext* renderingContext = nullptr;
+		
 		unsigned int width, height;
 		std::string title;
 

@@ -9,7 +9,7 @@ namespace CatWare
 {
 	Window::Window( std::string title, unsigned int width, unsigned int height, bool isFullscreen )
 	{
-		sdlWindow = SDL_CreateWindow( title.c_str( ), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_SHOWN );
+		sdlWindow = SDL_CreateWindow( title.c_str( ), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL );
 		SetFullscreen( isFullscreen );
 
 		this->title = title;
@@ -19,6 +19,8 @@ namespace CatWare
 
 		// Create rendering context
 		renderingContext = new Rendering::OpenGL::OpenGLContext( sdlWindow ); // only OpenGL for now
+
+		renderingContext->Init( );
 	}
 
 	Window::~Window( )

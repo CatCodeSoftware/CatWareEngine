@@ -23,6 +23,8 @@ namespace CatWare
 			window->HandleWindowEvents( );
 
 			running = !window->ShouldClose( );
+
+			window->SwapBuffers( );
 		}
 	}
 }

@@ -23,12 +23,14 @@ namespace CatWare
 				SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, 6 );
 				SDL_GL_SetAttribute( SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE );
 
-				// Load glad
-				gladLoadGLLoader( &SDL_GL_GetProcAddress );
-
 				glContext = SDL_GL_CreateContext( windowHandle );
 
-				if ( glContext == nullptr )
+				// Load glad
+				int version = gladLoadGLLoader( SDL_GL_GetProcAddress );
+
+				CW_ENGINE_LOG->Info( "OpenGL version %d", version );
+
+				if ( !glContext )
 				{
 					CW_ENGINE_LOG->Error( "Failed to create OpenGL context: %s", SDL_GetError( ) );
 				}

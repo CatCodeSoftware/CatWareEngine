@@ -1,8 +1,22 @@
-#include "Context.h"
+#include "OpenGLContext.h"
 
 #include <glad/glad.h>
 
 #include "CatWare/Utils/Log.h"
+
+void GLAPIENTRY
+MessageCallback( GLenum source,
+	GLenum type,
+	GLuint id,
+	GLenum severity,
+	GLsizei length,
+	const GLchar* message,
+	const void* userParam )
+{
+	fprintf( stderr, "GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
+		( type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : "" ),
+		type, severity, message );
+}
 
 namespace CatWare
 {
@@ -17,6 +31,8 @@ namespace CatWare
 
 			void OpenGLContext::Init( )
 			{
+				CW_ENGINE_LOG->Info( "Initializing OpenGL" );
+
 				SDL_GL_LoadLibrary( NULL );
 
 				SDL_GL_SetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, 4 );
@@ -26,14 +42,19 @@ namespace CatWare
 				glContext = SDL_GL_CreateContext( windowHandle );
 
 				// Load glad
-				int version = gladLoadGLLoader( SDL_GL_GetProcAddress );
-
-				CW_ENGINE_LOG->Info( "OpenGL version %d", version );
+				gladLoadGLLoader( SDL_GL_GetProcAddress );
 
 				if ( !glContext )
 				{
 					CW_ENGINE_LOG->Error( "Failed to create OpenGL context: %s", SDL_GetError( ) );
 				}
+
+				CW_ENGINE_LOG->Info( "Vendor:   %s", glGetString( GL_VENDOR ) );
+				CW_ENGINE_LOG->Info( "Renderer: %s", glGetString( GL_RENDERER ) );
+				CW_ENGINE_LOG->Info( "Version:  %s", glGetString( GL_VERSION ) );
+
+				glEnable( GL_DEBUG_OUTPUT );
+				glDebugMessageCallback( MessageCallback, 0 );
 			}
 
 			void OpenGLContext::SwapBuffers( )

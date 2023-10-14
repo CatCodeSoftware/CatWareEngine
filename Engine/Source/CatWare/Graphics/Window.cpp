@@ -3,7 +3,7 @@
 #include "CatWare/Input/KeyboardAndMouse.h"
 #include "CatWare/Utils/Log.h"
 
-#include "Renderer/OpenGL/Context.h"
+#include "Renderer/OpenGL/OpenGLContext.h"
 
 namespace CatWare
 {

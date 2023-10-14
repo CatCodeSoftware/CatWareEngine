@@ -66,8 +66,17 @@
     <ClInclude Include="Lib\Glad\include\KHR\khrplatform.h">
       <Filter>Extern\Glad</Filter>
     </ClInclude>
-    <ClInclude Include="Source\CatWare\Graphics\Renderer\OpenGL\Context.h">
+    <ClInclude Include="Source\CatWare\Graphics\Renderer\OpenGL\OpenGLContext.h">
       <Filter>Source\CatWare\Graphics\Renderer\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CatWare\Graphics\Renderer\Buffer.h">
+      <Filter>Source\CatWare\Graphics\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CatWare\Graphics\Renderer\OpenGL\OpenGLBuffer.h">
+      <Filter>Source\CatWare\Graphics\Renderer\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CatWare\Graphics\Renderer\Renderer.h">
+      <Filter>Source\CatWare\Graphics\Renderer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -92,8 +101,17 @@
     <ClCompile Include="Lib\Glad\src\glad.c">
       <Filter>Extern\Glad</Filter>
     </ClCompile>
-    <ClCompile Include="Source\CatWare\Graphics\Renderer\OpenGL\Context.cpp">
+    <ClCompile Include="Source\CatWare\Graphics\Renderer\OpenGL\OpenGLContext.cpp">
       <Filter>Source\CatWare\Graphics\Renderer\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CatWare\Graphics\Renderer\Buffer.cpp">
+      <Filter>Source\CatWare\Graphics\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CatWare\Graphics\Renderer\OpenGL\OpenGLBuffer.cpp">
+      <Filter>Source\CatWare\Graphics\Renderer\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CatWare\Graphics\Renderer\Renderer.cpp">
+      <Filter>Source\CatWare\Graphics\Renderer</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

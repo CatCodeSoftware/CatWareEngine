@@ -1,0 +1,91 @@
+#pragma once
+
+#include <vector>
+#include <string>
+
+namespace CatWare
+{
+	namespace Rendering
+	{
+		enum class ShaderDataType
+		{
+			None = 0,
+			Float, Float2, Float3, Float4, Int, Int2, Int3, Int4, Bool
+		};
+
+		inline unsigned int GetShaderDataTypeSize( ShaderDataType type )
+		{
+			switch ( type )
+			{
+			case ShaderDataType::Float: return 4;
+			case ShaderDataType::Float2: return 4 * 2;
+			case ShaderDataType::Float3: return 4 * 3;
+			case ShaderDataType::Float4: return 4 * 4;
+			case ShaderDataType::Int: return 4;
+			case ShaderDataType::Int2: return 4 * 2;
+			case ShaderDataType::Int3: return 4 * 3;
+			case ShaderDataType::Int4: return 4 * 4;
+			case ShaderDataType::Bool: return 1;
+			}
+
+			return 0;
+		}
+
+		class BufferElement
+		{
+		public:
+			std::string name;
+			unsigned int offset;
+			unsigned int size;
+			unsigned int count;
+
+			ShaderDataType dataType;
+
+			BufferElement( std::string name, ShaderDataType dataType );
+
+			unsigned int GetComponentCount( );
+		};
+
+		class BufferLayout
+		{
+		public:
+			BufferLayout( );
+			BufferLayout( std::initializer_list<BufferElement> elements );
+
+			inline std::vector<BufferElement>& GetBufferElements( ) { return bufferElements; }
+			inline unsigned int GetStride( ) { return stride; }
+
+		private:
+			void CalculateOffsetsAndStride( );
+
+			std::vector<BufferElement> bufferElements;
+			unsigned int stride = 0;
+		};
+
+		class VertexBuffer
+		{
+		public:
+			virtual ~VertexBuffer( ) {}
+
+			virtual void Bind( ) = 0;
+			virtual void Unbind( ) = 0;
+
+			virtual void SetLayout( BufferLayout leyout ) = 0;
+
+			static VertexBuffer* Create( unsigned int size, float* vertecies );
+		};
+
+		class IndexBuffer
+		{
+		public:
+			virtual ~IndexBuffer( ) {}
+
+			virtual void Bind( ) = 0;
+			virtual void Unbind( ) = 0;
+
+			virtual unsigned int GetCount( ) = 0;
+
+			static IndexBuffer* Create( unsigned int size, unsigned int* indicies );
+		};
+	}
+}

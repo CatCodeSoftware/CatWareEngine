@@ -84,6 +84,9 @@
     <ClInclude Include="Source\CatWare\Utils\Types.h">
       <Filter>Source\CatWare\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Source\CatWare\Graphics\Renderer\OpenGL\OpenGLRendererAPI.h">
+      <Filter>Source\CatWare\Graphics\Renderer\OpenGL</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\CatWare\Application.cpp">
@@ -118,6 +121,9 @@
     </ClCompile>
     <ClCompile Include="Source\CatWare\Graphics\Renderer\RendererAPI.cpp">
       <Filter>Source\CatWare\Graphics\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CatWare\Graphics\Renderer\OpenGL\OpenGLRendererAPI.cpp">
+      <Filter>Source\CatWare\Graphics\Renderer\OpenGL</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

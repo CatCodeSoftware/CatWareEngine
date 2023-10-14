@@ -100,6 +100,8 @@ namespace CatWare
 			virtual void AddVertexBuffer( VertexBuffer* vertexBuffer ) = 0;
 			virtual void SetIndexBuffer( IndexBuffer* indexBuffer ) = 0;
 
+			virtual IndexBuffer* GetIndexBuffer( ) = 0;
+
 			static VertexArray* Create( );
 		};
 	}

@@ -16,17 +16,14 @@ namespace CatWare
 				OPENGL = 1
 			};
 
-			virtual void Clear( Color clearColor ) = 0;
-			
-			virtual void DrawIndexed( VertexArray* vertexArray );
-			
-			static API GetRenderAPI( )
-			{
-				return API::OPENGL;
-			}
+			virtual void SetClearColor( Color clearColor ) = 0;
+			virtual void Clear( ) = 0;
 
-		private:
+			virtual void SetViewportSize( int width, int height ) = 0;
+
+			virtual void DrawIndexed( VertexArray* vertexArray ) = 0;
 			
+			virtual API GetRenderAPI( ) = 0;
 		};
 	}
 }

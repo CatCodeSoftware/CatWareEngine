@@ -74,6 +74,8 @@ namespace CatWare
 				virtual void AddVertexBuffer( VertexBuffer* vertexBuffer ) override;
 				virtual void SetIndexBuffer( IndexBuffer* indexBuffer ) override;
 
+				virtual IndexBuffer* GetIndexBuffer( ) override;
+
 			private:
 				unsigned int id;
 

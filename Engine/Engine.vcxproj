@@ -155,6 +155,7 @@
     <ClInclude Include="Source\CatWare\Graphics\Renderer\Context.h" />
     <ClInclude Include="Source\CatWare\Graphics\Renderer\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="Source\CatWare\Graphics\Renderer\OpenGL\OpenGLContext.h" />
+    <ClInclude Include="Source\CatWare\Graphics\Renderer\OpenGL\OpenGLRendererAPI.h" />
     <ClInclude Include="Source\CatWare\Graphics\Renderer\RendererAPI.h" />
     <ClInclude Include="Source\CatWare\Graphics\Window.h" />
     <ClInclude Include="Source\CatWare\Input\Binds.h" />
@@ -171,6 +172,7 @@
     <ClCompile Include="Source\CatWare\Graphics\Renderer\Buffer.cpp" />
     <ClCompile Include="Source\CatWare\Graphics\Renderer\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="Source\CatWare\Graphics\Renderer\OpenGL\OpenGLContext.cpp" />
+    <ClCompile Include="Source\CatWare\Graphics\Renderer\OpenGL\OpenGLRendererAPI.cpp" />
     <ClCompile Include="Source\CatWare\Graphics\Renderer\RendererAPI.cpp" />
     <ClCompile Include="Source\CatWare\Graphics\Window.cpp" />
     <ClCompile Include="Source\CatWare\Input\Binds.cpp" />

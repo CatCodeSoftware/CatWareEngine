@@ -120,6 +120,11 @@ namespace CatWare
 
 				this->indexBuffer = indexBuffer;
 			}
+
+			IndexBuffer* OpenGLVertexArray::GetIndexBuffer( )
+			{
+				return indexBuffer;
+			}
 		}
 	}
 }

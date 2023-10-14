@@ -34,14 +34,11 @@ namespace CatWare
 			void OpenGLVertexBuffer::SetLayout( BufferLayout layout )
 			{
 				bufferLayout = layout;
+			}
 
-				unsigned int index = 0;
-				for ( BufferElement& element : bufferLayout.GetBufferElements( ) )
-				{
-					glEnableVertexAttribArray( index );
-					glVertexAttribPointer( index, element.GetComponentCount( ), OpenGL::ShaderTypeToGLEnum( element.dataType ), false, bufferLayout.GetStride( ), ( void* ) element.offset );
-					index++;
-				}
+			BufferLayout OpenGLVertexBuffer::GetLayout( )
+			{
+				return bufferLayout;
 			}
 
 
@@ -74,6 +71,54 @@ namespace CatWare
 			unsigned int OpenGLIndexBuffer::GetCount( )
 			{
 				return count;
+			}
+
+			// VertexArray
+
+			OpenGLVertexArray::OpenGLVertexArray( )
+			{
+				glCreateVertexArrays( 1, &id );
+			}
+
+			OpenGLVertexArray::~OpenGLVertexArray( )
+			{
+				glDeleteVertexArrays( 1, &id );
+			}
+
+			void OpenGLVertexArray::Bind( )
+			{
+				glBindVertexArray( id );
+			}
+
+			void OpenGLVertexArray::Unbind( )
+			{
+				glBindVertexArray( 0 );
+			}
+
+			void OpenGLVertexArray::AddVertexBuffer( VertexBuffer* vertexBuffer )
+			{
+				Bind( );
+				vertexBuffer->Bind( );
+
+				BufferLayout bufferLayout = vertexBuffer->GetLayout( );
+
+				unsigned int index = 0;
+				for ( BufferElement& element : bufferLayout.GetBufferElements( ) )
+				{
+					glEnableVertexAttribArray( index );
+					glVertexAttribPointer( index, element.GetComponentCount( ), OpenGL::ShaderTypeToGLEnum( element.dataType ), false, bufferLayout.GetStride( ), ( void* ) element.offset );
+					index++;
+				}
+
+				vertexBuffers.push_back( vertexBuffer );
+			}
+
+			void OpenGLVertexArray::SetIndexBuffer( IndexBuffer* indexBuffer )
+			{
+				Bind( );
+				indexBuffer->Bind( );
+
+				this->indexBuffer = indexBuffer;
 			}
 		}
 	}

@@ -1,7 +1,9 @@
 #pragma once
 
-#include "CatWare/Graphics/Renderer/Buffer.h"
 #include <glad/glad.h>
+#include <vector>
+
+#include "CatWare/Graphics/Renderer/Buffer.h"
 
 namespace CatWare
 {
@@ -36,6 +38,7 @@ namespace CatWare
 				virtual void Unbind( ) override;
 
 				virtual void SetLayout( BufferLayout layout ) override;
+				virtual BufferLayout GetLayout( ) override;
 
 			private:
 				unsigned int id;
@@ -57,6 +60,25 @@ namespace CatWare
 			private:
 				unsigned int count;
 				unsigned int id;
+			};
+
+			class OpenGLVertexArray : public VertexArray
+			{
+			public:
+				OpenGLVertexArray( );
+				~OpenGLVertexArray( );
+
+				virtual void Bind( ) override;
+				virtual void Unbind( ) override;
+
+				virtual void AddVertexBuffer( VertexBuffer* vertexBuffer ) override;
+				virtual void SetIndexBuffer( IndexBuffer* indexBuffer ) override;
+
+			private:
+				unsigned int id;
+
+				std::vector<VertexBuffer*> vertexBuffers;
+				IndexBuffer* indexBuffer;
 			};
 		}
 	}

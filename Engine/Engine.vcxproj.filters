@@ -75,8 +75,14 @@
     <ClInclude Include="Source\CatWare\Graphics\Renderer\OpenGL\OpenGLBuffer.h">
       <Filter>Source\CatWare\Graphics\Renderer\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="Source\CatWare\Graphics\Renderer\Renderer.h">
+    <ClInclude Include="Source\CatWare\Graphics\Renderer\RendererAPI.h">
       <Filter>Source\CatWare\Graphics\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CatWare\Utils\Color.h">
+      <Filter>Source\CatWare\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CatWare\Utils\Types.h">
+      <Filter>Source\CatWare\Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -110,7 +116,7 @@
     <ClCompile Include="Source\CatWare\Graphics\Renderer\OpenGL\OpenGLBuffer.cpp">
       <Filter>Source\CatWare\Graphics\Renderer\OpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="Source\CatWare\Graphics\Renderer\Renderer.cpp">
+    <ClCompile Include="Source\CatWare\Graphics\Renderer\RendererAPI.cpp">
       <Filter>Source\CatWare\Graphics\Renderer</Filter>
     </ClCompile>
   </ItemGroup>

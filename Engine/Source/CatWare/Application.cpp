@@ -23,47 +23,46 @@ namespace CatWare
 	{
 		window = new Window( "CatWare", 1280, 720, false );
 
+		PostInit( );
+
 		glClearColor( 0.2, 0.2, 0.2, 1 );
 
-		float vertecies[3 * 4] = {
-			-0.5f, -0.5f, 0.0f,
-			0.5f, -0.5f, 0.0f,
-			-0.5f, 0.5f, 0.0f,
-			0.5f, 0.5f, 0.0f
+		float vertecies[2 * 3] = {
+			0.5, 0.5,
+			0.5, -0.5,
+			-0.5, 0.5,
 		};
 
-		unsigned int indicies[6] = { 0, 1, 2, 2, 3, 1 };
-
-		Rendering::VertexBuffer* vertexBuffer = Rendering::VertexBuffer::Create( sizeof( vertecies ), vertecies  );
-
-		BufferLayout bufferLayout =
-		{
-			BufferElement( "position", ShaderDataType::Float3 )
+		unsigned int indicies[3] = {
+			1, 2, 3
 		};
 
-		unsigned int vao;
-		glCreateVertexArrays( 1, &vao );
-		glBindVertexArray( vao );
+		VertexBuffer* vertexBuffer = VertexBuffer::Create( sizeof( vertecies ), vertecies );
+		IndexBuffer* indexBuffer = IndexBuffer::Create( 2, indicies );
 
-		vertexBuffer->SetLayout( bufferLayout );
+		BufferLayout layout = {
+			BufferElement( "position", ShaderDataType::Float2 )
+		};
 
-		Rendering::IndexBuffer* indexBuffer = Rendering::IndexBuffer::Create( 6, indicies );
+		vertexBuffer->SetLayout( layout );
 
-		vertexBuffer->Bind( );
-		indexBuffer->Bind( );
+		VertexArray* vertexArray = VertexArray::Create( );
 
-		PostInit( );
+		vertexArray->AddVertexBuffer( vertexBuffer );
+		vertexArray->SetIndexBuffer( indexBuffer );
 
 		while ( running )
 		{
 			window->HandleWindowEvents( );
-
 			running = !window->ShouldClose( );
 
 			glClear( GL_COLOR_BUFFER_BIT );
-			glDrawElements( GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr );
+
+			glDrawElements( GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr );
 
 			window->SwapBuffers( );
 		}
+
+		delete window;
 	}
 }

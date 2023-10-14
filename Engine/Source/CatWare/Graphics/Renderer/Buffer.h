@@ -70,7 +70,8 @@ namespace CatWare
 			virtual void Bind( ) = 0;
 			virtual void Unbind( ) = 0;
 
-			virtual void SetLayout( BufferLayout leyout ) = 0;
+			virtual void SetLayout( BufferLayout layout ) = 0;
+			virtual BufferLayout GetLayout( ) = 0;
 
 			static VertexBuffer* Create( unsigned int size, float* vertecies );
 		};
@@ -86,6 +87,20 @@ namespace CatWare
 			virtual unsigned int GetCount( ) = 0;
 
 			static IndexBuffer* Create( unsigned int size, unsigned int* indicies );
+		};
+
+		class VertexArray
+		{
+		public:
+			virtual ~VertexArray( ) {}
+
+			virtual void Bind( ) = 0;
+			virtual void Unbind( ) = 0;
+
+			virtual void AddVertexBuffer( VertexBuffer* vertexBuffer ) = 0;
+			virtual void SetIndexBuffer( IndexBuffer* indexBuffer ) = 0;
+
+			static VertexArray* Create( );
 		};
 	}
 }

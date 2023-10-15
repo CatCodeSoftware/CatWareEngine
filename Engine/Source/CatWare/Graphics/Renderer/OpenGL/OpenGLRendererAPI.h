@@ -13,6 +13,8 @@ namespace CatWare
 				virtual void SetClearColor( Color clearColor ) override;
 				virtual void Clear( ) override;
 
+				virtual void SetBlendAlpha( bool blend ) override;
+
 				virtual void SetViewportSize( int width, int height ) override;
 
 				virtual void DrawIndexed( VertexArray* vertexArray ) override;

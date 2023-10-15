@@ -4,6 +4,7 @@
 #include "CatWare/Utils/Log.h"
 
 #include "Renderer/OpenGL/OpenGLContext.h"
+#include "Renderer/Renderer.h"
 
 namespace CatWare
 {

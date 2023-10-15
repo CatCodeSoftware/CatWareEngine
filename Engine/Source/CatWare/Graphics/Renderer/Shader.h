@@ -32,6 +32,7 @@ namespace CatWare
 
 
 			static Shader* Create( std::string vertexSource, std::string fragmentSource );
+			static Shader* CreateFromFile( std::string vertexPath, std::string fragmentPath );
 		};
 	}
 }

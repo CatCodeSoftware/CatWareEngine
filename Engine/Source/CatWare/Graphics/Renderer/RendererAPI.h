@@ -16,8 +16,15 @@ namespace CatWare
 				OPENGL = 1
 			};
 
+			enum class BlendMode
+			{
+
+			};
+
 			virtual void SetClearColor( Color clearColor ) = 0;
 			virtual void Clear( ) = 0;
+
+			virtual void SetBlendAlpha( bool blend ) = 0;
 
 			virtual void SetViewportSize( int width, int height ) = 0;
 

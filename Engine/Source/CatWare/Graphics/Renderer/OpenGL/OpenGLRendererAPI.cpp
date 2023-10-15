@@ -23,6 +23,19 @@ namespace CatWare
 				glViewport( 0, 0, width, height );
 			}
 
+			void OpenGLAPI::SetBlendAlpha( bool blend )
+			{
+				if ( blend )
+				{
+					glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+					glEnable( GL_BLEND );
+				}
+				else
+				{
+					glDisable( GL_BLEND );
+				}
+			}
+
 			void OpenGLAPI::DrawIndexed( VertexArray* vertexArray )
 			{
 				vertexArray->Bind( );

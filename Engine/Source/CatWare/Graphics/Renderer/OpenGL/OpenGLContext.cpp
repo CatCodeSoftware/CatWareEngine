@@ -53,7 +53,7 @@ namespace CatWare
 				CW_ENGINE_LOG->Info( "Renderer: %s", glGetString( GL_RENDERER ) );
 				CW_ENGINE_LOG->Info( "Version:  %s", glGetString( GL_VERSION ) );
 
-				glEnable( GL_DEBUG_OUTPUT );
+				glEnable( GL_PROGRAM_OUTPUT );
 				glDebugMessageCallback( MessageCallback, 0 );
 			}
 

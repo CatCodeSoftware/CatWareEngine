@@ -4,10 +4,6 @@
 
 #include <Windows.h>
 
-extern "C" {
-	_declspec( dllexport ) DWORD NvOptimusEnablement = 0x00000001;
-}
-
 using namespace CatWare;
 
 class Sandbox : public CatWare::Application

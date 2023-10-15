@@ -74,13 +74,13 @@
     <OutDir>$(SolutionDir)\Build\</OutDir>
     <IntDir>$(SolutionDir)\Intermediate\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <TargetName>CatWareEngine</TargetName>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\Source;$(ProjectDir)\Lib\SDL2\include;$(ProjectDir)\Lib\Glad\include</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\Source;$(ProjectDir)\Lib\SDL2\include;$(ProjectDir)\Lib\Glad\include;$(ProjectDir)\Lib\Single header\</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)\Build\</OutDir>
     <IntDir>$(SolutionDir)\Intermediate\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <TargetName>CatWareEngine</TargetName>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\Source;$(ProjectDir)\Lib\SDL2\include;$(ProjectDir)\Lib\Glad\include</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\Source;$(ProjectDir)\Lib\SDL2\include;$(ProjectDir)\Lib\Glad\include;$(ProjectDir)\Lib\Single header\</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -157,9 +157,11 @@
     <ClInclude Include="Source\CatWare\Graphics\Renderer\OpenGL\OpenGLContext.h" />
     <ClInclude Include="Source\CatWare\Graphics\Renderer\OpenGL\OpenGLRendererAPI.h" />
     <ClInclude Include="Source\CatWare\Graphics\Renderer\OpenGL\OpenGLShader.h" />
+    <ClInclude Include="Source\CatWare\Graphics\Renderer\OpenGL\OpenGLTexture.h" />
     <ClInclude Include="Source\CatWare\Graphics\Renderer\Renderer.h" />
     <ClInclude Include="Source\CatWare\Graphics\Renderer\RendererAPI.h" />
     <ClInclude Include="Source\CatWare\Graphics\Renderer\Shader.h" />
+    <ClInclude Include="Source\CatWare\Graphics\Renderer\Texture.h" />
     <ClInclude Include="Source\CatWare\Graphics\Window.h" />
     <ClInclude Include="Source\CatWare\Input\Binds.h" />
     <ClInclude Include="Source\CatWare\Input\KeyboardAndMouse.h" />
@@ -169,6 +171,7 @@
     <ClInclude Include="Source\CatWare\Utils\Vector.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ExternSrc\stb_image.cpp" />
     <ClCompile Include="Lib\Glad\src\glad.c" />
     <ClCompile Include="Source\CatWare\Application.cpp" />
     <ClCompile Include="Source\CatWare\Core.cpp" />
@@ -177,9 +180,11 @@
     <ClCompile Include="Source\CatWare\Graphics\Renderer\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="Source\CatWare\Graphics\Renderer\OpenGL\OpenGLRendererAPI.cpp" />
     <ClCompile Include="Source\CatWare\Graphics\Renderer\OpenGL\OpenGLShader.cpp" />
+    <ClCompile Include="Source\CatWare\Graphics\Renderer\OpenGL\OpenGLTexture.cpp" />
     <ClCompile Include="Source\CatWare\Graphics\Renderer\RendererAPI.cpp" />
     <ClCompile Include="Source\CatWare\Graphics\Renderer\Renderer.cpp" />
     <ClCompile Include="Source\CatWare\Graphics\Renderer\Shader.cpp" />
+    <ClCompile Include="Source\CatWare\Graphics\Renderer\Texture.cpp" />
     <ClCompile Include="Source\CatWare\Graphics\Window.cpp" />
     <ClCompile Include="Source\CatWare\Input\Binds.cpp" />
     <ClCompile Include="Source\CatWare\Input\KeyboardAndMouse.cpp" />

@@ -63,6 +63,7 @@ namespace CatWare
 			for ( BufferElement& element : bufferElements )
 			{
 				element.offset = offset;
+				element.count = element.GetComponentCount( );
 				offset += element.size;
 				stride += element.size;	
 			}

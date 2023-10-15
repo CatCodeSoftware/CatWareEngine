@@ -5,6 +5,7 @@
 #include "OpenGL/OpenGLRendererAPI.h"
 #include "CatWare/Utils/Vector.h"
 #include "Shader.h"
+#include "Texture.h"
 
 namespace CatWare
 {
@@ -18,7 +19,7 @@ namespace CatWare
 			static void SetScreenSize( unsigned int width, unsigned int height );
 
 			static void DrawRect( Vector2D position, Vector2D size, Color color );
-			static void DrawRectTextured( Vector2D position, Vector2D size, Color tint );
+			static void DrawRectTextured( Vector2D position, Vector2D size, Texture2D* texture, Color tint );
 
 			static void Clear( Color clearColor );
 
@@ -28,6 +29,7 @@ namespace CatWare
 			static RendererAPI* rendererAPI;
 
 			static Shader* rectShader;
+			static Shader* rectTexturedShader;
 
 			static unsigned int width;
 			static unsigned int height;

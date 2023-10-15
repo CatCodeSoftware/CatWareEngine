@@ -7,3 +7,4 @@
 #include "CatWare/Graphics/Window.h"
 #include "CatWare/Input/KeyboardAndMouse.h"
 #include "CatWare/Input/Binds.h"
+#include "CatWare/Graphics/Renderer/Renderer.h"

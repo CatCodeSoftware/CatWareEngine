@@ -38,9 +38,8 @@ namespace CatWare
 			window->HandleWindowEvents( );
 			running = !window->ShouldClose( );
 
-			Renderer::Clear( { 40, 40, 40, 255 } );
-			
-			Renderer::DrawRect( { 20, 20 }, { 60, 60 }, { 255, 0, 255, 255 } );
+			Update( );
+			Draw( );
 
 			window->SwapBuffers( );
 		}

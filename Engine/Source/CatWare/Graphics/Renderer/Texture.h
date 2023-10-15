@@ -1,5 +1,9 @@
 #pragma once
 
+#include <string>
+
+#include "CatWare/Core.h"
+
 namespace CatWare
 {
 	namespace Rendering
@@ -9,7 +13,7 @@ namespace CatWare
 			NEAREST, BILINEAR
 		};
 
-		class Texture2D
+		class CATWARE_API Texture2D
 		{
 		public:
 			virtual ~Texture2D( ) {}
@@ -20,6 +24,7 @@ namespace CatWare
 			virtual void Unbind( ) = 0;
 
 			static Texture2D* Create( int width, int height, void* rgbaData );
+			static Texture2D* Create( std::string path );
 		};
 	}
 }

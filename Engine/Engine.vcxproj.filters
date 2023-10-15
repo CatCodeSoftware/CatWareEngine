@@ -87,6 +87,15 @@
     <ClInclude Include="Source\CatWare\Graphics\Renderer\OpenGL\OpenGLRendererAPI.h">
       <Filter>Source\CatWare\Graphics\Renderer\OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="Source\CatWare\Graphics\Renderer\Renderer.h">
+      <Filter>Source\CatWare\Graphics\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CatWare\Graphics\Renderer\Shader.h">
+      <Filter>Source\CatWare\Graphics\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CatWare\Graphics\Renderer\OpenGL\OpenGLShader.h">
+      <Filter>Source\CatWare\Graphics\Renderer\OpenGL</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\CatWare\Application.cpp">
@@ -123,6 +132,15 @@
       <Filter>Source\CatWare\Graphics\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="Source\CatWare\Graphics\Renderer\OpenGL\OpenGLRendererAPI.cpp">
+      <Filter>Source\CatWare\Graphics\Renderer\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CatWare\Graphics\Renderer\Renderer.cpp">
+      <Filter>Source\CatWare\Graphics\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CatWare\Graphics\Renderer\Shader.cpp">
+      <Filter>Source\CatWare\Graphics\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CatWare\Graphics\Renderer\OpenGL\OpenGLShader.cpp">
       <Filter>Source\CatWare\Graphics\Renderer\OpenGL</Filter>
     </ClCompile>
   </ItemGroup>

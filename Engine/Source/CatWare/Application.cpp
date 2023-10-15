@@ -4,6 +4,8 @@
 
 #include "Graphics/Renderer/Buffer.h"
 #include "Graphics/Renderer/OpenGL/OpenGLBuffer.h"
+#include "Graphics/Renderer/Renderer.h"
+#include "Graphics/Renderer/Shader.h"
 
 namespace CatWare
 {
@@ -23,14 +25,16 @@ namespace CatWare
 	{
 		window = new Window( "CatWare", 1280, 720, false );
 
+		Renderer::Init( new OpenGL::OpenGLAPI );
+
 		PostInit( );
 
 		glClearColor( 0.2, 0.2, 0.2, 1 );
 
-		float vertecies[2 * 3] = {
-			0.5, 0.5,
-			0.5, -0.5,
-			-0.5, 0.5,
+		float vertecies[6 * 3] = {
+			0.5, 0.5, 1.0f, 0.0, 0.0, 1.0,
+			0.5, -0.5, 0.0f, 1.0, 0.0, 1.0,
+			-0.5, 0.5, 0.0f, 0.0, 1.0, 1.0,
 		};
 
 		unsigned int indicies[3] = {
@@ -41,7 +45,8 @@ namespace CatWare
 		IndexBuffer* indexBuffer = IndexBuffer::Create( 2, indicies );
 
 		BufferLayout layout = {
-			BufferElement( "position", ShaderDataType::Float2 )
+			BufferElement( "position", ShaderDataType::Float2 ),
+			BufferElement( "color", ShaderDataType::Float4 )
 		};
 
 		vertexBuffer->SetLayout( layout );
@@ -50,6 +55,39 @@ namespace CatWare
 
 		vertexArray->AddVertexBuffer( vertexBuffer );
 		vertexArray->SetIndexBuffer( indexBuffer );
+
+		std::string vertexShader = R"(
+#version 460 core
+layout(location = 0) in vec2 position;
+layout(location = 1) in vec4 color;
+
+out vec4 vertexColor;
+
+void main()
+{
+	gl_Position = vec4(position.x, position.y, 0.0f, 1.0f);//position;
+	vertexColor = color;
+}
+)";
+
+		std::string fragmentShader = R"(
+#version 460 core
+out vec4 FragColor;
+in vec4 vertexColor;
+
+
+void main()
+{
+	FragColor = vertexColor;
+}
+)";
+
+		Shader* shader = Shader::Create(
+			vertexShader,
+			fragmentShader
+		);
+
+		shader->Bind( );
 
 		while ( running )
 		{

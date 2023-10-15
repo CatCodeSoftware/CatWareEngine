@@ -156,7 +156,10 @@
     <ClInclude Include="Source\CatWare\Graphics\Renderer\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="Source\CatWare\Graphics\Renderer\OpenGL\OpenGLContext.h" />
     <ClInclude Include="Source\CatWare\Graphics\Renderer\OpenGL\OpenGLRendererAPI.h" />
+    <ClInclude Include="Source\CatWare\Graphics\Renderer\OpenGL\OpenGLShader.h" />
+    <ClInclude Include="Source\CatWare\Graphics\Renderer\Renderer.h" />
     <ClInclude Include="Source\CatWare\Graphics\Renderer\RendererAPI.h" />
+    <ClInclude Include="Source\CatWare\Graphics\Renderer\Shader.h" />
     <ClInclude Include="Source\CatWare\Graphics\Window.h" />
     <ClInclude Include="Source\CatWare\Input\Binds.h" />
     <ClInclude Include="Source\CatWare\Input\KeyboardAndMouse.h" />
@@ -173,7 +176,10 @@
     <ClCompile Include="Source\CatWare\Graphics\Renderer\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="Source\CatWare\Graphics\Renderer\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="Source\CatWare\Graphics\Renderer\OpenGL\OpenGLRendererAPI.cpp" />
+    <ClCompile Include="Source\CatWare\Graphics\Renderer\OpenGL\OpenGLShader.cpp" />
     <ClCompile Include="Source\CatWare\Graphics\Renderer\RendererAPI.cpp" />
+    <ClCompile Include="Source\CatWare\Graphics\Renderer\Renderer.cpp" />
+    <ClCompile Include="Source\CatWare\Graphics\Renderer\Shader.cpp" />
     <ClCompile Include="Source\CatWare\Graphics\Window.cpp" />
     <ClCompile Include="Source\CatWare\Input\Binds.cpp" />
     <ClCompile Include="Source\CatWare\Input\KeyboardAndMouse.cpp" />

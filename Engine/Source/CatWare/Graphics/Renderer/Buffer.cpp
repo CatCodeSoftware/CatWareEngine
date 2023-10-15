@@ -1,6 +1,7 @@
 #include "Buffer.h"
 
 #include "RendererAPI.h"
+#include "Renderer.h"
 #include "OpenGL/OpenGLBuffer.h"
 
 namespace CatWare
@@ -73,7 +74,7 @@ namespace CatWare
 
 		VertexBuffer* VertexBuffer::Create( unsigned int size, float* vertecies )
 		{
-			switch ( RendererAPI::GetRenderAPI( ) )
+			switch ( Renderer::GetAPI( ) )
 			{
 			case RendererAPI::API::NONE:
 					return nullptr;
@@ -93,7 +94,7 @@ namespace CatWare
 
 		IndexBuffer* IndexBuffer::Create( unsigned int count, unsigned int* indicies )
 		{
-			switch ( RendererAPI::GetRenderAPI( ) )
+			switch ( Renderer::GetAPI( ) )
 			{
 			case RendererAPI::API::NONE:
 				return nullptr;
@@ -112,7 +113,7 @@ namespace CatWare
 		// ---------------------------------------
 		VertexArray* VertexArray::Create( )
 		{
-			switch ( RendererAPI::GetRenderAPI( ) )
+			switch ( Renderer::GetAPI( ) )
 			{
 			case RendererAPI::API::OPENGL:
 				return new OpenGL::OpenGLVertexArray;

@@ -31,6 +31,9 @@
     <Filter Include="Source\CatWare\Entity">
       <UniqueIdentifier>{71704687-3e90-4ff6-bde8-5066425884dd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\CatWare\Resource">
+      <UniqueIdentifier>{65627043-9d78-4e79-a324-0649f8ab2cf1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\CatWare.h">
@@ -107,6 +110,9 @@
     </ClInclude>
     <ClInclude Include="Source\CatWare\Entity\Entity.h">
       <Filter>Source\CatWare\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CatWare\Resource\Resource.h">
+      <Filter>Source\CatWare\Resource</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

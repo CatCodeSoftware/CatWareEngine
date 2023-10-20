@@ -62,6 +62,8 @@ public:
 	void Update( ) override
 	{
 		entityManager.Update( );
+
+		CW_LOG->Warning( "%lf", GetDeltaTime( ) );
 	}
 
 	void Draw( ) override

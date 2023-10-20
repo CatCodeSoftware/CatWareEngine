@@ -12,6 +12,13 @@
 
 namespace CatWare
 {
+	static double deltaTime;
+
+	double GetDeltaTime( )
+	{
+		return deltaTime;
+	}
+
 	using namespace CatWare::Rendering;
 
 	Application::Application( )
@@ -38,6 +45,8 @@ namespace CatWare
 
 		while ( running )
 		{
+			std::chrono::time_point<std::chrono::high_resolution_clock> startTime = std::chrono::high_resolution_clock::now( );
+
 			window->HandleWindowEvents( );
 			running = !window->ShouldClose( );
 
@@ -45,6 +54,9 @@ namespace CatWare
 			Draw( );
 
 			window->SwapBuffers( );
+
+			auto milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>( std::chrono::high_resolution_clock::now( ) - startTime );
+			deltaTime = double ( milliseconds.count( ) ) / 1000;
 		}
 
 		delete window;

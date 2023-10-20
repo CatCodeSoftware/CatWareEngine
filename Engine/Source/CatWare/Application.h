@@ -1,7 +1,8 @@
 #pragma once
 
-#include "Core.h"
+#include <chrono>
 
+#include "Core.h"
 #include "Graphics/Window.h"
 
 namespace CatWare
@@ -23,4 +24,6 @@ namespace CatWare
 
 		Window* window;
 	};
+
+	CATWARE_API double GetDeltaTime( );
 }

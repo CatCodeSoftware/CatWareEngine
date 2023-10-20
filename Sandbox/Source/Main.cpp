@@ -13,8 +13,6 @@ extern "C"
 	__declspec( dllexport ) unsigned long NvOptimusEnablement = 0x00000001;
 }
 
-static Texture2D* texture;
-
 class TestEntity : public Entity::Entity
 {
 public:
@@ -30,7 +28,7 @@ public:
 
 	void Draw( ) override
 	{
-		Renderer::DrawRectTextured( transform.position, transform.size, texture, { 255, 255, 255, 255 } );
+		Renderer::DrawRectTextured( transform.position, transform.size, TextureManager::GetTexture( "test_cat" ), { 255, 255, 255, 255 } );
 	}
 
 	static Entity* Create( std::unordered_map<std::string, std::string> tags )
@@ -49,21 +47,17 @@ public:
 
 	void PostInit( ) override
 	{
-		CW_LOG->Warning( "Hello :)" );
-
-		// Load a texture
-		texture = Texture2D::Create( "cat.png" );
-
 		Entity::EntityRegistry::RegisterEntity<TestEntity>( "test" );
 
-		entityManager.CreateEntityByClassName( "test", { { 0, 0, }, { 1280, 720 } }, { } );
+		entityManager.CreateEntityByClassName( "test", { { 0, 0 }, { 1280, 720 } }, { } );
+
+
+		TextureManager::AddTexture( "test_cat", "cat.png" );
 	}
 
 	void Update( ) override
 	{
 		entityManager.Update( );
-
-		CW_LOG->Warning( "%lf", GetDeltaTime( ) );
 	}
 
 	void Draw( ) override

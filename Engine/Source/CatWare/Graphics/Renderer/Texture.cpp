@@ -5,6 +5,7 @@
 #include "RendererAPI.h"
 #include "Renderer.h"
 #include "OpenGL/OpenGLTexture.h"
+#include "CatWare/Utils/Log.h"
 
 namespace CatWare
 {
@@ -23,6 +24,13 @@ namespace CatWare
 			int width, height;
 
 			void* rgbaData = stbi_load( path.c_str( ), &width, &height, nullptr, 4 );
+
+			if ( rgbaData == NULL )
+			{
+				CW_ENGINE_LOG->Error( "Failed to load texture: %s", stbi_failure_reason( ) );
+
+				return nullptr;
+			}
 
 			switch ( Renderer::GetAPI( ) )
 			{

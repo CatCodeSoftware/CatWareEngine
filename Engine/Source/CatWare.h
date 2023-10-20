@@ -9,3 +9,4 @@
 #include "CatWare/Input/Binds.h"
 #include "CatWare/Graphics/Renderer/Renderer.h"
 #include "CatWare/Entity/Entity.h"
+#include "CatWare/Resource/TextureResource.h"

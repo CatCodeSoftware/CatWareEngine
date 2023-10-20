@@ -4,10 +4,21 @@
 
 #include "Core.h"
 #include "Graphics/Window.h"
+#include "Graphics/Renderer/Renderer.h"
 #include "Scene.h"
 
 namespace CatWare
 {
+	class InitConfig
+	{
+	public:
+		UInt16 windowWidth = 1280;
+		UInt16 windowHeight = 720;
+		bool windowFullscreen = false;
+
+		Rendering::RendererAPI::API renderAPI = Rendering::RendererAPI::API::OPENGL;
+	};
+
 	class CATWARE_API Application
 	{
 	public:
@@ -26,6 +37,7 @@ namespace CatWare
 		bool running = true;
 
 		Window* window = nullptr;
+		InitConfig initConfig;
 
 	private:
 		Scene* currentScene = nullptr;

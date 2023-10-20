@@ -34,7 +34,7 @@ class InGame : public Scene
 public:
 	InGame( )
 	{
-		entityManager.CreateEntityByClassName( "test", { { 0, 0 }, { 90, 90 } }, { } );
+		entityManager.CreateEntityByClassName( "test", { { 20, 20 }, { 180, 180	} }, { } );
 	}
 
 	void Update( ) override
@@ -50,7 +50,12 @@ public:
 class Sandbox : public CatWare::Application
 {
 public:
-	Sandbox( ) {}
+	Sandbox( )
+	{
+		initConfig.windowWidth = 1600;
+		initConfig.windowHeight = 900;
+	}
+
 	~Sandbox( ) {}
 
 	void PostInit( ) override

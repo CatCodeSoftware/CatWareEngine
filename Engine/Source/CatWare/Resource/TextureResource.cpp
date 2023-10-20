@@ -16,7 +16,7 @@ namespace CatWare
 
 	TextureResource::~TextureResource( )
 	{
-		delete texture;
+		Unload( );
 	}
 
 	Rendering::Texture2D* TextureResource::GetTexture( )

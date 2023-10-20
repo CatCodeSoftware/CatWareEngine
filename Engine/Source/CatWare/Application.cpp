@@ -33,7 +33,7 @@ namespace CatWare
 		// temporary srand call - PT
 		std::srand( time( NULL ) );
 
-		window = new Window( "CatWare", 1280, 720, false );
+		window = new Window( "CatWare", initConfig.windowWidth, initConfig.windowHeight, false );
 
 		Renderer::Init( new OpenGL::OpenGLAPI );
 		Rendering::Renderer::SetScreenSize( window->GetWidth( ), window->GetHeight( ) );

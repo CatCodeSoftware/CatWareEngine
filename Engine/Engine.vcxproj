@@ -167,6 +167,7 @@
     <ClInclude Include="Source\CatWare\Input\Binds.h" />
     <ClInclude Include="Source\CatWare\Input\KeyboardAndMouse.h" />
     <ClInclude Include="Source\CatWare\Resource\TextureResource.h" />
+    <ClInclude Include="Source\CatWare\Scene.h" />
     <ClInclude Include="Source\CatWare\Utils\Color.h" />
     <ClInclude Include="Source\CatWare\Utils\Log.h" />
     <ClInclude Include="Source\CatWare\Utils\Types.h" />

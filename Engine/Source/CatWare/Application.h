@@ -4,6 +4,7 @@
 
 #include "Core.h"
 #include "Graphics/Window.h"
+#include "Scene.h"
 
 namespace CatWare
 {
@@ -19,10 +20,15 @@ namespace CatWare
 		virtual void Update( ) {}
 		virtual void Draw( ) {}
 
-	private:
+		void SetScene( Scene* scene );
+
+	protected:
 		bool running = true;
 
-		Window* window;
+		Window* window = nullptr;
+
+	private:
+		Scene* currentScene = nullptr;
 	};
 
 	CATWARE_API double GetDeltaTime( );

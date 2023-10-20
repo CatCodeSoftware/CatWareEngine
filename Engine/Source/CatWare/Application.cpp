@@ -50,8 +50,11 @@ namespace CatWare
 			window->HandleWindowEvents( );
 			running = !window->ShouldClose( );
 
-			Update( );
-			Draw( );
+			currentScene->Update( );
+			currentScene->entityManager.Update( );
+
+			currentScene->Draw( );
+			currentScene->entityManager.Draw( );
 
 			window->SwapBuffers( );
 
@@ -60,5 +63,14 @@ namespace CatWare
 		}
 
 		delete window;
+	}
+
+	void Application::SetScene( Scene* scene )
+	{
+		if ( currentScene != nullptr )
+			currentScene->SwitchOff( );
+
+		this->currentScene = scene;
+		scene->SwitchTo( );
 	}
 }

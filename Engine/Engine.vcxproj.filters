@@ -114,6 +114,9 @@
     <ClInclude Include="Source\CatWare\Resource\TextureResource.h">
       <Filter>Source\CatWare\Resource</Filter>
     </ClInclude>
+    <ClInclude Include="Source\CatWare\Scene.h">
+      <Filter>Source\CatWare</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\CatWare\Application.cpp">

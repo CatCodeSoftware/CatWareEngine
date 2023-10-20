@@ -44,6 +44,8 @@ namespace CatWare
 
 		static void CleanUpTextures( );
 
+		static void RemoveEverything( );
+
 	private:
 		static std::unordered_map<std::string, TextureResource*> textureRegistry;
 	};

@@ -4,11 +4,8 @@
 #include <random>
 
 #include "Utils/Color.h"
-#include "Graphics/Renderer/Buffer.h"
-#include "Graphics/Renderer/OpenGL/OpenGLBuffer.h"
 #include "Graphics/Renderer/Renderer.h"
-#include "Graphics/Renderer/Shader.h"
-#include "Graphics/Renderer/Texture.h"
+#include "Resource/TextureResource.h"
 
 namespace CatWare
 {
@@ -61,6 +58,8 @@ namespace CatWare
 			auto milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>( std::chrono::high_resolution_clock::now( ) - startTime );
 			deltaTime = double ( milliseconds.count( ) ) / 1000;
 		}
+
+		TextureManager::RemoveEverything( );
 
 		delete window;
 	}

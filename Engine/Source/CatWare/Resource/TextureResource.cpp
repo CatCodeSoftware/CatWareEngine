@@ -82,4 +82,14 @@ namespace CatWare
 	{
 		// i don't know what the criteria for what textures to dump should be here - PT
 	}
+
+	void TextureManager::RemoveEverything( )
+	{
+		for ( auto keyValPair : textureRegistry )
+		{
+			delete keyValPair.second;
+		}
+
+		textureRegistry.clear( );
+	}
 }

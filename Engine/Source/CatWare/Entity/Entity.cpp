@@ -65,7 +65,14 @@ namespace CatWare
 		// ----------------------------------------
 		// EntityManager --------------------------
 		// ----------------------------------------
-
+		void EntityManager::CleanUp( )
+		{
+			for ( Entity* entity : entities )
+			{
+				delete entity;
+			}
+		}
+		
 		UInt64 EntityManager::CreateEntityByClassName( std::string className, Transform transform, std::unordered_map<std::string, std::string> tags )
 		{
 			UInt64 id = std::rand( );

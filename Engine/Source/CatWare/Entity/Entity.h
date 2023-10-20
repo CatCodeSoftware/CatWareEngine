@@ -79,6 +79,8 @@ namespace CatWare
 		public:
 			~EntityManager( ) {}
 
+			void CleanUp( );
+
 			// Function for creating an entity by type
 			template<typename T>
 			UInt64 CreateEntityByType( Transform transform, std::unordered_map<std::string, std::string> tags )

@@ -1,7 +1,7 @@
 #include "Application.h"
 
-#include <glad/glad.h>
 #include <stb_image.h>
+#include <random>
 
 #include "Utils/Color.h"
 #include "Graphics/Renderer/Buffer.h"
@@ -26,7 +26,10 @@ namespace CatWare
 
 	void Application::Run( )
 	{
-		window = new Window( "CatWare", 1280, 720, true );
+		// temporary srand call - PT
+		std::srand( time( NULL ) );
+
+		window = new Window( "CatWare", 1280, 720, false );
 
 		Renderer::Init( new OpenGL::OpenGLAPI );
 		Rendering::Renderer::SetScreenSize( window->GetWidth( ), window->GetHeight( ) );

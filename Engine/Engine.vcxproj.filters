@@ -28,6 +28,9 @@
     <Filter Include="Extern\Glad">
       <UniqueIdentifier>{869a04a4-18da-4d98-b88b-cd76a31cf471}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\CatWare\Entity">
+      <UniqueIdentifier>{71704687-3e90-4ff6-bde8-5066425884dd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\CatWare.h">
@@ -102,6 +105,9 @@
     <ClInclude Include="Source\CatWare\Graphics\Renderer\OpenGL\OpenGLTexture.h">
       <Filter>Source\CatWare\Graphics\Renderer\OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="Source\CatWare\Entity\Entity.h">
+      <Filter>Source\CatWare\Entity</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\CatWare\Application.cpp">
@@ -157,6 +163,9 @@
     </ClCompile>
     <ClCompile Include="ExternSrc\stb_image.cpp">
       <Filter>Extern</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CatWare\Entity\Entity.cpp">
+      <Filter>Source\CatWare\Entity</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

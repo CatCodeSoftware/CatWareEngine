@@ -150,6 +150,7 @@
     <ClInclude Include="Source\CatWare.h" />
     <ClInclude Include="Source\CatWare\Application.h" />
     <ClInclude Include="Source\CatWare\Core.h" />
+    <ClInclude Include="Source\CatWare\Entity\Entity.h" />
     <ClInclude Include="Source\CatWare\EntryPoint.h" />
     <ClInclude Include="Source\CatWare\Graphics\Renderer\Buffer.h" />
     <ClInclude Include="Source\CatWare\Graphics\Renderer\Context.h" />
@@ -175,6 +176,7 @@
     <ClCompile Include="Lib\Glad\src\glad.c" />
     <ClCompile Include="Source\CatWare\Application.cpp" />
     <ClCompile Include="Source\CatWare\Core.cpp" />
+    <ClCompile Include="Source\CatWare\Entity\Entity.cpp" />
     <ClCompile Include="Source\CatWare\Graphics\Renderer\Buffer.cpp" />
     <ClCompile Include="Source\CatWare\Graphics\Renderer\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="Source\CatWare\Graphics\Renderer\OpenGL\OpenGLContext.cpp" />

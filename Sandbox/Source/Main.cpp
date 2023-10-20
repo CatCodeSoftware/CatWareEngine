@@ -49,15 +49,22 @@ public:
 	{
 		Entity::EntityRegistry::RegisterEntity<TestEntity>( "test" );
 
-		entityManager.CreateEntityByClassName( "test", { { 0, 0 }, { 1280, 720 } }, { } );
+		entityManager.CreateEntityByClassName( "test", { { 0, 0 }, { 90, 90 } }, { } );
 
 
 		TextureManager::AddTexture( "test_cat", "cat.png" );
+
+		Input::LoadBindsFromConfig( "binds.cfg" );
 	}
 
 	void Update( ) override
 	{
 		entityManager.Update( );
+
+		if ( Input::GetBinding( "do_stuff" )->IsDown( ) )
+		{
+			CW_LOG->Info( "Did stuff" );
+		}
 	}
 
 	void Draw( ) override

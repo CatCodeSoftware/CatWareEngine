@@ -40,5 +40,7 @@ namespace CatWare
 		CATWARE_API void AddBinding( std::string label, Binding* binding );
 		CATWARE_API Binding* GetBinding( std::string label );
 		CATWARE_API void RemoveBinding( std::string label );
+
+		CATWARE_API void LoadBindsFromConfig( std::string filePath );
 	}
 }

@@ -1,5 +1,7 @@
 #include "KeyboardAndMouse.h"
 
+#include "CatWare/Utils/Log.h"
+
 namespace CatWare
 {
 	namespace Input
@@ -12,6 +14,7 @@ namespace CatWare
 		void SetKeyPressed( int keyCode, bool isPressed )
 		{
 			keyStatus[keyCode] = isPressed;
+			// CW_ENGINE_LOG->Info( "Pressed key %d", keyCode );
 		}
 
 		void SetMousePressed( int buttonCode, bool isPressed )

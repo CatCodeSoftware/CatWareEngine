@@ -12,6 +12,7 @@ namespace CatWare
 	class InitConfig
 	{
 	public:
+		std::string windowTitle = "CatWare";
 		UInt16 windowWidth = 1280;
 		UInt16 windowHeight = 720;
 		bool windowFullscreen = false;

@@ -3,6 +3,7 @@
 #include "Buffer.h"
 #include "Shader.h"
 #include "Texture.h"
+#include "CatWare/Utils/Log.h"
 
 namespace CatWare
 {
@@ -21,6 +22,8 @@ namespace CatWare
 
 		void Renderer::Init( RendererAPI* a_rendererAPI )
 		{
+			CW_ENGINE_LOG->Info( "Initializing renderer" );
+
 			rendererAPI = a_rendererAPI;
 
 			rendererAPI->SetBlendAlpha( true );

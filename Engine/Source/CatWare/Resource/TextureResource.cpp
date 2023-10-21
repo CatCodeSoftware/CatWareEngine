@@ -1,5 +1,7 @@
 #include "TextureResource.h"
 
+#include "CatWare/Utils/Log.h"
+
 namespace CatWare
 {
 	// -----------------------------------------
@@ -30,6 +32,8 @@ namespace CatWare
 	}
 	void TextureResource::Load( )
 	{
+		CW_ENGINE_LOG->Info( "Loading texture from %s", filePath.c_str( ) );
+
 		texture = Rendering::Texture2D::Create( filePath );
 
 		if ( texture == nullptr )
@@ -39,6 +43,8 @@ namespace CatWare
 	}
 	void TextureResource::Unload( )
 	{
+		CW_ENGINE_LOG->Info( "Unloading texture %s", filePath.c_str( ) );
+
 		delete texture;
 		isLoaded = false;
 	}
@@ -58,6 +64,8 @@ namespace CatWare
 		TextureResource* textureResource = new TextureResource( path );
 
 		textureRegistry.insert( { name, textureResource } );
+
+		CW_ENGINE_LOG->Info( "Adding texture from %s as %s", path.c_str( ), name.c_str( ) );
 
 		return true;
 	}

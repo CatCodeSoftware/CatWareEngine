@@ -4,8 +4,8 @@
 
 #include "RendererAPI.h"
 #include "Renderer.h"
-
 #include "OpenGL/OpenGLShader.h"
+#include "CatWare/Utils/Log.h"
 
 namespace CatWare
 {
@@ -21,6 +21,8 @@ namespace CatWare
 
 		Shader* Shader::CreateFromFile( std::string vertexPath, std::string fragmentPath )
 		{
+			CW_ENGINE_LOG->Info( "Loading shader from files:\n\tVertex: %s\n\tFragment: %s", vertexPath.c_str( ), fragmentPath.c_str( ) );
+
 			// read the files
 			std::ifstream vertexFile( vertexPath );
 			std::ifstream fragmentFile( fragmentPath );

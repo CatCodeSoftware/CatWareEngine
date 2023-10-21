@@ -8,8 +8,34 @@ namespace CatWare
 	{
 		namespace OpenGL
 		{
-			OpenGLTexture::OpenGLTexture( int width, int height, void* rgbaData )
+			OpenGLTexture::OpenGLTexture( int width, int height, void* data, unsigned int channels )
 			{
+				GLenum internalFormat = GL_RGBA8;
+				GLenum format = GL_RGBA;
+
+				switch ( channels )
+				{
+				case 1:
+					internalFormat = GL_RED;
+					format = GL_RED;
+					break;
+
+				case 2:
+					internalFormat = GL_RG8;
+					format = GL_RG;
+					break;
+
+				case 3:
+					internalFormat = GL_RGB8;
+					format = GL_RGB;
+					break;
+
+				case 4:
+					internalFormat = GL_RGBA8;
+					format = GL_RGBA;
+					break;
+				}
+
 				glGenTextures( 1, &textureID );
 				glBindTexture( GL_TEXTURE_2D, textureID );
 
@@ -18,7 +44,9 @@ namespace CatWare
 				glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER );
 				glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER );
 
-				glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, rgbaData );
+				glPixelStorei( GL_UNPACK_ALIGNMENT, 1 );
+
+				glTexImage2D( GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, GL_UNSIGNED_BYTE, data );
 				glBindTexture( GL_TEXTURE_2D, 0 );
 			}
 

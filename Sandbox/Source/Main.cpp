@@ -38,10 +38,14 @@ public:
 
 class InGame : public Scene
 {
+	Text::Font* font = nullptr;
+
 public:
 	InGame( )
 	{
 		entityManager.CreateEntityByClassName( "test", { { 0, 0 }, { 60, 60 } }, { } );
+
+		font = new Text::Font( "C:/Windows/Fonts/arial.ttf", 50 );
 	}
 
 	void Update( ) override
@@ -52,6 +56,8 @@ public:
 	void Draw( ) override
 	{
 		Renderer::Clear( { 40, 40, 40, 255 } );
+
+		Renderer::DrawString( "Hello world!", { 20, 20 }, 1, font, { 255, 255, 255, 255 } );
 	}
 };
 

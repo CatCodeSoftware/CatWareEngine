@@ -11,11 +11,11 @@ namespace CatWare
 {
 	namespace Rendering
 	{
-		Texture2D* Texture2D::Create( int width, int height, void* rgbaData )
+		Texture2D* Texture2D::Create( int width, int height, void* data, unsigned int channels )
 		{
 			switch ( Renderer::GetAPI( ) )
 			{
-			case RendererAPI::API::OPENGL: return new OpenGL::OpenGLTexture( width, height, rgbaData );
+			case RendererAPI::API::OPENGL: return new OpenGL::OpenGLTexture( width, height, data, channels );
 			}
 		}
 
@@ -34,7 +34,7 @@ namespace CatWare
 
 			switch ( Renderer::GetAPI( ) )
 			{
-			case RendererAPI::API::OPENGL: return new OpenGL::OpenGLTexture( width, height, rgbaData );
+			case RendererAPI::API::OPENGL: return new OpenGL::OpenGLTexture( width, height, rgbaData, 4 );
 			}
 		}
 	}

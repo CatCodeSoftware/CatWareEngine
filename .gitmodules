@@ -2,3 +2,6 @@
 	path = Engine/Lib/SDL2
 	url = https://github.com/libsdl-org/SDL
 	branch = SDL2
+[submodule "Engine/Lib/Freetype"]
+	path = Engine/Lib/Freetype
+	url = https://github.com/ubawurinna/freetype-windows-binaries

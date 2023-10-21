@@ -6,6 +6,7 @@
 #include "CatWare/Utils/Vector.h"
 #include "Shader.h"
 #include "Texture.h"
+#include "../Text.h"
 
 namespace CatWare
 {
@@ -26,6 +27,9 @@ namespace CatWare
 			static void DrawRect( Vector2D position, Vector2D size, Color color );
 			static void DrawRectTextured( Vector2D position, Vector2D size, Texture2D* texture, Color tint );
 
+			static void DrawCharacter( Text::Character* character, Vector2D position, unsigned int scale , Color color = { 0, 0, 0, 255 } );
+			static void DrawString( std::string string, Vector2D position, unsigned int scale, Text::Font* font, Color color = { 0, 0, 0, 255 } );
+
 			static void Clear( Color clearColor );
 
 			static RendererAPI::API GetAPI( ) { return rendererAPI->GetRenderAPI( ); }
@@ -41,6 +45,7 @@ namespace CatWare
 			static Shader* rectShader;
 			static Shader* rectTexturedShader;
 			static Shader* postProcessShader;
+			static Shader* textShader;
 
 			static FrameBuffer* frameBuffer;
 

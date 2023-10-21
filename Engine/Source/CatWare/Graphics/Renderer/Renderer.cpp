@@ -14,6 +14,7 @@ namespace CatWare
 		Shader* Renderer::rectShader = nullptr;
 		Shader* Renderer::rectTexturedShader = nullptr;
 		Shader* Renderer::postProcessShader = nullptr;
+		Shader* Renderer::textShader = nullptr;
 
 		FrameBuffer* Renderer::frameBuffer = nullptr;
 
@@ -34,6 +35,7 @@ namespace CatWare
 			rectShader = Shader::CreateFromFile( "EngineRes/Shaders/RectShaderVertex.glsl", "EngineRes/Shaders/RectShaderFragment.glsl" );
 			rectTexturedShader = Shader::CreateFromFile( "EngineRes/Shaders/RectTexturedVertex.glsl", "EngineRes/Shaders/RectTexturedFragment.glsl" );
 			postProcessShader = Shader::CreateFromFile( "EngineRes/Shaders/PostProcessVertex.glsl", "EngineRes/Shaders/PostProcessFragment.glsl" );
+			textShader = Shader::CreateFromFile( "EngineRes/Shaders/TextVertex.glsl", "EngineRes/Shaders/TextFragment.glsl" );
 
 			// create framebuffer
 			FrameBufferSpec fbSpec;
@@ -194,6 +196,83 @@ namespace CatWare
 			delete vertexArray;
 			delete vertexBuffer;
 			delete indexBuffer;
+		}
+
+		void Renderer::DrawCharacter( Text::Character* character, Vector2D position, unsigned int size, Color color )
+		{
+			textShader->Bind( );
+			textShader->SetUniform4f( "u_Color", float( color.r ) / 255.0f, float( color.g ) / 255.0f, float( color.b ) / 255.0f, float( color.a ) / 255.0f );
+			textShader->SetUniform1i( "u_Texture", 0 );
+
+			float xpos = position.x + character->bearing.x * size;
+			float ypos = position.y - ( character->size.y - character->bearing.y ) * size;
+
+			float w = character->size.x * size;
+			float h = character->size.y * size;
+
+			float vertices[6 * 4] =
+			{
+				 ScreenCoordToGLCoord( xpos, ScreenAxis::X ), -ScreenCoordToGLCoord( ypos + h, ScreenAxis::Y ), 0.0f, 01.0f,
+				 ScreenCoordToGLCoord( xpos, ScreenAxis::X ), -ScreenCoordToGLCoord( ypos, ScreenAxis::Y ), 0.0f, 0.0f,
+				 ScreenCoordToGLCoord( xpos + w, ScreenAxis::X ), -ScreenCoordToGLCoord( ypos, ScreenAxis::Y ), 1.0f, 0.0f,
+
+				 ScreenCoordToGLCoord( xpos, ScreenAxis::X ), -ScreenCoordToGLCoord( ypos + h, ScreenAxis::Y ), 0.0f, 1.0f,
+				 ScreenCoordToGLCoord( xpos + w, ScreenAxis::X ), -ScreenCoordToGLCoord( ypos, ScreenAxis::Y ), 1.0f, 0.0f,
+				 ScreenCoordToGLCoord( xpos + w, ScreenAxis::X ), -ScreenCoordToGLCoord( ypos + h, ScreenAxis::Y ), 1.0f, 1.0f 
+			};
+
+			unsigned int indicies[6] =
+			{
+				0, 1, 2, 3, 4, 5
+			};
+
+			character->texture->Bind( 0 );
+
+			VertexBuffer* vertexBuffer = VertexBuffer::Create( sizeof( vertices ), vertices );
+			IndexBuffer* indexBuffer = IndexBuffer::Create( 6, indicies );
+
+			BufferLayout layout =
+			{
+				BufferElement( "position", ShaderDataType::Float2 ),
+				BufferElement( "textureCoord", ShaderDataType::Float2 )
+			};
+
+			vertexBuffer->SetLayout( layout );
+
+			VertexArray* vertexArray = VertexArray::Create( );
+
+			vertexArray->AddVertexBuffer( vertexBuffer );
+			vertexArray->SetIndexBuffer( indexBuffer );
+
+			rendererAPI->DrawIndexed( vertexArray );
+
+			delete vertexArray;
+			delete vertexBuffer;
+			delete indexBuffer;
+		}
+
+		void Renderer::DrawString( std::string string, Vector2D position, unsigned int size, Text::Font* font, Color color )
+		{
+			double offset = 0;
+
+			for ( char ch : string )
+			{
+				if ( ch == ' ' )
+				{
+					offset += font->spaceSize * size;
+				}
+				else if ( ch == '\t' )
+				{
+					offset += font->tabSize * size;
+				}
+				else
+				{
+					Text::Character* character = font->GetCharacter( ch );
+					DrawCharacter( character, { position.x + offset, position.y + ( ( font->GetSize( ) - character->bearing.y ) * size ) }, size, color );
+
+					offset += ( character->size.x + character->bearing.x ) * size;
+				}
+			}
 		}
 
 

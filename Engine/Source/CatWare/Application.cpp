@@ -7,6 +7,7 @@
 #include "Graphics/Renderer/Renderer.h"
 #include "Resource/TextureResource.h"
 #include "Error.h"
+#include "Graphics/Text.h"
 
 namespace CatWare
 {
@@ -31,6 +32,8 @@ namespace CatWare
 
 		Rendering::Renderer::SetScreenSize( window->GetWidth( ), window->GetHeight( ) );
 		Renderer::Init( new OpenGL::OpenGLAPI );
+		
+		Text::InitFreetype( );
 
 		PostInit( );
 

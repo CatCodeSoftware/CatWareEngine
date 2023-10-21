@@ -3,6 +3,9 @@
 #include <string>
 #include <unordered_map>
 
+#include <ft2build.h>
+#include FT_FREETYPE_H
+
 #include "Renderer/Texture.h"
 #include "../Utils/Vector.h"
 #include "CatWare/Core.h"
@@ -27,13 +30,22 @@ namespace CatWare
 		class CATWARE_API Font
 		{
 		public:
+			unsigned int spaceSize = 10;
+			unsigned int tabSize = 40;
+
 			Font( std::string fontPath, unsigned int size );
 			~Font( );
 
-			Rendering::Texture2D* GetCharacterTexture( char ch );
+			Character* GetCharacter( char ch );
+			inline unsigned int GetSize( ) { return size;  }
 
 		private:
-			std::unordered_map<char, Character> characters;
+			unsigned int size;
+			FT_Face freetypeFace;
+
+			std::unordered_map<char, Character*> characters;
 		};
+
+		CATWARE_API void InitFreetype( );
 	}
 }

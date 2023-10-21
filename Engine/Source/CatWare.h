@@ -11,3 +11,4 @@
 #include "CatWare/Entity/Entity.h"
 #include "CatWare/Resource/TextureResource.h"
 #include "CatWare/Utils/Time.h"
+#include "CatWare/Graphics/Text.h"

@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "CatWare/Graphics/Renderer/Buffer.h"
+#include "../Texture.h"
 
 namespace CatWare
 {
@@ -81,6 +82,30 @@ namespace CatWare
 
 				std::vector<VertexBuffer*> vertexBuffers;
 				IndexBuffer* indexBuffer;
+			};
+
+			class OpenGLFrameBuffer : public FrameBuffer
+			{
+			public:
+				OpenGLFrameBuffer( const FrameBufferSpec& spec );
+				~OpenGLFrameBuffer( );
+
+				virtual void Bind( ) override;
+				virtual void Unbind( ) override;
+
+				virtual FrameBufferSpec GetSpecification( ) override;
+
+				virtual inline Texture2D* GetColorAttachment( ) override
+				{
+					return colorAtachment;	
+				}
+
+			private:
+				UInt32 frameBufferID;
+				Texture2D* colorAtachment;
+				UInt32 depthAttachment;
+
+				FrameBufferSpec frameBufferSpec;
 			};
 		}
 	}

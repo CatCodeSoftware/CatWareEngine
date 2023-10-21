@@ -2,13 +2,19 @@
 
 #include <glad/glad.h>
 
+#include "CatWare/Utils/Log.h"
+
 namespace CatWare
 {
 	namespace Rendering
 	{
 		namespace OpenGL
 		{
-			// Vertex
+
+			// --------------------------
+			// VertexBuffer -------------
+			// --------------------------
+
 			OpenGLVertexBuffer::OpenGLVertexBuffer( unsigned int size, float* vertecies )
 			{
 				glCreateBuffers( 1, &id );
@@ -41,8 +47,9 @@ namespace CatWare
 				return bufferLayout;
 			}
 
-
-			// Index
+			// --------------------------
+			// IndexBuffer --------------
+			// --------------------------
 
 			OpenGLIndexBuffer::OpenGLIndexBuffer( unsigned int count, unsigned int* indicies )
 			{
@@ -73,7 +80,10 @@ namespace CatWare
 				return count;
 			}
 
-			// VertexArray
+
+			// --------------------------
+			// VertexArray --------------
+			// --------------------------
 
 			OpenGLVertexArray::OpenGLVertexArray( )
 			{
@@ -125,6 +135,45 @@ namespace CatWare
 			{
 				return indexBuffer;
 			}
-		}
+
+			// --------------------------
+			// FRAMEBUFFER --------------
+			// --------------------------
+
+			OpenGLFrameBuffer::OpenGLFrameBuffer( const FrameBufferSpec& spec )
+			{
+				this->frameBufferSpec = spec;
+
+				glCreateFramebuffers( 1, &frameBufferID );
+				Bind( );
+				
+				colorAtachment = Texture2D::Create( spec.width, spec.height, nullptr );
+				glFramebufferTexture2D( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, colorAtachment->GetTextureID( ), 0 );
+
+				Unbind( );
+			}
+
+			OpenGLFrameBuffer::~OpenGLFrameBuffer( )
+			{
+				glDeleteTextures( 1, &depthAttachment );
+				delete colorAtachment;
+				glDeleteFramebuffers( 1, &frameBufferID );
+			}
+
+			void OpenGLFrameBuffer::Bind( )
+			{
+				glBindFramebuffer( GL_FRAMEBUFFER, frameBufferID );
+			}
+
+			void OpenGLFrameBuffer::Unbind( )
+			{
+				glBindFramebuffer( GL_FRAMEBUFFER, 0 );
+			}
+
+			FrameBufferSpec OpenGLFrameBuffer::GetSpecification( )
+			{
+				return frameBufferSpec;
+			}
+}
 	}
 }

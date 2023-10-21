@@ -3,6 +3,9 @@
 #include <vector>
 #include <string>
 
+#include "CatWare/Utils/Types.h"
+#include "Texture.h"
+
 namespace CatWare
 {
 	namespace Rendering
@@ -103,6 +106,31 @@ namespace CatWare
 			virtual IndexBuffer* GetIndexBuffer( ) = 0;
 
 			static VertexArray* Create( );
+		};
+
+
+		class FrameBufferSpec
+		{
+		public:
+			UInt32 width, height;
+			UInt32 samples = 1;
+		};
+
+		class FrameBuffer
+		{
+		public:
+			virtual ~FrameBuffer( ) {}
+
+			virtual FrameBufferSpec GetSpecification( ) = 0;
+
+			virtual void Bind( ) = 0;
+			virtual void Unbind( ) = 0;
+
+			virtual Texture2D* GetColorAttachment( ) = 0;
+
+			static FrameBuffer* Create( const FrameBufferSpec& spec );
+
+		private:
 		};
 	}
 }

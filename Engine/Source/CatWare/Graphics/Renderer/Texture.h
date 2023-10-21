@@ -2,6 +2,7 @@
 
 #include <string>
 
+#include "CatWare/Utils/Types.h"
 #include "CatWare/Core.h"
 
 namespace CatWare
@@ -22,6 +23,8 @@ namespace CatWare
 
 			virtual void Bind( unsigned int slot ) = 0;
 			virtual void Unbind( ) = 0;
+
+			virtual UInt32 GetTextureID( ) = 0;
 
 			static Texture2D* Create( int width, int height, void* rgbaData );
 			static Texture2D* Create( std::string path );

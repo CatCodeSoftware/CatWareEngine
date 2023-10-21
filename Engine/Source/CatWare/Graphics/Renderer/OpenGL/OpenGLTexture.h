@@ -19,6 +19,8 @@ namespace CatWare
 
 				virtual void SetTextureFilter( TextureFilter tf ) override;
 
+				inline virtual UInt32 GetTextureID( ) override { return textureID; }
+
 			private:
 				int boundSlot = -1;
 				unsigned int textureID;

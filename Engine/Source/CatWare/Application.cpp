@@ -35,8 +35,8 @@ namespace CatWare
 
 		window = new Window( "CatWare", initConfig.windowWidth, initConfig.windowHeight, false );
 
-		Renderer::Init( new OpenGL::OpenGLAPI );
 		Rendering::Renderer::SetScreenSize( window->GetWidth( ), window->GetHeight( ) );
+		Renderer::Init( new OpenGL::OpenGLAPI );
 
 		PostInit( );
 
@@ -50,8 +50,12 @@ namespace CatWare
 			currentScene->Update( );
 			currentScene->entityManager.Update( );
 
+			Renderer::StartDrawing( );
+
 			currentScene->Draw( );
 			currentScene->entityManager.Draw( );
+
+			Renderer::EndDrawing( );
 
 			window->SwapBuffers( );
 

@@ -120,5 +120,18 @@ namespace CatWare
 				return new OpenGL::OpenGLVertexArray;
 			}
 		}
+
+
+		// ---------------------------------------
+		// FrameBuffer ---------------------------
+		// ---------------------------------------
+		FrameBuffer* FrameBuffer::Create( const FrameBufferSpec& spec )
+		{
+			switch ( Renderer::GetAPI( ) )
+			{
+			case RendererAPI::API::OPENGL:
+				return new OpenGL::OpenGLFrameBuffer( spec );
+			}
+		}
 	}
 }

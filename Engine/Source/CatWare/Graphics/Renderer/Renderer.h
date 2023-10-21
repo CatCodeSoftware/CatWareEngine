@@ -18,6 +18,9 @@ namespace CatWare
 
 			static void SetScreenSize( unsigned int width, unsigned int height );
 
+			static void StartDrawing( );
+			static void EndDrawing( );
+
 			static void DrawRect( Vector2D position, Vector2D size, Color color );
 			static void DrawRectTextured( Vector2D position, Vector2D size, Texture2D* texture, Color tint );
 
@@ -30,6 +33,9 @@ namespace CatWare
 
 			static Shader* rectShader;
 			static Shader* rectTexturedShader;
+			static Shader* postProcessShader;
+
+			static FrameBuffer* frameBuffer;
 
 			static unsigned int width;
 			static unsigned int height;

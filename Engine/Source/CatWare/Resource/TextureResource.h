@@ -19,6 +19,8 @@ namespace CatWare
 		void Unload( );
 
 		void ResetRefrenceCount( );
+		unsigned int GetRefrenceCount( );
+
 	private:
 		Rendering::Texture2D* texture = nullptr;
 

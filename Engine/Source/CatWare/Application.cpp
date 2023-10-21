@@ -53,6 +53,8 @@ namespace CatWare
 			currentScene->entityManager.Draw( );
 
 			Renderer::EndDrawing( );
+			
+			TextureManager::CleanUpTextures( );
 
 			window->SwapBuffers( );
 		}

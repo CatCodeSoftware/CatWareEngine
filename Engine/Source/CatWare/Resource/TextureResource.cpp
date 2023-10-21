@@ -43,15 +43,24 @@ namespace CatWare
 	}
 	void TextureResource::Unload( )
 	{
-		CW_ENGINE_LOG->Info( "Unloading texture %s", filePath.c_str( ) );
+		if ( isLoaded )
+		{
+			CW_ENGINE_LOG->Info( "Unloading texture %s", filePath.c_str( ) );
 
-		delete texture;
+			delete texture;
+		}
+
 		isLoaded = false;
 	}
 
 	void TextureResource::ResetRefrenceCount( )
 	{
 		refrenceCount = 0;
+	}
+
+	unsigned int TextureResource::GetRefrenceCount( )
+	{
+		return refrenceCount;
 	}
 
 	// -----------------------------------------
@@ -88,7 +97,17 @@ namespace CatWare
 
 	void TextureManager::CleanUpTextures( )
 	{
-		// i don't know what the criteria for what textures to dump should be here - PT
+		for ( auto keyVal : textureRegistry )
+		{
+			TextureResource* resource = keyVal.second;
+
+			if ( resource->GetRefrenceCount( ) == 0 )
+			{
+				resource->Unload( );
+			}
+
+			resource->ResetRefrenceCount( );
+		}
 	}
 
 	void TextureManager::RemoveEverything( )

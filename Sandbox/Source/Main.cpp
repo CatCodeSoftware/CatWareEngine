@@ -7,6 +7,8 @@ using namespace CatWare::Rendering;
 
 class TestEntity : public Entity::Entity
 {
+	unsigned int drawsRemaining = 1000;
+
 public:
 	TestEntity( )
 	{
@@ -21,7 +23,11 @@ public:
 
 	void Draw( ) override
 	{
-		Renderer::DrawRectTextured( transform.position, transform.size, TextureManager::GetTexture( "test_cat" ), { 255, 255, 255, 255 } );
+		if ( drawsRemaining != 0 )
+		{
+			Renderer::DrawRectTextured( transform.position, transform.size, TextureManager::GetTexture( "test_cat" ), { 255, 255, 255, 255 } );
+			drawsRemaining--;
+		}
 	}
 
 	static Entity* Create( std::unordered_map<std::string, std::string> tags )

@@ -6,6 +6,7 @@
 #include "Utils/Color.h"
 #include "Graphics/Renderer/Renderer.h"
 #include "Resource/TextureResource.h"
+#include "Error.h"
 
 namespace CatWare
 {
@@ -72,6 +73,9 @@ namespace CatWare
 	{
 		if ( currentScene != nullptr )
 			currentScene->SwitchOff( );
+
+		if ( scene == nullptr )
+			CW_ABORT( "Attemped to set scene that doesn't exist" );
 
 		this->currentScene = scene;
 		scene->SwitchTo( );

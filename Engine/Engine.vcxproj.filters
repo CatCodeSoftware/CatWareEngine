@@ -117,6 +117,9 @@
     <ClInclude Include="Source\CatWare\Scene.h">
       <Filter>Source\CatWare</Filter>
     </ClInclude>
+    <ClInclude Include="Source\CatWare\Error.h">
+      <Filter>Source\CatWare</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\CatWare\Application.cpp">
@@ -178,6 +181,9 @@
     </ClCompile>
     <ClCompile Include="Source\CatWare\Resource\TextureResource.cpp">
       <Filter>Source\CatWare\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CatWare\Error.cpp">
+      <Filter>Source\CatWare</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

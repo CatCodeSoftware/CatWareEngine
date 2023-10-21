@@ -6,6 +6,8 @@
 #include "Renderer/OpenGL/OpenGLContext.h"
 #include "Renderer/Renderer.h"
 
+#include "..\Error.h"
+
 namespace CatWare
 {
 	Window::Window( std::string title, unsigned int width, unsigned int height, bool isFullscreen )
@@ -13,7 +15,11 @@ namespace CatWare
 		CW_ENGINE_LOG->Info( "Creating %dx%d window with title %s", width, height, title.c_str( ) );
 
 		sdlWindow = SDL_CreateWindow( title.c_str( ), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL );
+
 		SetFullscreen( isFullscreen );
+
+		if ( sdlWindow == NULL )
+			CW_ABORT( "Failed to create SDL Window: " + std::string( SDL_GetError( ) ) );
 
 		this->title = title;
 		this->width = width;

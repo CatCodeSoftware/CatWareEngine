@@ -113,7 +113,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <SDLCheck>true</SDLCheck>
+      <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);CATWARE_BUILD;CW_PLATFORM_WIN64</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
@@ -130,7 +130,7 @@
       <WarningLevel>Level3</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
+      <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);CATWARE_BUILD;CW_PLATFORM_WIN64</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
@@ -152,6 +152,7 @@
     <ClInclude Include="Source\CatWare\Core.h" />
     <ClInclude Include="Source\CatWare\Entity\Entity.h" />
     <ClInclude Include="Source\CatWare\EntryPoint.h" />
+    <ClInclude Include="Source\CatWare\Error.h" />
     <ClInclude Include="Source\CatWare\Graphics\Renderer\Buffer.h" />
     <ClInclude Include="Source\CatWare\Graphics\Renderer\Context.h" />
     <ClInclude Include="Source\CatWare\Graphics\Renderer\OpenGL\OpenGLBuffer.h" />
@@ -179,6 +180,7 @@
     <ClCompile Include="Source\CatWare\Application.cpp" />
     <ClCompile Include="Source\CatWare\Core.cpp" />
     <ClCompile Include="Source\CatWare\Entity\Entity.cpp" />
+    <ClCompile Include="Source\CatWare\Error.cpp" />
     <ClCompile Include="Source\CatWare\Graphics\Renderer\Buffer.cpp" />
     <ClCompile Include="Source\CatWare\Graphics\Renderer\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="Source\CatWare\Graphics\Renderer\OpenGL\OpenGLContext.cpp" />

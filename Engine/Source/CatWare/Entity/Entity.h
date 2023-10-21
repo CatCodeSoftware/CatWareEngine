@@ -17,8 +17,7 @@ namespace CatWare
 		public:
 			Vector2D position = { 0, 0 };
 			Vector2D size = { 0, 0 };
-			Vector2D velocity = { 0, 0 };
-
+			
 			Vector2D rotationPoint = { 0, 0 };
 			float rotation = 0;
 		};
@@ -29,6 +28,7 @@ namespace CatWare
 
 		public:
 			Transform transform;
+			Vector2D velocity = { 0, 0 };
 
 			virtual void Update( ) {}
 			virtual void Tick( ) {}

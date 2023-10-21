@@ -2,6 +2,8 @@
 
 #include <random>
 
+#include "CatWare/Application.h"
+
 namespace CatWare
 {
 	namespace Entity
@@ -105,6 +107,10 @@ namespace CatWare
 				else
 				{
 					entity->Update( );
+
+					entity->transform.position.x += entity->velocity.x * GetDeltaTime( );
+					entity->transform.position.y += entity->velocity.y * GetDeltaTime( );
+
 					it++;
 				}
 			}

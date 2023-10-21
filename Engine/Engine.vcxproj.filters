@@ -120,6 +120,9 @@
     <ClInclude Include="Source\CatWare\Error.h">
       <Filter>Source\CatWare</Filter>
     </ClInclude>
+    <ClInclude Include="Source\CatWare\Utils\Time.h">
+      <Filter>Source\CatWare\Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\CatWare\Application.cpp">
@@ -184,6 +187,9 @@
     </ClCompile>
     <ClCompile Include="Source\CatWare\Error.cpp">
       <Filter>Source\CatWare</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CatWare\Utils\Time.cpp">
+      <Filter>Source\CatWare\Utils</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

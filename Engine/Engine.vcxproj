@@ -171,6 +171,7 @@
     <ClInclude Include="Source\CatWare\Scene.h" />
     <ClInclude Include="Source\CatWare\Utils\Color.h" />
     <ClInclude Include="Source\CatWare\Utils\Log.h" />
+    <ClInclude Include="Source\CatWare\Utils\Time.h" />
     <ClInclude Include="Source\CatWare\Utils\Types.h" />
     <ClInclude Include="Source\CatWare\Utils\Vector.h" />
   </ItemGroup>
@@ -196,6 +197,7 @@
     <ClCompile Include="Source\CatWare\Input\KeyboardAndMouse.cpp" />
     <ClCompile Include="Source\CatWare\Resource\TextureResource.cpp" />
     <ClCompile Include="Source\CatWare\Utils\Log.cpp" />
+    <ClCompile Include="Source\CatWare\Utils\Time.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Lib\SDL2\VisualC\SDL\SDL.vcxproj">

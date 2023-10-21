@@ -11,6 +11,7 @@ public:
 	TestEntity( )
 	{
 		className = "test";
+		// velocity = { 100, 100 };
 	}
 
 	void Update( ) override
@@ -34,11 +35,12 @@ class InGame : public Scene
 public:
 	InGame( )
 	{
-		entityManager.CreateEntityByClassName( "test", { { 20, 20 }, { 180, 180	} }, { } );
+		entityManager.CreateEntityByClassName( "test", { { 0, 0 }, { 180, 180 } }, { } );
 	}
 
 	void Update( ) override
 	{
+
 	}
 
 	void Draw( ) override
@@ -54,6 +56,8 @@ public:
 	{
 		initConfig.windowWidth = 1600;
 		initConfig.windowHeight = 900;
+
+		Renderer::renderOffset = { 800 - 60, 450 - 60 };
 	}
 
 	~Sandbox( ) {}

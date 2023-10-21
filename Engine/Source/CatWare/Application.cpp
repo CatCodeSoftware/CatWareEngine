@@ -41,9 +41,12 @@ namespace CatWare
 
 		PostInit( );
 
+		frameTimer.Reset( );
+
 		while ( running )
 		{
-			std::chrono::time_point<std::chrono::high_resolution_clock> startTime = std::chrono::high_resolution_clock::now( );
+			deltaTime = frameTimer.GetTime( );
+			frameTimer.Reset( );
 
 			window->HandleWindowEvents( );
 			running = !window->ShouldClose( );
@@ -59,9 +62,6 @@ namespace CatWare
 			Renderer::EndDrawing( );
 
 			window->SwapBuffers( );
-
-			auto milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>( std::chrono::high_resolution_clock::now( ) - startTime );
-			deltaTime = double ( milliseconds.count( ) ) / 1000;
 		}
 
 		TextureManager::RemoveEverything( );

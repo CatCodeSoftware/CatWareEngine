@@ -6,6 +6,7 @@
 #include "Graphics/Window.h"
 #include "Graphics/Renderer/Renderer.h"
 #include "Scene.h"
+#include "Utils/Time.h"
 
 namespace CatWare
 {
@@ -42,6 +43,7 @@ namespace CatWare
 
 	private:
 		Scene* currentScene = nullptr;
+		Timer frameTimer;
 	};
 
 	CATWARE_API double GetDeltaTime( );

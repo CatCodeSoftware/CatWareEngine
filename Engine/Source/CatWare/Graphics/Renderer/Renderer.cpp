@@ -17,6 +17,8 @@ namespace CatWare
 
 		FrameBuffer* Renderer::frameBuffer = nullptr;
 
+		Vector2D Renderer::renderOffset = { 0, 0 };
+
 		unsigned int Renderer::width = 0;
 		unsigned int Renderer::height = 0;
 
@@ -114,10 +116,10 @@ namespace CatWare
 		{
 			float vertecies[2 * 4] =
 			{
-				ScreenCoordToGLCoord( position.x, width ), -ScreenCoordToGLCoord( position.y, height ),
-				ScreenCoordToGLCoord( position.x + size.x, width ), -ScreenCoordToGLCoord( position.y, height ),
-				ScreenCoordToGLCoord( position.x, width ), -ScreenCoordToGLCoord( position.y + size.y, height ),
-				ScreenCoordToGLCoord( position.x + size.x, width ), -ScreenCoordToGLCoord( position.y + size.y, height )
+				ScreenCoordToGLCoord( position.x, ScreenAxis::X ), -ScreenCoordToGLCoord( position.y, ScreenAxis::Y ),
+				ScreenCoordToGLCoord( position.x + size.x, ScreenAxis::X ), -ScreenCoordToGLCoord( position.y, ScreenAxis::Y ),
+				ScreenCoordToGLCoord( position.x, ScreenAxis::X ), -ScreenCoordToGLCoord( position.y + size.y, ScreenAxis::Y ),
+				ScreenCoordToGLCoord( position.x + size.x, ScreenAxis::X ), -ScreenCoordToGLCoord( position.y + size.y, ScreenAxis::Y )
 			};
 
 			unsigned int indicies[6] =
@@ -154,10 +156,10 @@ namespace CatWare
 		{
 			float vertecies[4 * 4] =
 			{
-				ScreenCoordToGLCoord( position.x, width ), -ScreenCoordToGLCoord( position.y, height ), 0, 0,
-				ScreenCoordToGLCoord( position.x + size.x, width ), -ScreenCoordToGLCoord( position.y, height ), 1, 0,
-				ScreenCoordToGLCoord( position.x, width ), -ScreenCoordToGLCoord( position.y + size.y, height ), 0, 1,
-				ScreenCoordToGLCoord( position.x + size.x, width ), -ScreenCoordToGLCoord( position.y + size.y, height ), 1, 1
+				ScreenCoordToGLCoord( position.x, ScreenAxis::X ), -ScreenCoordToGLCoord( position.y, ScreenAxis::Y ), 0, 0,
+				ScreenCoordToGLCoord( position.x + size.x, ScreenAxis::X ), -ScreenCoordToGLCoord( position.y, ScreenAxis::Y ), 1, 0,
+				ScreenCoordToGLCoord( position.x, ScreenAxis::X ), -ScreenCoordToGLCoord( position.y + size.y, ScreenAxis::Y ), 0, 1,
+				ScreenCoordToGLCoord( position.x + size.x, ScreenAxis::X ), -ScreenCoordToGLCoord( position.y + size.y, ScreenAxis::Y ), 1, 1
 			};
 
 			unsigned int indicies[6] =
@@ -195,9 +197,23 @@ namespace CatWare
 		}
 
 
-		float Renderer::ScreenCoordToGLCoord( int screenCoord, int screenSize )
+		float Renderer::ScreenCoordToGLCoord( int screenCoord, ScreenAxis axis )
 		{
-			return ( float( screenCoord ) / float( screenSize ) ) * 2 - 1;
+			unsigned int screenSize = 0;
+			unsigned int offset = 0;
+
+			if ( axis == ScreenAxis::X )
+			{
+				screenSize = width;
+				offset = renderOffset.x;
+			}
+			else
+			{
+				screenSize = height;
+				offset = renderOffset.y;
+			}
+
+			return ( ( float( screenCoord + offset ) / float( screenSize ) ) * 2 - 1 );
 		}
 	}
 }

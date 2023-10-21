@@ -14,6 +14,8 @@ namespace CatWare
 		class CATWARE_API Renderer
 		{
 		public:
+			static Vector2D renderOffset;
+
 			static void Init( RendererAPI* a_rendererAPI );
 
 			static void SetScreenSize( unsigned int width, unsigned int height );
@@ -29,6 +31,11 @@ namespace CatWare
 			static RendererAPI::API GetAPI( ) { return rendererAPI->GetRenderAPI( ); }
 
 		private:
+			enum class ScreenAxis
+			{
+				X, Y
+			};
+
 			static RendererAPI* rendererAPI;
 
 			static Shader* rectShader;
@@ -40,7 +47,7 @@ namespace CatWare
 			static unsigned int width;
 			static unsigned int height;
 
-			static float ScreenCoordToGLCoord( int screenCoord, int screenSize );
+			static float ScreenCoordToGLCoord( int screenCoord, ScreenAxis axis );
 		};
 	}
 }

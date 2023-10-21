@@ -43,8 +43,6 @@ namespace CatWare
 
 	private:
 		Scene* currentScene = nullptr;
-		Timer frameTimer;
+		InternalTimer frameTimer;
 	};
-
-	CATWARE_API double GetDeltaTime( );
 }

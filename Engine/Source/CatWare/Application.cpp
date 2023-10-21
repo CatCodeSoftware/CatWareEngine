@@ -10,13 +10,6 @@
 
 namespace CatWare
 {
-	static double deltaTime;
-
-	double GetDeltaTime( )
-	{
-		return deltaTime;
-	}
-
 	using namespace CatWare::Rendering;
 
 	Application::Application( )
@@ -45,7 +38,7 @@ namespace CatWare
 
 		while ( running )
 		{
-			deltaTime = frameTimer.GetTime( );
+			GlobalTime::SetDeltaTime( frameTimer.GetTime( ) );
 			frameTimer.Reset( );
 
 			window->HandleWindowEvents( );

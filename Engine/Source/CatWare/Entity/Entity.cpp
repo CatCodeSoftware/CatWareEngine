@@ -108,8 +108,8 @@ namespace CatWare
 				{
 					entity->Update( );
 
-					entity->transform.position.x += entity->velocity.x * GetDeltaTime( );
-					entity->transform.position.y += entity->velocity.y * GetDeltaTime( );
+					entity->transform.position.x += entity->velocity.x * GlobalTime::GetDeltaTime( );
+					entity->transform.position.y += entity->velocity.y * GlobalTime::GetDeltaTime( );
 
 					it++;
 				}

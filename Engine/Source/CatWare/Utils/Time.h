@@ -2,9 +2,11 @@
 
 #include <chrono>
 
+#include "..\Core.h"
+
 namespace CatWare
 {
-	class Timer
+	class InternalTimer
 	{
 	public:
 		double GetTime( );
@@ -18,5 +20,34 @@ namespace CatWare
 
 	private:
 		std::chrono::time_point<std::chrono::high_resolution_clock> startTime;
+	};
+
+	class CATWARE_API GlobalTime
+	{
+	public:
+		static double modifier;
+
+		inline static double GetDeltaTime( )
+		{
+			if ( isTimePaused )
+				return 0;
+
+			return deltaTime * modifier;
+		}
+
+		inline static double GetTime( )
+		{
+			return time;
+		}
+
+		static void TimePaused( bool isPaused );
+		static void SetDeltaTime( double deltaTime );
+
+	private:
+		static double time;
+
+		static double deltaTime;
+
+		static bool isTimePaused;
 	};
 }

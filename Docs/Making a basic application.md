@@ -1,14 +1,14 @@
 ##  The Application class
 Start off by including the CarWare.h header. It contains everything you'll need to make a game using CatWare.
 
-```
+```cpp
 #include <CatWare.h>
 ```
 
 The base for everything is the Application class. Create a class with the name of your game which inherits from CatWare::Application.
 At the bottom put CW_REGISTER_APP( NameOfTheApplicationClass ). The Application has a PostInit function which is called after the engine is fully initialized.
 
-```
+```cpp
 class Game : public CatWare::Application
 {
 public:
@@ -36,7 +36,7 @@ The scene has 5 methods that can be overriden.
 
 For now let's make a simple scene that draws a square in the top left corner of the screen.
 
-```
+```cpp
 class InGame : public CatWare::Scene
 {
 public:
@@ -54,7 +54,7 @@ public:
 
 To set our scene as the current scene call SetScene in the PostInit method of the application class. It's the applications responsibility to delete the scene after it's no longer used.
 
-```
+```cpp
 class Game : public CatWare::Application
 {
 public:
@@ -83,7 +83,7 @@ CW_REGISTER_APP( Game )
 You should now see a red square on the screen.
 
 ### Full code
-```
+```cpp
 #include <CatWare.h>
 
 class InGame : public CatWare::Scene

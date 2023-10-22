@@ -34,6 +34,9 @@
     <Filter Include="Source\CatWare\Resource">
       <UniqueIdentifier>{65627043-9d78-4e79-a324-0649f8ab2cf1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\CatWare\Physics">
+      <UniqueIdentifier>{4e227f96-9f05-4a2c-a73f-e4e8fbf9aaf2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\CatWare.h">
@@ -126,6 +129,9 @@
     <ClInclude Include="Source\CatWare\Graphics\Text.h">
       <Filter>Source\CatWare\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="Source\CatWare\Physics\Collision.h">
+      <Filter>Source\CatWare\Physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\CatWare\Application.cpp">
@@ -196,6 +202,9 @@
     </ClCompile>
     <ClCompile Include="Source\CatWare\Graphics\Text.cpp">
       <Filter>Source\CatWare\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CatWare\Physics\Collision.cpp">
+      <Filter>Source\CatWare\Physics</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

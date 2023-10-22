@@ -24,10 +24,10 @@ namespace CatWare
 				virtual void SetUniform3i( std::string name, int i, int i2, int i3 ) override;
 				virtual void SetUniform4i( std::string name, int i, int i2, int i3, int i4 ) override;
 
-				virtual void SetUniform1f( std::string name, int f ) override;
-				virtual void SetUniform2f( std::string name, int f, int f2 ) override;
-				virtual void SetUniform3f( std::string name, int f, int f2, int f3 ) override;
-				virtual void SetUniform4f( std::string name, int f, int f2, int f3, int f4 ) override;
+				virtual void SetUniform1f( std::string name, float f ) override;
+				virtual void SetUniform2f( std::string name, float f, float f2 ) override;
+				virtual void SetUniform3f( std::string name, float f, float f2, float f3 ) override;
+				virtual void SetUniform4f( std::string name, float f, float f2, float f3, float f4 ) override;
 
 
 			private:

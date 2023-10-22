@@ -56,22 +56,22 @@ namespace CatWare
 				glUniform4i( glGetUniformLocation( programID, name.c_str( ) ), i, i2, i3, i4 );
 			}
 
-			void OpenGLShader::SetUniform1f( std::string name, int f )
+			void OpenGLShader::SetUniform1f( std::string name, float f )
 			{
 				glUniform1f( glGetUniformLocation( programID, name.c_str( ) ), f );
 			}
 
-			void OpenGLShader::SetUniform2f( std::string name, int f, int f2 )
+			void OpenGLShader::SetUniform2f( std::string name, float f, float f2 )
 			{
 				glUniform2f( glGetUniformLocation( programID, name.c_str( ) ), f, f2 );
 			}
 
-			void OpenGLShader::SetUniform3f( std::string name, int f, int f2, int f3 )
+			void OpenGLShader::SetUniform3f( std::string name, float f, float f2, float f3 )
 			{
 				glUniform3f( glGetUniformLocation( programID, name.c_str( ) ), f, f2, f3 );
 			}
 
-			void OpenGLShader::SetUniform4f( std::string name, int f, int f2, int f3, int f4 )
+			void OpenGLShader::SetUniform4f( std::string name, float f, float f2, float f3, float f4 )
 			{
 				glUniform4f( glGetUniformLocation( programID, name.c_str( ) ), f, f2, f3, f4 );
 			}

@@ -30,6 +30,7 @@ namespace CatWare
 			Transform transform;
 			Vector2D velocity = { 0, 0 };
 
+			virtual void Init( ) {}
 			virtual void Update( ) {}
 			virtual void Tick( ) {}
 			virtual void Draw( ) {}

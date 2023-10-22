@@ -174,6 +174,7 @@
     <ClInclude Include="Source\CatWare\Graphics\Window.h" />
     <ClInclude Include="Source\CatWare\Input\Binds.h" />
     <ClInclude Include="Source\CatWare\Input\KeyboardAndMouse.h" />
+    <ClInclude Include="Source\CatWare\Physics\Collision.h" />
     <ClInclude Include="Source\CatWare\Resource\TextureResource.h" />
     <ClInclude Include="Source\CatWare\Scene.h" />
     <ClInclude Include="Source\CatWare\Utils\Color.h" />
@@ -203,6 +204,7 @@
     <ClCompile Include="Source\CatWare\Graphics\Window.cpp" />
     <ClCompile Include="Source\CatWare\Input\Binds.cpp" />
     <ClCompile Include="Source\CatWare\Input\KeyboardAndMouse.cpp" />
+    <ClCompile Include="Source\CatWare\Physics\Collision.cpp" />
     <ClCompile Include="Source\CatWare\Resource\TextureResource.cpp" />
     <ClCompile Include="Source\CatWare\Utils\Log.cpp" />
     <ClCompile Include="Source\CatWare\Utils\Time.cpp" />

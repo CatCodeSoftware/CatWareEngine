@@ -85,8 +85,11 @@ namespace CatWare
 
 				Entity* entity = EntityRegistry::GetCreateFunction( className )( tags );
 				entity->transform = transform;
+				entity->id = id;
 
 				entities.push_back( entity );
+
+				entity->Init( );
 
 				return id;
 			}

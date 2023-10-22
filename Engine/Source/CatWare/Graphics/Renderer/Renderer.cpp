@@ -278,8 +278,8 @@ namespace CatWare
 
 		float Renderer::ScreenCoordToGLCoord( int screenCoord, ScreenAxis axis )
 		{
-			unsigned int screenSize = 0;
-			unsigned int offset = 0;
+			int screenSize = 0;
+			int offset = 0;
 
 			if ( axis == ScreenAxis::X )
 			{

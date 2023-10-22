@@ -16,6 +16,7 @@ namespace CatWare
 			Entity::Transform* transform; // The transform to change when updating the object
 			
 			double mass;
+			double frictionCoefficient;
 
 			Vector2D velocity;
 			Vector2D force;

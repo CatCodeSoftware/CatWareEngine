@@ -20,16 +20,32 @@ public:
 	{
 		object->transform = &transform;
 		object->mass = 10;
+		object->frictionCoefficient = 0.9;
 	}
 
 	void Update( ) override
 	{
-
+		if ( Input::IsKeyPressed( Input::KEY_W ) )
+		{
+			object->force.y -= 25000;
+		}
+		if ( Input::IsKeyPressed( Input::KEY_S ) )
+		{
+			object->force.y += 25000;
+		}
+		if ( Input::IsKeyPressed( Input::KEY_A ) )
+		{
+			object->force.x -= 25000;
+		}
+		if ( Input::IsKeyPressed( Input::KEY_D ) )
+		{
+			object->force.x += 25000;
+		}
 	}
 
 	void Draw( ) override
 	{
-		Renderer::DrawRect( transform.position, transform.size, { 255, 0, 0, 255 } );
+		Renderer::DrawRectTextured( transform.position, transform.size, TextureManager::GetTexture( "test_cat" ), { 255, 255, 255, 255 } );
 	}
 
 	static Entity* Create( std::unordered_map<std::string, std::string> tags )
@@ -52,7 +68,7 @@ public:
 
 		font = new Text::Font( "EngineRes/Fonts/Oxanium-Regular.ttf", 50 );
 
-		physicsWorld.gravity = { 0, 1000 };
+		physicsWorld.gravity = { 0, 0 };
 	}
 
 	void Update( ) override

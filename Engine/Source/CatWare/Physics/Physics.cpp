@@ -27,6 +27,11 @@ namespace CatWare
 			for ( PhysicsObject* object : physicsObjects )
 			{
 				object->force = object->force + Vector2D( gravity.x * object->mass, gravity.y * object->mass );
+
+				// calculate friction
+				object->force.x -= object->frictionCoefficient * ( object->mass * 10 ) * object->velocity.x;
+				object->force.y -= object->frictionCoefficient * ( object->mass * 10 ) * object->velocity.y;
+
 				object->velocity = object->velocity + Vector2D( ( object->force.x / object->mass ) * GlobalTime::GetDeltaTime( ), ( object->force.y / object->mass ) * GlobalTime::GetDeltaTime( ) );
 
 				object->transform->position.x += object->velocity.x * GlobalTime::GetDeltaTime( );

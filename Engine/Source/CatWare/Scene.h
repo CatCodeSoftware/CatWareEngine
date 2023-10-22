@@ -2,6 +2,7 @@
 
 #include "Core.h"
 #include "Entity/Entity.h"
+#include "Physics/Physics.h"
 
 namespace CatWare
 {
@@ -22,5 +23,6 @@ namespace CatWare
 
 	protected:
 		Entity::EntityManager entityManager;
+		Physics::PhysicsWorld physicsWorld;
 	};
 }

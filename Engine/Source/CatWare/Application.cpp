@@ -49,6 +49,7 @@ namespace CatWare
 
 			currentScene->Update( );
 			currentScene->entityManager.Update( );
+			currentScene->physicsWorld.Update( );
 
 			Renderer::StartDrawing( );
 

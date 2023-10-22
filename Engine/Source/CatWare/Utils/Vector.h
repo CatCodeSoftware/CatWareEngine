@@ -5,6 +5,18 @@
 class Vector2D
 {
 public:
+	inline Vector2D( )
+	{
+		x = 0;
+		y = 0;
+	}
+
+	inline Vector2D( double x, double y )
+	{
+		this->x = x;
+		this->y = y;
+	}
+
 	double x, y;
 
 	inline double GetDistanceTo( Vector2D vec )
@@ -33,5 +45,25 @@ public:
 		double tangents = rotation / 57.2957795;
 
 		return { length * cos( tangents ), length * sin( rotation ) };
+	}
+
+	inline Vector2D operator*( const Vector2D& otherVec )
+	{
+		return { this->x * otherVec.x, this->y * otherVec.y };
+	}
+
+	inline Vector2D operator/( const Vector2D& otherVec )
+	{
+		return { this->x / otherVec.x, this->y / otherVec.y };
+	}
+
+	inline Vector2D operator+( const Vector2D& otherVec )
+	{
+		return { this->x + otherVec.x, this->y + otherVec.y };
+	}
+
+	inline Vector2D operator-( const Vector2D& otherVec )
+	{
+		return { this->x - otherVec.x, this->y - otherVec.y };
 	}
 };

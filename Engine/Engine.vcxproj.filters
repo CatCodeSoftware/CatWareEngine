@@ -132,6 +132,9 @@
     <ClInclude Include="Source\CatWare\Physics\Collision.h">
       <Filter>Source\CatWare\Physics</Filter>
     </ClInclude>
+    <ClInclude Include="Source\CatWare\Physics\Physics.h">
+      <Filter>Source\CatWare\Physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\CatWare\Application.cpp">
@@ -204,6 +207,9 @@
       <Filter>Source\CatWare\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="Source\CatWare\Physics\Collision.cpp">
+      <Filter>Source\CatWare\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CatWare\Physics\Physics.cpp">
       <Filter>Source\CatWare\Physics</Filter>
     </ClCompile>
   </ItemGroup>

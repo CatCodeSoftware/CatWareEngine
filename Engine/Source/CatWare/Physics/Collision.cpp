@@ -8,6 +8,9 @@ namespace CatWare
 	{
 		CollisionInfo TestCollision( Collider* a, Collider* b )
 		{
+			if ( a->colliderType == ColliderType::RECT && b->colliderType == ColliderType::RECT ) { return TestCollisionRectRect( (RectCollider* ) a, ( RectCollider* ) b ); }
+			else if ( a->colliderType == ColliderType::CIRCLE && b->colliderType == ColliderType::CIRCLE ) { return TestCollisionCircleCircle( ( CircleCollider* ) a, ( CircleCollider* ) b ); }
+
 			return CollisionInfo( );
 		}
 
@@ -33,7 +36,8 @@ namespace CatWare
 				Vector2D normalizedA = Vector2D::Normalize( rotationA, b->radius );
 				ci.pointA = { b->position.x + normalizedA.x, b->position.y + normalizedA.y };
 
-				ci.normalized = Vector2D::Normalize( ci.pointB.GetRotationTo( ci.pointB ), ci.pointB.GetDistanceTo( a->position ) );
+				ci.depth = ci.pointB.GetDistanceTo( a->position );
+				ci.normalized = Vector2D::Normalize( ci.pointB.GetRotationTo( ci.pointA ), ci.depth );
 			}
 			else
 			{
@@ -55,13 +59,46 @@ namespace CatWare
 			{
 				ci.hasCollision = true;
 
-				Vector2D aCenenterPos = { a->position.x + a->size.x / 2, a->position.y + a->size.y / 2 };
-				Vector2D bCenenterPos = { b->position.x + b->size.x / 2, b->position.y + b->size.y / 2 };
+				// i apologize for all of these ifs, i couldn't find a better way - PT
+				if ( a->position.x <= b->position.x )
+				{
+					ci.pointA.x = b->position.x;
+				}
+				else
+				{
+					ci.pointA.x = b->position.x + b->size.x;
+				}
 
-				ci.pointA = aCenenterPos;
-				ci.pointB = bCenenterPos;
-				ci.normalized = Vector2D::Normalize( bCenenterPos.GetRotationTo( aCenenterPos ), bCenenterPos.GetDistanceTo( aCenenterPos ) );
+				if ( a->position.y <= b->position.y )
+				{
+					ci.pointA.y = b->position.y;
+				}
+				else
+				{
+					ci.pointA.y = b->position.y + b->size.y;
+				}
+
+				if ( b->position.x <= a->position.x )
+				{
+					ci.pointB.x = a->position.x;
+				}
+				else
+				{
+					ci.pointB.x = a->position.x + a->size.x;
+				}
+
+				if ( b->position.y <= a->position.y )
+				{
+					ci.pointB.y = a->position.y;
+				}
+				else
+				{
+					ci.pointB.y = a->position.y + a->size.y;
+				}
+
+				ci.normalized = Vector2D::Normalize( ci.pointB.GetRotationTo( ci.pointA ), ci.pointB.GetDistanceTo( ci.pointA ) );
 			}
+
 			return ci;
 		}
 

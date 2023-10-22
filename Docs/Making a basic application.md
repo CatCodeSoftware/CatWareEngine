@@ -1,0 +1,125 @@
+##  The Application class
+Start off by including the CarWare.h header. It contains everything you'll need to make a game using CatWare.
+
+```
+#include <CatWare.h>
+```
+
+The base for everything is the Application class. Create a class with the name of your game which inherits from CatWare::Application.
+At the bottom put CW_REGISTER_APP( NameOfTheApplicationClass ). The Application has a PostInit function which is called after the engine is fully initialized.
+
+```
+class Game : public CatWare::Application
+{
+public:
+	void PostInit( ) override
+	{
+		
+	}
+};
+
+CW_REGISTER_APP( Game )
+```
+
+If you run this program you should see a blank window. By default it's 1280x720 and has the title CatWare.
+
+## Scene class
+The scene essentially a game state. It can be the main menu, the actual in-game part or a loading screen.
+Scenes are created by creating a class that inherits from CatWare::Scene.
+
+The scene has 5 methods that can be overriden.
+- SwitchTo - Called when this scene is set as the current scene.
+- SwitchOff - Called when this scene is discarded and a new scene is set as the current scene.
+- Update - Called every frame. Runs the game logic.
+- Tick - Called every time a certain amount of time passes. Runs the game logic.
+- Draw - Called every frame. Draws everything on the screen
+
+For now let's make a simple scene that draws a square in the top left corner of the screen.
+
+```
+class InGame : public CatWare::Scene
+{
+public:
+	void Draw( ) override
+	{
+		CatWare::Rendering::Renderer::Clear( { 0, 0, 0, 255 } ); // Clears the screen, uses CatWare::Color class
+		CatWare::Rendering::Renderer::DrawRect(
+			{ 20, 20 }, // Vector2D, xy position of the rectangle
+			{ 100, 100 }, // Vector2D, width and height of the rectangle
+			{ 255, 0, 0, 255 } // Color, RGBA color
+		 );
+	}
+};
+```
+
+To set our scene as the current scene call SetScene in the PostInit method of the application class. It's the applications responsibility to delete the scene after it's no longer used.
+
+```
+class Game : public CatWare::Application
+{
+public:
+	InGame* inGame;
+
+	Game( )
+	{
+		inGame = new InGame( );
+	}
+
+	~Game( )
+	{
+		delete inGame;
+	}
+
+	void PostInit( ) override
+	{
+		SetScene( inGame );
+	}
+;
+
+CW_REGISTER_APP( Game )
+```
+
+
+You should now see a red square on the screen.
+
+### Full code
+```
+#include <CatWare.h>
+
+class InGame : public CatWare::Scene
+{
+public:
+	void Draw( ) override
+	{
+		CatWare::Rendering::Renderer::Clear( { 0, 0, 0, 255 } ); // Clears the screen, uses CatWare::Color class
+		CatWare::Rendering::Renderer::DrawRect(
+			{ 20, 20 }, // Vector2D, xy position of the rectangle
+			{ 100, 100 }, // Vector2D, width and height of the rectangle
+			{ 255, 0, 0, 255 } // Color, RGBA color
+		 );
+	}
+};
+
+class Game : public CatWare::Application
+{
+public:
+	InGame* inGame;
+
+	Game( )
+	{
+		inGame = new InGame( );
+	}
+
+	~Game( )
+	{
+		delete inGame;
+	}
+
+	void PostInit( ) override
+	{
+		SetScene( inGame );
+	}
+};
+
+CW_REGISTER_APP( Game )
+```

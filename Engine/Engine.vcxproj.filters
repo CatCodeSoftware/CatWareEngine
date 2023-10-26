@@ -37,6 +37,12 @@
     <Filter Include="Source\CatWare\Physics">
       <UniqueIdentifier>{4e227f96-9f05-4a2c-a73f-e4e8fbf9aaf2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Extern\ImGui">
+      <UniqueIdentifier>{0098cdd2-c379-447a-b52f-c301bccd43b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Extern\ImGui\backends">
+      <UniqueIdentifier>{b7dbacdd-be1e-41c9-ab1f-c377fbe714b3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\CatWare.h">
@@ -135,6 +141,33 @@
     <ClInclude Include="Source\CatWare\Physics\Physics.h">
       <Filter>Source\CatWare\Physics</Filter>
     </ClInclude>
+    <ClInclude Include="Lib\ImGui\imconfig.h">
+      <Filter>Extern\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Lib\ImGui\imgui.h">
+      <Filter>Extern\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Lib\ImGui\imgui_internal.h">
+      <Filter>Extern\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Lib\ImGui\imstb_rectpack.h">
+      <Filter>Extern\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Lib\ImGui\imstb_textedit.h">
+      <Filter>Extern\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Lib\ImGui\imstb_truetype.h">
+      <Filter>Extern\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Lib\ImGui\backends\imgui_impl_opengl3.h">
+      <Filter>Extern\ImGui\backends</Filter>
+    </ClInclude>
+    <ClInclude Include="Lib\ImGui\backends\imgui_impl_opengl3_loader.h">
+      <Filter>Extern\ImGui\backends</Filter>
+    </ClInclude>
+    <ClInclude Include="Lib\ImGui\backends\imgui_impl_sdl2.h">
+      <Filter>Extern\ImGui\backends</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\CatWare\Application.cpp">
@@ -211,6 +244,27 @@
     </ClCompile>
     <ClCompile Include="Source\CatWare\Physics\Physics.cpp">
       <Filter>Source\CatWare\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Lib\ImGui\imgui.cpp">
+      <Filter>Extern\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Lib\ImGui\imgui_demo.cpp">
+      <Filter>Extern\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Lib\ImGui\imgui_draw.cpp">
+      <Filter>Extern\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Lib\ImGui\imgui_tables.cpp">
+      <Filter>Extern\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Lib\ImGui\imgui_widgets.cpp">
+      <Filter>Extern\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Lib\ImGui\backends\imgui_impl_sdl2.cpp">
+      <Filter>Extern\ImGui\backends</Filter>
+    </ClCompile>
+    <ClCompile Include="Lib\ImGui\backends\imgui_impl_opengl3.cpp">
+      <Filter>Extern\ImGui\backends</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

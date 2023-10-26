@@ -74,7 +74,7 @@
     <OutDir>$(SolutionDir)\Build\</OutDir>
     <IntDir>$(SolutionDir)\Intermediate\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <TargetName>CatWareEngine</TargetName>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\Source;$(ProjectDir)\Lib\SDL2\include;$(ProjectDir)\Lib\Glad\include;$(ProjectDir)Lib\Freetype\include;$(ProjectDir)\Lib\Single header;</IncludePath>
+    <IncludePath>$(ProjectDir)\Lib\ImGui;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\Source;$(ProjectDir)\Lib\SDL2\include;$(ProjectDir)\Lib\Glad\include;$(ProjectDir)Lib\Freetype\include;$(ProjectDir)\Lib\Single header</IncludePath>
     <LibraryPath>$(ProjectDir)\Lib\Freetype\release static\vs2015-2022\win64;$(LibraryPath)</LibraryPath>
     <ExternalIncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)Lib\Freetype\include</ExternalIncludePath>
   </PropertyGroup>
@@ -82,7 +82,7 @@
     <OutDir>$(SolutionDir)\Build\</OutDir>
     <IntDir>$(SolutionDir)\Intermediate\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <TargetName>CatWareEngine</TargetName>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\Source;$(ProjectDir)\Lib\SDL2\include;$(ProjectDir)\Lib\Glad\include;$(ProjectDir)Lib\Freetype\include;$(ProjectDir)\Lib\Single header;</IncludePath>
+    <IncludePath>$(ProjectDir)\Lib\ImGui;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\Source;$(ProjectDir)\Lib\SDL2\include;$(ProjectDir)\Lib\Glad\include;$(ProjectDir)Lib\Freetype\include;$(ProjectDir)\Lib\Single header</IncludePath>
     <LibraryPath>$(ProjectDir)\Lib\Freetype\release static\vs2015-2022\win64;$(LibraryPath)</LibraryPath>
     <ExternalIncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)Lib\Freetype\include</ExternalIncludePath>
   </PropertyGroup>
@@ -153,6 +153,15 @@
   <ItemGroup>
     <ClInclude Include="Lib\Glad\include\glad\glad.h" />
     <ClInclude Include="Lib\Glad\include\KHR\khrplatform.h" />
+    <ClInclude Include="Lib\ImGui\backends\imgui_impl_opengl3.h" />
+    <ClInclude Include="Lib\ImGui\backends\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="Lib\ImGui\backends\imgui_impl_sdl2.h" />
+    <ClInclude Include="Lib\ImGui\imconfig.h" />
+    <ClInclude Include="Lib\ImGui\imgui.h" />
+    <ClInclude Include="Lib\ImGui\imgui_internal.h" />
+    <ClInclude Include="Lib\ImGui\imstb_rectpack.h" />
+    <ClInclude Include="Lib\ImGui\imstb_textedit.h" />
+    <ClInclude Include="Lib\ImGui\imstb_truetype.h" />
     <ClInclude Include="Source\CatWare.h" />
     <ClInclude Include="Source\CatWare\Application.h" />
     <ClInclude Include="Source\CatWare\Core.h" />
@@ -187,6 +196,13 @@
   <ItemGroup>
     <ClCompile Include="ExternSrc\stb_image.cpp" />
     <ClCompile Include="Lib\Glad\src\glad.c" />
+    <ClCompile Include="Lib\ImGui\backends\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="Lib\ImGui\backends\imgui_impl_sdl2.cpp" />
+    <ClCompile Include="Lib\ImGui\imgui.cpp" />
+    <ClCompile Include="Lib\ImGui\imgui_demo.cpp" />
+    <ClCompile Include="Lib\ImGui\imgui_draw.cpp" />
+    <ClCompile Include="Lib\ImGui\imgui_tables.cpp" />
+    <ClCompile Include="Lib\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="Source\CatWare\Application.cpp" />
     <ClCompile Include="Source\CatWare\Core.cpp" />
     <ClCompile Include="Source\CatWare\Entity\Entity.cpp" />

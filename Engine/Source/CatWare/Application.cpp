@@ -1,7 +1,9 @@
 #include "Application.h"
 
-#include <stb_image.h>
 #include <random>
+#include <imgui.h>
+#include <backends/imgui_impl_sdl2.h>
+#include <backends/imgui_impl_opengl3.h>
 
 #include "Utils/Color.h"
 #include "Graphics/Renderer/Renderer.h"
@@ -28,11 +30,21 @@ namespace CatWare
 		// temporary srand call - PT
 		std::srand( time( NULL ) );
 
+		// initialze imgui - this is temporary
+		ImGui::CreateContext( );
+
+		ImGuiIO& io = ImGui::GetIO( ); ( void ) io;
+		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+		io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
+
+		ImGui::StyleColorsDark( );
+
 		window = new Window( initConfig.windowTitle, initConfig.windowWidth, initConfig.windowHeight, initConfig.windowFullscreen );
 
 		Rendering::Renderer::SetScreenSize( window->GetWidth( ), window->GetHeight( ) );
 		Renderer::Init( new OpenGL::OpenGLAPI );
-		
+
 		Text::InitFreetype( );
 
 		PostInit( );
@@ -57,7 +69,23 @@ namespace CatWare
 			currentScene->entityManager.Draw( );
 
 			Renderer::EndDrawing( );
+
+			ImGui_ImplOpenGL3_NewFrame( );
+			ImGui_ImplSDL2_NewFrame( );
+			ImGui::NewFrame( );
+
+			ImGui::ShowDemoWindow( nullptr );
+
+			ImGui::Render( );
+
+			ImGui_ImplOpenGL3_RenderDrawData( ImGui::GetDrawData( ) );
 			
+			ImGui::EndFrame( );
+
+			ImGui::UpdatePlatformWindows( );
+			ImGui::RenderPlatformWindowsDefault( );
+
+
 			TextureManager::CleanUpTextures( );
 
 			window->SwapBuffers( );

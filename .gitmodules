@@ -5,3 +5,7 @@
 [submodule "Engine/Lib/Freetype"]
 	path = Engine/Lib/Freetype
 	url = https://github.com/ubawurinna/freetype-windows-binaries
+[submodule "Engine/Lib/ImGui"]
+	path = Engine/Lib/ImGui
+	url = https://github.com/ocornut/imgui
+	branch = docking

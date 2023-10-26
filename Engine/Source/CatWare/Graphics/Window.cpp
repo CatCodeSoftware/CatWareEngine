@@ -1,5 +1,7 @@
 #include "Window.h"
 
+#include <backends/imgui_impl_sdl2.h>
+
 #include "CatWare/Input/KeyboardAndMouse.h"
 #include "CatWare/Utils/Log.h"
 
@@ -44,6 +46,8 @@ namespace CatWare
 
 		while ( SDL_PollEvent( &e ) )
 		{
+			ImGui_ImplSDL2_ProcessEvent( &e );
+
 			switch ( e.type )
 			{
 			case SDL_QUIT:

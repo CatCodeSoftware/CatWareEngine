@@ -1,6 +1,8 @@
 #include "OpenGLContext.h"
 
 #include <glad/glad.h>
+#include <backends/imgui_impl_sdl2.h>
+#include <backends/imgui_impl_opengl3.h>
 
 #include "CatWare/Utils/Log.h"
 
@@ -55,6 +57,9 @@ namespace CatWare
 
 				glEnable( GL_PROGRAM_OUTPUT );
 				glDebugMessageCallback( MessageCallback, 0 );
+
+				ImGui_ImplSDL2_InitForOpenGL( windowHandle, glContext );
+				ImGui_ImplOpenGL3_Init( "#version 460" );
 			}
 
 			void OpenGLContext::SwapBuffers( )

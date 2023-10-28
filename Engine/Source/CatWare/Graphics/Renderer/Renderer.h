@@ -28,6 +28,9 @@ namespace CatWare
 		static void DrawCharacter( Text::Character* character, Vector2D position, unsigned int scale , Color color = { 0, 0, 0, 255 } );
 		static void DrawString( std::string string, Vector2D position, unsigned int scale, Text::Font* font, Color color = { 0, 0, 0, 255 } );
 
+		static void DrawRectRotated( Vector2D position, Vector2D size, Color color, float rotation );
+		static void DrawRectTexturedRotated( );
+
 		static void Clear( Color clearColor );
 
 		static Rendering::RendererAPI::API GetAPI( ) { return rendererAPI->GetRenderAPI( ); }
@@ -50,6 +53,6 @@ namespace CatWare
 		static unsigned int width;
 		static unsigned int height;
 
-		static float ScreenCoordToGLCoord( int screenCoord, ScreenAxis axis );
+		static float TransformCoord( int screenCoord, ScreenAxis axis, float rotation = 0 );
 	};
 }

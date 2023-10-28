@@ -118,10 +118,10 @@ namespace CatWare
 	{
 		float vertecies[2 * 4] =
 		{
-			ScreenCoordToGLCoord( position.x, ScreenAxis::X ), -ScreenCoordToGLCoord( position.y, ScreenAxis::Y ),
-			ScreenCoordToGLCoord( position.x + size.x, ScreenAxis::X ), -ScreenCoordToGLCoord( position.y, ScreenAxis::Y ),
-			ScreenCoordToGLCoord( position.x, ScreenAxis::X ), -ScreenCoordToGLCoord( position.y + size.y, ScreenAxis::Y ),
-			ScreenCoordToGLCoord( position.x + size.x, ScreenAxis::X ), -ScreenCoordToGLCoord( position.y + size.y, ScreenAxis::Y )
+			TransformCoord( position.x, ScreenAxis::X ), -TransformCoord( position.y, ScreenAxis::Y ),
+			TransformCoord( position.x + size.x, ScreenAxis::X ), -TransformCoord( position.y, ScreenAxis::Y ),
+			TransformCoord( position.x, ScreenAxis::X ), -TransformCoord( position.y + size.y, ScreenAxis::Y ),
+			TransformCoord( position.x + size.x, ScreenAxis::X ), -TransformCoord( position.y + size.y, ScreenAxis::Y )
 		};
 
 		unsigned int indicies[6] =
@@ -158,10 +158,10 @@ namespace CatWare
 	{
 		float vertecies[4 * 4] =
 		{
-			ScreenCoordToGLCoord( position.x, ScreenAxis::X ), -ScreenCoordToGLCoord( position.y, ScreenAxis::Y ), 0, 0,
-			ScreenCoordToGLCoord( position.x + size.x, ScreenAxis::X ), -ScreenCoordToGLCoord( position.y, ScreenAxis::Y ), 1, 0,
-			ScreenCoordToGLCoord( position.x, ScreenAxis::X ), -ScreenCoordToGLCoord( position.y + size.y, ScreenAxis::Y ), 0, 1,
-			ScreenCoordToGLCoord( position.x + size.x, ScreenAxis::X ), -ScreenCoordToGLCoord( position.y + size.y, ScreenAxis::Y ), 1, 1
+			TransformCoord( position.x, ScreenAxis::X ), -TransformCoord( position.y, ScreenAxis::Y ), 0, 0,
+			TransformCoord( position.x + size.x, ScreenAxis::X ), -TransformCoord( position.y, ScreenAxis::Y ), 1, 0,
+			TransformCoord( position.x, ScreenAxis::X ), -TransformCoord( position.y + size.y, ScreenAxis::Y ), 0, 1,
+			TransformCoord( position.x + size.x, ScreenAxis::X ), -TransformCoord( position.y + size.y, ScreenAxis::Y ), 1, 1
 		};
 
 		unsigned int indicies[6] =
@@ -198,6 +198,46 @@ namespace CatWare
 		delete indexBuffer;
 	}
 
+	void Renderer::DrawRectRotated( Vector2D position, Vector2D size, Color color, float rotation )
+	{
+		float vertecies[2 * 4] =
+		{
+			TransformCoord( position.x, ScreenAxis::X ), -TransformCoord( position.y, ScreenAxis::Y ),
+			TransformCoord( position.x + size.x, ScreenAxis::X ), -TransformCoord( position.y, ScreenAxis::Y ),
+			TransformCoord( position.x, ScreenAxis::X ), -TransformCoord( position.y + size.y, ScreenAxis::Y ),
+			TransformCoord( position.x + size.x, ScreenAxis::X ), -TransformCoord( position.y + size.y, ScreenAxis::Y )
+		};
+
+		unsigned int indicies[6] =
+		{
+			0, 1, 2, 2, 1, 3
+		};
+
+		VertexBuffer* vertexBuffer = VertexBuffer::Create( sizeof( vertecies ), vertecies );
+		IndexBuffer* indexBuffer = IndexBuffer::Create( 6, indicies );
+
+		BufferLayout layout =
+		{
+			BufferElement( "position", ShaderDataType::Float2 )
+		};
+
+		vertexBuffer->SetLayout( layout );
+
+		VertexArray* vertexArray = VertexArray::Create( );
+
+		vertexArray->AddVertexBuffer( vertexBuffer );
+		vertexArray->SetIndexBuffer( indexBuffer );
+
+		rectShader->Bind( );
+		rectShader->SetUniform4f( "u_Color", float( color.r ) / 255.0f, float( color.g ) / 255.0f, float( color.b ) / 255.0f, float( color.a ) / 255.0f );
+
+		rendererAPI->DrawIndexed( vertexArray );
+
+		delete vertexArray;
+		delete vertexBuffer;
+		delete indexBuffer;
+	}
+
 	void Renderer::DrawCharacter( Text::Character* character, Vector2D position, unsigned int size, Color color )
 	{
 		textShader->Bind( );
@@ -212,13 +252,13 @@ namespace CatWare
 
 		float vertices[6 * 4] =
 		{
-				ScreenCoordToGLCoord( xpos, ScreenAxis::X ), -ScreenCoordToGLCoord( ypos + h, ScreenAxis::Y ), 0.0f, 01.0f,
-				ScreenCoordToGLCoord( xpos, ScreenAxis::X ), -ScreenCoordToGLCoord( ypos, ScreenAxis::Y ), 0.0f, 0.0f,
-				ScreenCoordToGLCoord( xpos + w, ScreenAxis::X ), -ScreenCoordToGLCoord( ypos, ScreenAxis::Y ), 1.0f, 0.0f,
+				TransformCoord( xpos, ScreenAxis::X ), -TransformCoord( ypos + h, ScreenAxis::Y ), 0.0f, 01.0f,
+				TransformCoord( xpos, ScreenAxis::X ), -TransformCoord( ypos, ScreenAxis::Y ), 0.0f, 0.0f,
+				TransformCoord( xpos + w, ScreenAxis::X ), -TransformCoord( ypos, ScreenAxis::Y ), 1.0f, 0.0f,
 
-				ScreenCoordToGLCoord( xpos, ScreenAxis::X ), -ScreenCoordToGLCoord( ypos + h, ScreenAxis::Y ), 0.0f, 1.0f,
-				ScreenCoordToGLCoord( xpos + w, ScreenAxis::X ), -ScreenCoordToGLCoord( ypos, ScreenAxis::Y ), 1.0f, 0.0f,
-				ScreenCoordToGLCoord( xpos + w, ScreenAxis::X ), -ScreenCoordToGLCoord( ypos + h, ScreenAxis::Y ), 1.0f, 1.0f 
+				TransformCoord( xpos, ScreenAxis::X ), -TransformCoord( ypos + h, ScreenAxis::Y ), 0.0f, 1.0f,
+				TransformCoord( xpos + w, ScreenAxis::X ), -TransformCoord( ypos, ScreenAxis::Y ), 1.0f, 0.0f,
+				TransformCoord( xpos + w, ScreenAxis::X ), -TransformCoord( ypos + h, ScreenAxis::Y ), 1.0f, 1.0f 
 		};
 
 		unsigned int indicies[6] =
@@ -276,10 +316,12 @@ namespace CatWare
 	}
 
 
-	float Renderer::ScreenCoordToGLCoord( int screenCoord, ScreenAxis axis )
+	float Renderer::TransformCoord( int screenCoord, ScreenAxis axis, float rotation )
 	{
 		int screenSize = 0;
 		int offset = 0;
+
+		float rotationRadians;
 
 		if ( axis == ScreenAxis::X )
 		{

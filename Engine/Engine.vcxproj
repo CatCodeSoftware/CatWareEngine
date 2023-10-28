@@ -74,7 +74,7 @@
     <OutDir>$(SolutionDir)\Build\</OutDir>
     <IntDir>$(SolutionDir)\Intermediate\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <TargetName>CatWareEngine</TargetName>
-    <IncludePath>$(ProjectDir)\Lib\ImGui;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\Source;$(ProjectDir)\Lib\SDL2\include;$(ProjectDir)\Lib\Glad\include;$(ProjectDir)Lib\Freetype\include;$(ProjectDir)\Lib\Single header</IncludePath>
+    <IncludePath>$(ProjectDir)\Lib\ImGui;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\Source;$(ProjectDir)\Lib\SDL2\include;$(ProjectDir)\Lib\Glad\include;$(ProjectDir)Lib\Freetype\include;$(ProjectDir)\Lib\Single header\;$(ProjectDir)\Lib\glm</IncludePath>
     <LibraryPath>$(ProjectDir)\Lib\Freetype\release static\vs2015-2022\win64;$(LibraryPath)</LibraryPath>
     <ExternalIncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)Lib\Freetype\include</ExternalIncludePath>
   </PropertyGroup>
@@ -82,7 +82,7 @@
     <OutDir>$(SolutionDir)\Build\</OutDir>
     <IntDir>$(SolutionDir)\Intermediate\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <TargetName>CatWareEngine</TargetName>
-    <IncludePath>$(ProjectDir)\Lib\ImGui;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\Source;$(ProjectDir)\Lib\SDL2\include;$(ProjectDir)\Lib\Glad\include;$(ProjectDir)Lib\Freetype\include;$(ProjectDir)\Lib\Single header</IncludePath>
+    <IncludePath>$(ProjectDir)\Lib\ImGui;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\Source;$(ProjectDir)\Lib\SDL2\include;$(ProjectDir)\Lib\Glad\include;$(ProjectDir)Lib\Freetype\include;$(ProjectDir)\Lib\Single header\;$(ProjectDir)\Lib\glm</IncludePath>
     <LibraryPath>$(ProjectDir)\Lib\Freetype\release static\vs2015-2022\win64;$(LibraryPath)</LibraryPath>
     <ExternalIncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)Lib\Freetype\include</ExternalIncludePath>
   </PropertyGroup>

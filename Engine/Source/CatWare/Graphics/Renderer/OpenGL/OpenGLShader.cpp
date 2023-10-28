@@ -76,6 +76,11 @@ namespace CatWare
 				glUniform4f( glGetUniformLocation( programID, name.c_str( ) ), f, f2, f3, f4 );
 			}
 
+			void OpenGLShader::SetUniformMat4( std::string name, glm::mat4 mat )
+			{
+				glUniformMatrix4fv( glGetUniformLocation( programID, name.c_str( ) ), 1, true, &mat[0][0] );
+			}
+
 			unsigned int OpenGLShader::CompileShader( std::string source, GLenum type )
 			{
 				unsigned int shader = glCreateShader( type );

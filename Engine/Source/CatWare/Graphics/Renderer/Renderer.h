@@ -22,14 +22,11 @@ namespace CatWare
 		static void StartDrawing( );
 		static void EndDrawing( );
 
-		static void DrawRect( Vector2D position, Vector2D size, Color color );
-		static void DrawRectTextured( Vector2D position, Vector2D size, Rendering::Texture2D* texture, Color tint );
+		static void DrawRect( Vector2D position, Vector2D size, Color color, float rotation = 0 );
+		static void DrawRectTextured( Vector2D position, Vector2D size, Rendering::Texture2D* texture, Color tint = { 255, 255, 255, 255 }, float rotation = 0 );
 
 		static void DrawCharacter( Text::Character* character, Vector2D position, unsigned int scale , Color color = { 0, 0, 0, 255 } );
 		static void DrawString( std::string string, Vector2D position, unsigned int scale, Text::Font* font, Color color = { 0, 0, 0, 255 } );
-
-		static void DrawRectRotated( Vector2D position, Vector2D size, Color color, float rotation );
-		static void DrawRectTexturedRotated( );
 
 		static void Clear( Color clearColor );
 

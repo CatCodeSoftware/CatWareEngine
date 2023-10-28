@@ -69,6 +69,8 @@ public:
 		font = new Text::Font( "EngineRes/Fonts/Oxanium-Regular.ttf", 50 );
 
 		physicsWorld.gravity = { 0, 0 };
+
+		Renderer::renderOffset = { 120, 0 };
 	}
 
 	void Update( ) override

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <glm/glm.hpp>
 
 namespace CatWare
 {
@@ -30,6 +31,7 @@ namespace CatWare
 			virtual void SetUniform3f( std::string name, float f, float f2, float f3 ) = 0;
 			virtual void SetUniform4f( std::string name, float f, float f2, float f3, float f4 ) = 0;
 
+			virtual void SetUniformMat4( std::string name, glm::mat4 mat ) = 0;
 
 			static Shader* Create( std::string vertexSource, std::string fragmentSource );
 			static Shader* CreateFromFile( std::string vertexPath, std::string fragmentPath );

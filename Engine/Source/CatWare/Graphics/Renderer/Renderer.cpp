@@ -1,9 +1,14 @@
 #include "Renderer.h"
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 #include "Buffer.h"
 #include "Shader.h"
 #include "Texture.h"
 #include "CatWare/Utils/Log.h"
+
 
 using namespace CatWare::Rendering;
 
@@ -114,14 +119,16 @@ namespace CatWare
 
 
 
-	void Renderer::DrawRect( Vector2D position, Vector2D size, Color color )
+	void Renderer::DrawRect( Vector2D position, Vector2D size, Color color, float rotation )
 	{
+		glm::mat4 projectionMatrix = glm::ortho( 0.0f - renderOffset.x, float( width ) - renderOffset.x, float( height ) - renderOffset.y, 0.0f - renderOffset.y );
+
 		float vertecies[2 * 4] =
 		{
-			TransformCoord( position.x, ScreenAxis::X ), -TransformCoord( position.y, ScreenAxis::Y ),
-			TransformCoord( position.x + size.x, ScreenAxis::X ), -TransformCoord( position.y, ScreenAxis::Y ),
-			TransformCoord( position.x, ScreenAxis::X ), -TransformCoord( position.y + size.y, ScreenAxis::Y ),
-			TransformCoord( position.x + size.x, ScreenAxis::X ), -TransformCoord( position.y + size.y, ScreenAxis::Y )
+			position.x, position.y,
+			position.x + size.x, position.y,
+			position.x, position.y + size.y,
+			position.x + size.x, position.y + size.y
 		};
 
 		unsigned int indicies[6] =
@@ -146,6 +153,7 @@ namespace CatWare
 
 		rectShader->Bind( );
 		rectShader->SetUniform4f( "u_Color", float( color.r ) / 255.0f, float( color.g ) / 255.0f, float( color.b ) / 255.0f, float( color.a ) / 255.0f );
+		rectShader->SetUniformMat4( "u_Projection", projectionMatrix );
 
 		rendererAPI->DrawIndexed( vertexArray );
 
@@ -154,14 +162,16 @@ namespace CatWare
 		delete indexBuffer;
 	}
 
-	void Renderer::DrawRectTextured( Vector2D position, Vector2D size, Texture2D* texture, Color tint )
+	void Renderer::DrawRectTextured( Vector2D position, Vector2D size, Texture2D* texture, Color tint, float rotation )
 	{
+		glm::mat4 projectionMatrix = glm::ortho( 0.0f - renderOffset.x, float( width ) - renderOffset.x, float( height ) - renderOffset.y, 0.0f - renderOffset.y );
+
 		float vertecies[4 * 4] =
 		{
-			TransformCoord( position.x, ScreenAxis::X ), -TransformCoord( position.y, ScreenAxis::Y ), 0, 0,
-			TransformCoord( position.x + size.x, ScreenAxis::X ), -TransformCoord( position.y, ScreenAxis::Y ), 1, 0,
-			TransformCoord( position.x, ScreenAxis::X ), -TransformCoord( position.y + size.y, ScreenAxis::Y ), 0, 1,
-			TransformCoord( position.x + size.x, ScreenAxis::X ), -TransformCoord( position.y + size.y, ScreenAxis::Y ), 1, 1
+			position.x, position.y, 0, 0,
+			position.x + size.x, position.y, 1, 0,
+			position.x, position.y + size.y, 0, 1,
+			position.x + size.x, position.y + size.y, 1 ,1
 		};
 
 		unsigned int indicies[6] =
@@ -187,6 +197,7 @@ namespace CatWare
 
 		rectTexturedShader->Bind( );
 		rectTexturedShader->SetUniform4f( "u_Tint", float( tint.r ) / 255.0f, float( tint.g ) / 255.0f, float( tint.b ) / 255.0f, float( tint.a ) / 255.0f );
+		rectShader->SetUniformMat4( "u_Projection", projectionMatrix );
 
 		texture->Bind( 0 );
 		rectTexturedShader->SetUniform1f( "u_Texture", 0 );
@@ -198,51 +209,14 @@ namespace CatWare
 		delete indexBuffer;
 	}
 
-	void Renderer::DrawRectRotated( Vector2D position, Vector2D size, Color color, float rotation )
-	{
-		float vertecies[2 * 4] =
-		{
-			TransformCoord( position.x, ScreenAxis::X ), -TransformCoord( position.y, ScreenAxis::Y ),
-			TransformCoord( position.x + size.x, ScreenAxis::X ), -TransformCoord( position.y, ScreenAxis::Y ),
-			TransformCoord( position.x, ScreenAxis::X ), -TransformCoord( position.y + size.y, ScreenAxis::Y ),
-			TransformCoord( position.x + size.x, ScreenAxis::X ), -TransformCoord( position.y + size.y, ScreenAxis::Y )
-		};
-
-		unsigned int indicies[6] =
-		{
-			0, 1, 2, 2, 1, 3
-		};
-
-		VertexBuffer* vertexBuffer = VertexBuffer::Create( sizeof( vertecies ), vertecies );
-		IndexBuffer* indexBuffer = IndexBuffer::Create( 6, indicies );
-
-		BufferLayout layout =
-		{
-			BufferElement( "position", ShaderDataType::Float2 )
-		};
-
-		vertexBuffer->SetLayout( layout );
-
-		VertexArray* vertexArray = VertexArray::Create( );
-
-		vertexArray->AddVertexBuffer( vertexBuffer );
-		vertexArray->SetIndexBuffer( indexBuffer );
-
-		rectShader->Bind( );
-		rectShader->SetUniform4f( "u_Color", float( color.r ) / 255.0f, float( color.g ) / 255.0f, float( color.b ) / 255.0f, float( color.a ) / 255.0f );
-
-		rendererAPI->DrawIndexed( vertexArray );
-
-		delete vertexArray;
-		delete vertexBuffer;
-		delete indexBuffer;
-	}
-
 	void Renderer::DrawCharacter( Text::Character* character, Vector2D position, unsigned int size, Color color )
 	{
+		glm::mat4 projectionMatrix = glm::ortho( 0.0f - renderOffset.x, float( width ) - renderOffset.x, float( height ) - renderOffset.y, 0.0f - renderOffset.y );
+
 		textShader->Bind( );
 		textShader->SetUniform4f( "u_Color", float( color.r ) / 255.0f, float( color.g ) / 255.0f, float( color.b ) / 255.0f, float( color.a ) / 255.0f );
 		textShader->SetUniform1i( "u_Texture", 0 );
+		rectShader->SetUniformMat4( "u_Projection", projectionMatrix );
 
 		float xpos = position.x + character->bearing.x * size;
 		float ypos = position.y - ( character->size.y - character->bearing.y ) * size;
@@ -252,13 +226,13 @@ namespace CatWare
 
 		float vertices[6 * 4] =
 		{
-				TransformCoord( xpos, ScreenAxis::X ), -TransformCoord( ypos + h, ScreenAxis::Y ), 0.0f, 01.0f,
-				TransformCoord( xpos, ScreenAxis::X ), -TransformCoord( ypos, ScreenAxis::Y ), 0.0f, 0.0f,
-				TransformCoord( xpos + w, ScreenAxis::X ), -TransformCoord( ypos, ScreenAxis::Y ), 1.0f, 0.0f,
+			xpos, ypos + h, 0, 1,
+			xpos, ypos, 0, 0,
+			xpos + w, ypos, 1, 0,
 
-				TransformCoord( xpos, ScreenAxis::X ), -TransformCoord( ypos + h, ScreenAxis::Y ), 0.0f, 1.0f,
-				TransformCoord( xpos + w, ScreenAxis::X ), -TransformCoord( ypos, ScreenAxis::Y ), 1.0f, 0.0f,
-				TransformCoord( xpos + w, ScreenAxis::X ), -TransformCoord( ypos + h, ScreenAxis::Y ), 1.0f, 1.0f 
+			xpos, ypos + h, 0, 1,
+			xpos + w, ypos, 1, 0,
+			xpos + w, ypos + h, 1, 1
 		};
 
 		unsigned int indicies[6] =
@@ -313,27 +287,5 @@ namespace CatWare
 				offset += ( character->size.x + character->bearing.x ) * size;
 			}
 		}
-	}
-
-
-	float Renderer::TransformCoord( int screenCoord, ScreenAxis axis, float rotation )
-	{
-		int screenSize = 0;
-		int offset = 0;
-
-		float rotationRadians;
-
-		if ( axis == ScreenAxis::X )
-		{
-			screenSize = width;
-			offset = renderOffset.x;
-		}
-		else
-		{
-			screenSize = height;
-			offset = renderOffset.y;
-		}
-
-		return ( ( float( screenCoord + offset ) / float( screenSize ) ) * 2 - 1 );
 	}
 }

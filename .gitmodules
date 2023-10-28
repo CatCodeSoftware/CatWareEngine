@@ -9,3 +9,6 @@
 	path = Engine/Lib/ImGui
 	url = https://github.com/ocornut/imgui
 	branch = docking
+[submodule "Engine/Lib/glm"]
+	path = Engine/Lib/glm
+	url = https://github.com/g-truc/glm

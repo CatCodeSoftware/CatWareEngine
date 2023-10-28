@@ -73,12 +73,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)\Build\</OutDir>
     <IntDir>$(SolutionDir)\Intermediate\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)\Engine\Source;$(SolutionDir)\Engine\Lib\SDL2\include;$(SolutionDir)\Engine\Lib\Freetype\include</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)\Engine\Source;$(SolutionDir)\Engine\Lib\SDL2\include;$(SolutionDir)\Engine\Lib\glm;$(SolutionDir)\Engine\Lib\Freetype\include</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)\Build\</OutDir>
     <IntDir>$(SolutionDir)\Intermediate\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)\Engine\Source;$(SolutionDir)\Engine\Lib\SDL2\include;$(SolutionDir)\Engine\Lib\Freetype\include</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)\Engine\Source;$(SolutionDir)\Engine\Lib\SDL2\include;$(SolutionDir)\Engine\Lib\glm;$(SolutionDir)\Engine\Lib\Freetype\include</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

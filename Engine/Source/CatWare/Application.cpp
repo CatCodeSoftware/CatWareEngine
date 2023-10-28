@@ -42,7 +42,7 @@ namespace CatWare
 
 		window = new Window( initConfig.windowTitle, initConfig.windowWidth, initConfig.windowHeight, initConfig.windowFullscreen );
 
-		Rendering::Renderer::SetScreenSize( window->GetWidth( ), window->GetHeight( ) );
+		Rendering::Renderer::SetScreenSize( window->GetWidth( ), window->GetHeight( ), false );
 		Renderer::Init( new OpenGL::OpenGLAPI );
 
 		Text::InitFreetype( );

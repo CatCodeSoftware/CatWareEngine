@@ -96,12 +96,24 @@ namespace CatWare
 		}
 
 
-		void Renderer::SetScreenSize( unsigned int a_width, unsigned int a_height )
+		void Renderer::SetScreenSize( unsigned int a_width, unsigned int a_height, bool resizeViewport )
 		{
 			width = a_width;
 			height = a_height;
 
-			// rendererAPI->SetViewportSize( width, height );
+			if ( resizeViewport )
+			{
+				rendererAPI->SetViewportSize( width, height );
+
+				// regenerate framebuffer
+				delete frameBuffer;
+
+				FrameBufferSpec fbSpec;
+				fbSpec.width = width;
+				fbSpec.height = height;
+
+				frameBuffer = FrameBuffer::Create( fbSpec );
+			}
 		}
 
 

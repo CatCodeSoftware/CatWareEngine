@@ -16,7 +16,7 @@ namespace CatWare
 	{
 		CW_ENGINE_LOG->Info( "Creating %dx%d window with title %s", width, height, title.c_str( ) );
 
-		sdlWindow = SDL_CreateWindow( title.c_str( ), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL );
+		sdlWindow = SDL_CreateWindow( title.c_str( ), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE );
 
 		SetFullscreen( isFullscreen );
 
@@ -50,6 +50,11 @@ namespace CatWare
 
 			switch ( e.type )
 			{
+			case SDL_WINDOWEVENT:
+				if ( e.window.event == SDL_WINDOWEVENT_RESIZED )
+					Rendering::Renderer::SetScreenSize( e.window.data1, e.window.data1 );
+				break;
+
 			case SDL_QUIT:
 				shouldClose = true;
 				break;
@@ -74,6 +79,7 @@ namespace CatWare
 
 			case SDL_MOUSEMOTION:
 				Input::SetMouseMotion( { ( double ) e.motion.x, ( double ) e.motion.y } );
+				break;
 			}
 		}
 	}
@@ -90,6 +96,8 @@ namespace CatWare
 
 		this->width = width;
 		this->height = height;
+
+		Rendering::Renderer::SetScreenSize( width, height, true );
 	}
 
 	void Window::SetTitle( std::string title )

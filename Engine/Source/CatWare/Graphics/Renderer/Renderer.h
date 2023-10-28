@@ -19,7 +19,7 @@ namespace CatWare
 
 			static void Init( RendererAPI* a_rendererAPI );
 
-			static void SetScreenSize( unsigned int width, unsigned int height );
+			static void SetScreenSize( unsigned int width, unsigned int height, bool resizeViewport = true );
 
 			static void StartDrawing( );
 			static void EndDrawing( );
@@ -31,6 +31,11 @@ namespace CatWare
 			static void DrawString( std::string string, Vector2D position, unsigned int scale, Text::Font* font, Color color = { 0, 0, 0, 255 } );
 
 			static void Clear( Color clearColor );
+
+			inline static Texture2D* GetViewportTexture( )
+			{
+				return frameBuffer->GetColorAttachment( );
+			}
 
 			static RendererAPI::API GetAPI( ) { return rendererAPI->GetRenderAPI( ); }
 

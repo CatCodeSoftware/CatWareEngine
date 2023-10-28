@@ -123,6 +123,12 @@ namespace CatWare
 	{
 		glm::mat4 projectionMatrix = glm::ortho( 0.0f - renderOffset.x, float( width ) - renderOffset.x, float( height ) - renderOffset.y, 0.0f - renderOffset.y );
 
+		glm::mat4 transformMatrix = glm::mat4( 1.0f );
+
+		transformMatrix = glm::translate( transformMatrix, glm::vec3( position.x + size.x / 2, position.y + size.y / 2, 0.0f ) );
+		transformMatrix = glm::rotate( transformMatrix, glm::radians( rotation ), glm::vec3( 0.0f, 0.0f, 1.0f ) );
+		transformMatrix = glm::translate( transformMatrix, glm::vec3( -( position.x + size.x / 2 ), -( position.y + size.y / 2 ), 0.0f ) );
+		
 		float vertecies[2 * 4] =
 		{
 			position.x, position.y,
@@ -154,6 +160,7 @@ namespace CatWare
 		rectShader->Bind( );
 		rectShader->SetUniform4f( "u_Color", float( color.r ) / 255.0f, float( color.g ) / 255.0f, float( color.b ) / 255.0f, float( color.a ) / 255.0f );
 		rectShader->SetUniformMat4( "u_Projection", projectionMatrix );
+		rectShader->SetUniformMat4( "u_Transform", transformMatrix );
 
 		rendererAPI->DrawIndexed( vertexArray );
 
@@ -165,6 +172,12 @@ namespace CatWare
 	void Renderer::DrawRectTextured( Vector2D position, Vector2D size, Texture2D* texture, Color tint, float rotation )
 	{
 		glm::mat4 projectionMatrix = glm::ortho( 0.0f - renderOffset.x, float( width ) - renderOffset.x, float( height ) - renderOffset.y, 0.0f - renderOffset.y );
+
+		glm::mat4 transformMatrix = glm::mat4( 1.0f );
+
+		transformMatrix = glm::translate( transformMatrix, glm::vec3( position.x + size.x / 2, position.y + size.y / 2, 0.0f ) );
+		transformMatrix = glm::rotate( transformMatrix, glm::radians( rotation ), glm::vec3( 0.0f, 0.0f, 1.0f ) );
+		transformMatrix = glm::translate( transformMatrix, glm::vec3( -( position.x + size.x / 2 ), -( position.y + size.y / 2 ), 0.0f ) );
 
 		float vertecies[4 * 4] =
 		{
@@ -198,6 +211,8 @@ namespace CatWare
 		rectTexturedShader->Bind( );
 		rectTexturedShader->SetUniform4f( "u_Tint", float( tint.r ) / 255.0f, float( tint.g ) / 255.0f, float( tint.b ) / 255.0f, float( tint.a ) / 255.0f );
 		rectShader->SetUniformMat4( "u_Projection", projectionMatrix );
+		rectShader->SetUniformMat4( "u_Transform", transformMatrix );
+
 
 		texture->Bind( 0 );
 		rectTexturedShader->SetUniform1f( "u_Texture", 0 );

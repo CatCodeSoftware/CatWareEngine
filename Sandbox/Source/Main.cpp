@@ -41,11 +41,22 @@ public:
 		{
 			object->force.x += 25000;
 		}
+
+		if ( Input::IsKeyPressed( Input::KEY_LEFT ) )
+		{
+			transform.rotation -= 200 * GlobalTime::GetDeltaTime( );
+		}
+
+		if ( Input::IsKeyPressed( Input::KEY_RIGHT ) )
+		{
+			transform.rotation += 200 * GlobalTime::GetDeltaTime( );
+		}
 	}
 
 	void Draw( ) override
 	{
-		Renderer::DrawRectTextured( transform.position, transform.size, TextureManager::GetTexture( "test_cat" ), { 255, 255, 255, 255 } );
+		//Renderer::DrawRectTextured( transform.position, transform.size, TextureManager::GetTexture( "test_cat" ), { 255, 255, 255, 255 } );
+		Renderer::DrawRectTextured( transform.position, transform.size, TextureManager::GetTexture( "test_cat" ), { 255, 255, 255, 255 }, transform.rotation );
 	}
 
 	static Entity* Create( std::unordered_map<std::string, std::string> tags )
@@ -70,7 +81,7 @@ public:
 
 		physicsWorld.gravity = { 0, 0 };
 
-		Renderer::renderOffset = { 120, 0 };
+		Renderer::renderOffset = { 0, 0 };
 	}
 
 	void Update( ) override

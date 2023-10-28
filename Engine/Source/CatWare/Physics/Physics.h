@@ -13,7 +13,7 @@ namespace CatWare
 		class PhysicsObject
 		{
 		public:
-			Entity::Transform* transform; // The transform to change when updating the object
+			Transform* transform; // The transform to change when updating the object
 			
 			double mass;
 			double frictionCoefficient;

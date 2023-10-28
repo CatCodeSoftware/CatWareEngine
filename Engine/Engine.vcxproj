@@ -204,7 +204,6 @@
     <ClCompile Include="Lib\ImGui\imgui_tables.cpp" />
     <ClCompile Include="Lib\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="Source\CatWare\Application.cpp" />
-    <ClCompile Include="Source\CatWare\Core.cpp" />
     <ClCompile Include="Source\CatWare\Entity\Entity.cpp" />
     <ClCompile Include="Source\CatWare\Error.cpp" />
     <ClCompile Include="Source\CatWare\Graphics\Renderer\Buffer.cpp" />

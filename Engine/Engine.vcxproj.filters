@@ -185,9 +185,6 @@
     <ClCompile Include="Source\CatWare\Input\Binds.cpp">
       <Filter>Source\CatWare\Input</Filter>
     </ClCompile>
-    <ClCompile Include="Source\CatWare\Core.cpp">
-      <Filter>Source\CatWare</Filter>
-    </ClCompile>
     <ClCompile Include="Lib\Glad\src\glad.c">
       <Filter>Extern\Glad</Filter>
     </ClCompile>

@@ -13,8 +13,6 @@ namespace CatWare
 #if defined(CW_PLATFORM_WIN64)
 	int main( int argc, char** argv )
 	{
-		CatWare::Init( );
-
 		CatWare::CreateApplication( )->Run( );
 	}
 #endif

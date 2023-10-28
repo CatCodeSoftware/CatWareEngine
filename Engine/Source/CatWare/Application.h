@@ -29,10 +29,9 @@ namespace CatWare
 
 		virtual void Run( ) final;
 
+		// Overridable methods
 		virtual void PostInit( ) {}
-		virtual void Update( ) {}
-		virtual void Draw( ) {}
-
+		
 		void SetScene( Scene* scene );
 
 	protected:
@@ -44,5 +43,9 @@ namespace CatWare
 	private:
 		Scene* currentScene = nullptr;
 		InternalTimer frameTimer;
+
+		void Init( );
+		void Update( );
+		void Draw( );
 	};
 }

@@ -5,6 +5,7 @@
 #include <backends/imgui_impl_sdl2.h>
 #include <backends/imgui_impl_opengl3.h>
 
+#include "Utils/Log.h"
 #include "Utils/Color.h"
 #include "Graphics/Renderer/Renderer.h"
 #include "Resource/TextureResource.h"
@@ -13,8 +14,6 @@
 
 namespace CatWare
 {
-	using namespace CatWare::Rendering;
-
 	Application::Application( )
 	{
 
@@ -27,8 +26,42 @@ namespace CatWare
 
 	void Application::Run( )
 	{
+		Init( );
+
+		while ( running )
+		{
+			GlobalTime::SetDeltaTime( frameTimer.GetTime( ) );
+			frameTimer.Reset( );
+
+			window->HandleWindowEvents( );
+			running = !window->ShouldClose( );
+
+			if ( currentScene != nullptr )
+			{
+				Update( );
+				Draw( );
+			}
+
+			TextureManager::CleanUpTextures( );
+
+			window->SwapBuffers( );
+		}
+
+		TextureManager::RemoveEverything( );
+
+		delete window;
+	}
+
+	void Application::Init( )
+	{
+		CatWare::Logging::InitLoggers( );
+
+		CW_ENGINE_LOG->Info( "Initializing engine" );
+
 		// temporary srand call - PT
 		std::srand( time( NULL ) );
+
+		CW_ENGINE_LOG->Info( "Initializing ImGui" );
 
 		// initialze imgui - this is temporary
 		ImGui::CreateContext( );
@@ -42,69 +75,56 @@ namespace CatWare
 
 		window = new Window( initConfig.windowTitle, initConfig.windowWidth, initConfig.windowHeight, initConfig.windowFullscreen );
 
-		Rendering::Renderer::SetScreenSize( window->GetWidth( ), window->GetHeight( ) );
-		Renderer::Init( new OpenGL::OpenGLAPI );
+		Renderer::SetScreenSize( window->GetWidth( ), window->GetHeight( ) );
+		Renderer::Init( new Rendering::OpenGL::OpenGLAPI );
 
 		Text::InitFreetype( );
 
 		PostInit( );
 
 		frameTimer.Reset( );
+	}
 
-		while ( running )
-		{
-			GlobalTime::SetDeltaTime( frameTimer.GetTime( ) );
-			frameTimer.Reset( );
+	void Application::Update( )
+	{
+		currentScene->Update( );
+		currentScene->entityManager.Update( );
+		currentScene->physicsWorld.Update( );
+	}
 
-			window->HandleWindowEvents( );
-			running = !window->ShouldClose( );
+	void Application::Draw( )
+	{
+		Renderer::StartDrawing( );
 
-			currentScene->Update( );
-			currentScene->entityManager.Update( );
-			currentScene->physicsWorld.Update( );
+		currentScene->Draw( );
+		currentScene->entityManager.Draw( );
 
-			Renderer::StartDrawing( );
+		Renderer::EndDrawing( );
 
-			currentScene->Draw( );
-			currentScene->entityManager.Draw( );
+		// ImGui stuff
+		ImGui_ImplOpenGL3_NewFrame( );
+		ImGui_ImplSDL2_NewFrame( );
+		ImGui::NewFrame( );
 
-			Renderer::EndDrawing( );
+		ImGui::ShowDemoWindow( nullptr );
 
-			ImGui_ImplOpenGL3_NewFrame( );
-			ImGui_ImplSDL2_NewFrame( );
-			ImGui::NewFrame( );
+		ImGui::Render( );
 
-			ImGui::ShowDemoWindow( nullptr );
+		ImGui::EndFrame( );
 
-			ImGui::Render( );
-
-			ImGui_ImplOpenGL3_RenderDrawData( ImGui::GetDrawData( ) );
-			
-			ImGui::EndFrame( );
-
-			ImGui::UpdatePlatformWindows( );
-			ImGui::RenderPlatformWindowsDefault( );
-
-
-			TextureManager::CleanUpTextures( );
-
-			window->SwapBuffers( );
-		}
-
-		TextureManager::RemoveEverything( );
-
-		delete window;
+		ImGui::UpdatePlatformWindows( );
+		ImGui::RenderPlatformWindowsDefault( );
 	}
 
 	void Application::SetScene( Scene* scene )
 	{
 		if ( currentScene != nullptr )
-			currentScene->SwitchOff( );
+			currentScene->OnExit( );
 
 		if ( scene == nullptr )
 			CW_ABORT( "Attemped to set scene that doesn't exist" );
 
 		this->currentScene = scene;
-		scene->SwitchTo( );
+		scene->OnEnter( );
 	}
 }

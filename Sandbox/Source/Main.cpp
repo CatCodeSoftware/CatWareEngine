@@ -7,7 +7,7 @@ using namespace CatWare::Rendering;
 
 Physics::PhysicsObject* object = nullptr;
 
-class TestEntity : public Entity::Entity
+class TestEntity : public Entity
 {
 public:
 	TestEntity( )
@@ -101,7 +101,7 @@ public:
 
 	void PostInit( ) override
 	{
-		Entity::EntityRegistry::RegisterEntity<TestEntity>( "test" );
+		EntityRegistry::RegisterEntity<TestEntity>( "test" );
 		TextureManager::AddTexture( "test_cat", "cat.png" );
 
 		SetScene( new InGame );

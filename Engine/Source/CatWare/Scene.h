@@ -12,17 +12,17 @@ namespace CatWare
 
 	public:
 		// called when the currentScene is set to this
-		virtual void SwitchTo( ) {}
+		virtual void OnEnter( ) {}
 
 		// called when currentScene is set to something diffrent
-		virtual void SwitchOff( ) {}
+		virtual void OnExit( ) {}
 
 		virtual void Update( ) {}
 		virtual void Tick( ) {}
 		virtual void Draw( ) {}
 
 	protected:
-		Entity::EntityManager entityManager;
+		EntityManager entityManager;
 		Physics::PhysicsWorld physicsWorld;
 	};
 }

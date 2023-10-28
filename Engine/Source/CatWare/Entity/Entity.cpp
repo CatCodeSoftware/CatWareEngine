@@ -6,122 +6,119 @@
 
 namespace CatWare
 {
-	namespace Entity
+	// ----------------------------------------
+	// Entity ---------------------------------
+	// ----------------------------------------
+	void Entity::Destroy( )
 	{
-		// ----------------------------------------
-		// Entity ---------------------------------
-		// ----------------------------------------
-		void Entity::Destroy( )
-		{
-			shouldDelete = true;
-		}
+		shouldDelete = true;
+	}
 
 
-		void Entity::AddToGroup( std::string name )
-		{
-			groups.push_back( name );
-		}
+	void Entity::AddToGroup( std::string name )
+	{
+		groups.push_back( name );
+	}
 
-		void Entity::RemoveFromGroup( std::string name )
+	void Entity::RemoveFromGroup( std::string name )
+	{
+		for ( std::vector<std::string>::iterator it; it != groups.end( ); it++ )
 		{
-			for ( std::vector<std::string>::iterator it; it != groups.end( ); it++ )
+			if ( ( *it ) == name )
 			{
-				if ( ( *it ) == name )
-				{
-					groups.erase( it );
-				}
+				groups.erase( it );
 			}
 		}
+	}
 
-		std::vector<std::string>& Entity::GetGroups( )
+	std::vector<std::string>& Entity::GetGroups( )
+	{
+		return groups;
+	}
+
+
+	std::string Entity::GetClassName( )
+	{
+		return className;
+	}
+
+	std::string Entity::GetUniqueName( )
+	{
+		return uniqueName;
+	}
+
+	UInt64 Entity::GetID( )
+	{
+		return id;
+	}
+
+	// ----------------------------------------
+	// EntityRegistry -------------------------
+	// ----------------------------------------
+	std::unordered_map<std::string, Entity* ( * )( std::unordered_map<std::string, std::string> tags )> EntityRegistry::entityCreatePointers;
+
+	Entity* ( *EntityRegistry::GetCreateFunction( std::string name ) )( std::unordered_map<std::string, std::string>tags )
+	{
+		return entityCreatePointers[name];
+	}
+
+	// ----------------------------------------
+	// EntityManager --------------------------
+	// ----------------------------------------
+	void EntityManager::CleanUp( )
+	{
+		for ( Entity* entity : entities )
 		{
-			return groups;
+			delete entity;
 		}
+	}
+		
+	UInt64 EntityManager::CreateEntityByClassName( std::string className, Transform transform, std::unordered_map<std::string, std::string> tags )
+	{
+		UInt64 id = std::rand( );
 
-
-		std::string Entity::GetClassName( )
+		if ( usedIDs[id] == false )
 		{
-			return className;
-		}
+			usedIDs[id] = true;
 
-		std::string Entity::GetUniqueName( )
-		{
-			return uniqueName;
-		}
+			Entity* entity = EntityRegistry::GetCreateFunction( className )( tags );
+			entity->transform = transform;
+			entity->id = id;
 
-		UInt64 Entity::GetID( )
-		{
+			entities.push_back( entity );
+
+			entity->Init( );
+
 			return id;
 		}
 
-		// ----------------------------------------
-		// EntityRegistry -------------------------
-		// ----------------------------------------
-		std::unordered_map<std::string, Entity* ( * )( std::unordered_map<std::string, std::string> tags )> EntityRegistry::entityCreatePointers;
+		return 0;
+	}
 
-		Entity* ( *EntityRegistry::GetCreateFunction( std::string name ) )( std::unordered_map<std::string, std::string>tags )
+	void EntityManager::Update( )
+	{
+		for ( std::vector<Entity*>::iterator it = entities.begin( ); it != entities.end( ); )
 		{
-			return entityCreatePointers[name];
-		}
+			Entity* entity = ( *it );
 
-		// ----------------------------------------
-		// EntityManager --------------------------
-		// ----------------------------------------
-		void EntityManager::CleanUp( )
-		{
-			for ( Entity* entity : entities )
+			if ( entity->shouldDelete )
 			{
-				delete entity;
+				entities.erase( it );
+			}
+			else
+			{
+				entity->Update( );
+
+				it++;
 			}
 		}
-		
-		UInt64 EntityManager::CreateEntityByClassName( std::string className, Transform transform, std::unordered_map<std::string, std::string> tags )
+	}
+
+	void EntityManager::Draw( )
+	{
+		for ( Entity* entity : entities )
 		{
-			UInt64 id = std::rand( );
-
-			if ( usedIDs[id] == false )
-			{
-				usedIDs[id] = true;
-
-				Entity* entity = EntityRegistry::GetCreateFunction( className )( tags );
-				entity->transform = transform;
-				entity->id = id;
-
-				entities.push_back( entity );
-
-				entity->Init( );
-
-				return id;
-			}
-
-			return 0;
-		}
-
-		void EntityManager::Update( )
-		{
-			for ( std::vector<Entity*>::iterator it = entities.begin( ); it != entities.end( ); )
-			{
-				Entity* entity = ( *it );
-
-				if ( entity->shouldDelete )
-				{
-					entities.erase( it );
-				}
-				else
-				{
-					entity->Update( );
-
-					it++;
-				}
-			}
-		}
-
-		void EntityManager::Draw( )
-		{
-			for ( Entity* entity : entities )
-			{
-				entity->Draw( );
-			}
+			entity->Draw( );
 		}
 	}
 }

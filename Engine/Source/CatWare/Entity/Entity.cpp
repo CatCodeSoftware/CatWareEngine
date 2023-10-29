@@ -114,6 +114,14 @@ namespace CatWare
 		}
 	}
 
+	void EntityManager::Tick( )
+	{
+		for ( Entity* entity : entities )
+		{
+			entity->Tick( );
+		}
+	}
+
 	void EntityManager::Draw( )
 	{
 		for ( Entity* entity : entities )

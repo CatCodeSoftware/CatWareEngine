@@ -105,6 +105,7 @@ namespace CatWare
 		UInt64 CreateEntityByClassName( std::string className, Transform transform, std::unordered_map<std::string, std::string> tags );
 
 		void Update( );
+		void Tick( );
 		void Draw( );
 	private:
 		std::unordered_map<UInt64, bool> usedIDs;

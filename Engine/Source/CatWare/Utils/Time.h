@@ -14,7 +14,7 @@ namespace CatWare
 
 		/* this name might be confusing
 		this just gets how many times the time has elapsed */
-		int TimesTimeElapsed( float time );
+		int TimesTimeElapsed( double time );
 
 		void Reset( );
 

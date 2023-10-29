@@ -37,7 +37,9 @@ namespace CatWare
 			~Font( );
 
 			Character* GetCharacter( char ch );
-			inline unsigned int GetSize( ) { return size;  }
+			inline unsigned int GetSize( ) { return size; }
+
+			float GetStringSize( std::string string );
 
 		private:
 			unsigned int size;

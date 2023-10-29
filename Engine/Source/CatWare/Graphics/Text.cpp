@@ -43,6 +43,25 @@ namespace CatWare
 			this->size = size;
 		}
 
+		float Font::GetStringSize( std::string string )
+		{
+			float size = 0;
+
+			for ( char c : string )
+			{
+				if ( c == ' ' )
+					size += spaceSize;
+
+				else if ( c == '\t' )
+					size += tabSize;
+
+				else
+					size += GetCharacter( c )->size.x + GetCharacter( c )->bearing.x;
+			}
+
+			return size;
+		}
+
 		Font::~Font( )
 		{
 			for ( auto keyVal : characters )

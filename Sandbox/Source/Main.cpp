@@ -20,36 +20,36 @@ public:
 	{
 		object->transform = &transform;
 		object->mass = 10;
-		object->frictionCoefficient = 0.9;
+		object->frictionCoefficient = 0.7;
 	}
 
-	void Update( ) override
+	void Tick( ) override
 	{
 		if ( Input::IsKeyPressed( Input::KEY_W ) )
 		{
-			object->force.y -= 25000;
+			object->force.y -= 250000;
 		}
 		if ( Input::IsKeyPressed( Input::KEY_S ) )
 		{
-			object->force.y += 25000;
+			object->force.y += 250000;
 		}
 		if ( Input::IsKeyPressed( Input::KEY_A ) )
 		{
-			object->force.x -= 25000;
+			object->force.x -= 250000;
 		}
 		if ( Input::IsKeyPressed( Input::KEY_D ) )
 		{
-			object->force.x += 25000;
+			object->force.x += 250000;
 		}
 
 		if ( Input::IsKeyPressed( Input::KEY_LEFT ) )
 		{
-			transform.rotation -= 200 * GlobalTime::GetDeltaTime( );
+			transform.rotation -= 2;
 		}
 
 		if ( Input::IsKeyPressed( Input::KEY_RIGHT ) )
 		{
-			transform.rotation += 200 * GlobalTime::GetDeltaTime( );
+			transform.rotation += 2;
 		}
 	}
 
@@ -94,6 +94,7 @@ public:
 		Renderer::Clear( { 40, 40, 40, 255 } );
 
 		Renderer::DrawString( "Hello world!", { 20, 20 }, 1, font, { 255, 255, 255, 255 } );
+		Renderer::DrawString( "Good to see you!", { font->GetStringSize( "Hello world!" ) + 40, 20 }, 1, font, { 255, 255, 255, 255 } );
 	}
 };
 

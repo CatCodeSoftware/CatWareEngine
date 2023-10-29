@@ -20,9 +20,10 @@ namespace CatWare
 		return false;
 	}
 
-	int InternalTimer::TimesTimeElapsed( float time )
+	int InternalTimer::TimesTimeElapsed( double time )
 	{
-		return std::floor( GetTime( ) / time );
+		double result = GetTime( ) / time;
+		return GetTime( ) / time;
 	}
 
 	void InternalTimer::Reset( )

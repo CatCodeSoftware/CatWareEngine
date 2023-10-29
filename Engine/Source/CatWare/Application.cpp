@@ -33,12 +33,25 @@ namespace CatWare
 			GlobalTime::SetDeltaTime( frameTimer.GetTime( ) );
 			frameTimer.Reset( );
 
+			int ticksElapsed = tickTimer.TimesTimeElapsed( ( 1.0 / ticksPerSecond ) * GlobalTime::modifier );
+			
+			if ( ticksElapsed != 0 )
+			{
+				tickTimer.Reset( );
+			}
+
 			window->HandleWindowEvents( );
 			running = !window->ShouldClose( );
 
 			if ( currentScene != nullptr )
 			{
 				Update( );
+
+				for ( ; ticksElapsed > 0; ticksElapsed-- )
+				{
+					Tick( );
+				}
+
 				Draw( );
 			}
 
@@ -83,6 +96,7 @@ namespace CatWare
 		PostInit( );
 
 		frameTimer.Reset( );
+		tickTimer.Reset( );
 	}
 
 	void Application::Update( )
@@ -90,6 +104,12 @@ namespace CatWare
 		currentScene->Update( );
 		currentScene->entityManager.Update( );
 		currentScene->physicsWorld.Update( );
+	}
+
+	void Application::Tick( )
+	{
+		currentScene->Tick( );
+		currentScene->entityManager.Tick( );
 	}
 
 	void Application::Draw( )

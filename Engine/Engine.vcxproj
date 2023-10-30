@@ -168,6 +168,7 @@
     <ClInclude Include="Source\CatWare\Entity\Entity.h" />
     <ClInclude Include="Source\CatWare\EntryPoint.h" />
     <ClInclude Include="Source\CatWare\Error.h" />
+    <ClInclude Include="Source\CatWare\Graphics\Animation\Animation.h" />
     <ClInclude Include="Source\CatWare\Graphics\Renderer\Buffer.h" />
     <ClInclude Include="Source\CatWare\Graphics\Renderer\Context.h" />
     <ClInclude Include="Source\CatWare\Graphics\Renderer\OpenGL\OpenGLBuffer.h" />
@@ -190,6 +191,7 @@
     <ClInclude Include="Source\CatWare\Utils\Color.h" />
     <ClInclude Include="Source\CatWare\Utils\Log.h" />
     <ClInclude Include="Source\CatWare\Utils\Time.h" />
+    <ClInclude Include="Source\CatWare\Utils\Transform.h" />
     <ClInclude Include="Source\CatWare\Utils\Types.h" />
     <ClInclude Include="Source\CatWare\Utils\Vector.h" />
   </ItemGroup>
@@ -206,6 +208,7 @@
     <ClCompile Include="Source\CatWare\Application.cpp" />
     <ClCompile Include="Source\CatWare\Entity\Entity.cpp" />
     <ClCompile Include="Source\CatWare\Error.cpp" />
+    <ClCompile Include="Source\CatWare\Graphics\Animation\Animation.cpp" />
     <ClCompile Include="Source\CatWare\Graphics\Renderer\Buffer.cpp" />
     <ClCompile Include="Source\CatWare\Graphics\Renderer\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="Source\CatWare\Graphics\Renderer\OpenGL\OpenGLContext.cpp" />

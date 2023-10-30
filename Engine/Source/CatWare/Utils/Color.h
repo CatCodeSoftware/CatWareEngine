@@ -2,8 +2,6 @@
 
 #include "Types.h"
 
-#define Colour Color // for the brits - PT
-
 namespace CatWare
 {
 	class Color
@@ -16,7 +14,17 @@ namespace CatWare
 			this->b = b;
 			this->a = a;
 		}
+
+		Color( )
+		{
+			r = 255;
+			g = 255;
+			b = 255;
+			a = 255;
+		}
 		
 		UInt8 r, g, b, a;
 	};
+
+	typedef Color Colour;
 }

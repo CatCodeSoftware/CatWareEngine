@@ -22,6 +22,8 @@ namespace CatWare
 		static void StartDrawing( );
 		static void EndDrawing( );
 
+		static void SetRenderTarget( Rendering::FrameBuffer* frameBuffer );
+
 		static void DrawRect( Vector2D position, Vector2D size, Color color, float rotation = 0 );
 		static void DrawRectTextured( Vector2D position, Vector2D size, Rendering::Texture2D* texture, Color tint = { 255, 255, 255, 255 }, float rotation = 0 );
 
@@ -33,11 +35,6 @@ namespace CatWare
 		static Rendering::RendererAPI::API GetAPI( ) { return rendererAPI->GetRenderAPI( ); }
 
 	private:
-		enum class ScreenAxis
-		{
-			X, Y
-		};
-
 		static Rendering::RendererAPI* rendererAPI;
 
 		static Rendering::Shader* rectShader;
@@ -45,11 +42,11 @@ namespace CatWare
 		static Rendering::Shader* postProcessShader;
 		static Rendering::Shader* textShader;
 
-		static Rendering::FrameBuffer* frameBuffer;
+
+		static Rendering::FrameBuffer* currentFrameBuffer;
+		static Rendering::FrameBuffer* defaultFrameBuffer;
 
 		static unsigned int width;
 		static unsigned int height;
-
-		static float TransformCoord( int screenCoord, ScreenAxis axis, float rotation = 0 );
 	};
 }

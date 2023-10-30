@@ -21,9 +21,15 @@ namespace CatWare
 
 				inline virtual UInt32 GetTextureID( ) override { return textureID; }
 
+				inline virtual UInt32 GetTextureWidth( ) override { return width; }
+				inline virtual UInt32 GetTextureHeight( ) override { return height; }
+
 			private:
 				int boundSlot = -1;
-				unsigned int textureID;
+				UInt32 textureID;
+
+				UInt32 width;
+				UInt32 height;
 			};
 		}
 	}

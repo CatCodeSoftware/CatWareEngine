@@ -7,19 +7,10 @@
 #include "CatWare/Core.h"
 #include "CatWare/Utils/Vector.h"
 #include "CatWare/Utils/Types.h"
+#include "CatWare/Utils/Transform.h"
 
 namespace CatWare
 {
-	class Transform
-	{
-	public:
-		Vector2D position = { 0, 0 };
-		Vector2D size = { 0, 0 };
-			
-		Vector2D rotationPoint = { 0, 0 };
-		float rotation = 0;
-	};
-
 	class CATWARE_API Entity
 	{
 		friend class EntityManager;

@@ -3,6 +3,7 @@
 #include <glad/glad.h>
 #include <vector>
 
+#include "CatWare/Core.h"
 #include "CatWare/Graphics/Renderer/Buffer.h"
 #include "../Texture.h"
 

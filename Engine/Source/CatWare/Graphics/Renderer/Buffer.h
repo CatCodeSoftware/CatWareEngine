@@ -5,6 +5,7 @@
 
 #include "CatWare/Utils/Types.h"
 #include "Texture.h"
+#include "CatWare/Core.h"
 
 namespace CatWare
 {
@@ -128,7 +129,7 @@ namespace CatWare
 
 			virtual Texture2D* GetColorAttachment( ) = 0;
 
-			static FrameBuffer* Create( const FrameBufferSpec& spec );
+			CATWARE_API static FrameBuffer* Create( const FrameBufferSpec& spec );
 
 		private:
 		};

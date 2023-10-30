@@ -14,3 +14,4 @@
 #include "CatWare/Graphics/Text.h"
 #include "CatWare/Physics/Collision.h"
 #include "CatWare/Physics/Physics.h"
+#include "CatWare/Graphics/Animation/Animation.h"

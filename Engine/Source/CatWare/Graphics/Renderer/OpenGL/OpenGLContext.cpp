@@ -15,9 +15,12 @@ MessageCallback( GLenum source,
 	const GLchar* message,
 	const void* userParam )
 {
-	fprintf( stderr, "GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
-		( type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : "" ),
-		type, severity, message );
+	if ( severity >= GL_DEBUG_SEVERITY_MEDIUM )
+	{
+		fprintf( stderr, "GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
+			( type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : "" ),
+			type, severity, message );
+	}
 }
 
 namespace CatWare
@@ -55,7 +58,7 @@ namespace CatWare
 				CW_ENGINE_LOG->Info( "Renderer: %s", glGetString( GL_RENDERER ) );
 				CW_ENGINE_LOG->Info( "Version:  %s", glGetString( GL_VERSION ) );
 
-				glEnable( GL_PROGRAM_OUTPUT );
+				glEnable( GL_DEBUG_OUTPUT );
 				glDebugMessageCallback( MessageCallback, 0 );
 
 				ImGui_ImplSDL2_InitForOpenGL( windowHandle, glContext );

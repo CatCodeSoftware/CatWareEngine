@@ -148,7 +148,14 @@ namespace CatWare
 				Bind( );
 				
 				colorAtachment = Texture2D::Create( spec.width, spec.height, nullptr );
+				colorAtachment->Unbind( );
+
 				glFramebufferTexture2D( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, colorAtachment->GetTextureID( ), 0 );
+
+				if ( glCheckFramebufferStatus( GL_FRAMEBUFFER ) != GL_FRAMEBUFFER_COMPLETE )
+				{
+					CW_ENGINE_LOG->Error( "Broken framebuffer!" );
+				}
 
 				Unbind( );
 			}

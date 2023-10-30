@@ -21,7 +21,8 @@ namespace CatWare
 	Shader* Renderer::postProcessShader = nullptr;
 	Shader* Renderer::textShader = nullptr;
 
-	FrameBuffer* Renderer::frameBuffer = nullptr;
+	FrameBuffer* Renderer::currentFrameBuffer = nullptr;
+	FrameBuffer* Renderer::defaultFrameBuffer = nullptr;
 
 	Vector2D Renderer::renderOffset = { 0, 0 };
 
@@ -47,18 +48,19 @@ namespace CatWare
 		fbSpec.width = width;
 		fbSpec.height = height;
 
-		frameBuffer = FrameBuffer::Create( fbSpec );
+		defaultFrameBuffer = FrameBuffer::Create( fbSpec );
+		SetRenderTarget( defaultFrameBuffer );
 	}
 
 	void Renderer::StartDrawing( )
 	{
-		frameBuffer->Bind( );
+		SetRenderTarget( defaultFrameBuffer );
 	}
 
 	void Renderer::EndDrawing( )
 	{
-		frameBuffer->Unbind( );
-
+		currentFrameBuffer->Unbind( );
+		
 		float vertecies[4 * 4] =
 		{
 			-1, -1, 0, 0,
@@ -90,7 +92,7 @@ namespace CatWare
 
 		postProcessShader->Bind( );
 
-		frameBuffer->GetColorAttachment( )->Bind( 0 );
+		currentFrameBuffer->GetColorAttachment( )->Bind( 0 );
 		postProcessShader->SetUniform1f( "u_Texture", 0 );
 
 		rendererAPI->DrawIndexed( vertexArray );
@@ -100,6 +102,19 @@ namespace CatWare
 		delete indexBuffer;
 	}
 
+	void Renderer::SetRenderTarget( FrameBuffer* frameBuffer )
+	{
+		if ( currentFrameBuffer != nullptr )
+			currentFrameBuffer->Unbind( );
+
+		if ( frameBuffer == nullptr )
+			currentFrameBuffer = defaultFrameBuffer;
+
+		else
+			currentFrameBuffer = frameBuffer;
+
+		currentFrameBuffer->Bind( );
+	}
 
 	void Renderer::SetScreenSize( unsigned int a_width, unsigned int a_height )
 	{
@@ -121,7 +136,7 @@ namespace CatWare
 
 	void Renderer::DrawRect( Vector2D position, Vector2D size, Color color, float rotation )
 	{
-		glm::mat4 projectionMatrix = glm::ortho( 0.0f - renderOffset.x, float( width ) - renderOffset.x, float( height ) - renderOffset.y, 0.0f - renderOffset.y );
+		glm::mat4 projectionMatrix = glm::ortho( 0.0f - renderOffset.x, float( currentFrameBuffer->GetColorAttachment( )->GetTextureWidth( ) ) - renderOffset.x, float( currentFrameBuffer->GetColorAttachment( )->GetTextureHeight( ) ) - renderOffset.y, 0.0f - renderOffset.y );
 
 		glm::mat4 transformMatrix = glm::mat4( 1.0f );
 
@@ -171,7 +186,7 @@ namespace CatWare
 
 	void Renderer::DrawRectTextured( Vector2D position, Vector2D size, Texture2D* texture, Color tint, float rotation )
 	{
-		glm::mat4 projectionMatrix = glm::ortho( 0.0f - renderOffset.x, float( width ) - renderOffset.x, float( height ) - renderOffset.y, 0.0f - renderOffset.y );
+		glm::mat4 projectionMatrix = glm::ortho( 0.0f - renderOffset.x, float( currentFrameBuffer->GetColorAttachment( )->GetTextureWidth( ) ) - renderOffset.x, float( currentFrameBuffer->GetColorAttachment( )->GetTextureHeight( ) ) - renderOffset.y, 0.0f - renderOffset.y );
 
 		glm::mat4 transformMatrix = glm::mat4( 1.0f );
 
@@ -219,6 +234,8 @@ namespace CatWare
 
 		rendererAPI->DrawIndexed( vertexArray );
 
+		texture->Unbind( );
+
 		delete vertexArray;
 		delete vertexBuffer;
 		delete indexBuffer;
@@ -226,7 +243,7 @@ namespace CatWare
 
 	void Renderer::DrawCharacter( Text::Character* character, Vector2D position, unsigned int size, Color color )
 	{
-		glm::mat4 projectionMatrix = glm::ortho( 0.0f - renderOffset.x, float( width ) - renderOffset.x, float( height ) - renderOffset.y, 0.0f - renderOffset.y );
+		glm::mat4 projectionMatrix = glm::ortho( 0.0f - renderOffset.x, float( currentFrameBuffer->GetColorAttachment( )->GetTextureWidth( ) ) - renderOffset.x, float( currentFrameBuffer->GetColorAttachment( )->GetTextureHeight( ) ) - renderOffset.y, 0.0f - renderOffset.y );
 
 		textShader->Bind( );
 		textShader->SetUniform4f( "u_Color", float( color.r ) / 255.0f, float( color.g ) / 255.0f, float( color.b ) / 255.0f, float( color.a ) / 255.0f );

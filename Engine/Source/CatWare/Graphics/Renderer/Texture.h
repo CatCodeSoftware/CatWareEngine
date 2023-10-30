@@ -26,6 +26,9 @@ namespace CatWare
 
 			virtual UInt32 GetTextureID( ) = 0;
 
+			virtual UInt32 GetTextureWidth( ) = 0;
+			virtual UInt32 GetTextureHeight( ) = 0;
+
 			static Texture2D* Create( int width, int height, void* buffer, unsigned int channels = 4 );
 			static Texture2D* Create( std::string path );
 		};

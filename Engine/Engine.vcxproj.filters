@@ -43,6 +43,9 @@
     <Filter Include="Extern\ImGui\backends">
       <UniqueIdentifier>{b7dbacdd-be1e-41c9-ab1f-c377fbe714b3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\CatWare\Graphics\Animation">
+      <UniqueIdentifier>{c0252998-a1ce-4359-9eab-de65386260da}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\CatWare.h">
@@ -94,9 +97,6 @@
       <Filter>Source\CatWare\Graphics\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="Source\CatWare\Utils\Color.h">
-      <Filter>Source\CatWare\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\CatWare\Utils\Types.h">
       <Filter>Source\CatWare\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\CatWare\Graphics\Renderer\OpenGL\OpenGLRendererAPI.h">
@@ -167,6 +167,15 @@
     </ClInclude>
     <ClInclude Include="Lib\ImGui\backends\imgui_impl_sdl2.h">
       <Filter>Extern\ImGui\backends</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CatWare\Utils\Types.h">
+      <Filter>Source\CatWare\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CatWare\Utils\Transform.h">
+      <Filter>Source\CatWare\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CatWare\Graphics\Animation\Animation.h">
+      <Filter>Source\CatWare\Graphics\Animation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -262,6 +271,9 @@
     </ClCompile>
     <ClCompile Include="Lib\ImGui\backends\imgui_impl_opengl3.cpp">
       <Filter>Extern\ImGui\backends</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CatWare\Graphics\Animation\Animation.cpp">
+      <Filter>Source\CatWare\Graphics\Animation</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

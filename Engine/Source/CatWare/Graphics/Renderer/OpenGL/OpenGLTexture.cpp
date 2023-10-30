@@ -48,6 +48,9 @@ namespace CatWare
 
 				glTexImage2D( GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, GL_UNSIGNED_BYTE, data );
 				glBindTexture( GL_TEXTURE_2D, 0 );
+
+				this->width = width;
+				this->height = height;
 			}
 
 			OpenGLTexture::~OpenGLTexture( )

@@ -44,7 +44,7 @@ public:
 	{
 		double tangents = rotation / 57.2957795;
 
-		return { length * cos( tangents ), length * sin( rotation ) };
+		return { length * cos( tangents ), length * sin( tangents ) };
 	}
 
 	inline Vector2D operator*( const Vector2D& otherVec )

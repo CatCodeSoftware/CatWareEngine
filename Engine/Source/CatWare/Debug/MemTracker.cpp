@@ -13,16 +13,22 @@ namespace CatWare
 
 		void MemoryTracker::RemoveMemory( void* pointer )
 		{
-			for ( auto it = memInfo.begin( ); it != memInfo.end( ); )
+			for ( int i = 0; i < memInfo.size( ); i++ )
 			{
-				if ( it->address == pointer )
+				if ( memInfo[i].address == pointer )
 				{
-					memInfo.erase( it );
+					// We dont care about order here so we use a trick to remove the info
+					// do a switcharoo with the last element and the element we want to delete
+					MemInfo memInfo1 = memInfo[i]; // The element we want to delete
+					MemInfo memInfo2 = memInfo[memInfo.size( ) - 1]; // The last element
+				
+					memInfo[i] = memInfo2;
+					memInfo[memInfo.size( ) - 1] = memInfo1;
+
+					// pop that sucker
+					memInfo.pop_back( );
+
 					break;
-				}
-				else
-				{
-					it++;
 				}
 			}
 		}

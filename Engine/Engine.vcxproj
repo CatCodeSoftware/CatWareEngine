@@ -138,6 +138,8 @@
       <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);CATWARE_BUILD;CW_PLATFORM_WIN64</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <Optimization>MaxSpeed</Optimization>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

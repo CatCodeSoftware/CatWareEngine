@@ -97,9 +97,9 @@ public:
 	void Draw( ) override
 	{
 		//Renderer::DrawRectTextured( transform.position, transform.size, TextureManager::GetTexture( "test_cat" ), { 255, 255, 255, 255 } );
-		// Renderer::DrawRectTextured( transform.position, transform.size, TextureManager::GetTexture( "test_cat" ), { 255, 255, 255, 255 }, transform.rotation );
+		Renderer::DrawRectTextured( transform.position, transform.size, TextureManager::GetTexture( "test_cat" ), { 255, 255, 255, 255 }, transform.rotation );
 
-		anim.Draw( transform.position, { 1, 1 }, transform.rotation );
+		// anim.Draw( transform.position, { 1, 1 }, transform.rotation );
 	}
 
 	static Entity* Create( std::unordered_map<std::string, std::string> tags )
@@ -131,8 +131,13 @@ public:
 	{
 		Renderer::Clear( { 40, 40, 40, 255 } );
 
-		Renderer::DrawString( "Hello world!", { 20, 20 }, 1, font, { 255, 255, 255, 255 } );
-		Renderer::DrawString( "Good to see you!", { font->GetStringSize( "Hello world!" ) + 40, 20 }, 1, font, { 255, 255, 255, 255 } );
+		// Renderer::DrawString( "Hello world!", { 20, 20 }, 1, font, { 255, 255, 255, 255 } );
+		// Renderer::DrawString( "Good to see you!", { font->GetStringSize( "Hello world!" ) + 40, 20 }, 1, font, { 255, 255, 255, 255 } );
+	}
+
+	void DrawGUI( ) override
+	{
+		Renderer::DrawString( "FPS: " + std::to_string( 1.0 / GlobalTime::GetDeltaTime( ) ), { 20, 20 }, 1, font, { 255, 255, 255, 255 } );
 	}
 };
 

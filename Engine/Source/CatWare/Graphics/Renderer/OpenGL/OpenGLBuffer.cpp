@@ -2,6 +2,8 @@
 
 #include <glad/glad.h>
 
+#include "CatWare/Debug/Debug.h"
+
 #include "CatWare/Utils/Log.h"
 
 namespace CatWare

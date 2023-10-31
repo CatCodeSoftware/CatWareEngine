@@ -2,6 +2,8 @@
 
 #include <random>
 
+#include "CatWare/Debug/Debug.h"
+
 #include "CatWare/Application.h"
 #include "CatWare/Utils/Log.h"
 

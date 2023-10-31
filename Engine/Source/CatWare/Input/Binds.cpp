@@ -3,6 +3,8 @@
 #include <unordered_map>
 #include <fstream>
 
+#include "CatWare/Debug/Debug.h"
+
 #include "KeyboardAndMouse.h"
 
 namespace CatWare

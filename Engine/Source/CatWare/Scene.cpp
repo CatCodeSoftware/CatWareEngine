@@ -1,5 +1,7 @@
 #include "Scene.h"
 
+#include "CatWare/Debug/Debug.h"
+
 #include "Error.h"
 
 namespace CatWare

@@ -1,9 +1,12 @@
 #include "Application.h"
 
 #include <random>
+#include <sstream>
 #include <imgui.h>
 #include <backends/imgui_impl_sdl2.h>
 #include <backends/imgui_impl_opengl3.h>
+
+#include "Debug/Debug.h"
 
 #include "Utils/Log.h"
 #include "Utils/Color.h"
@@ -66,6 +69,29 @@ namespace CatWare
 		TextureManager::RemoveEverything( );
 
 		delete window;
+
+		#ifdef CW_DEBUG
+			// Generate memory report
+			std::stringstream memReport;
+
+			std::vector<Debug::MemInfo> unfreedMemory = Debug::MemoryTracker::GetUnfreedMemory( );
+
+			memReport << "[MEMORY REPORT]\n";
+
+			if ( unfreedMemory.size( ) != 0 )
+			{
+				for ( Debug::MemInfo& mi : unfreedMemory )
+				{
+					memReport << "\tUnfreed memory at " << mi.address << " allocated in file " << mi.file << " at line " << mi.line << '\n';
+				}
+			}
+			else
+			{
+				memReport << "No unfreed memory" << '\n';
+			}
+
+			CW_ENGINE_LOG->Info( memReport.str( ).c_str( ) );
+		#endif
 	}
 
 	void Application::Init( )

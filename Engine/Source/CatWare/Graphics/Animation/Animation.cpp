@@ -1,5 +1,7 @@
 #include "Animation.h"
 
+#include "CatWare/Debug/Debug.h"
+
 #include "CatWare/Graphics/Renderer/Renderer.h"
 #include "CatWare/Resource/TextureResource.h"
 

@@ -2,6 +2,8 @@
 
 #include "..\Utils\Time.h"
 
+#include "CatWare/Debug/Debug.h"
+
 namespace CatWare
 {
 	namespace Physics

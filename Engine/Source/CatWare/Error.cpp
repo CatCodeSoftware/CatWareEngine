@@ -1,5 +1,7 @@
 #include "Error.h"
 
+#include "CatWare/Debug/Debug.h"
+
 #if defined(CW_PLATFORM_WIN64)
 #	include <Windows.h>
 #endif

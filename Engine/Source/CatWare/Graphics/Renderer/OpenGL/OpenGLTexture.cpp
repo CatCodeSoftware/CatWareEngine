@@ -1,5 +1,7 @@
 #include "OpenGLTexture.h"
 
+#include "CatWare/Debug/Debug.h"
+
 #include <glad/glad.h>
 
 namespace CatWare

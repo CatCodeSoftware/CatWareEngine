@@ -1,5 +1,7 @@
 #include "Buffer.h"
 
+#include "CatWare/Debug/Debug.h"
+
 #include "RendererAPI.h"
 #include "Renderer.h"
 #include "OpenGL/OpenGLBuffer.h"

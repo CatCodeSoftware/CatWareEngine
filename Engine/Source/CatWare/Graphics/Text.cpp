@@ -1,5 +1,7 @@
 #include "Text.h"
 
+#include "CatWare/Debug/Debug.h"
+
 #include "CatWare/Utils/Log.h"
 #include "Renderer/Texture.h"
 

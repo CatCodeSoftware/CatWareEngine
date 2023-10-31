@@ -2,6 +2,8 @@
 
 #include <cmath>
 
+#include "CatWare/Debug/Debug.h"
+
 namespace CatWare
 {
 	namespace Physics

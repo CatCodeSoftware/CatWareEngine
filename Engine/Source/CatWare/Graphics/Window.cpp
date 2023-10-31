@@ -2,6 +2,8 @@
 
 #include <backends/imgui_impl_sdl2.h>
 
+#include "CatWare/Debug/Debug.h"
+
 #include "CatWare/Input/KeyboardAndMouse.h"
 #include "CatWare/Utils/Log.h"
 

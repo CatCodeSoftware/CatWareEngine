@@ -46,6 +46,9 @@
     <Filter Include="Source\CatWare\Graphics\Animation">
       <UniqueIdentifier>{c0252998-a1ce-4359-9eab-de65386260da}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\CatWare\Debug">
+      <UniqueIdentifier>{13d7a902-904f-4ca3-a1be-6658ea00cfc1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\CatWare.h">
@@ -177,6 +180,12 @@
     <ClInclude Include="Source\CatWare\Graphics\Animation\Animation.h">
       <Filter>Source\CatWare\Graphics\Animation</Filter>
     </ClInclude>
+    <ClInclude Include="Source\CatWare\Debug\Debug.h">
+      <Filter>Source\CatWare\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CatWare\Debug\MemTracker.h">
+      <Filter>Source\CatWare\Debug</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\CatWare\Application.cpp">
@@ -277,6 +286,9 @@
     </ClCompile>
     <ClCompile Include="Source\CatWare\Scene.cpp">
       <Filter>Source\CatWare</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CatWare\Debug\MemTracker.cpp">
+      <Filter>Source\CatWare\Debug</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

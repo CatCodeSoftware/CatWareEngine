@@ -118,7 +118,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>false</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);CATWARE_BUILD;CW_PLATFORM_WIN64</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);CATWARE_BUILD;CW_PLATFORM_WIN64;CW_DEBUG</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
@@ -165,6 +165,8 @@
     <ClInclude Include="Source\CatWare.h" />
     <ClInclude Include="Source\CatWare\Application.h" />
     <ClInclude Include="Source\CatWare\Core.h" />
+    <ClInclude Include="Source\CatWare\Debug\Debug.h" />
+    <ClInclude Include="Source\CatWare\Debug\MemTracker.h" />
     <ClInclude Include="Source\CatWare\Entity\Entity.h" />
     <ClInclude Include="Source\CatWare\EntryPoint.h" />
     <ClInclude Include="Source\CatWare\Error.h" />
@@ -206,6 +208,7 @@
     <ClCompile Include="Lib\ImGui\imgui_tables.cpp" />
     <ClCompile Include="Lib\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="Source\CatWare\Application.cpp" />
+    <ClCompile Include="Source\CatWare\Debug\MemTracker.cpp" />
     <ClCompile Include="Source\CatWare\Entity\Entity.cpp" />
     <ClCompile Include="Source\CatWare\Error.cpp" />
     <ClCompile Include="Source\CatWare\Graphics\Animation\Animation.cpp" />

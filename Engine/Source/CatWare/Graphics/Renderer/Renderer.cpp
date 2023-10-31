@@ -54,6 +54,16 @@ namespace CatWare
 		SetRenderTarget( defaultFrameBuffer );
 	}
 
+	void Renderer::DeInit( )
+	{
+		delete rectShader;
+		delete rectTexturedShader;
+		delete postProcessShader;
+		delete textShader;
+
+		delete defaultFrameBuffer;
+	}
+
 	void Renderer::StartDrawing( )
 	{
 		SetRenderTarget( defaultFrameBuffer );

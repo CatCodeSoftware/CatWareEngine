@@ -31,6 +31,7 @@ namespace CatWare
 
 		// Overridable methods
 		virtual void PostInit( ) {}
+		virtual void PreDeInit( ) {}
 
 	protected:
 		bool running = true;
@@ -39,12 +40,15 @@ namespace CatWare
 		InitConfig initConfig;
 
 	private:
+		Rendering::OpenGL::OpenGLAPI* renderingAPI;
+
 		InternalTimer frameTimer;
 		InternalTimer tickTimer;
 
 		float ticksPerSecond = 60; // 60 seems like a nice default value
 
 		void Init( );
+		void DeInit( );
 		void Update( );
 		void Tick( );
 		void Draw( );

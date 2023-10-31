@@ -5,6 +5,9 @@
 using namespace CatWare;
 using namespace CatWare::Rendering;
 
+Text::Font* font = nullptr;
+
+
 class TestEntity : public Entity
 {
 public:
@@ -107,12 +110,9 @@ public:
 
 class InGame : public Scene
 {
-	Text::Font* font = nullptr;
-
 public:
 	InGame( )
 	{
-		font = new Text::Font( "EngineRes/Fonts/Oxanium-Regular.ttf", 50 );
 		physicsWorld.gravity = { 0, 0 };
 		Renderer::renderOffset = { 0, 0 };
 	}
@@ -136,6 +136,8 @@ public:
 	}
 };
 
+InGame* inGame;
+
 class Sandbox : public CatWare::Application
 {
 public:
@@ -156,7 +158,16 @@ public:
 		EntityRegistry::RegisterEntity<TestEntity>( "test" );
 		TextureManager::AddTexture( "test_cat", "cat.png" );
 
-		SceneManager::SetScene( new InGame );
+		font = new Text::Font( "EngineRes/Fonts/Oxanium-Regular.ttf", 50 );
+
+		inGame = new InGame;
+		SceneManager::SetScene( inGame );
+	}
+
+	void PreDeInit( ) override
+	{
+		delete inGame;
+		delete font;
 	}
 };
 

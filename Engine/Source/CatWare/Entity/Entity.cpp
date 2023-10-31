@@ -117,6 +117,11 @@ namespace CatWare
 	{
 	}
 
+	EntityManager::~EntityManager( )
+	{
+		CleanUp( );
+	}
+
 	void EntityManager::CleanUp( )
 	{
 		for ( Entity* entity : entities )

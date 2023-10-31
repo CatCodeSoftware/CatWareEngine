@@ -66,32 +66,7 @@ namespace CatWare
 			window->SwapBuffers( );
 		}
 
-		TextureManager::RemoveEverything( );
-
-		delete window;
-
-		#ifdef CW_DEBUG
-			// Generate memory report
-			std::stringstream memReport;
-
-			std::vector<Debug::MemInfo> unfreedMemory = Debug::MemoryTracker::GetUnfreedMemory( );
-
-			memReport << "[MEMORY REPORT]\n";
-
-			if ( unfreedMemory.size( ) != 0 )
-			{
-				for ( Debug::MemInfo& mi : unfreedMemory )
-				{
-					memReport << "\tUnfreed memory at " << mi.address << " allocated in file " << mi.file << " at line " << mi.line << '\n';
-				}
-			}
-			else
-			{
-				memReport << "No unfreed memory" << '\n';
-			}
-
-			CW_ENGINE_LOG->Info( memReport.str( ).c_str( ) );
-		#endif
+		DeInit( );
 	}
 
 	void Application::Init( )
@@ -117,8 +92,9 @@ namespace CatWare
 
 		window = new Window( initConfig.windowTitle, initConfig.windowWidth, initConfig.windowHeight, initConfig.windowFullscreen );
 
+		renderingAPI = new Rendering::OpenGL::OpenGLAPI;
 		Renderer::SetScreenSize( window->GetWidth( ), window->GetHeight( ) );
-		Renderer::Init( new Rendering::OpenGL::OpenGLAPI );
+		Renderer::Init( renderingAPI );
 
 		Text::InitFreetype( );
 
@@ -126,6 +102,41 @@ namespace CatWare
 
 		frameTimer.Reset( );
 		tickTimer.Reset( );
+	}
+
+	void Application::DeInit( )
+	{
+		PreDeInit( );
+
+		TextureManager::RemoveEverything( );
+
+		Renderer::DeInit( );
+
+		delete window;
+		delete renderingAPI;
+
+		#ifdef CW_DEBUG
+		// Generate memory report
+		std::stringstream memReport;
+
+		std::vector<Debug::MemInfo> unfreedMemory = Debug::MemoryTracker::GetUnfreedMemory( );
+
+		memReport << "[MEMORY REPORT]\n";
+
+		if ( unfreedMemory.size( ) != 0 )
+		{
+			for ( Debug::MemInfo& mi : unfreedMemory )
+			{
+				memReport << "\tUnfreed memory at " << mi.address << " allocated in file " << mi.file << " at line " << mi.line << '\n';
+			}
+		}
+		else
+		{
+			memReport << "No unfreed memory" << '\n';
+		}
+
+		CW_ENGINE_LOG->Info( memReport.str( ).c_str( ) );
+		#endif
 	}
 
 	void Application::Update( )

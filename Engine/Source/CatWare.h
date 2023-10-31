@@ -15,3 +15,5 @@
 #include "CatWare/Physics/Collision.h"
 #include "CatWare/Physics/Physics.h"
 #include "CatWare/Graphics/Animation/Animation.h"
+
+#undef CW_DEBUG // Don't let the debug shit spill over to the game

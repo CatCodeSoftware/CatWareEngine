@@ -40,6 +40,8 @@ namespace CatWare
 	{
 		CW_ENGINE_LOG->Info( "Closing window" );
 		SDL_DestroyWindow( sdlWindow );
+
+		delete renderingContext;
 	}
 
 	void Window::HandleWindowEvents( )

@@ -77,7 +77,7 @@ namespace CatWare
 	{
 	public:
 		EntityManager( );
-		~EntityManager( ) {}
+		~EntityManager( );
 
 		void CleanUp( );
 

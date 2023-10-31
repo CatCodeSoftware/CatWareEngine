@@ -16,6 +16,7 @@ namespace CatWare
 		static Vector2D renderOffset;
 
 		static void Init( Rendering::RendererAPI* a_rendererAPI );
+		static void DeInit( );
 
 		static void SetScreenSize( unsigned int width, unsigned int height );
 

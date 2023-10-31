@@ -4,7 +4,8 @@
 
 #include "../Core.h"
 #include "CatWare/Utils/Vector.h"
-#include "../Entity/Entity.h"
+#include "CatWare/Utils/Transform.h"
+#include "Collision.h"
 
 namespace CatWare
 {
@@ -15,11 +16,15 @@ namespace CatWare
 		public:
 			Transform* transform; // The transform to change when updating the object
 			
-			double mass;
-			double frictionCoefficient;
+			double mass = 1;
+
+			bool frictionEnabled = false;
+			double frictionCoefficient = 1.0;
 
 			Vector2D velocity;
 			Vector2D force;
+
+			std::vector<Collider*> colliders;
 		};
 
 		class CATWARE_API PhysicsWorld

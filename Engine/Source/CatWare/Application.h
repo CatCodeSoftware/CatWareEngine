@@ -31,8 +31,6 @@ namespace CatWare
 
 		// Overridable methods
 		virtual void PostInit( ) {}
-		
-		void SetScene( Scene* scene );
 
 	protected:
 		bool running = true;
@@ -41,7 +39,6 @@ namespace CatWare
 		InitConfig initConfig;
 
 	private:
-		Scene* currentScene = nullptr;
 		InternalTimer frameTimer;
 		InternalTimer tickTimer;
 
@@ -49,7 +46,8 @@ namespace CatWare
 
 		void Init( );
 		void Update( );
-		void Draw( );
 		void Tick( );
+		void Draw( );
+		void DrawGUI( );
 	};
 }

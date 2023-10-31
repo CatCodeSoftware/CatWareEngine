@@ -226,6 +226,7 @@
     <ClCompile Include="Source\CatWare\Physics\Collision.cpp" />
     <ClCompile Include="Source\CatWare\Physics\Physics.cpp" />
     <ClCompile Include="Source\CatWare\Resource\TextureResource.cpp" />
+    <ClCompile Include="Source\CatWare\Scene.cpp" />
     <ClCompile Include="Source\CatWare\Utils\Log.cpp" />
     <ClCompile Include="Source\CatWare\Utils\Time.cpp" />
   </ItemGroup>

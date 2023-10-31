@@ -275,5 +275,8 @@
     <ClCompile Include="Source\CatWare\Graphics\Animation\Animation.cpp">
       <Filter>Source\CatWare\Graphics\Animation</Filter>
     </ClCompile>
+    <ClCompile Include="Source\CatWare\Scene.cpp">
+      <Filter>Source\CatWare</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

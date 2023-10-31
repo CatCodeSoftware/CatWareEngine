@@ -20,9 +20,19 @@ namespace CatWare
 		virtual void Update( ) {}
 		virtual void Tick( ) {}
 		virtual void Draw( ) {}
+		virtual void DrawGUI( ) {} // Ignores the render offset
 
-	protected:
 		EntityManager entityManager;
 		Physics::PhysicsWorld physicsWorld;
+	};
+
+	class CATWARE_API SceneManager
+	{
+	public:
+		static void SetScene( Scene* scene );
+		static Scene* GetCurrentScene( );
+
+	private:
+		static Scene* currentScene;
 	};
 }

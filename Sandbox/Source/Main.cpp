@@ -5,8 +5,6 @@
 using namespace CatWare;
 using namespace CatWare::Rendering;
 
-Physics::PhysicsObject* object = nullptr;
-
 class TestEntity : public Entity
 {
 public:
@@ -50,28 +48,36 @@ public:
 
 	void Init( ) override
 	{
-		object->transform = &transform;
-		object->mass = 10;
-		object->frictionCoefficient = 0.7;
+		AttachPhysicsObject( 10, true, 0.7 );
 	}
 
 	void Tick( ) override
 	{
-		if ( Input::IsKeyPressed( Input::KEY_W ) )
+		Physics::PhysicsObject* object = GetAttachedPhysicsObject( );
+
+		if ( object != nullptr )
 		{
-			object->force.y -= 250000;
-		}
-		if ( Input::IsKeyPressed( Input::KEY_S ) )
-		{
-			object->force.y += 250000;
-		}
-		if ( Input::IsKeyPressed( Input::KEY_A ) )
-		{
-			object->force.x -= 250000;
-		}
-		if ( Input::IsKeyPressed( Input::KEY_D ) )
-		{
-			object->force.x += 250000;
+			if ( Input::IsKeyPressed( Input::KEY_SPACE ) )
+			{
+				DetachPhysicsObject( );
+			}
+
+			if ( Input::IsKeyPressed( Input::KEY_W ) )
+			{
+				object->force.y -= 250000;
+			}
+			if ( Input::IsKeyPressed( Input::KEY_S ) )
+			{
+				object->force.y += 250000;
+			}
+			if ( Input::IsKeyPressed( Input::KEY_A ) )
+			{
+				object->force.x -= 250000;
+			}
+			if ( Input::IsKeyPressed( Input::KEY_D ) )
+			{
+				object->force.x += 250000;
+			}
 		}
 
 		if ( Input::IsKeyPressed( Input::KEY_LEFT ) )
@@ -106,16 +112,14 @@ class InGame : public Scene
 public:
 	InGame( )
 	{
-		object = new Physics::PhysicsObject;
-		physicsWorld.AddObject( object );
-
-		entityManager.CreateEntityByClassName( "test", { { 100, 100 }, { 64, 64 } }, { } );
-
 		font = new Text::Font( "EngineRes/Fonts/Oxanium-Regular.ttf", 50 );
-
 		physicsWorld.gravity = { 0, 0 };
-
 		Renderer::renderOffset = { 0, 0 };
+	}
+
+	void OnEnter( ) override
+	{
+		entityManager.CreateEntityByClassName( "test", { { 100, 100 }, { 64, 64 } }, { } );
 	}
 
 	void Update( ) override
@@ -152,7 +156,7 @@ public:
 		EntityRegistry::RegisterEntity<TestEntity>( "test" );
 		TextureManager::AddTexture( "test_cat", "cat.png" );
 
-		SetScene( new InGame );
+		SceneManager::SetScene( new InGame );
 	}
 };
 

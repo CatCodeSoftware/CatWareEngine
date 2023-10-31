@@ -43,6 +43,8 @@ namespace CatWare
 			window->HandleWindowEvents( );
 			running = !window->ShouldClose( );
 
+			Scene* currentScene = SceneManager::GetCurrentScene( );
+
 			if ( currentScene != nullptr )
 			{
 				Update( );
@@ -53,6 +55,7 @@ namespace CatWare
 				}
 
 				Draw( );
+				DrawGUI( );
 			}
 
 			TextureManager::CleanUpTextures( );
@@ -101,6 +104,8 @@ namespace CatWare
 
 	void Application::Update( )
 	{
+		Scene* currentScene = SceneManager::GetCurrentScene( );
+
 		currentScene->Update( );
 		currentScene->entityManager.Update( );
 		currentScene->physicsWorld.Update( );
@@ -108,18 +113,34 @@ namespace CatWare
 
 	void Application::Tick( )
 	{
+		Scene* currentScene = SceneManager::GetCurrentScene( );
+
 		currentScene->Tick( );
 		currentScene->entityManager.Tick( );
 	}
 
 	void Application::Draw( )
 	{
+		Scene* currentScene = SceneManager::GetCurrentScene( );
+
 		Renderer::StartDrawing( );
 
 		currentScene->Draw( );
 		currentScene->entityManager.Draw( );
 
 		Renderer::EndDrawing( );
+	}
+
+	void Application::DrawGUI( )
+	{
+		Scene* currentScene = SceneManager::GetCurrentScene( );
+
+		Vector2D oldRenderOffset = Renderer::renderOffset;
+		Renderer::renderOffset = { 0, 0 };
+
+		currentScene->DrawGUI( );
+
+		Renderer::renderOffset = oldRenderOffset;
 
 		// ImGui stuff
 		ImGui_ImplOpenGL3_NewFrame( );
@@ -134,17 +155,5 @@ namespace CatWare
 
 		ImGui::UpdatePlatformWindows( );
 		ImGui::RenderPlatformWindowsDefault( );
-	}
-
-	void Application::SetScene( Scene* scene )
-	{
-		if ( currentScene != nullptr )
-			currentScene->OnExit( );
-
-		if ( scene == nullptr )
-			CW_ABORT( "Attemped to set scene that doesn't exist" );
-
-		this->currentScene = scene;
-		scene->OnEnter( );
 	}
 }

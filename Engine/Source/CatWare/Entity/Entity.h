@@ -8,6 +8,8 @@
 #include "CatWare/Utils/Vector.h"
 #include "CatWare/Utils/Types.h"
 #include "CatWare/Utils/Transform.h"
+#include "CatWare/Physics/Physics.h"
+#include "CatWare/Physics/Collision.h"
 
 namespace CatWare
 {
@@ -35,6 +37,11 @@ namespace CatWare
 
 		UInt64 GetID( );
 
+		// Physics object stuff
+		void AttachPhysicsObject( double mass = 1.0, bool frictionEnabled = false, double frictionCoefficient = 1, std::vector<Physics::Collider*> colliders = { } );
+		Physics::PhysicsObject* GetAttachedPhysicsObject( );
+		void DetachPhysicsObject( );
+
 		static Entity* Create( std::unordered_map<std::string, std::string> tags ) { return nullptr;  }
 
 	protected:
@@ -46,6 +53,8 @@ namespace CatWare
 		UInt64 id;
 
 		bool shouldDelete = false;
+
+		Physics::PhysicsObject* attachedPhysicsObject = nullptr;
 	};
 
 	class CATWARE_API EntityRegistry
@@ -67,6 +76,7 @@ namespace CatWare
 	class CATWARE_API EntityManager
 	{
 	public:
+		EntityManager( );
 		~EntityManager( ) {}
 
 		void CleanUp( );
@@ -94,6 +104,11 @@ namespace CatWare
 		}
 
 		UInt64 CreateEntityByClassName( std::string className, Transform transform, std::unordered_map<std::string, std::string> tags );
+
+		Entity* GetEntityByID( UInt64 id );
+		Entity* GetEntityByUniqueName( std::string uniqueName );
+		std::vector<Entity*> GetEntitiesByClassName( std::string name );
+		std::vector<Entity*> GetEntitiesByGroup( std::string groupName );
 
 		void Update( );
 		void Tick( );

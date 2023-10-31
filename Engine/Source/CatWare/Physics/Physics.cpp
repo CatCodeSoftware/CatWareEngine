@@ -13,11 +13,16 @@ namespace CatWare
 
 		void PhysicsWorld::RemoveObject( PhysicsObject* physicsObject )
 		{
-			for ( std::vector<PhysicsObject*>::iterator it = physicsObjects.begin( ); it != physicsObjects.end( ); it++ )
+			for ( std::vector<PhysicsObject*>::iterator it = physicsObjects.begin( ); it != physicsObjects.end( ); )
 			{
 				if ( *it == physicsObject )
 				{
 					physicsObjects.erase( it );
+					break;
+				}
+				else
+				{
+					it++;
 				}
 			}
 		}
@@ -28,9 +33,12 @@ namespace CatWare
 			{
 				object->force = object->force + Vector2D( gravity.x * object->mass, gravity.y * object->mass );
 
-				// calculate friction
-				object->force.x -= object->frictionCoefficient * ( object->mass * 10 ) * object->velocity.x;
-				object->force.y -= object->frictionCoefficient * ( object->mass * 10 ) * object->velocity.y;
+				if ( object->frictionEnabled )
+				{
+					// calculate friction
+					object->force.x -= object->frictionCoefficient * ( object->mass * 10 ) * object->velocity.x;
+					object->force.y -= object->frictionCoefficient * ( object->mass * 10 ) * object->velocity.y;
+				}
 
 				object->velocity = object->velocity + Vector2D( ( object->force.x / object->mass ) * GlobalTime::GetDeltaTime( ), ( object->force.y / object->mass ) * GlobalTime::GetDeltaTime( ) );
 

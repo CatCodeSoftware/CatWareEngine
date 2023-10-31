@@ -3,6 +3,7 @@
 #include <random>
 
 #include "CatWare/Application.h"
+#include "CatWare/Utils/Log.h"
 
 namespace CatWare
 {
@@ -52,6 +53,51 @@ namespace CatWare
 		return id;
 	}
 
+
+	void Entity::AttachPhysicsObject( double mass, bool frictionEnabled, double frictionCoefficient, std::vector<Physics::Collider*> colliders )
+	{
+		if ( attachedPhysicsObject != nullptr )
+		{
+			CW_ENGINE_LOG->Warning( "Attempted to attach a physics object to entity that already has one" );
+			return;
+		}
+
+		attachedPhysicsObject = new Physics::PhysicsObject;
+
+		attachedPhysicsObject->transform = &transform;
+
+		attachedPhysicsObject->mass = mass;
+		attachedPhysicsObject->frictionEnabled = frictionEnabled;
+		attachedPhysicsObject->frictionCoefficient = frictionCoefficient;
+		attachedPhysicsObject->colliders = colliders;
+
+		SceneManager::GetCurrentScene( )->physicsWorld.AddObject( attachedPhysicsObject );
+	}
+
+	Physics::PhysicsObject* Entity::GetAttachedPhysicsObject( )
+	{
+		return attachedPhysicsObject;
+	}
+
+	void Entity::DetachPhysicsObject( )
+	{
+		if ( attachedPhysicsObject == nullptr )
+		{
+			CW_ENGINE_LOG->Warning( "Attempted to detach a physics object from entity which doesn't have one" );
+			return;
+		}
+
+		SceneManager::GetCurrentScene( )->physicsWorld.RemoveObject( attachedPhysicsObject );
+
+		for ( Physics::Collider* collider : attachedPhysicsObject->colliders )
+		{
+			delete collider;
+		}
+
+		delete attachedPhysicsObject;
+		attachedPhysicsObject = nullptr;
+	}
+
 	// ----------------------------------------
 	// EntityRegistry -------------------------
 	// ----------------------------------------
@@ -65,6 +111,10 @@ namespace CatWare
 	// ----------------------------------------
 	// EntityManager --------------------------
 	// ----------------------------------------
+	EntityManager::EntityManager( )
+	{
+	}
+
 	void EntityManager::CleanUp( )
 	{
 		for ( Entity* entity : entities )
@@ -94,6 +144,69 @@ namespace CatWare
 
 		return 0;
 	}
+
+
+	Entity* EntityManager::GetEntityByID( UInt64 id )
+	{
+		for ( Entity* entity : entities )
+		{
+			if ( id == entity->id )
+			{
+				return entity;
+			}
+		}
+
+		return nullptr;
+	}
+
+	Entity* EntityManager::GetEntityByUniqueName( std::string uniqueName )
+	{
+		for ( Entity* entity : entities )
+		{
+			if ( uniqueName == entity->uniqueName )
+			{
+				return entity;
+			}
+		}
+
+		return nullptr;
+	}
+
+	std::vector<Entity*> EntityManager::GetEntitiesByClassName( std::string className )
+	{
+		std::vector<Entity*> gatheredEntities;
+
+		for ( Entity* entity : entities )
+		{
+			if ( entity->className == className )
+			{
+				gatheredEntities.push_back( entity );
+			}
+		}
+
+		return gatheredEntities;
+	}
+
+	std::vector<Entity*> EntityManager::GetEntitiesByGroup( std::string groupName )
+	{
+		std::vector<Entity*> gatheredEntities;
+
+		for ( Entity* entity : entities )
+		{
+			// Todo: Find a better name for groupName2
+			for ( std::string groupName2 : entity->groups )
+			{
+				if ( groupName == groupName2 )
+				{
+					gatheredEntities.push_back( entity );
+					break;
+				}
+			}
+		}
+
+		return gatheredEntities;
+	}
+
 
 	void EntityManager::Update( )
 	{

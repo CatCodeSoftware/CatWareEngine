@@ -8,4 +8,6 @@
 #	else
 #		define CATWARE_API __declspec(dllimport)
 #	endif
+#else
+#	error Unsupported platform
 #endif

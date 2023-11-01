@@ -33,13 +33,13 @@ namespace CatWare
 		{
 			for ( PhysicsObject* object : physicsObjects )
 			{
-				object->force = object->force + Vector2D( gravity.x * object->mass, gravity.y * object->mass );
+				object->force = object->force + Vector2D( gravity.x * object->mass * GlobalTime::GetDeltaTime( ), gravity.y * object->mass * GlobalTime::GetDeltaTime( ) );
 
 				if ( object->frictionEnabled )
 				{
 					// calculate friction
-					object->force.x -= object->frictionCoefficient * ( object->mass * 10 ) * object->velocity.x;
-					object->force.y -= object->frictionCoefficient * ( object->mass * 10 ) * object->velocity.y;
+					object->force.x -= ( object->frictionCoefficient * ( object->mass * 10 ) * object->velocity.x ) * GlobalTime::GetDeltaTime( );
+					object->force.y -= ( object->frictionCoefficient * ( object->mass * 10 ) * object->velocity.y ) * GlobalTime::GetDeltaTime( );
 				}
 
 				object->velocity = object->velocity + Vector2D( ( object->force.x / object->mass ) * GlobalTime::GetDeltaTime( ), ( object->force.y / object->mass ) * GlobalTime::GetDeltaTime( ) );

@@ -45,8 +45,6 @@ namespace CatWare
 		InternalTimer frameTimer;
 		InternalTimer tickTimer;
 
-		float ticksPerSecond = 60; // 60 seems like a nice default value
-
 		void Init( );
 		void DeInit( );
 		void Update( );

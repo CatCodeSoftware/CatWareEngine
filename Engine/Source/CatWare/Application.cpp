@@ -36,7 +36,7 @@ namespace CatWare
 			GlobalTime::SetDeltaTime( frameTimer.GetTime( ) );
 			frameTimer.Reset( );
 
-			int ticksElapsed = tickTimer.TimesTimeElapsed( ( 1.0 / ticksPerSecond ) * GlobalTime::modifier );
+			int ticksElapsed = tickTimer.TimesTimeElapsed( ( 1.0 / GlobalTime::ticksPerSecond ) * GlobalTime::modifier );
 			
 			if ( ticksElapsed != 0 )
 			{
@@ -62,8 +62,9 @@ namespace CatWare
 			}
 
 			TextureManager::CleanUpTextures( );
-
 			window->SwapBuffers( );
+
+			while ( !frameTimer.HasTimeElapsed( 1 / GlobalTime::maxFPS ) && GlobalTime::frameRateLimited ) { }
 		}
 
 		DeInit( );

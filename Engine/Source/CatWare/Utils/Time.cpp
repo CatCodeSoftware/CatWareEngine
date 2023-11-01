@@ -39,6 +39,10 @@ namespace CatWare
 
 	bool GlobalTime::isTimePaused = false;
 
+	float GlobalTime::ticksPerSecond = 60; // 60 seems like a nice default value
+	float GlobalTime::maxFPS = 240;
+	bool GlobalTime::frameRateLimited = true;
+
 	void GlobalTime::SetDeltaTime( double deltaTime )
 	{
 		GlobalTime::deltaTime = deltaTime;

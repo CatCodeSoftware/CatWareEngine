@@ -27,6 +27,10 @@ namespace CatWare
 	public:
 		static double modifier;
 
+		static float ticksPerSecond;
+		static float maxFPS;
+		static bool frameRateLimited;
+
 		inline static double GetDeltaTime( )
 		{
 			if ( isTimePaused )
@@ -45,9 +49,8 @@ namespace CatWare
 
 	private:
 		static double time;
+		static bool isTimePaused;
 
 		static double deltaTime;
-
-		static bool isTimePaused;
 	};
 }

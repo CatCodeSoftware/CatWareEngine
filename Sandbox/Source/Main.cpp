@@ -51,7 +51,7 @@ public:
 
 	void Init( ) override
 	{
-		AttachPhysicsObject( 10, true, 0.7 );
+		AttachPhysicsObject( 10, true, 100 );
 	}
 
 	void Tick( ) override
@@ -67,19 +67,19 @@ public:
 
 			if ( Input::IsKeyPressed( Input::KEY_W ) )
 			{
-				object->force.y -= 250000;
+				object->force.y = 250000;
 			}
 			if ( Input::IsKeyPressed( Input::KEY_S ) )
 			{
-				object->force.y += 250000;
+				object->force.y = 250000;
 			}
 			if ( Input::IsKeyPressed( Input::KEY_A ) )
 			{
-				object->force.x -= 250000;
+				object->force.x = 250000;
 			}
 			if ( Input::IsKeyPressed( Input::KEY_D ) )
 			{
-				object->force.x += 250000;
+				object->force.x = 250000;
 			}
 		}
 
@@ -122,14 +122,23 @@ public:
 		entityManager.CreateEntityByClassName( "test", { { 100, 100 }, { 64, 64 } }, { } );
 	}
 
-	void Update( ) override
+	void Tick( ) override
 	{
-
+		if ( Input::IsKeyPressed( Input::KEY_UP ) )
+		{
+			GlobalTime::maxFPS++;
+		}
+		if ( Input::IsKeyPressed( Input::KEY_DOWN ) )
+		{
+			GlobalTime::maxFPS--;
+		}
 	}
 
 	void Draw( ) override
 	{
 		Renderer::Clear( { 40, 40, 40, 255 } );
+
+		Renderer::DrawString( "goober", { 90, 90 }, 1, font );
 
 		// Renderer::DrawString( "Hello world!", { 20, 20 }, 1, font, { 255, 255, 255, 255 } );
 		// Renderer::DrawString( "Good to see you!", { font->GetStringSize( "Hello world!" ) + 40, 20 }, 1, font, { 255, 255, 255, 255 } );
@@ -167,6 +176,8 @@ public:
 
 		inGame = new InGame;
 		SceneManager::SetScene( inGame );
+
+		GlobalTime::frameRateLimited = true;
 	}
 
 	void PreDeInit( ) override

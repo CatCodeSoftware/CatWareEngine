@@ -263,7 +263,7 @@ namespace CatWare
 		rectShader->SetUniformMat4( "u_Projection", projectionMatrix );
 
 		float xpos = position.x + character->bearing.x * size;
-		float ypos = position.y - ( character->size.y - character->bearing.y ) * size;
+		float ypos = position.y * size;
 
 		float w = character->size.x * size;
 		float h = character->size.y * size;

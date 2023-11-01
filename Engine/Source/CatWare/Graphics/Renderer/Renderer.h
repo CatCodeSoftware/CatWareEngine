@@ -43,7 +43,6 @@ namespace CatWare
 		static Rendering::Shader* postProcessShader;
 		static Rendering::Shader* textShader;
 
-
 		static Rendering::FrameBuffer* currentFrameBuffer;
 		static Rendering::FrameBuffer* defaultFrameBuffer;
 

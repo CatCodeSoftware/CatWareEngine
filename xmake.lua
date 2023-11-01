@@ -8,7 +8,16 @@ target("CatWareEngine")
 
 	set_languages("cxx20")
 
-    add_defines("CW_PLATFORM_WIN64", "CATWARE_BUILD")
+    add_defines("CATWARE_BUILD")
+
+	-- some config rules
+	if is_plat("windows") then
+		add_defines("CW_PLATFORM_WIN64")
+	end
+
+	if is_mode("debug") then
+		add_defines("CW_DEBUG")
+	end
 
 	-- library include dirs
 	add_includedirs("Engine/Lib/glad/include")
@@ -40,7 +49,9 @@ target("Sandbox")
 	add_deps("CatWareEngine")
 
     add_packages("libsdl", "freetype")
-    
+
+	set_rundir("$(projectdir)/WorkDir")
+
 	add_includedirs("Engine/Lib/glad/include")
 	add_includedirs("Engine/Lib/glm")
 	add_includedirs("Engine/Lib/ImGui")

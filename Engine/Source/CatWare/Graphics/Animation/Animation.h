@@ -39,6 +39,8 @@ namespace CatWare
 		void Update( );
 
 	private:
+		double currentKeyFrameStartTime = 0;
+
 		unsigned int currentKeyFrame = 0;
 		std::vector<KeyFrame> keyFrames;
 	};

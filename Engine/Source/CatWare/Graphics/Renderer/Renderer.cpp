@@ -144,18 +144,10 @@ namespace CatWare
 		rendererAPI->Clear( );
 	}
 
-
-
-	void Renderer::DrawRect( Vector2D position, Vector2D size, Color color, float rotation )
+	void Renderer::DrawRect( Vector2D position, Vector2D size, Color color, glm::mat4 transformMatrix )
 	{
 		glm::mat4 projectionMatrix = glm::ortho( 0.0f - renderOffset.x, float( currentFrameBuffer->GetColorAttachment( )->GetTextureWidth( ) ) - renderOffset.x, float( currentFrameBuffer->GetColorAttachment( )->GetTextureHeight( ) ) - renderOffset.y, 0.0f - renderOffset.y );
 
-		glm::mat4 transformMatrix = glm::mat4( 1.0f );
-
-		transformMatrix = glm::translate( transformMatrix, glm::vec3( position.x + size.x / 2, position.y + size.y / 2, 0.0f ) );
-		transformMatrix = glm::rotate( transformMatrix, glm::radians( rotation ), glm::vec3( 0.0f, 0.0f, 1.0f ) );
-		transformMatrix = glm::translate( transformMatrix, glm::vec3( -( position.x + size.x / 2 ), -( position.y + size.y / 2 ), 0.0f ) );
-		
 		float vertecies[2 * 4] =
 		{
 			position.x, position.y,
@@ -196,15 +188,20 @@ namespace CatWare
 		delete indexBuffer;
 	}
 
-	void Renderer::DrawRectTextured( Vector2D position, Vector2D size, Texture2D* texture, Color tint, float rotation )
+	void Renderer::DrawRect( Vector2D position, Vector2D size, Color color, float rotation )
 	{
-		glm::mat4 projectionMatrix = glm::ortho( 0.0f - renderOffset.x, float( currentFrameBuffer->GetColorAttachment( )->GetTextureWidth( ) ) - renderOffset.x, float( currentFrameBuffer->GetColorAttachment( )->GetTextureHeight( ) ) - renderOffset.y, 0.0f - renderOffset.y );
-
 		glm::mat4 transformMatrix = glm::mat4( 1.0f );
 
 		transformMatrix = glm::translate( transformMatrix, glm::vec3( position.x + size.x / 2, position.y + size.y / 2, 0.0f ) );
 		transformMatrix = glm::rotate( transformMatrix, glm::radians( rotation ), glm::vec3( 0.0f, 0.0f, 1.0f ) );
 		transformMatrix = glm::translate( transformMatrix, glm::vec3( -( position.x + size.x / 2 ), -( position.y + size.y / 2 ), 0.0f ) );
+		
+		DrawRect( position, size, color, transformMatrix );
+	}
+
+	void Renderer::DrawRectTextured( Vector2D position, Vector2D size, Rendering::Texture2D* texture, glm::mat4 transformMatrix, Color tint )
+	{
+		glm::mat4 projectionMatrix = glm::ortho( 0.0f - renderOffset.x, float( currentFrameBuffer->GetColorAttachment( )->GetTextureWidth( ) ) - renderOffset.x, float( currentFrameBuffer->GetColorAttachment( )->GetTextureHeight( ) ) - renderOffset.y, 0.0f - renderOffset.y );
 
 		float vertecies[4 * 4] =
 		{
@@ -251,6 +248,17 @@ namespace CatWare
 		delete vertexArray;
 		delete vertexBuffer;
 		delete indexBuffer;
+	}
+
+	void Renderer::DrawRectTextured( Vector2D position, Vector2D size, Texture2D* texture, Color tint, float rotation )
+	{
+		glm::mat4 transformMatrix = glm::mat4( 1.0f );
+
+		transformMatrix = glm::translate( transformMatrix, glm::vec3( position.x + size.x / 2, position.y + size.y / 2, 0.0f ) );
+		transformMatrix = glm::rotate( transformMatrix, glm::radians( rotation ), glm::vec3( 0.0f, 0.0f, 1.0f ) );
+		transformMatrix = glm::translate( transformMatrix, glm::vec3( -( position.x + size.x / 2 ), -( position.y + size.y / 2 ), 0.0f ) );
+
+		DrawRectTextured( position, size, texture, transformMatrix, tint );
 	}
 
 	void Renderer::DrawCharacter( Text::Character* character, Vector2D position, unsigned int size, Color color )

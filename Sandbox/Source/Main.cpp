@@ -19,6 +19,7 @@ public:
 		velocity = { 0, 0 };
 
 		KeyFrame kf;
+		kf.nextKeyFrameDelay = 1.0;
 
 		AnimationElement element1;
 		AnimationElement element2;
@@ -37,16 +38,25 @@ public:
 		element2.transform.rotation = 80;
 		element2.transform.size = { 30, 30 };
 		
-		AnimationElement element3;
-		element3.transform.position = { 0, 0 };
-		element3.transform.size = { 1, 1 };
-		element3.color = { 255, 0, 0, 255 };
-
 		kf.elements.push_back( element1 );
 		kf.elements.push_back( element2 );
-		kf.elements.push_back( element3 );
+
+		KeyFrame kf2;
+		kf2.nextKeyFrameDelay = 1.0;
+
+		AnimationElement element3;
+
+
+		element3.color = { 255, 0, 255, 255 };
+
+		element3.transform.position = { 0, 0 };
+		element3.transform.rotation = 40;
+		element3.transform.size = { 60, 60 };
+
+		kf2.elements.push_back( element3 );
 
 		anim.AddKeyFrame( kf );
+		anim.AddKeyFrame( kf2 );
 	}
 
 	void Init( ) override
@@ -67,19 +77,19 @@ public:
 
 			if ( Input::IsKeyPressed( Input::KEY_W ) )
 			{
-				object->force.y = 250000;
+				object->force.y -= 250000;
 			}
 			if ( Input::IsKeyPressed( Input::KEY_S ) )
 			{
-				object->force.y = 250000;
+				object->force.y += 250000;
 			}
 			if ( Input::IsKeyPressed( Input::KEY_A ) )
 			{
-				object->force.x = 250000;
+				object->force.x -= 250000;
 			}
 			if ( Input::IsKeyPressed( Input::KEY_D ) )
 			{
-				object->force.x = 250000;
+				object->force.x += 250000;
 			}
 		}
 
@@ -97,9 +107,9 @@ public:
 	void Draw( ) override
 	{
 		//Renderer::DrawRectTextured( transform.position, transform.size, TextureManager::GetTexture( "test_cat" ), { 255, 255, 255, 255 } );
-		Renderer::DrawRectTextured( transform.position, transform.size, TextureManager::GetTexture( "test_cat" ), { 255, 255, 255, 255 }, transform.rotation );
+		// Renderer::DrawRectTextured( transform.position, transform.size, TextureManager::GetTexture( "test_cat" ), { 255, 255, 255, 255 }, transform.rotation );
 
-		// anim.Draw( transform.position, { 1, 1 }, transform.rotation );
+		anim.Draw( transform.position, { 1, 1 }, transform.rotation );
 	}
 
 	static Entity* Create( std::unordered_map<std::string, std::string> tags )

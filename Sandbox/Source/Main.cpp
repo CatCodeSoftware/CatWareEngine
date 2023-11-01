@@ -107,9 +107,9 @@ public:
 	void Draw( ) override
 	{
 		//Renderer::DrawRectTextured( transform.position, transform.size, TextureManager::GetTexture( "test_cat" ), { 255, 255, 255, 255 } );
-		// Renderer::DrawRectTextured( transform.position, transform.size, TextureManager::GetTexture( "test_cat" ), { 255, 255, 255, 255 }, transform.rotation );
+		Renderer::DrawRectTextured( transform.position, transform.size, TextureManager::GetTexture( "test_cat" ), { 255, 255, 255, 255 }, transform.rotation );
 
-		anim.Draw( transform.position, { 1, 1 }, transform.rotation );
+		//anim.Draw( transform.position, { 1, 1 }, transform.rotation );
 	}
 
 	static Entity* Create( std::unordered_map<std::string, std::string> tags )
@@ -129,7 +129,7 @@ public:
 
 	void OnEnter( ) override
 	{
-		entityManager.CreateEntityByClassName( "test", { { 100, 100 }, { 64, 64 } }, { } );
+		entityManager.CreateEntityByClassName( "test", { { 100, 100 }, { 128, 128 } }, { } );
 	}
 
 	void Tick( ) override
@@ -180,7 +180,7 @@ public:
 	void PostInit( ) override
 	{
 		EntityRegistry::RegisterEntity<TestEntity>( "test" );
-		TextureManager::AddTexture( "test_cat", "cat.png" );
+		TextureManager::AddTexture( "test_cat", "cat.png", TextureFilter::NEAREST );
 
 		font = new Text::Font( "EngineRes/Fonts/Oxanium-Regular.ttf", 50 );
 

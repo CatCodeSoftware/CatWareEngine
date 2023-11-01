@@ -10,7 +10,7 @@ namespace CatWare
 	{
 		namespace OpenGL
 		{
-			OpenGLTexture::OpenGLTexture( int width, int height, void* data, unsigned int channels )
+			OpenGLTexture::OpenGLTexture( int width, int height, void* data, unsigned int channels, TextureFilter tf )
 			{
 				GLenum internalFormat = GL_RGBA8;
 				GLenum format = GL_RGBA;
@@ -41,8 +41,8 @@ namespace CatWare
 				glGenTextures( 1, &textureID );
 				glBindTexture( GL_TEXTURE_2D, textureID );
 
-				glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
-				glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );// set billinear by default
+				SetTextureFilter( tf );
+
 				glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER );
 				glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER );
 
@@ -70,7 +70,16 @@ namespace CatWare
 
 			void OpenGLTexture::SetTextureFilter( TextureFilter tf )
 			{
-
+				if ( tf == TextureFilter::NEAREST )
+				{
+					glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
+					glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
+				}
+				else if ( tf == TextureFilter::LINEAR )
+				{
+					glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+					glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+				}
 			}
 
 			void OpenGLTexture::Unbind( )

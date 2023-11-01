@@ -10,7 +10,7 @@ namespace CatWare
 	class TextureResource
 	{
 	public:
-		TextureResource( std::string filePath );
+		TextureResource( std::string filePath, Rendering::TextureFilter textureFilter );
 		~TextureResource( );
 
 		Rendering::Texture2D* GetTexture( );
@@ -23,6 +23,7 @@ namespace CatWare
 
 	private:
 		Rendering::Texture2D* texture = nullptr;
+		Rendering::TextureFilter textureFilter;
 
 		unsigned int refrenceCount = 0;
 
@@ -36,7 +37,7 @@ namespace CatWare
 	{
 	public:
 		// Adds a texture to the registry, returns if adding was succesful 
-		static bool	AddTexture( std::string	name, std::string path );
+		static bool	AddTexture( std::string	name, std::string path, Rendering::TextureFilter textureFilter = Rendering::TextureFilter::LINEAR );
 
 		// Removes a texture from the registry, returns is removing was succesful
 		static bool RemoveTexture( std::string name );

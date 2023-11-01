@@ -11,7 +11,7 @@ namespace CatWare
 			class OpenGLTexture : public Texture2D
 			{
 			public:
-				OpenGLTexture( int width, int height, void* data, unsigned int channels );
+				OpenGLTexture( int width, int height, void* data, unsigned int channels, TextureFilter tf );
 				virtual ~OpenGLTexture( );
 				
 				virtual void Bind( unsigned int slot ) override;

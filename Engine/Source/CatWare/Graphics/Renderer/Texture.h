@@ -11,7 +11,7 @@ namespace CatWare
 	{
 		enum class TextureFilter
 		{
-			NEAREST, BILINEAR
+			NEAREST, LINEAR
 		};
 
 		class CATWARE_API Texture2D
@@ -29,8 +29,8 @@ namespace CatWare
 			virtual UInt32 GetTextureWidth( ) = 0;
 			virtual UInt32 GetTextureHeight( ) = 0;
 
-			static Texture2D* Create( int width, int height, void* buffer, unsigned int channels = 4 );
-			static Texture2D* Create( std::string path );
+			static Texture2D* Create( int width, int height, void* buffer, unsigned int channels = 4, TextureFilter textureFilter = TextureFilter::LINEAR );
+			static Texture2D* Create( std::string path, TextureFilter tf );
 		};
 	}
 }

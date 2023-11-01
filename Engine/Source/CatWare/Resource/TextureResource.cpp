@@ -7,13 +7,15 @@ namespace CatWare
 	// -----------------------------------------
 	// TextureResource -------------------------
 	// -----------------------------------------
-	TextureResource::TextureResource( std::string filePath )
+	TextureResource::TextureResource( std::string filePath, Rendering::TextureFilter textureFilter )
 	{
 		this->dontRemove = false;
 		this->filePath = filePath;
 
 		isLoaded = false;
 		refrenceCount = false;
+
+		this->textureFilter = textureFilter;
 	}
 
 	TextureResource::~TextureResource( )
@@ -34,7 +36,7 @@ namespace CatWare
 	{
 		CW_ENGINE_LOG->Info( "Loading texture from %s", filePath.c_str( ) );
 
-		texture = Rendering::Texture2D::Create( filePath );
+		texture = Rendering::Texture2D::Create( filePath, textureFilter );
 
 		if ( texture == nullptr )
 			return;
@@ -68,9 +70,9 @@ namespace CatWare
 	// -----------------------------------------
 	std::unordered_map<std::string, TextureResource*> TextureManager::textureRegistry;
 
-	bool TextureManager::AddTexture( std::string name, std::string path )
+	bool TextureManager::AddTexture( std::string name, std::string path, Rendering::TextureFilter textureFilter )
 	{
-		TextureResource* textureResource = new TextureResource( path );
+		TextureResource* textureResource = new TextureResource( path, textureFilter );
 
 		textureRegistry.insert( { name, textureResource } );
 

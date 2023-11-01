@@ -1,10 +1,3 @@
-[submodule "Engine/Lib/SDL2"]
-	path = Engine/Lib/SDL2
-	url = https://github.com/libsdl-org/SDL
-	branch = SDL2
-[submodule "Engine/Lib/Freetype"]
-	path = Engine/Lib/Freetype
-	url = https://github.com/ubawurinna/freetype-windows-binaries
 [submodule "Engine/Lib/ImGui"]
 	path = Engine/Lib/ImGui
 	url = https://github.com/ocornut/imgui

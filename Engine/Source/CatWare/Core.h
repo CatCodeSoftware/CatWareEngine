@@ -9,8 +9,3 @@
 #		define CATWARE_API __declspec(dllimport)
 #	endif
 #endif
-
-namespace CatWare
-{
-	void CATWARE_API Init( );
-}

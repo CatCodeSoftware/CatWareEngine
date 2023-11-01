@@ -1,3 +1,8 @@
+add_rules("mode.debug", "mode.release")
+
+add_requires("libsdl")
+add_requires("freetype")
+
 target("CatWareEngine")
     set_kind("shared")
 
@@ -6,18 +11,19 @@ target("CatWareEngine")
     add_defines("CW_PLATFORM_WIN64", "CATWARE_BUILD")
 
 	-- library include dirs
-	add_includedirs("Engine/Lib/freetype/include")
 	add_includedirs("Engine/Lib/glad/include")
 	add_includedirs("Engine/Lib/glm")
 	add_includedirs("Engine/Lib/ImGui")
 	add_includedirs("Engine/Lib/ImGui/backends")
-	add_includedirs("Engine/Lib/SDL2/include")
 	add_includedirs("Engine/Lib/Single header")
+
+    add_packages("libsdl", "freetype")
 
 	-- self include dir
 	add_includedirs("Engine/Source/")
 
 	-- library sources
+    add_files("Engine/Lib/stb_image.cpp")
 	add_files("Engine/Lib/ImGui/*.cpp")
 	add_files("Engine/Lib/ImGui/backends/imgui_impl_sdl2.cpp")
 	add_files("Engine/Lib/ImGui/backends/imgui_impl_opengl3.cpp")
@@ -32,16 +38,15 @@ target("Sandbox")
 
     add_defines("CW_PLATFORM_WIN64")
 	add_deps("CatWareEngine")
+
+    add_packages("libsdl", "freetype")
     
-	add_includedirs("Engine/Lib/freetype/include")
 	add_includedirs("Engine/Lib/glad/include")
 	add_includedirs("Engine/Lib/glm")
 	add_includedirs("Engine/Lib/ImGui")
 	add_includedirs("Engine/Lib/ImGui/backends")
-	add_includedirs("Engine/Lib/SDL2/include")
 	add_includedirs("Engine/Lib/Single header")
 
     add_includedirs("Engine/Source/")
 
 	add_files("Sandbox/Source/**.cpp")
-    add_headerfiles("Engine/Source/**.h")

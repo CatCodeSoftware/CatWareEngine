@@ -23,7 +23,8 @@ These features may or may not get included in the future
 - Full 3D support
 
 ## Building
-Right now CatWare uses Visual Studio 2022 solutions. A proper build system is planned
+CatWare uses xmake to generate projects. Install xmake here https://xmake.io
+To generate a Visual Studio solution open your terminal and run ```xmake project -k vsxmake2022 -m "debug;release"```
 
 ## Docs
 Documentiation is localized in the docs folder in the repository

@@ -73,6 +73,7 @@ public:
 			if ( Input::IsKeyPressed( Input::KEY_SPACE ) )
 			{
 				DetachPhysicsObject( );
+				// Destroy( );
 			}
 
 			if ( Input::IsKeyPressed( Input::KEY_W ) )
@@ -121,8 +122,15 @@ public:
 class InGame : public Scene
 {
 public:
+	AudioHandle* handle;
+
 	InGame( )
 	{
+		Sound* sound = new Sound( "meow.wav" );
+		handle = AudioEngine::PlaySound( sound );
+
+		handle->SetLooping( true );
+
 		physicsWorld.gravity = { 0, 0 };
 		Renderer::renderOffset = { 0, 0 };
 	}
@@ -141,6 +149,16 @@ public:
 		if ( Input::IsKeyPressed( Input::KEY_DOWN ) )
 		{
 			GlobalTime::maxFPS--;
+		}
+
+		if ( Input::IsKeyPressed( Input::KEY_LEFT ) )
+		{
+			handle->SetSpeed( handle->GetSpeed( ) - 0.0025 );
+		}
+
+		if ( Input::IsKeyPressed( Input::KEY_RIGHT ) )
+		{
+			handle->SetSpeed( handle->GetSpeed( ) + 0.0025 );
 		}
 	}
 

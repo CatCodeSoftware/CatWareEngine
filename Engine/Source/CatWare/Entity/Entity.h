@@ -13,6 +13,7 @@
 
 namespace CatWare
 {
+    // This is a base class for all entities in the game
 	class CATWARE_API Entity
 	{
 		friend class EntityManager;
@@ -57,6 +58,7 @@ namespace CatWare
 		Physics::PhysicsObject* attachedPhysicsObject = nullptr;
 	};
 
+    // This static class holds info about how to create entities
 	class CATWARE_API EntityRegistry
 	{
 	public:
@@ -73,6 +75,7 @@ namespace CatWare
 		static std::unordered_map<std::string, Entity* ( * )( std::unordered_map<std::string, std::string> tags )> entityCreatePointers;
 	};
 
+    // This is a scene specific class that manages all entities
 	class CATWARE_API EntityManager
 	{
 	public:

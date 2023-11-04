@@ -30,6 +30,7 @@ namespace CatWare
 			if ( ( *it ) == name )
 			{
 				groups.erase( it );
+				break;
 			}
 		}
 	}

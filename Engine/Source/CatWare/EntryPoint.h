@@ -10,6 +10,8 @@ namespace CatWare
 	extern Application* CreateApplication( );
 }
 
+// TODO: Make the entry point use WinMain and windows subsystem in release/distrubution mode
+
 #if defined(CW_PLATFORM_WIN64)
 	int main( int argc, char** argv )
 	{

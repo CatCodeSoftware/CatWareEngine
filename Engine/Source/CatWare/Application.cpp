@@ -14,6 +14,7 @@
 #include "Resource/TextureResource.h"
 #include "Error.h"
 #include "Graphics/Text.h"
+#include "Audio/Audio.h"
 
 namespace CatWare
 {
@@ -93,9 +94,12 @@ namespace CatWare
 
 		window = new Window( initConfig.windowTitle, initConfig.windowWidth, initConfig.windowHeight, initConfig.windowFullscreen );
 
+		CW_ENGINE_LOG->Info( "Initializing renderer" );
 		renderingAPI = new Rendering::OpenGL::OpenGLAPI;
 		Renderer::SetScreenSize( window->GetWidth( ), window->GetHeight( ) );
 		Renderer::Init( renderingAPI );
+
+		AudioEngine::InitAudio( );
 
 		Text::InitFreetype( );
 

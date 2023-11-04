@@ -7,6 +7,13 @@
 
 namespace CatWare
 {
+	/* Internal class that uses a refrence counting system that
+	   Automatically unloads the texture if unused
+
+	   TODO:
+		- Improve the refrence counting method
+		- Make this type of autocleanup available for diffrent resources
+	*/
 	class TextureResource
 	{
 	public:

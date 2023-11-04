@@ -27,6 +27,8 @@ namespace CatWare
 			std::vector<Collider*> colliders;
 		};
 
+
+		// Controlls all physics objects
 		class CATWARE_API PhysicsWorld
 		{
 		public:

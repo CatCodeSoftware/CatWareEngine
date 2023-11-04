@@ -1,5 +1,9 @@
 #pragma once
 
+/*
+	CatWare Engine 1.0 - Developed by Cat Code Software
+*/
+
 #include "CatWare/Core.h"
 #include "CatWare/Application.h"
 #include "CatWare/EntryPoint.h"
@@ -15,5 +19,6 @@
 #include "CatWare/Physics/Collision.h"
 #include "CatWare/Physics/Physics.h"
 #include "CatWare/Graphics/Animation/Animation.h"
+#include "CatWare/Audio/Audio.h"
 
 #undef CW_DEBUG // Don't let the debug shit spill over to the game

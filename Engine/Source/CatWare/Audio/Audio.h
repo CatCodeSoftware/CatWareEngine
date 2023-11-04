@@ -16,6 +16,8 @@ namespace CatWare
 	public:
 		Sound( std::string soundFilePath );
 
+		int useCount;
+
 		inline SoLoud::Wav* GetWave( ) { return &wave; }
 	private:
 		SoLoud::Wav wave;
@@ -45,8 +47,9 @@ namespace CatWare
 		inline float GetPitch( ) { return pitch; }
 		inline float GetSpeed( ) { return speed; }
 
-    protected:
 		Sound* soundResource;
+
+    protected:
 		int soloudHandle;
 
         bool looping = false;

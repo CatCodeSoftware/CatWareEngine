@@ -141,12 +141,15 @@ namespace CatWare
     {
         int soloudHandle = soloud.play( *( sound->GetWave( ) ), 1.0 );
 
+		sound->useCount++;
+
         AudioHandle* audioHandle = new AudioHandle( sound, soloudHandle );
         audioHandles.push_back(audioHandle);
 
         if ( soloudHandle == -1 )
         {
             CW_ENGINE_LOG->Error( "Failed to play sound" );
+			sound->useCount--;
         }
 
         return audioHandle;
@@ -156,12 +159,15 @@ namespace CatWare
 	{
 		int soloudHandle = soloud.play( *( sound->GetWave( ) ), 1.0 );
 
+		sound->useCount++;
+
         AudioHandle2D* audioHandle = new AudioHandle2D( sound, position, volume, radius, soloudHandle );
         audioHandles.push_back(audioHandle);
 
         if ( soloudHandle == -1 )
         {
             CW_ENGINE_LOG->Error( "Failed to play sound" );
+			sound->useCount--;
         }
 
         return audioHandle;
@@ -175,6 +181,8 @@ namespace CatWare
 
 			if ( ( *it )->IsFinished( ) )
 			{
+				( *it )->soundResource->useCount--;
+
 				delete *it;
 				audioHandles.erase( it );
 			}

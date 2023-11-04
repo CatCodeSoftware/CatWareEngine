@@ -13,7 +13,7 @@
 #include "CatWare/Input/Binds.h"
 #include "CatWare/Graphics/Renderer/Renderer.h"
 #include "CatWare/Entity/Entity.h"
-#include "CatWare/Resource/TextureResource.h"
+#include "CatWare/Assets/Assets.h"
 #include "CatWare/Utils/Time.h"
 #include "CatWare/Graphics/Text.h"
 #include "CatWare/Physics/Collision.h"

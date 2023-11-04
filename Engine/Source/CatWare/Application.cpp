@@ -11,10 +11,10 @@
 #include "Utils/Log.h"
 #include "Utils/Color.h"
 #include "Graphics/Renderer/Renderer.h"
-#include "Resource/TextureResource.h"
 #include "Error.h"
 #include "Graphics/Text.h"
 #include "Audio/Audio.h"
+#include "Assets/Assets.h"
 
 namespace CatWare
 {
@@ -62,7 +62,8 @@ namespace CatWare
 				DrawGUI( );
 			}
 
-			TextureManager::CleanUpTextures( );
+			Assets::textures.RunCleanup( );
+			Assets::sounds.RunCleanup( );
 			window->SwapBuffers( );
 
 			while ( !frameTimer.HasTimeElapsed( 1 / GlobalTime::maxFPS ) && GlobalTime::frameRateLimited ) { }
@@ -113,9 +114,11 @@ namespace CatWare
 	{
 		PreDeInit( );
 		
-		TextureManager::RemoveEverything( );
 		Renderer::DeInit( );
 		AudioEngine::DeInitAudio( );
+
+		Assets::textures.Clear( );
+		Assets::sounds.Clear( );
 
 		delete window;
 		delete renderingAPI;

@@ -111,7 +111,7 @@ public:
 	void Draw( ) override
 	{
 		//Renderer::DrawRectTextured( transform.position, transform.size, TextureManager::GetTexture( "test_cat" ), { 255, 255, 255, 255 } );
-		Renderer::DrawRectTextured( transform.position, transform.size, TextureManager::GetTexture( "test_cat" ), { 255, 255, 255, 255 }, transform.rotation );
+		Renderer::DrawRectTextured( transform.position, transform.size, Assets::textures.GetAsset( "test_cat" ), { 255, 255, 255, 255 }, transform.rotation );
 		Renderer::renderOffset = Vector2D( 0, 0 ) - ( transform.position - Vector2D( 1600 / 2, 900 / 2 ) + transform.size / Vector2D( 2, 2 ) );
 
 		//anim.Draw( transform.position, { 1, 1 }, transform.rotation );
@@ -130,8 +130,7 @@ public:
 
 	InGame( )
 	{
-		Sound* sound = new Sound( "meow.wav" );
-		handle = AudioEngine::PlaySound2D( sound, { 1280 / 2, 720 / 2 }, 1.0, 700 );
+		handle = AudioEngine::PlaySound2D( Assets::sounds.GetAsset( "meow" ), { 1280 / 2, 720 / 2 }, 1.0, 700 );
 
 		handle->SetLooping( true );
 
@@ -203,7 +202,9 @@ public:
 	void PostInit( ) override
 	{
 		EntityRegistry::RegisterEntity<TestEntity>( "test" );
-		TextureManager::AddTexture( "test_cat", "cat.png", TextureFilter::NEAREST );
+
+		Assets::textures.Add( "test_cat", "cat.png" );
+		Assets::sounds.Add( "meow", "meow.wav" );
 
 		font = new Text::Font( "EngineRes/Fonts/Oxanium-Regular.ttf", 50 );
 

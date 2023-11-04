@@ -7,7 +7,7 @@
 #include "CatWare/Debug/Debug.h"
 
 #include "CatWare/Graphics/Renderer/Renderer.h"
-#include "CatWare/Resource/TextureResource.h"
+#include "CatWare/Assets/Assets.h"
 #include "CatWare/Utils/Time.h"
 
 namespace CatWare
@@ -48,7 +48,7 @@ namespace CatWare
 			transform = glm::translate( transform, glm::vec3( -( position.x + element.transform.position.x + element.transform.size.x / 2 ), -( position.y + element.transform.position.y + element.transform.size.y / 2 ), 0.0f ) );
 
 			if ( element.textured )
-				Renderer::DrawRectTextured( position + element.transform.position, element.transform.size * scale, TextureManager::GetTexture( element.textureID ), transform, element.color );
+				Renderer::DrawRectTextured( position + element.transform.position, element.transform.size * scale, Assets::textures.GetAsset( element.textureID ), transform, element.color );
 			else
 				Renderer::DrawRect( position + element.transform.position, element.transform.size * scale, element.color, transform );
 		}

@@ -112,10 +112,10 @@ namespace CatWare
 	void Application::DeInit( )
 	{
 		PreDeInit( );
-
+		
 		TextureManager::RemoveEverything( );
-
 		Renderer::DeInit( );
+		AudioEngine::DeInitAudio( );
 
 		delete window;
 		delete renderingAPI;
@@ -151,6 +151,8 @@ namespace CatWare
 		currentScene->Update( );
 		currentScene->entityManager.Update( );
 		currentScene->physicsWorld.Update( );
+
+		AudioEngine::UpdateHandles( );
 	}
 
 	void Application::Tick( )

@@ -26,6 +26,8 @@ namespace CatWare
     public:
 		AudioHandle( Sound* sound, int soloudHandle );
 
+		virtual void Update( );
+
         void Pause( ); // This function can be called again to resume
         void Stop( );
     
@@ -57,13 +59,26 @@ namespace CatWare
         float pitch = 1.0;
     };
 
+	class CATWARE_API AudioListener2D
+	{
+	public:
+		AudioListener2D( Vector2D position, float volume );
+
+		Vector2D position;
+		float volume;
+	};
+
     // 2D Spatial audio
     class CATWARE_API AudioHandle2D : public AudioHandle
     {
     public:
-        AudioHandle2D( Sound* sound, Vector2D position, int soloudHandle );
+        AudioHandle2D( Sound* sound, Vector2D position, float volume, double radius, int soloudHandle );
 
-        void SetPosition( );
+		void Update( ) override;
+
+		Vector2D position;
+		float volumeCenter; // Todo: find a beter name for this
+		double radius;
     };
 
     class CATWARE_API AudioEngine
@@ -73,9 +88,13 @@ namespace CatWare
 		static void DeInitAudio( );
 
         static AudioHandle* PlaySound( Sound* sound );
-    	static AudioHandle2D* PlaySound2D( Sound* sound );
+    	static AudioHandle2D* PlaySound2D( Sound* sound, Vector2D position, float volume, double radius );
+
+		static void UpdateHandles( );
 
 		inline static SoLoud::Soloud* GetSoLoudInstance() { return &soloud; }
+
+		static AudioListener2D audioListener;
 	private:
 		static std::vector<AudioHandle*> audioHandles;
 		static SoLoud::Soloud soloud;

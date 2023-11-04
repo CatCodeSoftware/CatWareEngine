@@ -62,6 +62,7 @@ public:
 	void Init( ) override
 	{
 		AttachPhysicsObject( 10, true, 100 );
+		AudioEngine::audioListener = AudioListener2D( transform.position, 1 );
 	}
 
 	void Tick( ) override
@@ -103,12 +104,15 @@ public:
 		{
 			transform.rotation += 2;
 		}
+
+		AudioEngine::audioListener.position = transform.position;
 	}
 
 	void Draw( ) override
 	{
 		//Renderer::DrawRectTextured( transform.position, transform.size, TextureManager::GetTexture( "test_cat" ), { 255, 255, 255, 255 } );
 		Renderer::DrawRectTextured( transform.position, transform.size, TextureManager::GetTexture( "test_cat" ), { 255, 255, 255, 255 }, transform.rotation );
+		Renderer::renderOffset = Vector2D( 0, 0 ) - ( transform.position - Vector2D( 1600 / 2, 900 / 2 ) + transform.size / Vector2D( 2, 2 ) );
 
 		//anim.Draw( transform.position, { 1, 1 }, transform.rotation );
 	}
@@ -127,7 +131,7 @@ public:
 	InGame( )
 	{
 		Sound* sound = new Sound( "meow.wav" );
-		handle = AudioEngine::PlaySound( sound );
+		handle = AudioEngine::PlaySound2D( sound, { 1280 / 2, 720 / 2 }, 1.0, 700 );
 
 		handle->SetLooping( true );
 
@@ -137,7 +141,7 @@ public:
 
 	void OnEnter( ) override
 	{
-		entityManager.CreateEntityByClassName( "test", { { 100, 100 }, { 128, 128 } }, { } );
+		entityManager.CreateEntityByClassName( "test", { { 0, 0 }, { 64, 64 } }, { } );
 	}
 
 	void Tick( ) override
@@ -153,12 +157,12 @@ public:
 
 		if ( Input::IsKeyPressed( Input::KEY_LEFT ) )
 		{
-			handle->SetSpeed( handle->GetSpeed( ) - 0.0025 );
+			
 		}
 
 		if ( Input::IsKeyPressed( Input::KEY_RIGHT ) )
 		{
-			handle->SetSpeed( handle->GetSpeed( ) + 0.0025 );
+			
 		}
 	}
 
@@ -167,6 +171,7 @@ public:
 		Renderer::Clear( { 40, 40, 40, 255 } );
 
 		Renderer::DrawString( "goober", { 90, 90 }, 1, font );
+		Renderer::DrawRect( { 1280 / 2 - 2, 720 / 2 - 2 }, { 4, 4}, { 255, 0, 0, 255 } );
 
 		// Renderer::DrawString( "Hello world!", { 20, 20 }, 1, font, { 255, 255, 255, 255 } );
 		// Renderer::DrawString( "Good to see you!", { font->GetStringSize( "Hello world!" ) + 40, 20 }, 1, font, { 255, 255, 255, 255 } );

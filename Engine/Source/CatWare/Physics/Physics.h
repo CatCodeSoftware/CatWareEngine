@@ -37,6 +37,7 @@ namespace CatWare
 			void AddObject( PhysicsObject* physicsObject );
 			void RemoveObject( PhysicsObject* physicsObject ); // Doesn't call delete! Beware of memory leaks.
 
+			void Tick( );
 			void Update( );
 
 		private:

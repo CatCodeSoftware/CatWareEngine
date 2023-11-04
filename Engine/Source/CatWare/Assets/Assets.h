@@ -124,9 +124,26 @@ namespace CatWare
     class AssetManager
     {
     public:
+        AssetManager( )
+        {
+
+        }
+
+        AssetManager( std::string fallbackPath )
+        {
+            Add( "fallback", fallbackPath );
+        }
+
         Asset* GetAsset( std::string name )
         {
-            return assetMap.find( name )->second->Get( );
+            auto iterator = assetMap.find( name );
+            
+            if ( iterator == assetMap.end( ) )
+            {
+                iterator = assetMap.find( "fallback" );
+            }
+
+            return iterator->second->Get( );
         }
 
         void Add( std::string name, std::string path )

@@ -61,7 +61,7 @@ public:
 
 	void Init( ) override
 	{
-		AttachPhysicsObject( 10, true, 100 );
+		AttachPhysicsObject( 10, true, 1.5 );
 		AudioEngine::audioListener = AudioListener2D( transform.position, 1 );
 	}
 
@@ -74,24 +74,24 @@ public:
 			if ( Input::IsKeyPressed( Input::KEY_SPACE ) )
 			{
 				DetachPhysicsObject( );
-				// Destroy( );
+				Destroy( );
 			}
 
 			if ( Input::IsKeyPressed( Input::KEY_W ) )
 			{
-				object->force.y -= 250000;
+				object->force.y -= 250;
 			}
 			if ( Input::IsKeyPressed( Input::KEY_S ) )
 			{
-				object->force.y += 250000;
+				object->force.y += 250;
 			}
 			if ( Input::IsKeyPressed( Input::KEY_A ) )
 			{
-				object->force.x -= 250000;
+				object->force.x -= 250;
 			}
 			if ( Input::IsKeyPressed( Input::KEY_D ) )
 			{
-				object->force.x += 250000;
+				object->force.x += 250;
 			}
 		}
 
@@ -111,7 +111,7 @@ public:
 	void Draw( ) override
 	{
 		//Renderer::DrawRectTextured( transform.position, transform.size, TextureManager::GetTexture( "test_cat" ), { 255, 255, 255, 255 } );
-		Renderer::DrawRectTextured( transform.position, transform.size, Assets::textures.GetAsset( "test_cat" ), { 255, 255, 255, 255 }, transform.rotation );
+		Renderer::DrawRectTextured( transform.position, transform.size, Assets::textures.GetAsset( "testcat" ), { 255, 255, 255, 255 }, transform.rotation );
 		Renderer::renderOffset = Vector2D( 0, 0 ) - ( transform.position - Vector2D( 1600 / 2, 900 / 2 ) + transform.size / Vector2D( 2, 2 ) );
 
 		//anim.Draw( transform.position, { 1, 1 }, transform.rotation );
@@ -212,6 +212,7 @@ public:
 		SceneManager::SetScene( inGame );
 
 		GlobalTime::frameRateLimited = true;
+		GlobalTime::maxFPS = 240;
 	}
 
 	void PreDeInit( ) override

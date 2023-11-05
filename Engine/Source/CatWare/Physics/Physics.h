@@ -6,6 +6,7 @@
 #include "CatWare/Utils/Vector.h"
 #include "CatWare/Utils/Transform.h"
 #include "Collision.h"
+#include "CollisionResponse.h"
 
 namespace CatWare
 {
@@ -24,7 +25,11 @@ namespace CatWare
 			Vector2D velocity;
 			Vector2D force;
 
+			float bounciness = 1;
+
+			bool collidable;
 			std::vector<Collider*> colliders;
+			CollisionResponse* response = nullptr;
 		};
 
 

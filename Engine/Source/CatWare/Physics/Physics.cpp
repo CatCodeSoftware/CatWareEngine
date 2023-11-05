@@ -38,8 +38,39 @@ namespace CatWare
 				if ( object->frictionEnabled )
 				{
 					// calculate friction
-					//object->force.x -= ( object->frictionCoefficient * ( object->mass * 10 ) * object->velocity.x );
-					//object->force.y -= ( object->frictionCoefficient * ( object->mass * 10 ) * object->velocity.y );
+					object->force.x -= ( object->frictionCoefficient * ( object->mass * 10 ) * object->velocity.x );
+					object->force.y -= ( object->frictionCoefficient * ( object->mass * 10 ) * object->velocity.y );
+				}
+
+				// check collisions between objects
+				for ( PhysicsObject* physObj1 : physicsObjects )
+				{
+					HasCollision:
+					for ( PhysicsObject* physObj2 : physicsObjects )
+					{
+						if ( physObj1 == physObj2 && !physObj1->collidable || !physObj2->collidable ) break;
+
+						for ( Collider* c1 : physObj1->colliders )
+						{
+							for ( Collider* c2 : physObj2->colliders )
+							{
+								CollisionInfo ci = TestCollision( c1, c2 );
+
+								if ( ci.hasCollision )
+								{
+									if ( physObj1->response != nullptr )
+										physObj1->response->OnCollide( physObj1, physObj2, ci );
+
+									if ( physObj2->response != nullptr )
+										physObj1->response->OnCollide( physObj2, physObj1, ci );
+
+
+									// stop checking collision for these objects
+									goto HasCollision;
+								}	
+							}
+						}
+					}
 				}
 			}
 		}

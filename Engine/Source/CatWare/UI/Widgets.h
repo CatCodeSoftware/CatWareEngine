@@ -50,6 +50,8 @@ namespace CatWare
 				void Update( ) override;
 				void Draw( ) override;
 
+				void OnClick( unsigned int button ) override;
+
 				Rendering::Texture2D* buttonImage;
 				std::string label;
 
@@ -93,10 +95,15 @@ namespace CatWare
 				unsigned int cursorPos = 0;
 			};
 
-			class Slider
+			class Slider : public Widget
 			{
 			public:
 				Slider( double minValue, double maxValue );
+
+				void Draw( ) override;
+				void Update( ) override;
+
+				void OnClick( unsigned int button ) override;
 
 				void ( *onChanged )( double value ) = nullptr;
 

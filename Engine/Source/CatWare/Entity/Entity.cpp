@@ -218,13 +218,15 @@ namespace CatWare
 
 	void EntityManager::Update( )
 	{
-		for ( std::vector<Entity*>::iterator it = entities.begin( ); it != entities.end( ); )
+		std::vector<std::vector<Entity*>::iterator> entityDeleteQueue;
+
+		for ( std::vector<Entity*>::iterator it = entities.begin( ); it != entities.end( ); it++ )
 		{
 			Entity* entity = ( *it );
 
 			if ( entity->shouldDelete )
 			{
-				entities.erase( it );
+				entityDeleteQueue.push_back( it );
 			}
 			else
 			{
@@ -232,6 +234,12 @@ namespace CatWare
 
 				it++;
 			}
+		}
+
+		for ( auto it : entityDeleteQueue )
+		{
+			delete *it;
+			entities.erase( it );
 		}
 	}
 

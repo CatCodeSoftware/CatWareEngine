@@ -8,6 +8,7 @@
 #include "CatWare/Utils/Types.h"
 #include "CatWare/Graphics/Renderer/Texture.h"
 #include "CatWare/Audio/Audio.h"
+#include "CatWare/Graphics/Text.h"
 
 namespace CatWare
 {

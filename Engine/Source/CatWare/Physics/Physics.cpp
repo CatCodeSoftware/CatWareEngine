@@ -72,6 +72,9 @@ namespace CatWare
 						}
 					}
 				}
+
+				object->velocity.x += ( object->force.x / object->mass ) / GlobalTime::ticksPerSecond * GlobalTime::modifier;
+				object->velocity.y += object->force.y / object->mass / GlobalTime::ticksPerSecond * GlobalTime::modifier;
 			}
 		}
 
@@ -79,9 +82,6 @@ namespace CatWare
 		{
 			for ( PhysicsObject* object : physicsObjects )
 			{
-				object->velocity.x += object->force.x / object->mass;
-				object->velocity.y += object->force.y / object->mass;
-
 				object->transform->position.x += object->velocity.x * GlobalTime::GetDeltaTime( );
 				object->transform->position.y += object->velocity.y * GlobalTime::GetDeltaTime( );
 

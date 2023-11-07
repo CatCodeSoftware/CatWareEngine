@@ -231,8 +231,6 @@ namespace CatWare
 			else
 			{
 				entity->Update( );
-
-				it++;
 			}
 		}
 

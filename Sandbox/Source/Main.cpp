@@ -1,4 +1,5 @@
 #include <CatWare.h>
+#include <CatWare/EntryPoint.h>
 
 #include <iostream>
 
@@ -61,7 +62,7 @@ public:
 
 	void Init( ) override
 	{
-		AttachPhysicsObject( 10, true, 1.5 );
+		AttachPhysicsObject( 10, true, 0.9 );
 		AudioEngine::audioListener = AudioListener2D( transform.position, 1 );
 	}
 
@@ -79,19 +80,19 @@ public:
 
 			if ( Input::IsKeyPressed( Input::KEY_W ) )
 			{
-				object->force.y -= 250;
+				object->force.y = 2500.0;
 			}
 			if ( Input::IsKeyPressed( Input::KEY_S ) )
 			{
-				object->force.y += 250;
+				object->force.y = 2500.0;
 			}
 			if ( Input::IsKeyPressed( Input::KEY_A ) )
 			{
-				object->force.x -= 250;
+				object->force.x = 2500.0;
 			}
 			if ( Input::IsKeyPressed( Input::KEY_D ) )
 			{
-				object->force.x += 250;
+				object->force.x = 2500.0;
 			}
 		}
 

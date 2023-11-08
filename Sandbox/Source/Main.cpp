@@ -80,19 +80,19 @@ public:
 
 			if ( Input::IsKeyPressed( Input::KEY_W ) )
 			{
-				object->force.y = 2500.0;
+				object->force.y -= 25000;
 			}
 			if ( Input::IsKeyPressed( Input::KEY_S ) )
 			{
-				object->force.y = 2500.0;
+				object->force.y += 25000;
 			}
 			if ( Input::IsKeyPressed( Input::KEY_A ) )
 			{
-				object->force.x = 2500.0;
+				object->force.x -= 25000;
 			}
 			if ( Input::IsKeyPressed( Input::KEY_D ) )
 			{
-				object->force.x = 2500.0;
+				object->force.x += 25000;
 			}
 		}
 
@@ -111,11 +111,8 @@ public:
 
 	void Draw( ) override
 	{
-		//Renderer::DrawRectTextured( transform.position, transform.size, TextureManager::GetTexture( "test_cat" ), { 255, 255, 255, 255 } );
 		Renderer::DrawRectTextured( transform.position, transform.size, Assets::textures.GetAsset( "testcat" ), { 255, 255, 255, 255 }, transform.rotation );
 		Renderer::renderOffset = Vector2D( 0, 0 ) - ( transform.position - Vector2D( 1600 / 2, 900 / 2 ) + transform.size / Vector2D( 2, 2 ) );
-
-		//anim.Draw( transform.position, { 1, 1 }, transform.rotation );
 	}
 
 	static Entity* Create( std::unordered_map<std::string, std::string> tags )
@@ -172,9 +169,6 @@ public:
 
 		Renderer::DrawString( "goober", { 90, 90 }, 1, font );
 		Renderer::DrawRect( { 1280 / 2 - 2, 720 / 2 - 2 }, { 4, 4}, { 255, 0, 0, 255 } );
-
-		// Renderer::DrawString( "Hello world!", { 20, 20 }, 1, font, { 255, 255, 255, 255 } );
-		// Renderer::DrawString( "Good to see you!", { font->GetStringSize( "Hello world!" ) + 40, 20 }, 1, font, { 255, 255, 255, 255 } );
 	}
 
 	void DrawGUI( ) override
@@ -204,7 +198,7 @@ public:
 	{
 		EntityRegistry::RegisterEntity<TestEntity>( "test" );
 
-		Assets::textures.Add( "test_cat", "cat.png" );
+		Assets::textures.Add( "testcat", "cat.png" );
 		Assets::sounds.Add( "meow", "meow.wav" );
 
 		font = new Text::Font( "EngineRes/Fonts/Oxanium-Regular.ttf", 50 );

@@ -1,0 +1,9 @@
+PROJECT_NAME = "CatWare Engine"
+PROJECT_BRIEF = "A game engine developed by Cat Code Software"
+
+RECURSIVE = YES
+
+GENERATE_LATEX = NO
+
+# only generate docs for the engine
+INPUT = "Engine/Source"

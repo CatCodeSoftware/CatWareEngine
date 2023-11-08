@@ -1,4 +1,10 @@
-#pragma once
+/**
+* @file Types.h
+* 
+* @brief Contains some typedefs for diffrent datatypes.
+* 
+* @author PointThink
+*/
 
 #pragma once
 

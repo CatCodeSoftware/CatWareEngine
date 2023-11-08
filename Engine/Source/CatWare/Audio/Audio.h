@@ -1,3 +1,11 @@
+/**
+* @file Audio.h
+* 
+* @brief The entire sound system
+* 
+* @author PointThink
+*/
+
 #pragma once
 
 #include <string>
@@ -11,6 +19,10 @@
 
 namespace CatWare
 {
+	/**
+	* A sound resource, not recomended to use this directly
+	* Use the asset managers in Assets.h
+	*/
     class CATWARE_API Sound
     {
 	public:
@@ -23,6 +35,10 @@ namespace CatWare
 		SoLoud::Wav wave;
     };
 
+	/**
+	* Class returned by AudioEngine::PlaySound
+	* Allows to modify sound properties while it's playing
+	*/
     class CATWARE_API AudioHandle
     {
     public:
@@ -71,7 +87,10 @@ namespace CatWare
 		float volume;
 	};
 
-    // 2D Spatial audio
+    /**
+	* Basically the same thing as AudioHandle
+	* Except it's used for 2D spatial audio
+	*/
     class CATWARE_API AudioHandle2D : public AudioHandle
     {
     public:
@@ -84,6 +103,9 @@ namespace CatWare
 		double radius;
     };
 
+	/**
+	* Handles almost everything related to sound
+	*/
     class CATWARE_API AudioEngine
     {
 	public:

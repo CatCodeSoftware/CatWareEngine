@@ -1,3 +1,11 @@
+/**	
+* @file Scene.h
+* 
+* @brief Manages the game scenes
+* 
+* @author PointThink
+*/
+
 #pragma once
 
 #include "Core.h"
@@ -6,6 +14,10 @@
 
 namespace CatWare
 {
+	/**
+	* The Scene class is meant to be inherited from by another class
+	* which represents the current game state
+	*/
 	class Scene
 	{
 		friend class Application;

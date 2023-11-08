@@ -1,3 +1,11 @@
+/**
+* @file Core.h
+* 
+* @brief Contains macro definitions. Not important to the end user
+* 
+* @author PointThink
+*/
+
 #pragma once
 
 #define SDL_MAIN_HANDLED

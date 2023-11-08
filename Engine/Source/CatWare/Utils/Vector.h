@@ -1,3 +1,11 @@
+/**
+* @file Vector.h
+* 
+* @brief Contains stuff related to vector math
+* 
+* @author PointThink
+*/
+
 #pragma once
 
 #include <math.h>

@@ -1,3 +1,12 @@
+/**
+* @file MemTracker.h
+* 
+* @brief Internal tool that tracks memory allocations in the engine
+* but causes a lot of slowdown.
+* 
+* @author PointThink
+*/
+
 #pragma once
 
 #include <vector>

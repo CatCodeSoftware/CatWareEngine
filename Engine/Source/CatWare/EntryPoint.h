@@ -1,3 +1,12 @@
+/**
+* @file EntryPoint.h
+* 
+* @breif Abstracts the main function, due to an oversight
+* this header has to be included seperately from CatWare.h.
+* 
+* @author PointThink
+*/
+
 #pragma once
 
 #include "Application.h"

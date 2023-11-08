@@ -1,3 +1,12 @@
+/**
+* @file Assets.h
+* 
+* @brief Handles everything related to assets. Like automatic
+* removal and getting asset by ID.
+* 
+* @author PointThink
+*/
+
 #pragma once
 
 #include <string>

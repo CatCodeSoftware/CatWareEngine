@@ -1,3 +1,11 @@
+/**
+*	@file Application.h
+*
+*	@brief File for the CatWare::Application class.
+*
+*	@author PointThink
+*/
+
 #pragma once
 
 #include <chrono>
@@ -10,6 +18,12 @@
 
 namespace CatWare
 {
+	// We need to make these weird comments because doxygen is fucking stupid - PT
+
+	/**
+	* Contains information used by CatWare::Application when initializing.
+	* Needs to be modified before in the chid class constructor.
+	*/
 	class InitConfig
 	{
 	public:
@@ -21,6 +35,10 @@ namespace CatWare
 		Rendering::RendererAPI::API renderAPI = Rendering::RendererAPI::API::OPENGL;
 	};
 
+	/**
+	* Singleton class for the entire application.
+	* Handles initialization, the game loop and deinitialization
+	*/
 	class CATWARE_API Application
 	{
 	public:

@@ -1,3 +1,11 @@
+/**
+* @file Error.h
+* 
+* @brief Contains various utilities for error handling.
+* 
+* @author PointThink
+*/
+
 #pragma once
 
 #include <string>

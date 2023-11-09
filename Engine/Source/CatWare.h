@@ -1,7 +1,11 @@
 #pragma once
 
-/*
-	CatWare Engine 1.0 - Developed by Cat Code Software
+/**
+* @file CatWare.h
+* 
+* @brief Includes all CatWare headers
+* 
+* @author PointThink
 */
 
 #include "CatWare/Core.h"

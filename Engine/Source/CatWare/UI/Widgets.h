@@ -1,3 +1,11 @@
+/**
+* @file Widgets.h
+* 
+* @brief Contains widgets for UI module
+* 
+* @author PointThink
+*/
+
 #pragma once
 
 #include <string>
@@ -12,7 +20,7 @@ namespace CatWare
 	{
 		namespace Widgets
 		{
-			// base class for all widgets
+			//! Base class for all widgets
 			class Widget
 			{
 			public:
@@ -55,7 +63,8 @@ namespace CatWare
 				Rendering::Texture2D* buttonImage;
 				std::string label;
 
-				void ( *onClick )( ) = nullptr; // click callback
+				//! The function pointed to by this gets called when the button gets pressed
+				void ( *onClick )( ) = nullptr;
 			};
 
 			class Checkbox : public Widget
@@ -86,7 +95,10 @@ namespace CatWare
 				unsigned int GetCursorPos( );
 				void SetCursorPos( );
 
+				//! Called when enter is pressed
 				void ( *onEnter )( std::string string ) = nullptr;
+
+				//! Called when entry field is modified
 				void ( *onCharacterTyped )( char character ) = nullptr;
 
 			private:
@@ -105,6 +117,7 @@ namespace CatWare
 
 				void OnClick( unsigned int button ) override;
 
+				//! Called when value is changed
 				void ( *onChanged )( double value ) = nullptr;
 
 				double percent = 0;

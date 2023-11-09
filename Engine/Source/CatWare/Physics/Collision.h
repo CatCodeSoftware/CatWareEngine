@@ -1,3 +1,13 @@
+/**
+* @file Collision.h
+* 
+* @brief Contains collider types and collision checking functions.
+* 
+* @todo Make this not suck
+* 
+* @author PointThink
+*/
+
 #pragma once
 
 #include "CatWare/Core.h"
@@ -67,6 +77,7 @@ namespace CatWare
 			Vector2D pointB = { 0, 0 }; // Furthest point of B into A
 		};
 
+		//! Generic collision check function. Accepts any collider.
 		CATWARE_API CollisionInfo TestCollision( Collider* a, Collider* b );
 
 		CATWARE_API CollisionInfo TestCollisionCircleCircle( CircleCollider* a, CircleCollider* b );

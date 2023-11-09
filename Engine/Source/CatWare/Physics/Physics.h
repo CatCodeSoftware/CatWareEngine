@@ -1,3 +1,11 @@
+/**
+* @file Physics.h
+* 
+* @brief The physics module
+* 
+* @author PointThink
+*/
+
 #pragma once
 
 #include <vector>
@@ -12,10 +20,17 @@ namespace CatWare
 {
 	namespace Physics
 	{
+		/** 
+		* A class to represent a single physics object in the world
+		* 
+		* Not really meant to be used standalone but bound to an entity.
+		* Look up CatWare::Entity::AttachPhysicsObject
+		*/
 		class PhysicsObject
 		{
 		public:
-			Transform* transform; // The transform to change when updating the object
+			//! A pointer to the transform to modify when the object is updated
+			Transform* transform;
 			
 			double mass = 1;
 
@@ -33,7 +48,7 @@ namespace CatWare
 		};
 
 
-		// Controlls all physics objects
+		//! Controls all physics objects
 		class CATWARE_API PhysicsWorld
 		{
 		public:

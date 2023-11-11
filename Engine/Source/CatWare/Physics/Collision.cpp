@@ -26,20 +26,9 @@ namespace CatWare
 			if ( distance <= a->radius + b->radius )
 			{
 				ci.hasCollision = true;
-				ci.depth = distance - ( a->radius + b->radius );
+				ci.penetration = distance - ( a->radius + b->radius );
 
-				// Get point B
-				double rotationB = b->position.GetRotationTo( a->position );
-				Vector2D normalized = Vector2D::Normalize( rotationB, a->radius );
-				ci.pointB = { a->position.x + normalized.x, a->position.y + normalized.y };
-
-				// Same for point A
-				double rotationA = a->position.GetRotationTo( b->position );
-				Vector2D normalizedA = Vector2D::Normalize( rotationA, b->radius );
-				ci.pointA = { b->position.x + normalizedA.x, b->position.y + normalizedA.y };
-
-				ci.depth = ci.pointB.GetDistanceTo( a->position );
-				ci.normalized = Vector2D::Normalize( ci.pointB.GetRotationTo( ci.pointA ), ci.depth );
+				ci.normal = Vector2D::Normalize( a->position.GetRotationTo( b->position ), ci.penetration );
 			}
 			else
 			{
@@ -53,52 +42,49 @@ namespace CatWare
 		{
 			CollisionInfo ci;
 
-			if ( a->position.x + a->size.x >= b->position.x &&
-				a->position.x <= b->position.x + b->size.x && 
-				a->position.y + a->size.y >= b->position.y &&
-				a->position.y <= b->position.y + b->size.y
-				)
+			// I have no idea what any of this does - PT
+			Vector2D aCenter = a->position + ( a->size / Vector2D( 2, 2 ) );
+			Vector2D bCenter = b->position + ( b->size / Vector2D( 2, 2 ) );
+
+			Vector2D n = aCenter - bCenter;
+
+			float aExtent = ( ( a->position.x + a->size.x ) - a->position.x ) / 2;
+			float bExtent = ( ( b->position.x + b->size.x ) - b->position.x ) / 2;
+
+			float xOverlap = aExtent + bExtent - abs( n.x );
+
+			if ( xOverlap > 0 )
 			{
-				ci.hasCollision = true;
+				aExtent = ( ( a->position.y + a->size.y ) - a->position.y ) / 2;
+				bExtent = ( ( b->position.y + b->size.y ) - b->position.y ) / 2;
 
-				// i apologize for all of these ifs, i couldn't find a better way - PT
-				if ( a->position.x <= b->position.x )
-				{
-					ci.pointA.x = b->position.x;
-				}
-				else
-				{
-					ci.pointA.x = b->position.x + b->size.x;
-				}
+				float yOverlap = aExtent + bExtent - abs( n.y );
 
-				if ( a->position.y <= b->position.y )
+				if ( yOverlap > 0 )
 				{
-					ci.pointA.y = b->position.y;
-				}
-				else
-				{
-					ci.pointA.y = b->position.y + b->size.y;
-				}
+					if ( xOverlap > yOverlap )
+					{
+						if ( n.y < 0 )
+							ci.normal = { 0, 1 };
+						else
+							ci.normal = { 0, -1 };
 
-				if ( b->position.x <= a->position.x )
-				{
-					ci.pointB.x = a->position.x;
-				}
-				else
-				{
-					ci.pointB.x = a->position.x + a->size.x;
-				}
+						ci.penetration = yOverlap;
+						ci.hasCollision = true;
+					}
+					else
+					{
+						if ( n.x < 0 )
+							ci.normal = { 1, 0 };
+						else
+							ci.normal = { -1, 0 };
 
-				if ( b->position.y <= a->position.y )
-				{
-					ci.pointB.y = a->position.y;
-				}
-				else
-				{
-					ci.pointB.y = a->position.y + a->size.y;
+						ci.penetration = xOverlap;
+						ci.hasCollision = true;
+					}
 				}
 
-				ci.normalized = Vector2D::Normalize( ci.pointB.GetRotationTo( ci.pointA ), ci.pointB.GetDistanceTo( ci.pointA ) );
+				ci.normal = ci.normal * Vector2D( xOverlap, yOverlap );
 			}
 
 			return ci;

@@ -69,12 +69,8 @@ namespace CatWare
 		{
 		public:
 			bool hasCollision = false; // self explanitory
-			double depth = 0; // lenght of b to a
-
-			Vector2D normalized = { 0, 0 }; // b to a normalized
-
-			Vector2D pointA = { 0, 0 }; // Furthest point of A into B
-			Vector2D pointB = { 0, 0 }; // Furthest point of B into A
+			double penetration = 0; // lenght of b to a
+			Vector2D normal = { 0, 0 }; // b to a normalized
 		};
 
 		//! Generic collision check function. Accepts any collider.

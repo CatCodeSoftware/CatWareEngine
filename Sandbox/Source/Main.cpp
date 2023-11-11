@@ -8,6 +8,8 @@ using namespace CatWare::Rendering;
 
 Text::Font* font = nullptr;
 
+Physics::RectCollider* collider1;
+Physics::RectCollider* collider2;
 
 class TestEntity : public Entity
 {
@@ -18,50 +20,12 @@ public:
 	{
 		className = "test";
 		velocity = { 0, 0 };
-
-		KeyFrame kf;
-		kf.nextKeyFrameDelay = 1.0;
-
-		AnimationElement element1;
-		AnimationElement element2;
-
-		element1.color = { 255, 255, 255, 255 };
-		element2.color = { 0, 255, 0, 255 };
-
-		element1.transform.position = { 0, 0 };
-		element1.transform.rotation = 40;
-		element1.transform.size = { 60, 60 };
-
-		element1.textured = true;
-		element1.textureID = "test_cat";
-
-		element2.transform.position = { 50, 50 };
-		element2.transform.rotation = 80;
-		element2.transform.size = { 30, 30 };
-		
-		kf.elements.push_back( element1 );
-		kf.elements.push_back( element2 );
-
-		KeyFrame kf2;
-		kf2.nextKeyFrameDelay = 1.0;
-
-		AnimationElement element3;
-
-
-		element3.color = { 255, 0, 255, 255 };
-
-		element3.transform.position = { 0, 0 };
-		element3.transform.rotation = 40;
-		element3.transform.size = { 60, 60 };
-
-		kf2.elements.push_back( element3 );
-
-		anim.AddKeyFrame( kf );
-		anim.AddKeyFrame( kf2 );
 	}
 
 	void Init( ) override
 	{
+		collider1 = new Physics::RectCollider( transform.position, { 64, 64 } );
+
 		AttachPhysicsObject( 10, true, 0.9 );
 		AudioEngine::audioListener = AudioListener2D( transform.position, 1 );
 	}
@@ -107,12 +71,24 @@ public:
 		}
 
 		AudioEngine::audioListener.position = transform.position;
+
+		collider1->position = transform.position;
+		
+		// check collision
+		Physics::CollisionInfo ci = Physics::TestCollision( collider1, collider2 );
+
+		if ( ci.hasCollision )
+		{
+			transform.position = transform.position - ci.normal;
+		}
 	}
 
 	void Draw( ) override
 	{
-		Renderer::DrawRectTextured( transform.position, transform.size, Assets::textures.GetAsset( "testcat" ), { 255, 255, 255, 255 }, transform.rotation );
+		// Renderer::DrawRectTextured( transform.position, transform.size, Assets::textures.GetAsset( "testcat" ), { 255, 255, 255, 255 }, transform.rotation );
 		Renderer::renderOffset = Vector2D( 0, 0 ) - ( transform.position - Vector2D( 1600 / 2, 900 / 2 ) + transform.size / Vector2D( 2, 2 ) );
+
+		Renderer::DrawRect( transform.position, { 64, 64 }, { 255, 0, 0, 255 } );
 	}
 
 	static Entity* Create( std::unordered_map<std::string, std::string> tags )
@@ -134,6 +110,8 @@ public:
 
 		physicsWorld.gravity = { 0, 0 };
 		Renderer::renderOffset = { 0, 0 };
+
+		collider2 = new Physics::RectCollider( { 500, 300 }, { 256, 128 } );
 	}
 
 	void OnEnter( ) override
@@ -169,6 +147,9 @@ public:
 
 		Renderer::DrawString( "goober", { 90, 90 }, 1, font );
 		Renderer::DrawRect( { 1280 / 2 - 2, 720 / 2 - 2 }, { 4, 4}, { 255, 0, 0, 255 } );
+
+		// Draw collider 2
+		Renderer::DrawRect( { 500, 300 }, { 256, 128 }, { 255, 255, 0, 255 } );
 	}
 
 	void DrawGUI( ) override
@@ -199,6 +180,8 @@ public:
 		EntityRegistry::RegisterEntity<TestEntity>( "test" );
 
 		Assets::textures.Add( "testcat", "cat.png" );
+		Assets::textures.Add( "circle", "circle.png" );
+
 		Assets::sounds.Add( "meow", "meow.wav" );
 
 		font = new Text::Font( "EngineRes/Fonts/Oxanium-Regular.ttf", 50 );

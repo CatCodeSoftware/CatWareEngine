@@ -48,8 +48,19 @@ namespace CatWare
         {
             if ( refrenceCount == 0 && isLoaded && !IsInUse( asset ) )
             {
-                Unload( asset );
-                asset = nullptr;
+                unusedFor++;
+
+                if ( unusedFor > 200 )
+                {
+                    Unload( asset );
+                    asset = nullptr;
+                }
+
+                
+            }
+            else
+            {
+                unusedFor = 0;
             }
 
             ResetRefrenceCount( );
@@ -69,6 +80,8 @@ namespace CatWare
         bool isLoaded = false; 
 
     private:
+        unsigned int unusedFor = 0;
+
         std::string path;
 
         UInt16 refrenceCount = 0;

@@ -12,6 +12,7 @@ namespace CatWare
 	class CATWARE_API Animation
 	{
 	public:
+		Animation( std::string filePath );
 		Animation( float fps, std::vector<std::string> frames);
 
 		void Draw( Vector2D position, Vector2D size, Color color = { 255, 255, 255, 255 }, float rotation = 0 );

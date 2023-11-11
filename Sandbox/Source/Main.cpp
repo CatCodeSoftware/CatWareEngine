@@ -13,7 +13,7 @@ class TestEntity : public Entity
 public:
 	Physics::RectCollider* collider;
 
-	Animation anim = Animation( 2, { "testcat", "circle" } );
+	Animation anim = Animation( "anim.txt" );
 
 	TestEntity( )
 	{

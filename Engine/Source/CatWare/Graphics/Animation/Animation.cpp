@@ -12,58 +12,31 @@
 
 namespace CatWare
 {
-	void Animation::Draw( Vector2D position, Vector2D scale, float rotation )
+	Animation::Animation( float fps, std::vector<std::string> frames )
+	{
+		this->fps = fps;
+		this->frames = frames;
+
+		currentFrameStartTime = GlobalTime::GetDeltaTime( );
+	}
+
+	void Animation::Draw( Vector2D position, Vector2D size, Color color, float rotation )
 	{
 		Update( );
 
-		KeyFrame keyFrame = keyFrames[currentKeyFrame];
-
-		// Get largest size + pos
-		Vector2D largestPosSize = { 0, 0 };
-
-		for ( AnimationElement element : keyFrame.elements )
-		{
-			Vector2D posSize = element.transform.position + element.transform.size;
-
-			if ( posSize.x > largestPosSize.x )
-				largestPosSize.x = posSize.x;
-
-			if ( posSize.y > largestPosSize.y )
-				largestPosSize.y = posSize.y;
-		}
-
-		for ( AnimationElement element : keyFrame.elements )
-		{
-			// Create a transform matrix
-			glm::mat4 transform( 1.0 );
-
-			// rotate it again by the origin of the whole frame
-			transform = glm::translate( transform, glm::vec3( position.x + largestPosSize.x / 2, position.y + largestPosSize.y / 2, 0.f ) );
-			transform = glm::rotate( transform, glm::radians( rotation ), glm::vec3( 0.0f, 0.0f, 1.0f ) );
-			transform = glm::translate( transform, glm::vec3( -( position.x + largestPosSize.x / 2 ), -( position.y + largestPosSize.y / 2 ), 0.f ) );
-
-			// first rotate the element around itself
-			transform = glm::translate( transform, glm::vec3( position.x + element.transform.position.x + element.transform.size.x / 2, position.y + element.transform.position.y + element.transform.size.y / 2, 0.0f ) );
-			transform = glm::rotate( transform, glm::radians( element.transform.rotation ), glm::vec3( 0.0f, 0.0f, 1.0f ) );
-			transform = glm::translate( transform, glm::vec3( -( position.x + element.transform.position.x + element.transform.size.x / 2 ), -( position.y + element.transform.position.y + element.transform.size.y / 2 ), 0.0f ) );
-
-			if ( element.textured )
-				Renderer::DrawRectTextured( position + element.transform.position, element.transform.size * scale, Assets::textures.GetAsset( element.textureID ), transform, element.color );
-			else
-				Renderer::DrawRect( position + element.transform.position, element.transform.size * scale, element.color, transform );
-		}
+		Renderer::DrawRectTextured( position, size, Assets::textures.GetAsset( frames[currentFrame] ), color, rotation );
 	}
 
 	void Animation::Update( )
 	{
-		if ( GlobalTime::GetTime( ) - currentKeyFrameStartTime > keyFrames[currentKeyFrame].nextKeyFrameDelay )
+		if ( GlobalTime::GetTime( ) - currentFrameStartTime > 1 / fps && !paused )
 		{
-			currentKeyFrame++;
+			currentFrame++;
 
-			if ( currentKeyFrame >= keyFrames.size( ) )
-				currentKeyFrame = 0;
+			if ( currentFrame >= frames.size( ) )
+				currentFrame = 0;
 
-			currentKeyFrameStartTime = GlobalTime::GetTime( );
+			currentFrameStartTime = GlobalTime::GetTime( );
 		}
 	}
 }

@@ -1,0 +1,3 @@
+2
+cat.png
+cat2.png

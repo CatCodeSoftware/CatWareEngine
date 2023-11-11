@@ -8,13 +8,12 @@ using namespace CatWare::Rendering;
 
 Text::Font* font = nullptr;
 
-Physics::RectCollider* collider1;
 Physics::RectCollider* collider2;
 
 class TestEntity : public Entity
 {
 public:
-	Animation anim;
+	Physics::RectCollider* collider1;
 
 	TestEntity( )
 	{
@@ -27,6 +26,13 @@ public:
 		collider1 = new Physics::RectCollider( transform.position, { 64, 64 } );
 
 		AttachPhysicsObject( 10, true, 0.9 );
+		Physics::PhysicsObject* po = GetAttachedPhysicsObject( );
+
+		po->AttachCollider( collider1 );
+		po->resistance = 0.5;
+		po->collidable = true;
+		po->movable = true;
+
 		AudioEngine::audioListener = AudioListener2D( transform.position, 1 );
 	}
 
@@ -71,16 +77,6 @@ public:
 		}
 
 		AudioEngine::audioListener.position = transform.position;
-
-		collider1->position = transform.position;
-		
-		// check collision
-		Physics::CollisionInfo ci = Physics::TestCollision( collider1, collider2 );
-
-		if ( ci.hasCollision )
-		{
-			transform.position = transform.position - ci.normal;
-		}
 	}
 
 	void Draw( ) override
@@ -102,8 +98,12 @@ class InGame : public Scene
 public:
 	AudioHandle* handle;
 
+	Transform transform;
+
 	InGame( )
 	{
+		transform.position = { 400, 400 };
+
 		handle = AudioEngine::PlaySound2D( Assets::sounds.GetAsset( "meow" ), { 1280 / 2, 720 / 2 }, 1.0, 700 );
 
 		handle->SetLooping( true );
@@ -111,11 +111,19 @@ public:
 		physicsWorld.gravity = { 0, 0 };
 		Renderer::renderOffset = { 0, 0 };
 
-		collider2 = new Physics::RectCollider( { 500, 300 }, { 256, 128 } );
+		collider2 = new Physics::RectCollider( transform.position, { 256, 128 } );
 	}
 
 	void OnEnter( ) override
 	{
+		auto po = new Physics::PhysicsObject;
+		
+		po->AttachCollider( collider2 );
+		po->transform = &transform;
+		po->collidable = true;
+		po->movable = true;
+
+		physicsWorld.AddObject( po );
 		entityManager.CreateEntityByClassName( "test", { { 0, 0 }, { 64, 64 } }, { } );
 	}
 
@@ -149,7 +157,7 @@ public:
 		Renderer::DrawRect( { 1280 / 2 - 2, 720 / 2 - 2 }, { 4, 4}, { 255, 0, 0, 255 } );
 
 		// Draw collider 2
-		Renderer::DrawRect( { 500, 300 }, { 256, 128 }, { 255, 255, 0, 255 } );
+		Renderer::DrawRect( transform.position, { 256, 128 }, { 255, 255, 0, 255 } );
 	}
 
 	void DrawGUI( ) override

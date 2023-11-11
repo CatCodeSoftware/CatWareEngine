@@ -26,6 +26,10 @@ namespace CatWare
 		{
 		public:
 			Vector2D position;
+
+			//! position relative to physics body
+			Vector2D positionRelative;
+
 			ColliderType colliderType = ColliderType::UNKNOWN;
 		};
 

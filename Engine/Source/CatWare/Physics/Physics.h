@@ -26,9 +26,16 @@ namespace CatWare
 		* Not really meant to be used standalone but bound to an entity.
 		* Look up CatWare::Entity::AttachPhysicsObject
 		*/
-		class PhysicsObject
+		class CATWARE_API PhysicsObject
 		{
 		public:
+			void AttachCollider( Collider* collider, Vector2D relativePos = { 0, 0 } );
+			void DetachCollider( Collider* collider );
+
+			inline std::vector<Collider*> GetColliders( ) { return colliders; }
+
+			void SetResponse( CollisionResponse* response );
+
 			//! A pointer to the transform to modify when the object is updated
 			Transform* transform;
 			
@@ -40,9 +47,12 @@ namespace CatWare
 			Vector2D velocity;
 			Vector2D force;
 
-			float bounciness = 1;
+			double resistance = 1;
 
-			bool collidable;
+			bool movable = false;
+			bool collidable = true;
+
+		private:
 			std::vector<Collider*> colliders;
 			CollisionResponse* response = nullptr;
 		};
@@ -61,6 +71,8 @@ namespace CatWare
 			void Update( );
 
 		private:
+			void ResolveCollisions( PhysicsObject* physObj1, PhysicsObject* physObj2 );
+
 			std::vector<PhysicsObject*> physicsObjects;
 		};
 	}

@@ -39,7 +39,7 @@ namespace CatWare
 		UInt64 GetID( );
 
 		// Physics object stuff
-		void AttachPhysicsObject( double mass = 1.0, bool frictionEnabled = false, double frictionCoefficient = 1, std::vector<Physics::Collider*> colliders = { } );
+		void AttachPhysicsObject( double mass = 1.0, bool frictionEnabled = false, double frictionCoefficient = 1 );
 		Physics::PhysicsObject* GetAttachedPhysicsObject( );
 		void DetachPhysicsObject( );
 

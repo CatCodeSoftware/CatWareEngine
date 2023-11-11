@@ -57,7 +57,7 @@ namespace CatWare
 	}
 
 
-	void Entity::AttachPhysicsObject( double mass, bool frictionEnabled, double frictionCoefficient, std::vector<Physics::Collider*> colliders )
+	void Entity::AttachPhysicsObject( double mass, bool frictionEnabled, double frictionCoefficient )
 	{
 		if ( attachedPhysicsObject != nullptr )
 		{
@@ -72,7 +72,7 @@ namespace CatWare
 		attachedPhysicsObject->mass = mass;
 		attachedPhysicsObject->frictionEnabled = frictionEnabled;
 		attachedPhysicsObject->frictionCoefficient = frictionCoefficient;
-		attachedPhysicsObject->colliders = colliders;
+		// attachedPhysicsObject->colliders = colliders;
 
 		SceneManager::GetCurrentScene( )->physicsWorld.AddObject( attachedPhysicsObject );
 	}
@@ -92,7 +92,7 @@ namespace CatWare
 
 		SceneManager::GetCurrentScene( )->physicsWorld.RemoveObject( attachedPhysicsObject );
 
-		for ( Physics::Collider* collider : attachedPhysicsObject->colliders )
+		for ( Physics::Collider* collider : attachedPhysicsObject->GetColliders( ) )
 		{
 			delete collider;
 		}

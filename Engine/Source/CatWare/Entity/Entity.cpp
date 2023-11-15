@@ -62,7 +62,7 @@ namespace CatWare
 		if ( attachedPhysicsObject != nullptr )
 		{
 			CW_ENGINE_LOG->Warning( "Attempted to attach a physics object to entity that already has one" );
-			return;
+			return nullptr;
 		}
 
 		attachedPhysicsObject = new Physics::PhysicsObject;

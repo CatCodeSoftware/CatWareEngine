@@ -15,6 +15,7 @@
 #include "Graphics/Text.h"
 #include "Audio/Audio.h"
 #include "Assets/Assets.h"
+#include "Input/Binds.h"
 
 namespace CatWare
 {
@@ -114,6 +115,8 @@ namespace CatWare
 	{
 		PreDeInit( );
 		
+		Input::CleanUpBinds( );
+
 		Renderer::DeInit( );
 		AudioEngine::DeInitAudio( );
 

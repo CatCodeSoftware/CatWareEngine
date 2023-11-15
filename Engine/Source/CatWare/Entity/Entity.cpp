@@ -57,7 +57,7 @@ namespace CatWare
 	}
 
 
-	void Entity::AttachPhysicsObject( double mass, bool frictionEnabled, double frictionCoefficient )
+	Physics::PhysicsObject* Entity::AttachPhysicsObject( double mass, bool frictionEnabled, double frictionCoefficient )
 	{
 		if ( attachedPhysicsObject != nullptr )
 		{
@@ -75,6 +75,8 @@ namespace CatWare
 		// attachedPhysicsObject->colliders = colliders;
 
 		SceneManager::GetCurrentScene( )->physicsWorld.AddObject( attachedPhysicsObject );
+
+		return attachedPhysicsObject;
 	}
 
 	Physics::PhysicsObject* Entity::GetAttachedPhysicsObject( )

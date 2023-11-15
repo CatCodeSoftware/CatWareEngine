@@ -121,5 +121,13 @@ namespace CatWare
 				}
 			}
 		}
+
+		void CleanUpBinds( )
+		{
+			for ( auto bind : bindings )
+			{
+				delete bind.second;
+			}
+		}
 	}
 }

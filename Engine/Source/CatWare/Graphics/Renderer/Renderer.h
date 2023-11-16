@@ -7,15 +7,16 @@
 #include "Shader.h"
 #include "Texture.h"
 #include "../Text.h"
+#include "../Camera.h"
 
 namespace CatWare
 {
 	class CATWARE_API Renderer
 	{
 	public:
-		static Vector2D renderOffset;
+		static OrthoCamera* camera2D;
 
-		static void Init( Rendering::RendererAPI* a_rendererAPI );
+		static void Init( Rendering::RendererAPI* a_rendererAPI, int screenWidth, int screenHeight );
 		static void DeInit( );
 
 		static void SetScreenSize( unsigned int width, unsigned int height );

@@ -16,6 +16,8 @@ using namespace CatWare::Rendering;
 
 namespace CatWare
 {
+	OrthoCamera* Renderer::camera2D = nullptr;
+
 	RendererAPI* Renderer::rendererAPI = nullptr;
 
 	Shader* Renderer::rectShader = nullptr;
@@ -26,15 +28,13 @@ namespace CatWare
 	FrameBuffer* Renderer::currentFrameBuffer = nullptr;
 	FrameBuffer* Renderer::defaultFrameBuffer = nullptr;
 
-	Vector2D Renderer::renderOffset = { 0, 0 };
-
 	unsigned int Renderer::width = 0;
 	unsigned int Renderer::height = 0;
 
-	void Renderer::Init( RendererAPI* a_rendererAPI )
+	void Renderer::Init( RendererAPI* a_rendererAPI, int screenWidth, int screenHeight )
 	{
 		CW_ENGINE_LOG->Info( "Initializing renderer" );
-
+		
 		rendererAPI = a_rendererAPI;
 
 		rendererAPI->SetBlendAlpha( true );
@@ -45,6 +45,9 @@ namespace CatWare
 		postProcessShader = Shader::CreateFromFile( "EngineRes/Shaders/PostProcessVertex.glsl", "EngineRes/Shaders/PostProcessFragment.glsl" );
 		textShader = Shader::CreateFromFile( "EngineRes/Shaders/TextVertex.glsl", "EngineRes/Shaders/TextFragment.glsl" );
 
+		width = screenWidth;
+		height = screenHeight;
+
 		// create framebuffer
 		FrameBufferSpec fbSpec;
 		fbSpec.width = width;
@@ -52,6 +55,8 @@ namespace CatWare
 
 		defaultFrameBuffer = FrameBuffer::Create( fbSpec );
 		SetRenderTarget( defaultFrameBuffer );
+
+		camera2D = new OrthoCamera( screenWidth, screenHeight );
 	}
 
 	void Renderer::DeInit( )
@@ -133,7 +138,10 @@ namespace CatWare
 		width = a_width;
 		height = a_height;
 
-		// rendererAPI->SetViewportSize( width, height );
+		delete camera2D;
+		camera2D = new OrthoCamera( a_width, a_height );
+
+		rendererAPI->SetViewportSize( width, height );
 	}
 
 
@@ -146,7 +154,7 @@ namespace CatWare
 
 	void Renderer::DrawRect( Vector2D position, Vector2D size, Color color, glm::mat4 transformMatrix )
 	{
-		glm::mat4 projectionMatrix = glm::ortho( 0.0f - renderOffset.x, float( currentFrameBuffer->GetColorAttachment( )->GetTextureWidth( ) ) - renderOffset.x, float( currentFrameBuffer->GetColorAttachment( )->GetTextureHeight( ) ) - renderOffset.y, 0.0f - renderOffset.y );
+		glm::mat4 projectionMatrix = camera2D->CalculateProjectionMatrix( );
 
 		float vertecies[2 * 4] =
 		{
@@ -201,7 +209,7 @@ namespace CatWare
 
 	void Renderer::DrawRectTextured( Vector2D position, Vector2D size, Rendering::Texture2D* texture, glm::mat4 transformMatrix, Color tint )
 	{
-		glm::mat4 projectionMatrix = glm::ortho( 0.0f - renderOffset.x, float( currentFrameBuffer->GetColorAttachment( )->GetTextureWidth( ) ) - renderOffset.x, float( currentFrameBuffer->GetColorAttachment( )->GetTextureHeight( ) ) - renderOffset.y, 0.0f - renderOffset.y );
+		glm::mat4 projectionMatrix = camera2D->CalculateProjectionMatrix( );
 
 		float vertecies[4 * 4] =
 		{
@@ -263,7 +271,7 @@ namespace CatWare
 
 	void Renderer::DrawCharacter( Text::Character* character, Vector2D position, unsigned int size, Color color )
 	{
-		glm::mat4 projectionMatrix = glm::ortho( 0.0f - renderOffset.x, float( currentFrameBuffer->GetColorAttachment( )->GetTextureWidth( ) ) - renderOffset.x, float( currentFrameBuffer->GetColorAttachment( )->GetTextureHeight( ) ) - renderOffset.y, 0.0f - renderOffset.y );
+		glm::mat4 projectionMatrix = camera2D->CalculateProjectionMatrix( );
 
 		textShader->Bind( );
 		textShader->SetUniform4f( "u_Color", float( color.r ) / 255.0f, float( color.g ) / 255.0f, float( color.b ) / 255.0f, float( color.a ) / 255.0f );

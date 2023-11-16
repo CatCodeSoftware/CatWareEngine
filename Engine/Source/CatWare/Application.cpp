@@ -98,8 +98,7 @@ namespace CatWare
 
 		CW_ENGINE_LOG->Info( "Initializing renderer" );
 		renderingAPI = new Rendering::OpenGL::OpenGLAPI;
-		Renderer::SetScreenSize( window->GetWidth( ), window->GetHeight( ) );
-		Renderer::Init( renderingAPI );
+		Renderer::Init( renderingAPI, initConfig.windowWidth, initConfig.windowHeight );
 
 		AudioEngine::InitAudio( );
 
@@ -185,14 +184,14 @@ namespace CatWare
 
 	void Application::DrawGUI( )
 	{
+		OrthoCamera* uiCamera = new OrthoCamera( window->GetWidth( ), window->GetHeight( ) );
+		OrthoCamera* oldCamera = Renderer::camera2D;
+
+		Renderer::camera2D = uiCamera;
+
 		Scene* currentScene = SceneManager::GetCurrentScene( );
 
-		Vector2D oldRenderOffset = Renderer::renderOffset;
-		Renderer::renderOffset = { 0, 0 };
-
 		currentScene->DrawGUI( );
-
-		Renderer::renderOffset = oldRenderOffset;
 
 		// ImGui stuff
 		ImGui_ImplOpenGL3_NewFrame( );
@@ -207,5 +206,8 @@ namespace CatWare
 
 		ImGui::UpdatePlatformWindows( );
 		ImGui::RenderPlatformWindowsDefault( );
+
+		Renderer::camera2D = oldCamera;
+		delete uiCamera;
 	}
 }

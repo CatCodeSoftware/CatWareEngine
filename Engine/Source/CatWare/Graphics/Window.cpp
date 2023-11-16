@@ -94,6 +94,8 @@ namespace CatWare
 
 		this->width = width;
 		this->height = height;
+
+		Renderer::SetScreenSize( width, height );
 	}
 
 	void Window::SetTitle( std::string title )

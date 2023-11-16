@@ -25,8 +25,7 @@ public:
 	{
 		collider = new Physics::RectCollider( transform.position, { 64, 64 } );
 
-		AttachPhysicsObject( 10, true, 0.9 );
-		Physics::PhysicsObject* po = GetAttachedPhysicsObject( );
+		Physics::PhysicsObject* po = AttachPhysicsObject( 10, true, 0.9 );
 
 		po->AttachCollider( collider );
 		po->resistance = 0.5;
@@ -82,6 +81,7 @@ public:
 	void Draw( ) override
 	{
 		anim.Draw( transform.position, transform.size );
+		Renderer::camera2D->SetFocus( transform.position + transform.size / Vector2D( 2, 2 ) );
 	}
 
 	static Entity* Create( std::unordered_map<std::string, std::string> tags )
@@ -97,12 +97,7 @@ public:
 
 	InGame( )
 	{
-		handle = AudioEngine::PlaySound2D( Assets::sounds.GetAsset( "meow" ), { 1280 / 2, 720 / 2 }, 1.0, 700 );
-
-		handle->SetLooping( true );
-
 		physicsWorld.gravity = { 0, 0 };
-		Renderer::renderOffset = { 0, 0 };
 	}
 
 	void OnEnter( ) override
@@ -120,24 +115,11 @@ public:
 		{
 			GlobalTime::maxFPS--;
 		}
-
-		if ( Input::IsKeyPressed( Input::KEY_LEFT ) )
-		{
-			
-		}
-
-		if ( Input::IsKeyPressed( Input::KEY_RIGHT ) )
-		{
-			
-		}
 	}
 
 	void Draw( ) override
 	{
 		Renderer::Clear( { 40, 40, 40, 255 } );
-
-		Renderer::DrawString( "goober", { 90, 90 }, 1, font );
-		Renderer::DrawRect( { 1280 / 2 - 2, 720 / 2 - 2 }, { 4, 4}, { 255, 0, 0, 255 } );
 	}
 
 	void DrawGUI( ) override
@@ -156,8 +138,6 @@ public:
 		initConfig.windowWidth = 1600;
 		initConfig.windowHeight = 900;
 
-		Renderer::renderOffset = { 0, 0 };
-
 		GlobalTime::modifier = 1.0;
 	}
 
@@ -169,8 +149,6 @@ public:
 
 		Assets::textures.Add( "testcat", "cat.png" );
 		Assets::textures.Add( "circle", "circle.png" );
-
-		Assets::sounds.Add( "meow", "meow.wav" );
 
 		font = new Text::Font( "EngineRes/Fonts/Oxanium-Regular.ttf", 50 );
 

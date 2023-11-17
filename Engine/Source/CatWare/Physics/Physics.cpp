@@ -4,6 +4,11 @@
 
 namespace CatWare
 {
+	b2Vec2 VecToB2Vec( Vector2D vec )
+	{
+		return b2Vec2( vec.x, vec.y );
+	}
+
 	// Shapes
 	void PolygonShape::SetAsRect( Vector2D size )
 	{
@@ -23,15 +28,35 @@ namespace CatWare
 		shape.Set( vecs, count );
 	}
 
+	CircleShape::CircleShape( float radius )
+	{
+		shape.m_radius = radius;
+	}
+
+	// Object
+	void PhysicsObject::ApplyForce( Vector2D force, Vector2D point )
+	{
+		body->ApplyForce( VecToB2Vec( force ), VecToB2Vec( point ), true );
+	}
+
+	void PhysicsObject::SetVelocity( Vector2D velocity )
+	{
+		body->SetLinearVelocity( VecToB2Vec( velocity ) );
+	}
+
 	// World
 	PhysicsWorld::PhysicsWorld( )
 	{
 		b2Vec2 gravity( 0, 0 );
 		world = new b2World( gravity );
+
+		collisionCallback = new CollisionCallback;
+		world->SetContactListener( collisionCallback );
 	}
 
 	PhysicsWorld::~PhysicsWorld( )
 	{
+		delete collisionCallback;
 		delete world;
 	}
 
@@ -44,6 +69,14 @@ namespace CatWare
 			b2Vec2 pos = object->body->GetPosition( );
 			object->transform->position = { pos.x, pos.y };
 			object->transform->rotation = object->body->GetAngle( ) * 57.2957795;
+
+			b2Vec2 velocity = object->body->GetLinearVelocity( );
+			float angularVelocity = object->body->GetAngularVelocity( );
+
+			if ( velocity == b2Vec2( 0, 0 ) && round( angularVelocity ) == 0 )
+			{
+				object->body->SetAwake( 0 );
+			}
 		}
 	}
 
@@ -65,7 +98,6 @@ namespace CatWare
 
 		bodyDef.position.Set( transform->position.x, transform->position.y );
 
-
 		b2FixtureDef fixtureDef;
 
 		fixtureDef.shape = shape->GetB2Shape( );
@@ -74,6 +106,8 @@ namespace CatWare
 
 		object->body = world->CreateBody( &bodyDef );
 		object->body->CreateFixture( &fixtureDef );
+
+		object->body->GetUserData( ).pointer = ( uintptr_t ) object;
 
 		objects.push_back( object );
 
@@ -108,5 +142,24 @@ namespace CatWare
 	{
 		b2Vec2 gravity = world->GetGravity( );
 		return { gravity.x, gravity.y };
+	}
+
+	// CollisionCallback
+	void CollisionCallback::BeginContact( b2Contact* contact )
+	{
+		PhysicsObject* object1 = ( ( PhysicsObject* )contact->GetFixtureA( )->GetBody( )->GetUserData( ).pointer );
+		PhysicsObject* object2 = ( ( PhysicsObject* )contact->GetFixtureB( )->GetBody( )->GetUserData( ).pointer );
+
+		if ( object1->onCollideBegin != nullptr ) object1->onCollideBegin( object1, object2 );
+		if ( object2->onCollideBegin != nullptr ) object2->onCollideBegin( object2, object1 );
+	}
+
+	void CollisionCallback::EndContact( b2Contact* contact )
+	{
+		PhysicsObject* object1 = ( ( PhysicsObject* )contact->GetFixtureA( )->GetBody( )->GetUserData( ).pointer );
+		PhysicsObject* object2 = ( ( PhysicsObject* )contact->GetFixtureB( )->GetBody( )->GetUserData( ).pointer );
+
+		if ( object1->onCollideEnd != nullptr ) object1->onCollideEnd( object1, object2 );
+		if ( object2->onCollideEnd != nullptr ) object2->onCollideEnd( object2, object1 );
 	}
 }

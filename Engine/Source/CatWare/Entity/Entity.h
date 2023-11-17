@@ -44,6 +44,9 @@ namespace CatWare
 		PhysicsObject* GetAttachedPhysicsObject( );
 		void DetachPhysicsObject( );
 
+		virtual void OnCollisionBegin( Entity* otherEntity ) { };
+		virtual void OnCollisionEnd( Entity* otherEntity ) { };
+
 		static Entity* Create( std::unordered_map<std::string, std::string> tags ) { return nullptr;  }
 
 	protected:

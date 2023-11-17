@@ -11,6 +11,7 @@ Text::Font* font = nullptr;
 class Box : public Entity
 {
 public:
+	Color color = { 255, 255, 255, 255 };
 
 	void Init( )
 	{
@@ -24,12 +25,30 @@ public:
 
 	void Draw( )
 	{
-		Renderer::DrawRect( transform.position - ( transform.size / Vector2D( 2, 2 ) ), transform.size, { 255, 255, 255, 255 }, transform.rotation );
+		Renderer::DrawRect( transform.position - ( transform.size / Vector2D( 2, 2 ) ), transform.size, color, transform.rotation );
+	}
+
+	void OnCollisionBegin( Entity* entity ) override
+	{
+		color = { 255, 0, 0, 255 };
+	}
+
+	void OnCollisionEnd( Entity* entity ) override
+	{
+		color = { 255, 255, 255, 255 };
 	}
 
 	static Entity* Create( std::unordered_map<std::string, std::string> tags )
 	{
 		return new Box;
+	}
+
+	void Tick( )
+	{
+		if ( Input::IsKeyPressed( Input::KEY_SPACE ) )
+		{
+			GetAttachedPhysicsObject( )->SetVelocity( { 0, -2000 } );
+		}
 	}
 };
 
@@ -112,7 +131,7 @@ public:
 		inGame = new InGame;
 		SceneManager::SetScene( inGame );
 
-		GlobalTime::frameRateLimited = true;
+		GlobalTime::frameRateLimited = false;
 		GlobalTime::maxFPS = 240;
 	}
 

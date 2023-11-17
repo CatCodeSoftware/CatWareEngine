@@ -3,6 +3,7 @@ add_rules("mode.debug", "mode.release")
 add_requires("libsdl")
 add_requires("freetype")
 add_requires("soloud")
+add_requires("box2d")
 
 target("CatWareEngine")
     set_kind("shared")
@@ -27,7 +28,7 @@ target("CatWareEngine")
 	add_includedirs("Engine/Lib/ImGui/backends")
 	add_includedirs("Engine/Lib/Single header")
 
-    add_packages("libsdl", "freetype", "soloud")
+    add_packages("libsdl", "freetype", "soloud", "box2d")
 
 	-- self include dir
 	add_includedirs("Engine/Source/")
@@ -49,7 +50,7 @@ target("Sandbox")
     add_defines("CW_PLATFORM_WIN64")
 	add_deps("CatWareEngine")
 
-    add_packages("libsdl", "freetype", "soloud")
+    add_packages("libsdl", "freetype", "soloud", "box2d")
 
 	set_rundir("$(projectdir)/WorkDir")
 

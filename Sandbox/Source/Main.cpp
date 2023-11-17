@@ -8,85 +8,28 @@ using namespace CatWare::Rendering;
 
 Text::Font* font = nullptr;
 
-class TestEntity : public Entity
+class Box : public Entity
 {
 public:
-	Physics::RectCollider* collider;
 
-	Animation anim = Animation( "anim.txt" );
-
-	TestEntity( )
+	void Init( )
 	{
-		className = "test";
-		velocity = { 0, 0 };
+		PolygonShape* boxShape = new PolygonShape;
+		boxShape->SetAsRect( transform.size );
+
+		AttachPhysicsObject( boxShape, true, 1, 0.9 );
+
+		delete boxShape;
 	}
 
-	void Init( ) override
+	void Draw( )
 	{
-		collider = new Physics::RectCollider( transform.position, { 64, 64 } );
-
-		Physics::PhysicsObject* po = AttachPhysicsObject( 10, true, 0.9 );
-
-		po->AttachCollider( collider );
-		po->resistance = 0.5;
-		po->collidable = true;
-		po->movable = true;
-
-		AudioEngine::audioListener = AudioListener2D( transform.position, 1 );
-	}
-
-	void Tick( ) override
-	{
-		Physics::PhysicsObject* object = GetAttachedPhysicsObject( );
-
-		if ( object != nullptr )
-		{
-			if ( Input::IsKeyPressed( Input::KEY_SPACE ) )
-			{
-				DetachPhysicsObject( );
-				Destroy( );
-			}
-
-			if ( Input::IsKeyPressed( Input::KEY_W ) )
-			{
-				object->force.y -= 25000;
-			}
-			if ( Input::IsKeyPressed( Input::KEY_S ) )
-			{
-				object->force.y += 25000;
-			}
-			if ( Input::IsKeyPressed( Input::KEY_A ) )
-			{
-				object->force.x -= 25000;
-			}
-			if ( Input::IsKeyPressed( Input::KEY_D ) )
-			{
-				object->force.x += 25000;
-			}
-		}
-
-		if ( Input::IsKeyPressed( Input::KEY_LEFT ) )
-		{
-			transform.rotation -= 2;
-		}
-
-		if ( Input::IsKeyPressed( Input::KEY_RIGHT ) )
-		{
-			transform.rotation += 2;
-		}
-
-		AudioEngine::audioListener.position = transform.position;
-	}
-
-	void Draw( ) override
-	{
-		anim.Draw( transform.position, transform.size );
-		Renderer::camera2D->SetFocus( transform.position + transform.size / Vector2D( 2, 2 ) );
+		Renderer::DrawRect( transform.position - ( transform.size / Vector2D( 2, 2 ) ), transform.size, { 255, 255, 255, 255 }, transform.rotation );
 	}
 
 	static Entity* Create( std::unordered_map<std::string, std::string> tags )
 	{
-		return new TestEntity;
+		return new Box;
 	}
 };
 
@@ -95,14 +38,28 @@ class InGame : public Scene
 public:
 	AudioHandle* handle;
 
+	Transform floorTransform = { { 800, 900 }, { 1600, 1 } };
+
 	InGame( )
 	{
-		physicsWorld.gravity = { 0, 0 };
+		EntityRegistry::RegisterEntity<Box>( "box" );
 	}
 
 	void OnEnter( ) override
 	{
-		entityManager.CreateEntityByClassName( "test", { { 0, 0 }, { 64, 64 } }, { } );
+		physicsWorld.SetGravity( { 0, 200 } );
+
+		PolygonShape* floorShape = new PolygonShape;
+		floorShape->SetAsRect( { 1600, 1 } );
+
+		physicsWorld.CreateObject( &floorTransform, floorShape, false, 1, 0.3 );
+		
+		delete floorShape;
+	}
+
+	void Update( ) override
+	{
+
 	}
 
 	void Tick( ) override
@@ -114,6 +71,11 @@ public:
 		if ( Input::IsKeyPressed( Input::KEY_DOWN ) )
 		{
 			GlobalTime::maxFPS--;
+		}
+
+		if ( Input::IsMousePressed( 1 ) )
+		{
+			entityManager.CreateEntityByClassName( "box", { Input::GetMouseMotion( ), { 64, 64 } }, { } );
 		}
 	}
 
@@ -145,11 +107,6 @@ public:
 
 	void PostInit( ) override
 	{
-		EntityRegistry::RegisterEntity<TestEntity>( "test" );
-
-		Assets::textures.Add( "testcat", "cat.png" );
-		Assets::textures.Add( "circle", "circle.png" );
-
 		font = new Text::Font( "EngineRes/Fonts/Oxanium-Regular.ttf", 50 );
 
 		inGame = new InGame;

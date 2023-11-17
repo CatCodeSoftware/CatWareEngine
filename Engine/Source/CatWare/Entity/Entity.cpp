@@ -57,29 +57,22 @@ namespace CatWare
 	}
 
 
-	Physics::PhysicsObject* Entity::AttachPhysicsObject( double mass, bool frictionEnabled, double frictionCoefficient )
+	PhysicsObject* Entity::AttachPhysicsObject( Shape* shape, bool dynamic, float density, float friction )
 	{
 		if ( attachedPhysicsObject != nullptr )
 		{
-			CW_ENGINE_LOG->Warning( "Attempted to attach a physics object to entity that already has one" );
-			return nullptr;
+			CW_ENGINE_LOG->Warning( "Attempted to attach a physics object to an entity that already has one" );
+			return attachedPhysicsObject;
 		}
 
-		attachedPhysicsObject = new Physics::PhysicsObject;
+		PhysicsWorld* physicsWorld = &SceneManager::GetCurrentScene( )->physicsWorld;
 
-		attachedPhysicsObject->transform = &transform;
-
-		attachedPhysicsObject->mass = mass;
-		attachedPhysicsObject->frictionEnabled = frictionEnabled;
-		attachedPhysicsObject->frictionCoefficient = frictionCoefficient;
-		// attachedPhysicsObject->colliders = colliders;
-
-		SceneManager::GetCurrentScene( )->physicsWorld.AddObject( attachedPhysicsObject );
-
+		attachedPhysicsObject = physicsWorld->CreateObject( &transform, shape, dynamic, density, friction );
+		
 		return attachedPhysicsObject;
 	}
 
-	Physics::PhysicsObject* Entity::GetAttachedPhysicsObject( )
+	PhysicsObject* Entity::GetAttachedPhysicsObject( )
 	{
 		return attachedPhysicsObject;
 	}
@@ -93,11 +86,6 @@ namespace CatWare
 		}
 
 		SceneManager::GetCurrentScene( )->physicsWorld.RemoveObject( attachedPhysicsObject );
-
-		for ( Physics::Collider* collider : attachedPhysicsObject->GetColliders( ) )
-		{
-			delete collider;
-		}
 
 		delete attachedPhysicsObject;
 		attachedPhysicsObject = nullptr;

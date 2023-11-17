@@ -35,7 +35,7 @@ namespace CatWare
 		virtual void DrawGUI( ) {} // Ignores the render offset
 
 		EntityManager entityManager;
-		Physics::PhysicsWorld physicsWorld;
+		PhysicsWorld physicsWorld;
 	};
 
 	class CATWARE_API SceneManager

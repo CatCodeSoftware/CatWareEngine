@@ -19,9 +19,9 @@
 #include "CatWare/Assets/Assets.h"
 #include "CatWare/Utils/Time.h"
 #include "CatWare/Graphics/Text.h"
-#include "CatWare/Physics/Collision.h"
 #include "CatWare/Physics/Physics.h"
 #include "CatWare/Graphics/Animation/Animation.h"
 #include "CatWare/Audio/Audio.h"
+#include "CatWare/Physics/Physics.h"
 
 #undef CW_DEBUG // Don't let the debug shit spill over to the game

@@ -34,15 +34,60 @@ namespace CatWare
 	}
 
 	// Object
-	void PhysicsObject::ApplyForce( Vector2D force, Vector2D point )
+	PhysicsObject::~PhysicsObject( )
 	{
-		body->ApplyForce( VecToB2Vec( force ), VecToB2Vec( point ), true );
+		body->GetWorld( )->DestroyBody( body );
+	}
+
+	void PhysicsObject::SetFixedRotation( bool fixed )
+	{
+		body->SetFixedRotation( true );
 	}
 
 	void PhysicsObject::SetVelocity( Vector2D velocity )
 	{
 		body->SetLinearVelocity( VecToB2Vec( velocity ) );
 	}
+
+	void PhysicsObject::SetAngularVelocity( float velocity )
+	{
+		body->SetAngularVelocity( velocity );
+	}
+
+
+	Vector2D PhysicsObject::GetVelocity( )
+	{
+		b2Vec2 vec = body->GetLinearVelocity( );
+		return { vec.x, vec.y };
+	}
+
+	float PhysicsObject::GetAngularVelocity( )
+	{
+		return body->GetAngularVelocity( );
+	}
+
+	bool PhysicsObject::GetFixedRotation( )
+	{
+		return body->IsFixedRotation( );
+	}
+
+	Vector2D PhysicsObject::GetWorldCenter( )
+	{
+		b2Vec2 vec = body->GetWorldCenter( );
+		return { vec.x, vec.y };
+	}
+
+
+	void PhysicsObject::ApplyImpulse( Vector2D force, Vector2D point )
+	{
+		body->ApplyLinearImpulse( VecToB2Vec( force ), VecToB2Vec( point ), true );
+	}
+
+	void PhysicsObject::ApplyForce( Vector2D force, Vector2D point )
+	{
+		body->ApplyForce( VecToB2Vec( force ), VecToB2Vec( point ), true );
+	}
+	
 
 	// World
 	PhysicsWorld::PhysicsWorld( )
@@ -62,7 +107,7 @@ namespace CatWare
 
 	void PhysicsWorld::Update( )
 	{
-		world->Step( GlobalTime::GetDeltaTime( ), 8, 3 );
+		world->Step( GlobalTime::GetDeltaTime( ), 1, 1 );
 
 		for ( PhysicsObject* object : objects )
 		{

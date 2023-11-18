@@ -28,12 +28,14 @@ public:
 		Renderer::DrawRect( transform.position - ( transform.size / Vector2D( 2, 2 ) ), transform.size, color, transform.rotation );
 	}
 
-	void OnCollisionBegin( Entity* entity ) override
+	void OnCollisionBegin( PhysicsObject* object ) override
 	{
-		color = { 255, 0, 0, 255 };
+		color = { 255, 255, 255, 255 };
+
+		// AudioEngine::PlaySound( Assets::sounds.GetAsset( "a" ) );
 	}
 
-	void OnCollisionEnd( Entity* entity ) override
+	void OnCollisionEnd( PhysicsObject* object ) override
 	{
 		color = { 255, 255, 255, 255 };
 	}
@@ -47,7 +49,16 @@ public:
 	{
 		if ( Input::IsKeyPressed( Input::KEY_SPACE ) )
 		{
-			GetAttachedPhysicsObject( )->SetVelocity( { 0, -2000 } );
+			GetAttachedPhysicsObject( )->ApplyImpulse( { 200000, 0 }, GetAttachedPhysicsObject( )->GetWorldCenter( ) );
+		}
+	}
+
+	void Update( )
+	{
+		if ( transform.position.y > 900 )
+		{
+			if ( GetAttachedPhysicsObject( ) == nullptr )
+				DetachPhysicsObject( );
 		}
 	}
 };
@@ -133,6 +144,8 @@ public:
 
 		GlobalTime::frameRateLimited = false;
 		GlobalTime::maxFPS = 240;
+
+		Assets::sounds.Add( "a", "a.wav" );
 	}
 
 	void PreDeInit( ) override

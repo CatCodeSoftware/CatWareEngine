@@ -52,6 +52,8 @@ namespace CatWare
 	class CATWARE_API PhysicsObject
 	{
 	public:
+		~PhysicsObject( );
+
 		//! Pointer to transform to modify
 		Transform* transform = nullptr;
 		Entity* attachedEntity = nullptr;
@@ -60,8 +62,17 @@ namespace CatWare
 		void ( *onCollideBegin )( PhysicsObject* object1, PhysicsObject* object2 );
 		void ( *onCollideEnd )( PhysicsObject* object1, PhysicsObject* object2 );
 
-		void ApplyForce( Vector2D force, Vector2D point );
+		Vector2D GetVelocity( );
+		float GetAngularVelocity( );
+		bool GetFixedRotation( );
+		Vector2D GetWorldCenter( );
+		
 		void SetVelocity( Vector2D velocity );
+		void SetAngularVelocity( float angularVelocity );
+		void SetFixedRotation( bool fixed );
+
+		void ApplyForce( Vector2D force, Vector2D point );
+		void ApplyImpulse( Vector2D force, Vector2D point );
 	};
 
 	class CATWARE_API PhysicsWorld

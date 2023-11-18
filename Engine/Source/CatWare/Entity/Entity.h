@@ -44,8 +44,8 @@ namespace CatWare
 		PhysicsObject* GetAttachedPhysicsObject( );
 		void DetachPhysicsObject( );
 
-		virtual void OnCollisionBegin( Entity* otherEntity ) { };
-		virtual void OnCollisionEnd( Entity* otherEntity ) { };
+		virtual void OnCollisionBegin( PhysicsObject* object ) { };
+		virtual void OnCollisionEnd( PhysicsObject* object ) { };
 
 		static Entity* Create( std::unordered_map<std::string, std::string> tags ) { return nullptr;  }
 
@@ -116,6 +116,8 @@ namespace CatWare
 		Entity* GetEntityByUniqueName( std::string uniqueName );
 		std::vector<Entity*> GetEntitiesByClassName( std::string name );
 		std::vector<Entity*> GetEntitiesByGroup( std::string groupName );
+
+		void DestroyEntity( UInt64 id );
 
 		void Update( );
 		void Tick( );

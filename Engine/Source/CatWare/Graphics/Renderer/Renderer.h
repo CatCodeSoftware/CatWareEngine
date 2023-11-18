@@ -50,6 +50,10 @@ namespace CatWare
 		static Rendering::FrameBuffer* currentFrameBuffer;
 		static Rendering::FrameBuffer* defaultFrameBuffer;
 
+		static Rendering::VertexBuffer* rectVerts;
+		static Rendering::IndexBuffer* rectIndexes;
+		static Rendering::VertexArray* rectArray;
+
 		static unsigned int width;
 		static unsigned int height;
 	};

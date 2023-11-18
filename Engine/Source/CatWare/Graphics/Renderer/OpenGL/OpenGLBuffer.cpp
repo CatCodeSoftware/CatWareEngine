@@ -21,7 +21,7 @@ namespace CatWare
 			{
 				glCreateBuffers( 1, &id );
 				Bind( );
-				glBufferData( GL_ARRAY_BUFFER, size, vertecies, GL_STATIC_DRAW );
+				glBufferData( GL_ARRAY_BUFFER, size, vertecies, GL_STREAM_DRAW );
 			}
 
 			OpenGLVertexBuffer::~OpenGLVertexBuffer( )
@@ -57,7 +57,7 @@ namespace CatWare
 			{
 				glCreateBuffers( 1, &id );
 				Bind( );
-				glBufferData( GL_ELEMENT_ARRAY_BUFFER, count * sizeof( unsigned int ), indicies, GL_STATIC_DRAW );
+				glBufferData( GL_ELEMENT_ARRAY_BUFFER, count * sizeof( unsigned int ), indicies, GL_STREAM_DRAW );
 
 				this->count = count;
 			}

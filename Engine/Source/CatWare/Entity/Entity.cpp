@@ -11,20 +11,14 @@ namespace CatWare
 {
 	void CollisionBegin( PhysicsObject* object1, PhysicsObject* object2 )
 	{
-		if ( object1->attachedEntity != nullptr && object2->attachedEntity != nullptr )
-		{
-			object1->attachedEntity->OnCollisionBegin( object2->attachedEntity );
-			object2->attachedEntity->OnCollisionBegin( object1->attachedEntity );
-		}
+		if ( object1->attachedEntity != nullptr ) object1->attachedEntity->OnCollisionBegin( object2 );
+		if ( object2->attachedEntity != nullptr ) object2->attachedEntity->OnCollisionBegin( object1 );
 	}
 
 	void CollisionEnd( PhysicsObject* object1, PhysicsObject* object2 )
 	{
-		if ( object1->attachedEntity != nullptr && object2->attachedEntity != nullptr )
-		{
-			object1->attachedEntity->OnCollisionEnd( object2->attachedEntity );
-			object2->attachedEntity->OnCollisionEnd( object1->attachedEntity );
-		}
+		if ( object1->attachedEntity != nullptr ) object1->attachedEntity->OnCollisionEnd( object2 );
+		if ( object2->attachedEntity != nullptr ) object2->attachedEntity->OnCollisionEnd( object1 );
 	}
 
 	// ----------------------------------------
@@ -108,7 +102,7 @@ namespace CatWare
 
 		SceneManager::GetCurrentScene( )->physicsWorld.RemoveObject( attachedPhysicsObject );
 
-		delete attachedPhysicsObject;
+		SceneManager::GetCurrentScene( )->physicsWorld.RemoveObject( attachedPhysicsObject );
 		attachedPhysicsObject = nullptr;
 	}
 
@@ -229,26 +223,19 @@ namespace CatWare
 
 	void EntityManager::Update( )
 	{
-		std::vector<std::vector<Entity*>::iterator> entityDeleteQueue;
-
-		for ( std::vector<Entity*>::iterator it = entities.begin( ); it != entities.end( ); it++ )
+		for ( std::vector<Entity*>::iterator it = entities.begin( ); it != entities.end( ); )
 		{
 			Entity* entity = ( *it );
 
 			if ( entity->shouldDelete )
 			{
-				entityDeleteQueue.push_back( it );
+				DestroyEntity( entity->id );
 			}
 			else
 			{
 				entity->Update( );
+				it++;
 			}
-		}
-
-		for ( auto it : entityDeleteQueue )
-		{
-			delete *it;
-			entities.erase( it );
 		}
 	}
 
@@ -265,6 +252,20 @@ namespace CatWare
 		for ( Entity* entity : entities )
 		{
 			entity->Draw( );
+		}
+	}
+
+	void EntityManager::DestroyEntity( UInt64 id )
+	{
+		for ( auto it = entities.begin( ); it != entities.end( ); it++ )
+		{
+			if ( ( *it )->GetID( ) == id )
+			{
+				delete ( *it );
+				entities.erase( it );
+
+				break;
+			}
 		}
 	}
 }

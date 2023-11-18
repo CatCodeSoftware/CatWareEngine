@@ -8,6 +8,8 @@ using namespace CatWare::Rendering;
 
 Text::Font* font = nullptr;
 
+int boxNumber = 0;
+
 class Box : public Entity
 {
 public:
@@ -23,6 +25,8 @@ public:
 		delete boxShape;
 
 		color = { UInt8( Random::GetUInt( 0, 255 ) ), UInt8( Random::GetUInt( 0, 255 ) ), UInt8( Random::GetUInt( 0, 255 ) ), 255 };
+
+		boxNumber++;
 	}
 
 	void Draw( )
@@ -134,8 +138,6 @@ public:
 
 		GlobalTime::frameRateLimited = false;
 		GlobalTime::maxFPS = 240;
-
-		Assets::sounds.Add( "a", "a.wav" );
 	}
 
 	void PreDeInit( ) override

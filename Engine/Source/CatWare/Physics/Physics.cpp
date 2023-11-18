@@ -107,7 +107,16 @@ namespace CatWare
 
 	void PhysicsWorld::Update( )
 	{
-		world->Step( GlobalTime::GetDeltaTime( ), 1, 1 );
+		for ( PhysicsObject* object : objects )
+		{
+			object->transform->position = object->transform->position + object->GetVelocity( ) * Vector2D( GlobalTime::GetDeltaTime( ), GlobalTime::GetDeltaTime( ) );
+			object->transform->rotation += object->GetAngularVelocity( ) * GlobalTime::GetDeltaTime( );
+		}
+	}
+
+	void PhysicsWorld::Tick( )
+	{
+		world->Step( 1.0 / GlobalTime::ticksPerSecond, 1, 1 );
 
 		for ( PhysicsObject* object : objects )
 		{
@@ -123,11 +132,6 @@ namespace CatWare
 				object->body->SetAwake( 0 );
 			}
 		}
-	}
-
-	void PhysicsWorld::Tick( )
-	{
-
 	}
 
 	PhysicsObject* PhysicsWorld::CreateObject( Transform* transform, Shape* shape, bool dynamic, float density, float friction )

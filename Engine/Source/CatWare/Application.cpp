@@ -18,6 +18,8 @@
 #include "Input/Binds.h"
 #include "Random.h"
 
+#include "SDL.h"
+
 namespace CatWare
 {
 	Application::Application( )
@@ -65,10 +67,12 @@ namespace CatWare
 
 			Assets::textures.RunCleanup( );
 			Assets::sounds.RunCleanup( );
-			window->SwapBuffers( );
+
 
 			while ( !frameTimer.HasTimeElapsed( 1 / GlobalTime::maxFPS ) && GlobalTime::frameRateLimited ) { }
 			GlobalTime::SetDeltaTime( frameTimer.GetTime( ) );
+
+			window->SwapBuffers( );
 		}
 
 		DeInit( );

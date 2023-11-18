@@ -16,6 +16,7 @@
 #include "Audio/Audio.h"
 #include "Assets/Assets.h"
 #include "Input/Binds.h"
+#include "Random.h"
 
 namespace CatWare
 {
@@ -76,6 +77,8 @@ namespace CatWare
 	void Application::Init( )
 	{
 		CatWare::Logging::InitLoggers( );
+
+		Random::Init( );
 
 		CW_ENGINE_LOG->Info( "Initializing engine" );
 

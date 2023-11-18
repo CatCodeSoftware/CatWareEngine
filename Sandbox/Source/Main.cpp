@@ -21,23 +21,13 @@ public:
 		AttachPhysicsObject( boxShape, true, 1, 0.9 );
 
 		delete boxShape;
+
+		color = { UInt8( Random::GetUInt( 0, 255 ) ), UInt8( Random::GetUInt( 0, 255 ) ), UInt8( Random::GetUInt( 0, 255 ) ), 255 };
 	}
 
 	void Draw( )
 	{
 		Renderer::DrawRect( transform.position - ( transform.size / Vector2D( 2, 2 ) ), transform.size, color, transform.rotation );
-	}
-
-	void OnCollisionBegin( PhysicsObject* object ) override
-	{
-		color = { 255, 255, 255, 255 };
-
-		// AudioEngine::PlaySound( Assets::sounds.GetAsset( "a" ) );
-	}
-
-	void OnCollisionEnd( PhysicsObject* object ) override
-	{
-		color = { 255, 255, 255, 255 };
 	}
 
 	static Entity* Create( std::unordered_map<std::string, std::string> tags )

@@ -2,6 +2,8 @@
 
 #include "..\Utils\Time.h"
 
+#define UNIT_SCALE 10
+
 namespace CatWare
 {
 	b2Vec2 VecToB2Vec( Vector2D vec )
@@ -12,7 +14,7 @@ namespace CatWare
 	// Shapes
 	void PolygonShape::SetAsRect( Vector2D size )
 	{
-		shape.SetAsBox( size.x / 2, size.y / 2 );
+		shape.SetAsBox( size.x / 2 / UNIT_SCALE, size.y / 2 / UNIT_SCALE );
 	}
 
 	void PolygonShape::SetVerts( int count, Vector2D* verts )
@@ -30,7 +32,7 @@ namespace CatWare
 
 	CircleShape::CircleShape( float radius )
 	{
-		shape.m_radius = radius;
+		shape.m_radius = radius * UNIT_SCALE;
 	}
 
 	// Object
@@ -109,19 +111,19 @@ namespace CatWare
 	{
 		for ( PhysicsObject* object : objects )
 		{
-			object->transform->position = object->transform->position + object->GetVelocity( ) * Vector2D( GlobalTime::GetDeltaTime( ), GlobalTime::GetDeltaTime( ) );
+			object->transform->position = object->transform->position + object->GetVelocity( ) * Vector2D( GlobalTime::GetDeltaTime( ) * UNIT_SCALE, GlobalTime::GetDeltaTime( ) * UNIT_SCALE );
 			object->transform->rotation += object->GetAngularVelocity( ) * GlobalTime::GetDeltaTime( );
 		}
 	}
 
 	void PhysicsWorld::Tick( )
 	{
-		world->Step( 1.0 / GlobalTime::ticksPerSecond, 1, 1 );
+		world->Step( 1.0 / GlobalTime::ticksPerSecond, 12, 5 );
 
 		for ( PhysicsObject* object : objects )
 		{
 			b2Vec2 pos = object->body->GetPosition( );
-			object->transform->position = { pos.x, pos.y };
+			object->transform->position = { pos.x * UNIT_SCALE, pos.y * UNIT_SCALE };
 			object->transform->rotation = object->body->GetAngle( ) * 57.2957795;
 
 			b2Vec2 velocity = object->body->GetLinearVelocity( );
@@ -145,7 +147,7 @@ namespace CatWare
 		if ( dynamic ) bodyDef.type = b2_dynamicBody;
 		else bodyDef.type = b2_staticBody;
 
-		bodyDef.position.Set( transform->position.x, transform->position.y );
+		bodyDef.position.Set( transform->position.x / UNIT_SCALE, transform->position.y / UNIT_SCALE );
 
 		b2FixtureDef fixtureDef;
 

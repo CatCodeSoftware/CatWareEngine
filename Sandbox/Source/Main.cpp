@@ -71,7 +71,7 @@ public:
 
 	void OnEnter( ) override
 	{
-		physicsWorld.SetGravity( { 0, 200 } );
+		physicsWorld.SetGravity( { 0, 600 } );
 
 		PolygonShape* floorShape = new PolygonShape;
 		floorShape->SetAsRect( { 1600, 1 } );

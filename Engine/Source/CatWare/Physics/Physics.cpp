@@ -118,7 +118,7 @@ namespace CatWare
 
 	void PhysicsWorld::Tick( )
 	{
-		world->Step( 1.0 / GlobalTime::ticksPerSecond, 12, 5 );
+		world->Step( 1.0 / GlobalTime::ticksPerSecond, 8, 5 );
 
 		for ( PhysicsObject* object : objects )
 		{

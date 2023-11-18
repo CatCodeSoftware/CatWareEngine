@@ -19,6 +19,8 @@ namespace CatWare
 			{
 			case RendererAPI::API::OPENGL: return new OpenGL::OpenGLShader( vertexSource, fragmentSource );
 			}
+
+			return nullptr;
 		}
 
 		Shader* Shader::CreateFromFile( std::string vertexPath, std::string fragmentPath )

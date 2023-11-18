@@ -60,8 +60,6 @@ public:
 class InGame : public Scene
 {
 public:
-	AudioHandle* handle;
-
 	Transform floorTransform = { { 800, 900 }, { 1600, 1 } };
 
 	InGame( )
@@ -71,7 +69,7 @@ public:
 
 	void OnEnter( ) override
 	{
-		physicsWorld.SetGravity( { 0, 600 } );
+		physicsWorld.SetGravity( { 0, 150 } );
 
 		PolygonShape* floorShape = new PolygonShape;
 		floorShape->SetAsRect( { 1600, 1 } );

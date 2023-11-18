@@ -59,8 +59,8 @@ namespace CatWare
 		Entity* attachedEntity = nullptr;
 		b2Body* body = nullptr;
 
-		void ( *onCollideBegin )( PhysicsObject* object1, PhysicsObject* object2 );
-		void ( *onCollideEnd )( PhysicsObject* object1, PhysicsObject* object2 );
+		void ( *onCollideBegin )( PhysicsObject* object1, PhysicsObject* object2 ) = nullptr;
+		void ( *onCollideEnd )( PhysicsObject* object1, PhysicsObject* object2 ) = nullptr;
 
 		Vector2D GetVelocity( );
 		float GetAngularVelocity( );

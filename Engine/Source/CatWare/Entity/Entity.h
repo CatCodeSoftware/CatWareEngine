@@ -55,7 +55,7 @@ namespace CatWare
 			
 		std::vector<std::string> groups;
 	private:
-		UInt64 id;
+		UInt64 id = 0;
 
 		bool shouldDelete = false;
 

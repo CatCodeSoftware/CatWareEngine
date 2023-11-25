@@ -65,7 +65,7 @@ namespace CatWare
 		delete rectTexturedShader;
 		delete postProcessShader;
 		delete textShader;
-
+		delete camera2D;
 		delete defaultFrameBuffer;
 	}
 

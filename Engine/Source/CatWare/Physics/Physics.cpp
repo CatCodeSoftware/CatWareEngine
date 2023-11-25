@@ -2,7 +2,7 @@
 
 #include "..\Utils\Time.h"
 
-#define UNIT_SCALE 10
+#define UNIT_SCALE 8
 
 namespace CatWare
 {
@@ -118,7 +118,8 @@ namespace CatWare
 
 	void PhysicsWorld::Tick( )
 	{
-		world->Step( 1.0 / GlobalTime::ticksPerSecond, 8, 5 );
+		world->Step( 1.0 / GlobalTime::ticksPerSecond, 8, 3 );
+
 
 		for ( PhysicsObject* object : objects )
 		{
@@ -148,6 +149,7 @@ namespace CatWare
 		else bodyDef.type = b2_staticBody;
 
 		bodyDef.position.Set( transform->position.x / UNIT_SCALE, transform->position.y / UNIT_SCALE );
+		bodyDef.angle = transform->rotation;
 
 		b2FixtureDef fixtureDef;
 

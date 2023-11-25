@@ -1,10 +1,8 @@
-#include <CatWare.h>
-#include <CatWare/EntryPoint.h>
+#define EXPORT extern "C" __declspec(dllexport)
 
-#include <iostream>
+#include <CatWare.h>
 
 using namespace CatWare;
-using namespace CatWare::Rendering;
 
 Text::Font* font = nullptr;
 
@@ -60,6 +58,8 @@ public:
 class InGame : public Scene
 {
 public:
+	AudioHandle* handle;
+
 	Transform floorTransform = { { 800, 900 }, { 1600, 1 } };
 
 	InGame( )
@@ -69,13 +69,13 @@ public:
 
 	void OnEnter( ) override
 	{
-		physicsWorld.SetGravity( { 0, 150 } );
+		physicsWorld.SetGravity( { 0, 600 } );
 
 		PolygonShape* floorShape = new PolygonShape;
 		floorShape->SetAsRect( { 1600, 1 } );
 
 		physicsWorld.CreateObject( &floorTransform, floorShape, false, 1, 0.3 );
-		
+
 		delete floorShape;
 	}
 
@@ -114,35 +114,34 @@ public:
 
 InGame* inGame;
 
-class Sandbox : public CatWare::Application
+EXPORT void PreInit( CatWare::InitConfig* config )
 {
-public:
-	Sandbox( )
-	{
-		initConfig.windowWidth = 1600;
-		initConfig.windowHeight = 900;
+	config->windowWidth = 1600;
+	config->windowHeight = 900;
 
-		GlobalTime::modifier = 1.0;
-	}
+	GlobalTime::modifier = 1.0;
+}
 
-	~Sandbox( ) {}
+EXPORT void PostInit( )
+{
+	font = new Text::Font( "EngineRes/Fonts/Oxanium-Regular.ttf", 50 );
 
-	void PostInit( ) override
-	{
-		font = new Text::Font( "EngineRes/Fonts/Oxanium-Regular.ttf", 50 );
+	inGame = new InGame;
+	SceneManager::SetScene( inGame );
 
-		inGame = new InGame;
-		SceneManager::SetScene( inGame );
+	GlobalTime::frameRateLimited = false;
+	GlobalTime::maxFPS = 240;
 
-		GlobalTime::frameRateLimited = false;
-		GlobalTime::maxFPS = 240;
-	}
+	inGame - new InGame;
+	SceneManager::SetScene( inGame );
+}
 
-	void PreDeInit( ) override
-	{
-		delete inGame;
-		delete font;
-	}
-};
+EXPORT void Activate( )
+{
+	CW_LOG->Warning( "Activated script" );
+}
 
-CW_REGISTER_APP( Sandbox )
+EXPORT void DeInit( )
+{
+	delete font;
+}

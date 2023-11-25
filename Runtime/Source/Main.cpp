@@ -32,7 +32,7 @@ public:
 		for ( Script& script : scripts )
 		{
 			if ( script.fptrActivate != nullptr )
-				script.fptrActivate( );
+				script.fptrActivate( ); 
 		}
 	}
 

@@ -124,31 +124,27 @@ namespace CatWare
 		for ( PhysicsObject* object : objects )
 		{
 			b2Vec2 pos = object->body->GetPosition( );
-			object->transform->position = { pos.x * UNIT_SCALE, pos.y * UNIT_SCALE };
+			object->transform->position = { pos.x * UNIT_SCALE - object->entityAttachOffset.x, pos.y * UNIT_SCALE - object->entityAttachOffset.y };
 			object->transform->rotation = object->body->GetAngle( ) * 57.2957795;
 
 			b2Vec2 velocity = object->body->GetLinearVelocity( );
 			float angularVelocity = object->body->GetAngularVelocity( );
-
-			if ( velocity == b2Vec2( 0, 0 ) && round( angularVelocity ) == 0 )
-			{
-				object->body->SetAwake( 0 );
-			}
 		}
 	}
 
-	PhysicsObject* PhysicsWorld::CreateObject( Transform* transform, Shape* shape, bool dynamic, float density, float friction )
+	PhysicsObject* PhysicsWorld::CreateObject( Transform* transform, Shape* shape, bool dynamic, float density, float friction, Vector2D attachOffset )
 	{
 		PhysicsObject* object = new PhysicsObject( );
 
 		object->transform = transform;
+		object->entityAttachOffset = attachOffset;
 
 		b2BodyDef bodyDef;
 
 		if ( dynamic ) bodyDef.type = b2_dynamicBody;
 		else bodyDef.type = b2_staticBody;
 
-		bodyDef.position.Set( transform->position.x / UNIT_SCALE, transform->position.y / UNIT_SCALE );
+		bodyDef.position.Set( ( transform->position.x + object->entityAttachOffset.x ) / UNIT_SCALE, ( transform->position.y + object->entityAttachOffset.y ) / UNIT_SCALE );
 		bodyDef.angle = transform->rotation;
 
 		b2FixtureDef fixtureDef;
@@ -161,6 +157,18 @@ namespace CatWare
 		object->body->CreateFixture( &fixtureDef );
 
 		object->body->GetUserData( ).pointer = ( uintptr_t ) object;
+
+		if ( floor != nullptr )
+		{
+			b2FrictionJointDef* fjdef = new b2FrictionJointDef;
+
+			fjdef->Initialize( object->body, floor, b2Vec2_zero );
+			
+			fjdef->maxForce = 1000;
+			fjdef->maxTorque = 1000;
+
+			world->CreateJoint( fjdef );
+		}
 
 		objects.push_back( object );
 
@@ -197,14 +205,36 @@ namespace CatWare
 		return { gravity.x, gravity.y };
 	}
 
+	void PhysicsWorld::SetTopDown( float floorFriction )
+	{
+		b2BodyDef bodyDef;
+
+		bodyDef.type = b2_staticBody;
+		bodyDef.fixedRotation = true;
+		bodyDef.position.Set( -UINT32_MAX, -UINT32_MAX );
+		bodyDef.angle = 0;
+
+		b2FixtureDef fixtureDef;
+
+		PolygonShape* shape = new PolygonShape;
+		shape->SetAsRect( { UINT32_MAX, UINT32_MAX } );
+
+		fixtureDef.shape = shape->GetB2Shape( );
+		fixtureDef.friction = floorFriction;
+		fixtureDef.density = 1;
+
+		floor = world->CreateBody( &bodyDef );
+		floor->CreateFixture( &fixtureDef );
+	}
+
 	// CollisionCallback
 	void CollisionCallback::BeginContact( b2Contact* contact )
 	{
 		PhysicsObject* object1 = ( ( PhysicsObject* )contact->GetFixtureA( )->GetBody( )->GetUserData( ).pointer );
 		PhysicsObject* object2 = ( ( PhysicsObject* )contact->GetFixtureB( )->GetBody( )->GetUserData( ).pointer );
 
-		if ( object1->onCollideBegin != nullptr ) object1->onCollideBegin( object1, object2 );
-		if ( object2->onCollideBegin != nullptr ) object2->onCollideBegin( object2, object1 );
+		if ( object1 != nullptr && object1->onCollideBegin != nullptr ) object1->onCollideBegin( object1, object2 );
+		if ( object2 != nullptr && object2->onCollideBegin != nullptr ) object2->onCollideBegin( object2, object1 );
 	}
 
 	void CollisionCallback::EndContact( b2Contact* contact )

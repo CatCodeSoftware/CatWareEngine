@@ -18,7 +18,7 @@ public:
 		PolygonShape* boxShape = new PolygonShape;
 		boxShape->SetAsRect( transform.size );
 
-		AttachPhysicsObject( boxShape, true, 1, 0.9 );
+		PhysicsObject* object = AttachPhysicsObject( boxShape, true, 1, 0.9, transform.size / Vector2D( 2, 2 ) );
 
 		delete boxShape;
 
@@ -29,7 +29,7 @@ public:
 
 	void Draw( )
 	{
-		Renderer::DrawRect( transform.position - ( transform.size / Vector2D( 2, 2 ) ), transform.size, color, transform.rotation );
+		Renderer::DrawRect( transform.position, transform.size, color, transform.rotation );
 	}
 
 	static Entity* Create( std::unordered_map<std::string, std::string> tags )
@@ -41,7 +41,7 @@ public:
 	{
 		if ( Input::IsKeyPressed( Input::KEY_SPACE ) )
 		{
-			GetAttachedPhysicsObject( )->ApplyImpulse( { 200000, 0 }, GetAttachedPhysicsObject( )->GetWorldCenter( ) );
+			GetAttachedPhysicsObject( )->ApplyImpulse( { 200, 0 }, GetAttachedPhysicsObject( )->GetWorldCenter( ) );
 		}
 	}
 
@@ -70,6 +70,7 @@ public:
 	void OnEnter( ) override
 	{
 		physicsWorld.SetGravity( { 0, 600 } );
+		// physicsWorld.SetTopDown( 0.3 );
 
 		PolygonShape* floorShape = new PolygonShape;
 		floorShape->SetAsRect( { 1600, 1 } );

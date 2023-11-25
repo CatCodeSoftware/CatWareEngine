@@ -40,7 +40,7 @@ namespace CatWare
 		UInt64 GetID( );
 
 		// Physics object stuff
-		PhysicsObject* AttachPhysicsObject( Shape* shape, bool dynamic, float density, float friction );
+		PhysicsObject* AttachPhysicsObject( Shape* shape, bool dynamic, float density, float friction, Vector2D attachOffset = { 0, 0 } );
 		PhysicsObject* GetAttachedPhysicsObject( );
 		void DetachPhysicsObject( );
 

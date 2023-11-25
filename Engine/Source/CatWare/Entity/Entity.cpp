@@ -11,8 +11,11 @@ namespace CatWare
 {
 	void CollisionBegin( PhysicsObject* object1, PhysicsObject* object2 )
 	{
-		if ( object1->attachedEntity != nullptr ) object1->attachedEntity->OnCollisionBegin( object2 );
-		if ( object2->attachedEntity != nullptr ) object2->attachedEntity->OnCollisionBegin( object1 );
+		if ( object1 != nullptr && object2 != nullptr )
+		{
+			if ( object1->attachedEntity != nullptr ) object1->attachedEntity->OnCollisionBegin( object2 );
+			if ( object2->attachedEntity != nullptr ) object2->attachedEntity->OnCollisionBegin( object1 );
+		}
 	}
 
 	void CollisionEnd( PhysicsObject* object1, PhysicsObject* object2 )
@@ -69,7 +72,7 @@ namespace CatWare
 	}
 
 
-	PhysicsObject* Entity::AttachPhysicsObject( Shape* shape, bool dynamic, float density, float friction )
+	PhysicsObject* Entity::AttachPhysicsObject( Shape* shape, bool dynamic, float density, float friction, Vector2D attachOffset )
 	{
 		if ( attachedPhysicsObject != nullptr )
 		{
@@ -79,7 +82,7 @@ namespace CatWare
 
 		PhysicsWorld* physicsWorld = &SceneManager::GetCurrentScene( )->physicsWorld;
 
-		attachedPhysicsObject = physicsWorld->CreateObject( &transform, shape, dynamic, density, friction );
+		attachedPhysicsObject = physicsWorld->CreateObject( &transform, shape, dynamic, density, friction, attachOffset );
 		attachedPhysicsObject->attachedEntity = this;
 		attachedPhysicsObject->onCollideBegin = &CollisionBegin;
 		attachedPhysicsObject->onCollideEnd = &CollisionEnd;

@@ -59,6 +59,8 @@ namespace CatWare
 		Entity* attachedEntity = nullptr;
 		b2Body* body = nullptr;
 
+		Vector2D entityAttachOffset;
+
 		void ( *onCollideBegin )( PhysicsObject* object1, PhysicsObject* object2 ) = nullptr;
 		void ( *onCollideEnd )( PhysicsObject* object1, PhysicsObject* object2 ) = nullptr;
 
@@ -84,16 +86,20 @@ namespace CatWare
 		void Update( );
 		void Tick( );
 
-		PhysicsObject* CreateObject( Transform* transform, Shape* shape, bool dynamic, float density, float friction );
+		PhysicsObject* CreateObject( Transform* transform, Shape* shape, bool dynamic, float density, float friction, Vector2D attachOffset = { 0, 0 } );
 		void RemoveObject( PhysicsObject* object );
 
 		void SetGravity( Vector2D gravity );
 		Vector2D GetGravity( );
 
+		void SetTopDown( float floorFriction );
+
 	private:
 		CollisionCallback* collisionCallback;
 		std::vector<PhysicsObject*> objects;
 		b2World* world;
+
+		b2Body* floor = nullptr;
 	};
 
 }

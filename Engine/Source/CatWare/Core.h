@@ -8,7 +8,9 @@
 
 #pragma once
 
-#define SDL_MAIN_HANDLED
+#if !defined(SDL_MAIN_HANDLED)
+#   define SDL_MAIN_HANDLED
+#endif
 
 #if defined(CW_PLATFORM_WIN64)
 #	if defined(CATWARE_BUILD)

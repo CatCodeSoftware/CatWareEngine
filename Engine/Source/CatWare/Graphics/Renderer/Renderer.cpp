@@ -65,7 +65,7 @@ namespace CatWare
 		delete rectTexturedShader;
 		delete postProcessShader;
 		delete textShader;
-
+		delete camera2D;
 		delete defaultFrameBuffer;
 	}
 
@@ -154,6 +154,11 @@ namespace CatWare
 
 	void Renderer::DrawRect( Vector2D position, Vector2D size, Color color, glm::mat4 transformMatrix )
 	{
+		if ( ( position.x < 0 - size.x * 2 || position.x > width + size.x * 2 ) || ( position.y < 0 - size.y * 2 || position.y > height + size.y * 2 ) )
+		{
+			return;
+		}
+
 		glm::mat4 projectionMatrix = camera2D->CalculateProjectionMatrix( );
 
 		float vertecies[2 * 4] =
@@ -209,6 +214,11 @@ namespace CatWare
 
 	void Renderer::DrawRectTextured( Vector2D position, Vector2D size, Rendering::Texture2D* texture, glm::mat4 transformMatrix, Color tint )
 	{
+		if ( ( position.x < 0 - size.x * 2 || position.x > width + size.x * 2 ) || ( position.y < 0 - size.y * 2 || position.y > height + size.y * 2 ) )
+		{
+			return;
+		}
+		
 		glm::mat4 projectionMatrix = camera2D->CalculateProjectionMatrix( );
 
 		float vertecies[4 * 4] =

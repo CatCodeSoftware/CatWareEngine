@@ -2,140 +2,217 @@
 
 #include "..\Utils\Time.h"
 
-#include "CatWare/Debug/Debug.h"
+#define UNIT_SCALE 8
 
 namespace CatWare
 {
-	namespace Physics
+	b2Vec2 VecToB2Vec( Vector2D vec )
 	{
-		void PhysicsObject::AttachCollider( Collider* collider, Vector2D relativePos )
+		return b2Vec2( vec.x, vec.y );
+	}
+
+	// Shapes
+	void PolygonShape::SetAsRect( Vector2D size )
+	{
+		shape.SetAsBox( size.x / 2 / UNIT_SCALE, size.y / 2 / UNIT_SCALE );
+	}
+
+	void PolygonShape::SetVerts( int count, Vector2D* verts )
+	{
+		// convert to b2vec2
+		b2Vec2* vecs = new b2Vec2[count];
+
+		for ( unsigned int i = 0; i < count; i++ )
 		{
-			collider->positionRelative = relativePos;
-			colliders.push_back( collider );
+			vecs[i].Set( verts[i].x, verts[i].y );
 		}
 
-		void PhysicsObject::DetachCollider( Collider* collider )
+		shape.Set( vecs, count );
+	}
+
+	CircleShape::CircleShape( float radius )
+	{
+		shape.m_radius = radius * UNIT_SCALE;
+	}
+
+	// Object
+	PhysicsObject::~PhysicsObject( )
+	{
+		body->GetWorld( )->DestroyBody( body );
+	}
+
+	void PhysicsObject::SetFixedRotation( bool fixed )
+	{
+		body->SetFixedRotation( true );
+	}
+
+	void PhysicsObject::SetVelocity( Vector2D velocity )
+	{
+		body->SetLinearVelocity( VecToB2Vec( velocity ) );
+	}
+
+	void PhysicsObject::SetAngularVelocity( float velocity )
+	{
+		body->SetAngularVelocity( velocity );
+	}
+
+
+	Vector2D PhysicsObject::GetVelocity( )
+	{
+		b2Vec2 vec = body->GetLinearVelocity( );
+		return { vec.x, vec.y };
+	}
+
+	float PhysicsObject::GetAngularVelocity( )
+	{
+		return body->GetAngularVelocity( );
+	}
+
+	bool PhysicsObject::GetFixedRotation( )
+	{
+		return body->IsFixedRotation( );
+	}
+
+	Vector2D PhysicsObject::GetWorldCenter( )
+	{
+		b2Vec2 vec = body->GetWorldCenter( );
+		return { vec.x, vec.y };
+	}
+
+
+	void PhysicsObject::ApplyImpulse( Vector2D force, Vector2D point )
+	{
+		body->ApplyLinearImpulse( VecToB2Vec( force ), VecToB2Vec( point ), true );
+	}
+
+	void PhysicsObject::ApplyForce( Vector2D force, Vector2D point )
+	{
+		body->ApplyForce( VecToB2Vec( force ), VecToB2Vec( point ), true );
+	}
+	
+
+	// World
+	PhysicsWorld::PhysicsWorld( )
+	{
+		b2Vec2 gravity( 0, 0 );
+		world = new b2World( gravity );
+
+		collisionCallback = new CollisionCallback;
+		world->SetContactListener( collisionCallback );
+	}
+
+	PhysicsWorld::~PhysicsWorld( )
+	{
+		delete collisionCallback;
+		delete world;
+	}
+
+	void PhysicsWorld::Update( )
+	{
+		for ( PhysicsObject* object : objects )
 		{
-			for ( std::vector<Collider*>::iterator it = colliders.begin( ); it != colliders.end( ); )
+			object->transform->position = object->transform->position + object->GetVelocity( ) * Vector2D( GlobalTime::GetDeltaTime( ) * UNIT_SCALE, GlobalTime::GetDeltaTime( ) * UNIT_SCALE );
+			object->transform->rotation += object->GetAngularVelocity( ) * GlobalTime::GetDeltaTime( );
+		}
+	}
+
+	void PhysicsWorld::Tick( )
+	{
+		world->Step( 1.0 / GlobalTime::ticksPerSecond, 8, 3 );
+
+
+		for ( PhysicsObject* object : objects )
+		{
+			b2Vec2 pos = object->body->GetPosition( );
+			object->transform->position = { pos.x * UNIT_SCALE, pos.y * UNIT_SCALE };
+			object->transform->rotation = object->body->GetAngle( ) * 57.2957795;
+
+			b2Vec2 velocity = object->body->GetLinearVelocity( );
+			float angularVelocity = object->body->GetAngularVelocity( );
+
+			if ( velocity == b2Vec2( 0, 0 ) && round( angularVelocity ) == 0 )
 			{
-				if ( *it == collider )
-				{
-					colliders.erase( it );
-					break;
-				}
-				else
-				{
-					it++;
-				}
+				object->body->SetAwake( 0 );
 			}
 		}
+	}
 
-		void PhysicsObject::SetResponse( CollisionResponse* response )
+	PhysicsObject* PhysicsWorld::CreateObject( Transform* transform, Shape* shape, bool dynamic, float density, float friction )
+	{
+		PhysicsObject* object = new PhysicsObject( );
+
+		object->transform = transform;
+
+		b2BodyDef bodyDef;
+
+		if ( dynamic ) bodyDef.type = b2_dynamicBody;
+		else bodyDef.type = b2_staticBody;
+
+		bodyDef.position.Set( transform->position.x / UNIT_SCALE, transform->position.y / UNIT_SCALE );
+		bodyDef.angle = transform->rotation;
+
+		b2FixtureDef fixtureDef;
+
+		fixtureDef.shape = shape->GetB2Shape( );
+		fixtureDef.density = density;
+		fixtureDef.friction = friction;
+
+		object->body = world->CreateBody( &bodyDef );
+		object->body->CreateFixture( &fixtureDef );
+
+		object->body->GetUserData( ).pointer = ( uintptr_t ) object;
+
+		objects.push_back( object );
+
+		return object;
+	}
+
+	void PhysicsWorld::RemoveObject( PhysicsObject* object )
+	{
+		for ( std::vector<PhysicsObject*>::iterator it = objects.begin( ); it != objects.end( ); )
 		{
-			this->response = response;
-		}
-
-		// PhysicsWorld
-
-		void PhysicsWorld::AddObject( PhysicsObject* physicsObject )
-		{
-			physicsObjects.push_back( physicsObject );
-		}
-
-		void PhysicsWorld::RemoveObject( PhysicsObject* physicsObject )
-		{
-			for ( std::vector<PhysicsObject*>::iterator it = physicsObjects.begin( ); it != physicsObjects.end( ); )
+			if ( *it == object )
 			{
-				if ( *it == physicsObject )
-				{
-					physicsObjects.erase( it );
-					break;
-				}
-				else
-				{
-					it++;
-				}
+				objects.erase( it );
+				delete ( *it );
+
+				break;
+			}
+			else
+			{
+				it++;
 			}
 		}
+	}
 
-		void PhysicsWorld::Tick( )
-		{
-			for ( PhysicsObject* object : physicsObjects )
-			{
-				// update collider positions
-				for ( Collider* collider : object->GetColliders( ) )
-				{
-					collider->position = object->transform->position + collider->positionRelative;
-				}
+	void PhysicsWorld::SetGravity( Vector2D gravity )
+	{
+		b2Vec2 vec = b2Vec2( gravity.x, gravity.y );
+		world->SetGravity( vec );
+	}
 
-				object->force = object->force + Vector2D( gravity.x * object->mass, gravity.y * object->mass );
+	Vector2D PhysicsWorld::GetGravity( )
+	{
+		b2Vec2 gravity = world->GetGravity( );
+		return { gravity.x, gravity.y };
+	}
 
-				if ( object->frictionEnabled )
-				{
-					// calculate friction
-					object->force.x -= ( object->frictionCoefficient * ( object->mass * 10 ) * object->velocity.x );
-					object->force.y -= ( object->frictionCoefficient * ( object->mass * 10 ) * object->velocity.y );
-				}
+	// CollisionCallback
+	void CollisionCallback::BeginContact( b2Contact* contact )
+	{
+		PhysicsObject* object1 = ( ( PhysicsObject* )contact->GetFixtureA( )->GetBody( )->GetUserData( ).pointer );
+		PhysicsObject* object2 = ( ( PhysicsObject* )contact->GetFixtureB( )->GetBody( )->GetUserData( ).pointer );
 
-				object->velocity.x += ( object->force.x / object->mass ) / GlobalTime::ticksPerSecond * GlobalTime::modifier;
-				object->velocity.y += object->force.y / object->mass / GlobalTime::ticksPerSecond * GlobalTime::modifier;
+		if ( object1->onCollideBegin != nullptr ) object1->onCollideBegin( object1, object2 );
+		if ( object2->onCollideBegin != nullptr ) object2->onCollideBegin( object2, object1 );
+	}
 
-				// check collisions between objects
-				for ( PhysicsObject* physObj1 : physicsObjects )
-				{
-					for ( PhysicsObject* physObj2 : physicsObjects )
-					{
-						if ( physObj1 == physObj2 || ( !physObj2->collidable || !physObj1->collidable ) ) break;
+	void CollisionCallback::EndContact( b2Contact* contact )
+	{
+		PhysicsObject* object1 = ( ( PhysicsObject* )contact->GetFixtureA( )->GetBody( )->GetUserData( ).pointer );
+		PhysicsObject* object2 = ( ( PhysicsObject* )contact->GetFixtureB( )->GetBody( )->GetUserData( ).pointer );
 
-						ResolveCollisions( physObj1, physObj2 );
-					}
-				}
-			}
-		}
-
-		void PhysicsWorld::Update( )
-		{
-			for ( PhysicsObject* object : physicsObjects )
-			{
-				object->transform->position.x += object->velocity.x * GlobalTime::GetDeltaTime( );
-				object->transform->position.y += object->velocity.y * GlobalTime::GetDeltaTime( );
-
-				object->force = { 0, 0 };
-
-			}
-		}
-
-		void PhysicsWorld::ResolveCollisions( PhysicsObject* physObj1, PhysicsObject* physObj2 )
-		{
-			for ( Collider* c1 : physObj1->GetColliders( ) )
-			{
-				for ( Collider* c2 : physObj2->GetColliders( ) )
-				{
-					CollisionInfo ci = TestCollision( c1, c2 );
-
-					if ( ci.hasCollision )
-					{
-						/*
-						if ( physObj1->response != nullptr )
-							physObj1->response->OnCollide( physObj1, physObj2, ci );
-
-						if ( physObj2->response != nullptr )
-							physObj1->response->OnCollide( physObj2, physObj1, ci );
-						*/
-
-						// Correct position
-
-						if ( physObj1->movable )
-							physObj1->transform->position = physObj1->transform->position - ci.normal;
-
-						if ( physObj2->movable )
-							physObj2->transform->position = physObj2->transform->position + ci.normal;
-
-						// stop checking collision for these objects
-						return;
-					}
-				}
-			}
-		}
+		if ( object1->onCollideEnd != nullptr ) object1->onCollideEnd( object1, object2 );
+		if ( object2->onCollideEnd != nullptr ) object2->onCollideEnd( object2, object1 );
 	}
 }

@@ -9,7 +9,6 @@
 #include "CatWare/Utils/Types.h"
 #include "CatWare/Utils/Transform.h"
 #include "CatWare/Physics/Physics.h"
-#include "CatWare/Physics/Collision.h"
 
 #undef GetClassName // stupid windows
 
@@ -41,9 +40,12 @@ namespace CatWare
 		UInt64 GetID( );
 
 		// Physics object stuff
-		Physics::PhysicsObject* AttachPhysicsObject( double mass = 1.0, bool frictionEnabled = false, double frictionCoefficient = 1 );
-		Physics::PhysicsObject* GetAttachedPhysicsObject( );
+		PhysicsObject* AttachPhysicsObject( Shape* shape, bool dynamic, float density, float friction );
+		PhysicsObject* GetAttachedPhysicsObject( );
 		void DetachPhysicsObject( );
+
+		virtual void OnCollisionBegin( PhysicsObject* object ) { };
+		virtual void OnCollisionEnd( PhysicsObject* object ) { };
 
 		static Entity* Create( std::unordered_map<std::string, std::string> tags ) { return nullptr;  }
 
@@ -53,11 +55,11 @@ namespace CatWare
 			
 		std::vector<std::string> groups;
 	private:
-		UInt64 id;
+		UInt64 id = 0;
 
 		bool shouldDelete = false;
 
-		Physics::PhysicsObject* attachedPhysicsObject = nullptr;
+		PhysicsObject* attachedPhysicsObject = nullptr;
 	};
 
     // This static class holds info about how to create entities
@@ -114,6 +116,8 @@ namespace CatWare
 		Entity* GetEntityByUniqueName( std::string uniqueName );
 		std::vector<Entity*> GetEntitiesByClassName( std::string name );
 		std::vector<Entity*> GetEntitiesByGroup( std::string groupName );
+
+		void DestroyEntity( UInt64 id );
 
 		void Update( );
 		void Tick( );

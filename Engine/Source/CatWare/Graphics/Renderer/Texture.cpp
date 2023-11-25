@@ -19,6 +19,8 @@ namespace CatWare
 			{
 			case RendererAPI::API::OPENGL: return new OpenGL::OpenGLTexture( width, height, data, channels, textureFilter );
 			}
+
+			return nullptr;
 		}
 
 		Texture2D* Texture2D::Create( std::string path, TextureFilter tf )
@@ -38,6 +40,8 @@ namespace CatWare
 			{
 			case RendererAPI::API::OPENGL: return new OpenGL::OpenGLTexture( width, height, rgbaData, 4, tf );
 			}
+
+			return nullptr;
 		}
 	}
 }

@@ -28,6 +28,8 @@ namespace CatWare
 				case ShaderDataType::Int4: return GL_INT;
 				case ShaderDataType::Bool: return GL_INT;
 				}
+
+				return 0;
 			}
 
 			class OpenGLVertexBuffer : public VertexBuffer

@@ -1,79 +1,99 @@
-/**
-* @file Physics.h
-* 
-* @brief The physics module
-* 
-* @author PointThink
-*/
-
 #pragma once
 
 #include <vector>
+#include <array>
 
-#include "../Core.h"
-#include "CatWare/Utils/Vector.h"
+#include <box2d/box2d.h>
+
+#include "CatWare/Core.h"
 #include "CatWare/Utils/Transform.h"
-#include "Collision.h"
-#include "CollisionResponse.h"
+#include "CatWare/Utils/Vector.h"
 
 namespace CatWare
 {
-	namespace Physics
+	class Entity;
+
+	class Shape
 	{
-		/** 
-		* A class to represent a single physics object in the world
-		* 
-		* Not really meant to be used standalone but bound to an entity.
-		* Look up CatWare::Entity::AttachPhysicsObject
-		*/
-		class CATWARE_API PhysicsObject
-		{
-		public:
-			void AttachCollider( Collider* collider, Vector2D relativePos = { 0, 0 } );
-			void DetachCollider( Collider* collider );
+	public:
+		virtual b2Shape* GetB2Shape( ) = 0;
+	};
 
-			inline std::vector<Collider*> GetColliders( ) { return colliders; }
+	class CATWARE_API PolygonShape : public Shape
+	{
+	public:
+		inline b2Shape* GetB2Shape( ) override { return &shape; }
 
-			void SetResponse( CollisionResponse* response );
+		void SetAsRect( Vector2D size );
+		void SetVerts( int count, Vector2D* verts );
 
-			//! A pointer to the transform to modify when the object is updated
-			Transform* transform;
-			
-			double mass = 1;
+	private:
+		b2PolygonShape shape;
+	};
 
-			bool frictionEnabled = false;
-			double frictionCoefficient = 1.0;
+	class CATWARE_API CircleShape : public Shape
+	{
+	public:
+		CircleShape( float radius );
 
-			Vector2D velocity;
-			Vector2D force;
+		inline b2Shape* GetB2Shape( ) override { return &shape; }
 
-			double resistance = 1;
+	private:
+		b2CircleShape shape;
+	};
 
-			bool movable = false;
-			bool collidable = true;
+	class CollisionCallback : public b2ContactListener
+	{
+	public:
+		void BeginContact( b2Contact* contact ) override;
+		void EndContact( b2Contact* contact ) override;
+	};
 
-		private:
-			std::vector<Collider*> colliders;
-			CollisionResponse* response = nullptr;
-		};
+	class CATWARE_API PhysicsObject
+	{
+	public:
+		~PhysicsObject( );
 
+		//! Pointer to transform to modify
+		Transform* transform = nullptr;
+		Entity* attachedEntity = nullptr;
+		b2Body* body = nullptr;
 
-		//! Controls all physics objects
-		class CATWARE_API PhysicsWorld
-		{
-		public:
-			Vector2D gravity = { 0, 0 };
+		void ( *onCollideBegin )( PhysicsObject* object1, PhysicsObject* object2 ) = nullptr;
+		void ( *onCollideEnd )( PhysicsObject* object1, PhysicsObject* object2 ) = nullptr;
 
-			void AddObject( PhysicsObject* physicsObject );
-			void RemoveObject( PhysicsObject* physicsObject ); // Doesn't call delete! Beware of memory leaks.
+		Vector2D GetVelocity( );
+		float GetAngularVelocity( );
+		bool GetFixedRotation( );
+		Vector2D GetWorldCenter( );
+		
+		void SetVelocity( Vector2D velocity );
+		void SetAngularVelocity( float angularVelocity );
+		void SetFixedRotation( bool fixed );
 
-			void Tick( );
-			void Update( );
+		void ApplyForce( Vector2D force, Vector2D point );
+		void ApplyImpulse( Vector2D force, Vector2D point );
+	};
 
-		private:
-			void ResolveCollisions( PhysicsObject* physObj1, PhysicsObject* physObj2 );
+	class CATWARE_API PhysicsWorld
+	{
+	public:
+		PhysicsWorld( );
+		~PhysicsWorld( );
 
-			std::vector<PhysicsObject*> physicsObjects;
-		};
-	}
+		void Update( );
+		void Tick( );
+
+		PhysicsObject* CreateObject( Transform* transform, Shape* shape, bool dynamic, float density, float friction );
+		void RemoveObject( PhysicsObject* object );
+
+		void SetGravity( Vector2D gravity );
+		Vector2D GetGravity( );
+
+	private:
+		CollisionCallback* collisionCallback;
+		std::vector<PhysicsObject*> objects;
+		b2World* world;
+	};
+
 }

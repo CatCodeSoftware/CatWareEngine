@@ -121,6 +121,8 @@ namespace CatWare
 			case RendererAPI::API::OPENGL:
 				return new OpenGL::OpenGLVertexArray;
 			}
+
+			return nullptr;
 		}
 
 
@@ -134,6 +136,8 @@ namespace CatWare
 			case RendererAPI::API::OPENGL:
 				return new OpenGL::OpenGLFrameBuffer( spec );
 			}
+
+			return nullptr;
 		}
 	}
 }

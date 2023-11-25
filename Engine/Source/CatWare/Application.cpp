@@ -16,6 +16,9 @@
 #include "Audio/Audio.h"
 #include "Assets/Assets.h"
 #include "Input/Binds.h"
+#include "Random.h"
+
+#include "SDL.h"
 
 namespace CatWare
 {
@@ -64,10 +67,12 @@ namespace CatWare
 
 			Assets::textures.RunCleanup( );
 			Assets::sounds.RunCleanup( );
-			window->SwapBuffers( );
+
 
 			while ( !frameTimer.HasTimeElapsed( 1 / GlobalTime::maxFPS ) && GlobalTime::frameRateLimited ) { }
 			GlobalTime::SetDeltaTime( frameTimer.GetTime( ) );
+
+			window->SwapBuffers( );
 		}
 
 		DeInit( );
@@ -76,6 +81,8 @@ namespace CatWare
 	void Application::Init( )
 	{
 		CatWare::Logging::InitLoggers( );
+
+		Random::Init( );
 
 		CW_ENGINE_LOG->Info( "Initializing engine" );
 

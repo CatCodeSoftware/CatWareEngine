@@ -27,7 +27,10 @@ public:
 		{
 			if ( script.fptrPostInit != nullptr )
 				script.fptrPostInit( );
+		}
 
+		for ( Script& script : scripts )
+		{
 			if ( script.fptrActivate != nullptr )
 				script.fptrActivate( );
 		}

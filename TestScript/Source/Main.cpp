@@ -8,76 +8,27 @@ Text::Font* font = nullptr;
 
 int boxNumber = 0;
 
-class Box : public Entity
+void CreateTestEntity( EntityManager* manager, Vector2D position )
 {
-public:
-	Color color = { 255, 255, 255, 255 };
-
-	void Init( )
-	{
-		PolygonShape* boxShape = new PolygonShape;
-		boxShape->SetAsRect( transform.size );
-
-		PhysicsObject* object = AttachPhysicsObject( boxShape, true, 1, 0.9, transform.size / Vector2D( 2, 2 ) );
-
-		delete boxShape;
-
-		color = { UInt8( Random::GetUInt( 0, 255 ) ), UInt8( Random::GetUInt( 0, 255 ) ), UInt8( Random::GetUInt( 0, 255 ) ), 255 };
-
-		boxNumber++;
-	}
-
-	void Draw( )
-	{
-		Renderer::DrawRect( transform.position, transform.size, color, transform.rotation );
-	}
-
-	static Entity* Create( std::unordered_map<std::string, std::string> tags )
-	{
-		return new Box;
-	}
-
-	void Tick( )
-	{
-		if ( Input::IsKeyPressed( Input::KEY_SPACE ) )
-		{
-			GetAttachedPhysicsObject( )->ApplyImpulse( { 200, 0 }, GetAttachedPhysicsObject( )->GetWorldCenter( ) );
-		}
-	}
-
-	void Update( )
-	{
-		if ( transform.position.y > 900 )
-		{
-			if ( GetAttachedPhysicsObject( ) == nullptr )
-				DetachPhysicsObject( );
-		}
-	}
-};
+	/*
+	manager->CreateEntity( "testEntity", { } )
+		.AddComponent<TransformComponent>( position, { 64, 64 } )
+		.AddComponent<RectRenderer>( { 255, 255, 255, 255 } );
+	*/
+}
 
 class InGame : public Scene
 {
 public:
-	AudioHandle* handle;
-
-	Transform floorTransform = { { 800, 900 }, { 1600, 1 } };
 
 	InGame( )
 	{
-		EntityRegistry::RegisterEntity<Box>( "box" );
+		
 	}
 
 	void OnEnter( ) override
 	{
-		physicsWorld.SetGravity( { 0, 600 } );
-		// physicsWorld.SetTopDown( 0.3 );
 
-		PolygonShape* floorShape = new PolygonShape;
-		floorShape->SetAsRect( { 1600, 1 } );
-
-		physicsWorld.CreateObject( &floorTransform, floorShape, false, 1, 0.3 );
-
-		delete floorShape;
 	}
 
 	void Update( ) override
@@ -98,7 +49,6 @@ public:
 
 		if ( Input::IsMousePressed( 1 ) )
 		{
-			entityManager.CreateEntityByClassName( "box", { Input::GetMouseMotion( ), { 64, 64 } }, { } );
 		}
 	}
 

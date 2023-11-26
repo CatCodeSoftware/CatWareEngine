@@ -1,5 +1,8 @@
 #include "Entity.h"
 
+#include "Components.h"
+
+
 namespace CatWare
 {
 	void EntityManager::Update( )
@@ -28,6 +31,15 @@ namespace CatWare
 
 	void EntityManager::Draw( )
 	{
+		auto group = enttRegistry.group<Transform>( entt::get<SpriteRenderer> );
+
+		for ( auto entity : group )
+		{
+			auto [transform, rectRenderer] = group.get<Transform, SpriteRenderer>( entity );
+
+			rectRenderer.Draw( transform );
+		}
+
 		enttRegistry.view<EntityBehaviorComponent>( ).each( [=] ( auto entity, EntityBehaviorComponent& component )
 		{
 			component.behavior->Draw( );
@@ -37,8 +49,11 @@ namespace CatWare
 	Entity EntityManager::CreateEntity( std::string name, std::vector<std::string> groups )
 	{
 		UInt32 id = ( UInt32 ) enttRegistry.create( );
+		Entity entity( this, id );
 
-		return Entity( this, id );
+		// entity.AddComponent<BasicEntityInfo>( name, groups );
+
+		return entity;
 	}
 
 	Entity::Entity( )

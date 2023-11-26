@@ -10,28 +10,6 @@
 
 namespace CatWare
 {
-	class BasicEntityInfo
-	{
-		std::string name;
-		std::string uniqueName;
-		std::vector<std::string> groups;
-	};
-
-	class TransformComponent
-	{
-	public:
-		TransformComponent( Vector2D position = Vector2D( 0, 0 ), Vector2D size = Vector2D( 0, 0 ), float rotation = 0 )
-		{
-			this->position = position;
-			this->size = size;
-			this->rotation = rotation;
-		}
-
-		Vector2D position;
-		Vector2D size;
-		float rotation;
-	};
-
 	class CATWARE_API EntityManager
 	{
 		friend class Entity;

@@ -13,7 +13,7 @@ class TestEntityBehavior : public EntityBehavior
 public:
 	void Update( ) override
 	{
-		TransformComponent* transform = GetComponent<TransformComponent>( );
+		Transform* transform = GetComponent<Transform>( );
 
 		if ( Input::IsKeyPressed( Input::KEY_W ) )
 		{
@@ -35,17 +35,15 @@ public:
 
 	void Draw( )
 	{
-		TransformComponent* transform = GetComponent<TransformComponent>( );
-		Renderer::DrawRect( transform->position, transform->size, { 255, 0, 0, 255 }, transform->rotation );
+		
 	}
 };
 
 void CreateTestEntity( EntityManager* manager, Vector2D position )
 {
-	Entity entity = manager->CreateEntity( "testEntity", { } );
-		
-	entity
-		.AddComponent<TransformComponent>( position, Vector2D( 64, 64 ) )
+	manager->CreateEntity( "testEntity", { } )
+		.AddComponent<Transform>( position, Vector2D( 64, 100 ) )
+		.AddComponent<SpriteRenderer>( Color( 255, 255, 255, 255 ), "testTexture" )
 		.AddComponent<EntityBehaviorComponent>( new TestEntityBehavior );
 }
 
@@ -103,6 +101,8 @@ EXPORT void PreInit( CatWare::InitConfig* config )
 	config->windowHeight = 900;
 
 	GlobalTime::modifier = 1.0;
+
+	Assets::textures.Add( "testTexture", "gato.jpg" );
 }
 
 EXPORT void PostInit( )

@@ -8,13 +8,45 @@ Text::Font* font = nullptr;
 
 int boxNumber = 0;
 
+class TestEntityBehavior : public EntityBehavior
+{
+public:
+	void Update( ) override
+	{
+		TransformComponent* transform = GetComponent<TransformComponent>( );
+
+		if ( Input::IsKeyPressed( Input::KEY_W ) )
+		{
+			transform->position.y -= 300 * GlobalTime::GetDeltaTime( );
+		}
+		if ( Input::IsKeyPressed( Input::KEY_S ) )
+		{
+			transform->position.y += 300 * GlobalTime::GetDeltaTime( );
+		}
+		if ( Input::IsKeyPressed( Input::KEY_A ) )
+		{
+			transform->position.x -= 300 * GlobalTime::GetDeltaTime( );
+		}
+		if ( Input::IsKeyPressed( Input::KEY_D ) )
+		{
+			transform->position.x += 300 * GlobalTime::GetDeltaTime( );
+		}
+	}
+
+	void Draw( )
+	{
+		TransformComponent* transform = GetComponent<TransformComponent>( );
+		Renderer::DrawRect( transform->position, transform->size, { 255, 0, 0, 255 }, transform->rotation );
+	}
+};
+
 void CreateTestEntity( EntityManager* manager, Vector2D position )
 {
-	/*
-	manager->CreateEntity( "testEntity", { } )
-		.AddComponent<TransformComponent>( position, { 64, 64 } )
-		.AddComponent<RectRenderer>( { 255, 255, 255, 255 } );
-	*/
+	Entity entity = manager->CreateEntity( "testEntity", { } );
+		
+	entity
+		.AddComponent<TransformComponent>( position, Vector2D( 64, 64 ) )
+		.AddComponent<EntityBehaviorComponent>( new TestEntityBehavior );
 }
 
 class InGame : public Scene
@@ -28,7 +60,7 @@ public:
 
 	void OnEnter( ) override
 	{
-
+		CreateTestEntity( &entityManager, { 128, 128 } );
 	}
 
 	void Update( ) override

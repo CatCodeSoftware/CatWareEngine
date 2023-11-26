@@ -91,7 +91,7 @@ if has_config("useRuntime") then
 			add_deps("TestScript")
 		end
 
-		add_packages("libsdl", "freetype", "soloud", "box2d", "entt`")
+		add_packages("libsdl", "freetype", "soloud", "box2d", "entt")
 
 		set_rundir("$(projectdir)/WorkDir")
 

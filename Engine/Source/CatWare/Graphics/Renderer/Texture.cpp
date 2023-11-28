@@ -8,6 +8,7 @@
 #include "Renderer.h"
 #include "OpenGL/OpenGLTexture.h"
 #include "CatWare/Utils/Log.h"
+#include "CatWare/Filesystem/Filesystem.h"
 
 namespace CatWare
 {
@@ -27,7 +28,12 @@ namespace CatWare
 		{
 			int width, height;
 
-			void* rgbaData = stbi_load( path.c_str( ), &width, &height, nullptr, 4 );
+			FileHandle* file = FileSystem::OpenFile( path, FileMode::READ_BINARY, true );
+			unsigned char* fileBuffer = ( unsigned char* ) file->Read( );
+
+			void* rgbaData = stbi_load_from_memory( fileBuffer, file->GetSizeBytes( ), &width, &height, nullptr, 4 );
+
+			delete fileBuffer;
 
 			if ( rgbaData == NULL )
 			{

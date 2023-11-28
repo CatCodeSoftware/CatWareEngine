@@ -20,6 +20,9 @@
 
 #include "SDL.h"
 
+#include "CatWare/Filesystem/Filesystem.h"
+#include "CatWare/Filesystem/Sources.h"
+
 namespace CatWare
 {
 	Application::Application( )
@@ -35,7 +38,7 @@ namespace CatWare
 	void Application::Run( )
 	{
 		Init( );
-
+		
 		while ( running )
 		{
 			frameTimer.Reset( );
@@ -81,6 +84,10 @@ namespace CatWare
 	void Application::Init( )
 	{
 		CatWare::Logging::InitLoggers( );
+
+		CW_ENGINE_LOG->Info( "Initializing filesystem" );
+		FileSystem::AddSource( new DirectorySource( "Custom" ) );
+		FileSystem::AddSource( new DirectorySource( "." ) );
 
 		Random::Init( );
 

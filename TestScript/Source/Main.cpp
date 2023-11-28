@@ -42,7 +42,7 @@ public:
 void CreateTestEntity( EntityManager* manager, Vector2D position )
 {
 	manager->CreateEntity( "testEntity", { } )
-		.AddComponent<Transform>( position, Vector2D( 64, 100 ) )
+		.AddComponent<Transform>( position, Vector2D( 128, 200 ) )
 		.AddComponent<SpriteRenderer>( Color( 255, 255, 255, 255 ), "testTexture" )
 		.AddComponent<EntityBehaviorComponent>( new TestEntityBehavior );
 }

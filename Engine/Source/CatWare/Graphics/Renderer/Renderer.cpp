@@ -21,7 +21,6 @@ namespace CatWare
 	RendererAPI* Renderer::rendererAPI = nullptr;
 
 	Shader* Renderer::rectShader = nullptr;
-	Shader* Renderer::rectTexturedShader = nullptr;
 	Shader* Renderer::postProcessShader = nullptr;
 	Shader* Renderer::textShader = nullptr;
 
@@ -44,8 +43,7 @@ namespace CatWare
 		rendererAPI->SetBlendAlpha( true );
 
 		// Load shaders from EngineRes
-		rectShader = Shader::CreateFromFile( "EngineRes/Shaders/RectShaderVertex.glsl", "EngineRes/Shaders/RectShaderFragment.glsl" );
-		rectTexturedShader = Shader::CreateFromFile( "EngineRes/Shaders/RectTexturedVertex.glsl", "EngineRes/Shaders/RectTexturedFragment.glsl" );
+		rectShader = Shader::CreateFromFile( "EngineRes/Shaders/RectVertex.glsl", "EngineRes/Shaders/RectFragment.glsl" );
 		postProcessShader = Shader::CreateFromFile( "EngineRes/Shaders/PostProcessVertex.glsl", "EngineRes/Shaders/PostProcessFragment.glsl" );
 		textShader = Shader::CreateFromFile( "EngineRes/Shaders/TextVertex.glsl", "EngineRes/Shaders/TextFragment.glsl" );
 
@@ -62,19 +60,20 @@ namespace CatWare
 
 		camera2D = new OrthoCamera( screenWidth, screenHeight );
 
-		float vertecies[] = {
+		// Create basic geometry for the rectangles
+		float rectVerteciesTemp[] = {
 			0, 0, 0, 0,
 			1, 0, 1, 0,
 			0, 1, 0, 1,
 			1, 1, 1, 1
 		};
 
-		unsigned int indicies[6] =
+		unsigned int rectIndiciesTemp[6] =
 		{
 			0, 1, 2, 2, 1, 3
 		};
 
-		rectVerts = Rendering::VertexBuffer::Create( sizeof( vertecies ), vertecies );
+		rectVerts = Rendering::VertexBuffer::Create( sizeof( rectVerteciesTemp ), rectVerteciesTemp );
 
 		BufferLayout vertBufferLayout =
 		{
@@ -82,7 +81,7 @@ namespace CatWare
 			BufferElement( "textureCoord", ShaderDataType::Float2 )
 		};
 
-		rectIndexes = Rendering::IndexBuffer::Create( 6, indicies );
+		rectIndexes = Rendering::IndexBuffer::Create( 6, rectIndiciesTemp );
 
 		rectVerts->SetLayout( vertBufferLayout );
 
@@ -94,8 +93,11 @@ namespace CatWare
 
 	void Renderer::DeInit( )
 	{
+		delete rectVerts;
+		delete rectIndexes;
+		delete rectArray;
+
 		delete rectShader;
-		delete rectTexturedShader;
 		delete postProcessShader;
 		delete textShader;
 		delete camera2D;
@@ -196,14 +198,14 @@ namespace CatWare
 
 		position = position / size;
 
-		rectTexturedShader->SetUniform2f( "u_Size", size.x, size.y );
-		rectTexturedShader->SetUniform2f( "u_Position", position.x, position.y );
+		rectShader->SetUniform2f( "u_Size", size.x, size.y );
+		rectShader->SetUniform2f( "u_Position", position.x, position.y );
 
-		rectTexturedShader->Bind( );
-		rectTexturedShader->SetUniform1i( "u_IsTextured", false );
-		rectTexturedShader->SetUniform4f( "u_Tint", float( color.r ) / 255.0f, float( color.g ) / 255.0f, float( color.b ) / 255.0f, float( color.a ) / 255.0f );
-		rectTexturedShader->SetUniformMat4( "u_Projection", projectionMatrix );
-		rectTexturedShader->SetUniformMat4( "u_Transform", transformMatrix );
+		rectShader->Bind( );
+		rectShader->SetUniform1i( "u_IsTextured", false );
+		rectShader->SetUniform4f( "u_Tint", float( color.r ) / 255.0f, float( color.g ) / 255.0f, float( color.b ) / 255.0f, float( color.a ) / 255.0f );
+		rectShader->SetUniformMat4( "u_Projection", projectionMatrix );
+		rectShader->SetUniformMat4( "u_Transform", transformMatrix );
 
 		rendererAPI->DrawIndexed( rectArray );
 	}
@@ -230,19 +232,19 @@ namespace CatWare
 
 		position = position / size;
 
-		rectTexturedShader->Bind( );
-		rectTexturedShader->SetUniform4f( "u_Tint", float( tint.r ) / 255.0f, float( tint.g ) / 255.0f, float( tint.b ) / 255.0f, float( tint.a ) / 255.0f );
+		rectShader->Bind( );
+		rectShader->SetUniform4f( "u_Tint", float( tint.r ) / 255.0f, float( tint.g ) / 255.0f, float( tint.b ) / 255.0f, float( tint.a ) / 255.0f );
 
-		rectTexturedShader->SetUniform2f( "u_Size", size.x, size.y );
-		rectTexturedShader->SetUniform2f( "u_Position", position.x, position.y );
+		rectShader->SetUniform2f( "u_Size", size.x, size.y );
+		rectShader->SetUniform2f( "u_Position", position.x, position.y );
 
-		rectTexturedShader->SetUniformMat4( "u_Projection", projectionMatrix );
-		rectTexturedShader->SetUniformMat4( "u_Transform", transformMatrix );
+		rectShader->SetUniformMat4( "u_Projection", projectionMatrix );
+		rectShader->SetUniformMat4( "u_Transform", transformMatrix );
 
 
 		texture->Bind( 0 );
-		rectTexturedShader->SetUniform1i( "u_IsTextured", true );
-		rectTexturedShader->SetUniform1f( "u_Texture", 0 );
+		rectShader->SetUniform1i( "u_IsTextured", true );
+		rectShader->SetUniform1f( "u_Texture", 0 );
 
 		rendererAPI->DrawIndexed( rectArray );
 

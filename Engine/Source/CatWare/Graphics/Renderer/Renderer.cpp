@@ -28,6 +28,10 @@ namespace CatWare
 	FrameBuffer* Renderer::currentFrameBuffer = nullptr;
 	FrameBuffer* Renderer::defaultFrameBuffer = nullptr;
 
+	Rendering::VertexBuffer* Renderer::rectVerts = nullptr;
+	Rendering::IndexBuffer* Renderer::rectIndexes = nullptr;
+	Rendering::VertexArray* Renderer::rectArray = nullptr;
+
 	unsigned int Renderer::width = 0;
 	unsigned int Renderer::height = 0;
 
@@ -57,6 +61,35 @@ namespace CatWare
 		SetRenderTarget( defaultFrameBuffer );
 
 		camera2D = new OrthoCamera( screenWidth, screenHeight );
+
+		float vertecies[] = {
+			0, 0, 0, 0,
+			1, 0, 1, 0,
+			0, 1, 0, 1,
+			1, 1, 1, 1
+		};
+
+		unsigned int indicies[6] =
+		{
+			0, 1, 2, 2, 1, 3
+		};
+
+		rectVerts = Rendering::VertexBuffer::Create( sizeof( vertecies ), vertecies );
+
+		BufferLayout vertBufferLayout =
+		{
+			BufferElement( "position", ShaderDataType::Float2 ),
+			BufferElement( "textureCoord", ShaderDataType::Float2 )
+		};
+
+		rectIndexes = Rendering::IndexBuffer::Create( 6, indicies );
+
+		rectVerts->SetLayout( vertBufferLayout );
+
+		rectArray = Rendering::VertexArray::Create( );
+
+		rectArray->AddVertexBuffer( rectVerts );
+		rectArray->SetIndexBuffer( rectIndexes );
 	}
 
 	void Renderer::DeInit( )
@@ -161,44 +194,18 @@ namespace CatWare
 
 		glm::mat4 projectionMatrix = camera2D->CalculateProjectionMatrix( );
 
-		float vertecies[2 * 4] =
-		{
-			position.x, position.y,
-			position.x + size.x, position.y,
-			position.x, position.y + size.y,
-			position.x + size.x, position.y + size.y
-		};
+		position = position / size;
 
-		unsigned int indicies[6] =
-		{
-			0, 1, 2, 2, 1, 3
-		};
+		rectTexturedShader->SetUniform2f( "u_Size", size.x, size.y );
+		rectTexturedShader->SetUniform2f( "u_Position", position.x, position.y );
 
-		VertexBuffer* vertexBuffer = VertexBuffer::Create( sizeof( vertecies ), vertecies );
-		IndexBuffer* indexBuffer = IndexBuffer::Create( 6, indicies );
+		rectTexturedShader->Bind( );
+		rectTexturedShader->SetUniform1i( "u_IsTextured", false );
+		rectTexturedShader->SetUniform4f( "u_Tint", float( color.r ) / 255.0f, float( color.g ) / 255.0f, float( color.b ) / 255.0f, float( color.a ) / 255.0f );
+		rectTexturedShader->SetUniformMat4( "u_Projection", projectionMatrix );
+		rectTexturedShader->SetUniformMat4( "u_Transform", transformMatrix );
 
-		BufferLayout layout =
-		{
-			BufferElement( "position", ShaderDataType::Float2 )
-		};
-
-		vertexBuffer->SetLayout( layout );
-
-		VertexArray* vertexArray = VertexArray::Create( );
-
-		vertexArray->AddVertexBuffer( vertexBuffer );
-		vertexArray->SetIndexBuffer( indexBuffer );
-
-		rectShader->Bind( );
-		rectShader->SetUniform4f( "u_Color", float( color.r ) / 255.0f, float( color.g ) / 255.0f, float( color.b ) / 255.0f, float( color.a ) / 255.0f );
-		rectShader->SetUniformMat4( "u_Projection", projectionMatrix );
-		rectShader->SetUniformMat4( "u_Transform", transformMatrix );
-
-		rendererAPI->DrawIndexed( vertexArray );
-
-		delete vertexArray;
-		delete vertexBuffer;
-		delete indexBuffer;
+		rendererAPI->DrawIndexed( rectArray );
 	}
 
 	void Renderer::DrawRect( Vector2D position, Vector2D size, Color color, float rotation )
@@ -221,51 +228,25 @@ namespace CatWare
 		
 		glm::mat4 projectionMatrix = camera2D->CalculateProjectionMatrix( );
 
-		float vertecies[4 * 4] =
-		{
-			position.x, position.y, 0, 0,
-			position.x + size.x, position.y, 1, 0,
-			position.x, position.y + size.y, 0, 1,
-			position.x + size.x, position.y + size.y, 1 ,1
-		};
-
-		unsigned int indicies[6] =
-		{
-			0, 1, 2, 2, 1, 3
-		};
-
-		VertexBuffer* vertexBuffer = VertexBuffer::Create( sizeof( vertecies ), vertecies );
-		IndexBuffer* indexBuffer = IndexBuffer::Create( 6, indicies );
-
-		BufferLayout layout =
-		{
-			BufferElement( "position", ShaderDataType::Float2 ),
-			BufferElement( "textureCoord", ShaderDataType::Float2 )
-		};
-
-		vertexBuffer->SetLayout( layout );
-
-		VertexArray* vertexArray = VertexArray::Create( );
-
-		vertexArray->AddVertexBuffer( vertexBuffer );
-		vertexArray->SetIndexBuffer( indexBuffer );
+		position = position / size;
 
 		rectTexturedShader->Bind( );
 		rectTexturedShader->SetUniform4f( "u_Tint", float( tint.r ) / 255.0f, float( tint.g ) / 255.0f, float( tint.b ) / 255.0f, float( tint.a ) / 255.0f );
-		rectShader->SetUniformMat4( "u_Projection", projectionMatrix );
-		rectShader->SetUniformMat4( "u_Transform", transformMatrix );
+
+		rectTexturedShader->SetUniform2f( "u_Size", size.x, size.y );
+		rectTexturedShader->SetUniform2f( "u_Position", position.x, position.y );
+
+		rectTexturedShader->SetUniformMat4( "u_Projection", projectionMatrix );
+		rectTexturedShader->SetUniformMat4( "u_Transform", transformMatrix );
 
 
 		texture->Bind( 0 );
+		rectTexturedShader->SetUniform1i( "u_IsTextured", true );
 		rectTexturedShader->SetUniform1f( "u_Texture", 0 );
 
-		rendererAPI->DrawIndexed( vertexArray );
+		rendererAPI->DrawIndexed( rectArray );
 
 		texture->Unbind( );
-
-		delete vertexArray;
-		delete vertexBuffer;
-		delete indexBuffer;
 	}
 
 	void Renderer::DrawRectTextured( Vector2D position, Vector2D size, Texture2D* texture, Color tint, float rotation )

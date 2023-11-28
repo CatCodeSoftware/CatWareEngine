@@ -3,8 +3,7 @@
 #include <stdio.h>
 #include <Windows.h>
 
-// Should probably replace my impementation with a library like spdlog in the future - PT
-
+// Todo: Make this not suck
 namespace CatWare
 {
 	namespace Logging
@@ -21,41 +20,41 @@ namespace CatWare
 			// for now no logging to file
 		}
 
-		void Logger::Error ( std::string text, ... )
+		void Logger::Error( std::string text, ... )
 		{
 			text = "[ " + category + " ] " + text + "\n";
 
 			va_list args;
-			va_start ( args, text );
+			va_start( args, text );
 
-			SetConsoleTextAttribute ( GetStdHandle ( STD_OUTPUT_HANDLE ), 0xC0 );
-			vprintf ( text.c_str( ), args );
-			SetConsoleTextAttribute ( GetStdHandle ( STD_OUTPUT_HANDLE ), 0x0F );
+			SetConsoleTextAttribute( GetStdHandle( STD_OUTPUT_HANDLE ), 0xC0 );
+			vprintf( text.c_str( ), args );
+			SetConsoleTextAttribute( GetStdHandle( STD_OUTPUT_HANDLE ), 0x0F );
 		}
 
-		void Logger::Info ( std::string text, ... )
+		void Logger::Info( std::string text, ... )
 		{
 			text = "[ " + category + " ] " + text + "\n";
 
 			va_list args;
-			va_start ( args, text );
+			va_start( args, text );
 
-			SetConsoleTextAttribute ( GetStdHandle ( STD_OUTPUT_HANDLE ), 0x0F );
-			vprintf ( text.c_str( ), args );
-			SetConsoleTextAttribute ( GetStdHandle ( STD_OUTPUT_HANDLE ), 0x0F );
+			SetConsoleTextAttribute( GetStdHandle( STD_OUTPUT_HANDLE ), 0x0F );
+			vprintf( text.c_str( ), args );
+			SetConsoleTextAttribute( GetStdHandle( STD_OUTPUT_HANDLE ), 0x0F );
 
 		}
 
-		void Logger::Warning ( std::string text, ... )
+		void Logger::Warning( std::string text, ... )
 		{
 			text = "[ " + category + " ] " + text + "\n";
 
 			va_list args;
-			va_start ( args, text );
+			va_start( args, text );
 
-			SetConsoleTextAttribute ( GetStdHandle ( STD_OUTPUT_HANDLE ), 0xE0 );
-			vprintf ( text.c_str( ), args );
-			SetConsoleTextAttribute ( GetStdHandle ( STD_OUTPUT_HANDLE ), 0x0F );
+			SetConsoleTextAttribute( GetStdHandle( STD_OUTPUT_HANDLE ), 0xE0 );
+			vprintf( text.c_str( ), args );
+			SetConsoleTextAttribute( GetStdHandle( STD_OUTPUT_HANDLE ), 0x0F );
 		}
 
 

@@ -35,6 +35,13 @@ public:
 
 	void Draw( )
 	{
+		for ( int i = 0; i < 16; i++ )
+		{
+			for ( int j = 0; j < 9; j++ )
+			{
+				Renderer::DrawRect( { 100.0 * i, 100.0 * j }, { 100, 100 }, { 255, 255, 0, 255 } );
+			}
+		}
 		
 	}
 };
@@ -43,7 +50,6 @@ void CreateTestEntity( EntityManager* manager, Vector2D position )
 {
 	manager->CreateEntity( "testEntity", { } )
 		.AddComponent<Transform>( position, Vector2D( 128, 200 ) )
-		.AddComponent<SpriteRenderer>( Color( 255, 255, 255, 255 ), "testTexture" )
 		.AddComponent<EntityBehaviorComponent>( new TestEntityBehavior );
 }
 
@@ -121,7 +127,7 @@ EXPORT void PostInit( )
 
 EXPORT void Activate( )
 {
-	CW_LOG->Warning( "Activated script" );
+
 }
 
 EXPORT void DeInit( )

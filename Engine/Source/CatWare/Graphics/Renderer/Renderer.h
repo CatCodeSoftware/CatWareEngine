@@ -3,7 +3,7 @@
 #include "CatWare/Core.h"
 #include "RendererAPI.h"
 #include "OpenGL/OpenGLRendererAPI.h"
-#include "CatWare/Utils/Vector.h"
+#include "CatWare/Types/Vector.h"
 #include "Shader.h"
 #include "Texture.h"
 #include "../Text.h"

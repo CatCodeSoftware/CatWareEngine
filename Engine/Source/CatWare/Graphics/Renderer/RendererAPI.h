@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CatWare/Utils/Color.h"
+#include "CatWare/Types/Color.h"
 #include "Buffer.h"
 
 namespace CatWare

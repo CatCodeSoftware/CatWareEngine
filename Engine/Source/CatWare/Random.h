@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Utils/Types.h"
+#include "Types/Types.h"
 #include "Core.h"
 
 namespace CatWare

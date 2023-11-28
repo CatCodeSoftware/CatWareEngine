@@ -7,7 +7,7 @@
 #include FT_FREETYPE_H
 
 #include "Renderer/Texture.h"
-#include "../Utils/Vector.h"
+#include "../Types/Vector.h"
 #include "CatWare/Core.h"
 
 namespace CatWare

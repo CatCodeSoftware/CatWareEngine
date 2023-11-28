@@ -8,8 +8,8 @@
 
 #include "Debug/Debug.h"
 
-#include "Utils/Log.h"
-#include "Utils/Color.h"
+#include "Log.h"
+#include "Types/Color.h"
 #include "Graphics/Renderer/Renderer.h"
 #include "Error.h"
 #include "Graphics/Text.h"

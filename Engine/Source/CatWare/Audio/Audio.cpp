@@ -1,7 +1,7 @@
 #include "Audio.h"
 
 #include "CatWare/Debug/Debug.h"
-#include "CatWare/Utils/Log.h"
+#include "CatWare/Log.h"
 
 namespace CatWare
 {

@@ -13,8 +13,8 @@
 #include <unordered_map>
 
 #include "CatWare/Core.h"
-#include "CatWare/Utils/Log.h"
-#include "CatWare/Utils/Types.h"
+#include "CatWare/Log.h"
+#include "CatWare/Types/Types.h"
 #include "CatWare/Graphics/Renderer/Texture.h"
 #include "CatWare/Audio/Audio.h"
 #include "CatWare/Graphics/Text.h"

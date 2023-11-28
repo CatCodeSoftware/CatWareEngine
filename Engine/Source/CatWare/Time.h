@@ -2,7 +2,7 @@
 
 #include <chrono>
 
-#include "..\Core.h"
+#include "Core.h"
 
 namespace CatWare
 {

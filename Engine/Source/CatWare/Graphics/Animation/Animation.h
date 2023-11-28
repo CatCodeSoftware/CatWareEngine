@@ -4,8 +4,8 @@
 #include <vector>
 
 #include "CatWare/Core.h"
-#include "CatWare/Utils/Color.h"
-#include "CatWare/Utils/Vector.h"
+#include "CatWare/Types/Color.h"
+#include "CatWare/Types/Vector.h"
 
 namespace CatWare
 {

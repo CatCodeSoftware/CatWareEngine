@@ -3,7 +3,7 @@
 #include <vector>
 #include <string>
 
-#include "CatWare/Utils/Types.h"
+#include "CatWare/Types/Types.h"
 #include "Texture.h"
 #include "CatWare/Core.h"
 

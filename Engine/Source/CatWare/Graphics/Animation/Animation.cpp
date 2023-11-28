@@ -9,7 +9,7 @@
 
 #include "CatWare/Graphics/Renderer/Renderer.h"
 #include "CatWare/Assets/Assets.h"
-#include "CatWare/Utils/Time.h"
+#include "CatWare/Time.h"
 
 
 namespace CatWare

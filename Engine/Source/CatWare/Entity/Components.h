@@ -2,8 +2,8 @@
 
 #include "Entity.h"
 
-#include "CatWare/Utils/Color.h"
-#include "CatWare/Utils/Transform.h"
+#include "CatWare/Types/Color.h"
+#include "CatWare/Types/Transform.h"
 
 namespace CatWare
 {

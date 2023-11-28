@@ -5,7 +5,7 @@
 #include "CatWare/Debug/Debug.h"
 
 #include "CatWare/Input/KeyboardAndMouse.h"
-#include "CatWare/Utils/Log.h"
+#include "CatWare/Log.h"
 
 #include "Renderer/OpenGL/OpenGLContext.h"
 #include "Renderer/Renderer.h"

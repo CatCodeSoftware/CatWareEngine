@@ -1,7 +1,7 @@
 #pragma once
 
 #include "CatWare/Core.h"
-#include "CatWare/Utils/Vector.h"
+#include "CatWare/Types/Vector.h"
 
 namespace CatWare
 {

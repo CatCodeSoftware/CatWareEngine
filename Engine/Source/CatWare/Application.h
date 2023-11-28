@@ -14,7 +14,7 @@
 #include "Graphics/Window.h"
 #include "Graphics/Renderer/Renderer.h"
 #include "Scene.h"
-#include "Utils/Time.h"
+#include "Time.h"
 
 namespace CatWare
 {

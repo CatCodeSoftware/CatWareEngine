@@ -6,7 +6,7 @@
 
 #include "CatWare/Debug/Debug.h"
 
-#include "CatWare/Utils/Log.h"
+#include "CatWare/Log.h"
 
 void GLAPIENTRY
 MessageCallback( GLenum source,

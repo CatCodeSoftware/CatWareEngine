@@ -9,7 +9,7 @@
 #include "Buffer.h"
 #include "Shader.h"
 #include "Texture.h"
-#include "CatWare/Utils/Log.h"
+#include "CatWare/Log.h"
 
 
 using namespace CatWare::Rendering;

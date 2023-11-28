@@ -6,8 +6,8 @@
 #include <box2d/box2d.h>
 
 #include "CatWare/Core.h"
-#include "CatWare/Utils/Transform.h"
-#include "CatWare/Utils/Vector.h"
+#include "CatWare/Types/Transform.h"
+#include "CatWare/Types/Vector.h"
 
 namespace CatWare
 {

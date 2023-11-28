@@ -4,7 +4,7 @@
 #include <string>
 
 #include "CatWare/Core.h"
-#include "CatWare/Utils/Types.h"
+#include "CatWare/Types/Types.h"
 
 namespace CatWare
 {

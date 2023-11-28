@@ -8,76 +8,57 @@ Text::Font* font = nullptr;
 
 int boxNumber = 0;
 
-class Box : public Entity
+class TestEntityBehavior : public EntityBehavior
 {
 public:
-	Color color = { 255, 255, 255, 255 };
-
-	void Init( )
+	void Update( ) override
 	{
-		PolygonShape* boxShape = new PolygonShape;
-		boxShape->SetAsRect( transform.size );
+		Transform* transform = GetComponent<Transform>( );
 
-		PhysicsObject* object = AttachPhysicsObject( boxShape, true, 1, 0.9, transform.size / Vector2D( 2, 2 ) );
-
-		delete boxShape;
-
-		color = { UInt8( Random::GetUInt( 0, 255 ) ), UInt8( Random::GetUInt( 0, 255 ) ), UInt8( Random::GetUInt( 0, 255 ) ), 255 };
-
-		boxNumber++;
+		if ( Input::IsKeyPressed( Input::KEY_W ) )
+		{
+			transform->position.y -= 300 * GlobalTime::GetDeltaTime( );
+		}
+		if ( Input::IsKeyPressed( Input::KEY_S ) )
+		{
+			transform->position.y += 300 * GlobalTime::GetDeltaTime( );
+		}
+		if ( Input::IsKeyPressed( Input::KEY_A ) )
+		{
+			transform->position.x -= 300 * GlobalTime::GetDeltaTime( );
+		}
+		if ( Input::IsKeyPressed( Input::KEY_D ) )
+		{
+			transform->position.x += 300 * GlobalTime::GetDeltaTime( );
+		}
 	}
 
 	void Draw( )
 	{
-		Renderer::DrawRect( transform.position, transform.size, color, transform.rotation );
-	}
-
-	static Entity* Create( std::unordered_map<std::string, std::string> tags )
-	{
-		return new Box;
-	}
-
-	void Tick( )
-	{
-		if ( Input::IsKeyPressed( Input::KEY_SPACE ) )
-		{
-			GetAttachedPhysicsObject( )->ApplyImpulse( { 200, 0 }, GetAttachedPhysicsObject( )->GetWorldCenter( ) );
-		}
-	}
-
-	void Update( )
-	{
-		if ( transform.position.y > 900 )
-		{
-			if ( GetAttachedPhysicsObject( ) == nullptr )
-				DetachPhysicsObject( );
-		}
+		
 	}
 };
+
+void CreateTestEntity( EntityManager* manager, Vector2D position )
+{
+	manager->CreateEntity( "testEntity", { } )
+		.AddComponent<Transform>( position, Vector2D( 128, 200 ) )
+		.AddComponent<SpriteRenderer>( Color( 255, 255, 255, 255 ), "testTexture" )
+		.AddComponent<EntityBehaviorComponent>( new TestEntityBehavior );
+}
 
 class InGame : public Scene
 {
 public:
-	AudioHandle* handle;
-
-	Transform floorTransform = { { 800, 900 }, { 1600, 1 } };
 
 	InGame( )
 	{
-		EntityRegistry::RegisterEntity<Box>( "box" );
+		
 	}
 
 	void OnEnter( ) override
 	{
-		physicsWorld.SetGravity( { 0, 600 } );
-		// physicsWorld.SetTopDown( 0.3 );
-
-		PolygonShape* floorShape = new PolygonShape;
-		floorShape->SetAsRect( { 1600, 1 } );
-
-		physicsWorld.CreateObject( &floorTransform, floorShape, false, 1, 0.3 );
-
-		delete floorShape;
+		CreateTestEntity( &entityManager, { 128, 128 } );
 	}
 
 	void Update( ) override
@@ -98,7 +79,6 @@ public:
 
 		if ( Input::IsMousePressed( 1 ) )
 		{
-			entityManager.CreateEntityByClassName( "box", { Input::GetMouseMotion( ), { 64, 64 } }, { } );
 		}
 	}
 
@@ -121,6 +101,8 @@ EXPORT void PreInit( CatWare::InitConfig* config )
 	config->windowHeight = 900;
 
 	GlobalTime::modifier = 1.0;
+
+	Assets::textures.Add( "testTexture", "gato.jpg" );
 }
 
 EXPORT void PostInit( )

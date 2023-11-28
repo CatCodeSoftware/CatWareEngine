@@ -45,4 +45,4 @@ typedef void* Handle;
 // String
 typedef char* String;
 
-#define null 0
+#define NULL 0

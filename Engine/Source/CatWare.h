@@ -24,5 +24,6 @@
 #include "CatWare/Audio/Audio.h"
 #include "CatWare/Physics/Physics.h"
 #include "CatWare/Random.h"
+#include "CatWare/Entity/Components.h"
 
 #undef CW_DEBUG // Don't let the debug shit spill over to the game

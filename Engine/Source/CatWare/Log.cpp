@@ -21,12 +21,6 @@ namespace CatWare
 			// for now no logging to file
 		}
 
-		Logger::~Logger( )
-		{
-
-		}
-
-
 		void Logger::Error ( std::string text, ... )
 		{
 			text = "[ " + category + " ] " + text + "\n";

@@ -86,8 +86,6 @@ namespace CatWare
 
 	void AudioHandle2D::Update( )
 	{
-		// CW_ENGINE_LOG->Info( "Called" );
-
 		// calculate volume
 		/* get how far away the audio is from the listener and convert that into 0 - 1, 
 		then multiply that by volume of the sound and listener */

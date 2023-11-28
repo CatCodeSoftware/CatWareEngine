@@ -42,13 +42,10 @@ namespace CatWare
 	class CATWARE_API Application
 	{
 	public:
-		Application( );
-		virtual ~Application( );
-
 		virtual void Run( ) final;
 
 		// Overridable methods
-		virtual void PostInit( ) {}
+		virtual void PostInit( ) = 0;
 		virtual void PreDeInit( ) {}
 
 	protected:

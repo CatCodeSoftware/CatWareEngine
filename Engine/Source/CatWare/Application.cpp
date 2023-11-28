@@ -25,16 +25,6 @@
 
 namespace CatWare
 {
-	Application::Application( )
-	{
-
-	}
-
-	Application::~Application( )
-	{
-
-	}
-
 	void Application::Run( )
 	{
 		Init( );

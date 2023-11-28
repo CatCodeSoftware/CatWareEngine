@@ -45,12 +45,6 @@ namespace CatWare
 		}
 
 		template<typename ComponentType>
-		bool HasComponent( )
-		{
-			return false;
-		}
-
-		template<typename ComponentType>
 		void RemoveComponent( )
 		{
 			manager->enttRegistry.remove<ComponentType>( ( entt::entity ) id );

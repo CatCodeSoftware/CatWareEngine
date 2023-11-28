@@ -92,14 +92,10 @@ namespace CatWare
 		void SetGravity( Vector2D gravity );
 		Vector2D GetGravity( );
 
-		void SetTopDown( float floorFriction );
-
 	private:
 		CollisionCallback* collisionCallback;
 		std::vector<PhysicsObject*> objects;
 		b2World* world;
-
-		b2Body* floor = nullptr;
 	};
 
 }

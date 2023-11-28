@@ -17,19 +17,19 @@ public:
 
 		if ( Input::IsKeyPressed( Input::KEY_W ) )
 		{
-			transform->position.y -= 300 * GlobalTime::GetDeltaTime( );
+			transform->position.y -= 300 * Time::GetDeltaTime( );
 		}
 		if ( Input::IsKeyPressed( Input::KEY_S ) )
 		{
-			transform->position.y += 300 * GlobalTime::GetDeltaTime( );
+			transform->position.y += 300 * Time::GetDeltaTime( );
 		}
 		if ( Input::IsKeyPressed( Input::KEY_A ) )
 		{
-			transform->position.x -= 300 * GlobalTime::GetDeltaTime( );
+			transform->position.x -= 300 * Time::GetDeltaTime( );
 		}
 		if ( Input::IsKeyPressed( Input::KEY_D ) )
 		{
-			transform->position.x += 300 * GlobalTime::GetDeltaTime( );
+			transform->position.x += 300 * Time::GetDeltaTime( );
 		}
 	}
 
@@ -70,11 +70,11 @@ public:
 	{
 		if ( Input::IsKeyPressed( Input::KEY_UP ) )
 		{
-			GlobalTime::maxFPS++;
+			Time::maxFPS++;
 		}
 		if ( Input::IsKeyPressed( Input::KEY_DOWN ) )
 		{
-			GlobalTime::maxFPS--;
+			Time::maxFPS--;
 		}
 
 		if ( Input::IsMousePressed( 1 ) )
@@ -89,7 +89,7 @@ public:
 
 	void DrawGUI( ) override
 	{
-		Renderer::DrawString( "FPS: " + std::to_string( 1.0 / GlobalTime::GetDeltaTime( ) ), { 20, 20 }, 1, font, { 255, 255, 255, 255 } );
+		Renderer::DrawString( "FPS: " + std::to_string( 1.0 / Time::GetDeltaTime( ) ), { 20, 20 }, 1, font, { 255, 255, 255, 255 } );
 	}
 };
 
@@ -100,7 +100,7 @@ EXPORT void PreInit( CatWare::InitConfig* config )
 	config->windowWidth = 1600;
 	config->windowHeight = 900;
 
-	GlobalTime::modifier = 1.0;
+	Time::modifier = 1.0;
 
 	Assets::textures.Add( "testTexture", "gato.jpg" );
 }
@@ -112,8 +112,8 @@ EXPORT void PostInit( )
 	inGame = new InGame;
 	SceneManager::SetScene( inGame );
 
-	GlobalTime::frameRateLimited = false;
-	GlobalTime::maxFPS = 240;
+	Time::frameRateLimited = false;
+	Time::maxFPS = 240;
 
 	inGame - new InGame;
 	SceneManager::SetScene( inGame );

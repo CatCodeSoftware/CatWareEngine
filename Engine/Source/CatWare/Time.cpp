@@ -32,20 +32,20 @@ namespace CatWare
 	}
 
 	
-	double GlobalTime::time = 0;
+	double Time::time = 0;
 
-	double GlobalTime::deltaTime = 0;
-	double GlobalTime::modifier = 1.0;
+	double Time::deltaTime = 0;
+	double Time::modifier = 1.0;
 
-	bool GlobalTime::isTimePaused = false;
+	bool Time::isTimePaused = false;
 
-	float GlobalTime::ticksPerSecond = 60; // 60 seems like a nice default value
-	float GlobalTime::maxFPS = 240;
-	bool GlobalTime::frameRateLimited = true;
+	float Time::ticksPerSecond = 60; // 60 seems like a nice default value
+	float Time::maxFPS = 240;
+	bool Time::frameRateLimited = true;
 
-	void GlobalTime::SetDeltaTime( double deltaTime )
+	void Time::SetDeltaTime( double deltaTime )
 	{
-		GlobalTime::deltaTime = deltaTime;
+		Time::deltaTime = deltaTime;
 
 		if ( !isTimePaused )
 		{
@@ -53,8 +53,8 @@ namespace CatWare
 		}
 	}
 
-	void GlobalTime::TimePaused( bool isTimePaused )
+	void Time::TimePaused( bool isTimePaused )
 	{
-		GlobalTime::isTimePaused = isTimePaused;
+		Time::isTimePaused = isTimePaused;
 	}
 }

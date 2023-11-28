@@ -111,14 +111,14 @@ namespace CatWare
 	{
 		for ( PhysicsObject* object : objects )
 		{
-			object->transform->position = object->transform->position + object->GetVelocity( ) * Vector2D( GlobalTime::GetDeltaTime( ) * UNIT_SCALE, GlobalTime::GetDeltaTime( ) * UNIT_SCALE );
-			object->transform->rotation += object->GetAngularVelocity( ) * GlobalTime::GetDeltaTime( );
+			object->transform->position = object->transform->position + object->GetVelocity( ) * Vector2D( Time::GetDeltaTime( ) * UNIT_SCALE, Time::GetDeltaTime( ) * UNIT_SCALE );
+			object->transform->rotation += object->GetAngularVelocity( ) * Time::GetDeltaTime( );
 		}
 	}
 
 	void PhysicsWorld::Tick( )
 	{
-		world->Step( 1.0 / GlobalTime::ticksPerSecond, 8, 3 );
+		world->Step( 1.0 / Time::ticksPerSecond, 8, 3 );
 
 
 		for ( PhysicsObject* object : objects )

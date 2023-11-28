@@ -52,7 +52,7 @@ namespace CatWare
 			{
 				Update( );
 
-				int ticksElapsed = tickTimer.TimesTimeElapsed( ( 1.0 / GlobalTime::ticksPerSecond ) * GlobalTime::modifier );
+				int ticksElapsed = tickTimer.TimesTimeElapsed( ( 1.0 / Time::ticksPerSecond ) * Time::modifier );
 			
 				if ( ticksElapsed != 0 )
 				{
@@ -72,8 +72,8 @@ namespace CatWare
 			Assets::sounds.RunCleanup( );
 
 
-			while ( !frameTimer.HasTimeElapsed( 1 / GlobalTime::maxFPS ) && GlobalTime::frameRateLimited ) { }
-			GlobalTime::SetDeltaTime( frameTimer.GetTime( ) );
+			while ( !frameTimer.HasTimeElapsed( 1 / Time::maxFPS ) && Time::frameRateLimited ) { }
+			Time::SetDeltaTime( frameTimer.GetTime( ) );
 
 			window->SwapBuffers( );
 		}

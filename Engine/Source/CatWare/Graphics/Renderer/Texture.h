@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "CatWare/Utils/Types.h"
+#include "CatWare/Types/Types.h"
 #include "CatWare/Core.h"
 
 namespace CatWare

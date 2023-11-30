@@ -70,10 +70,8 @@ namespace CatWare
 
 			std::string line;
 
-			while ( getline ( file, line ) ) {
-				// Output the text from the file
-				// std::cout << line << std::endl;
-
+			while ( getline ( file, line ) )
+			{
 				int stage = 0;
 
 				std::string name;
@@ -105,7 +103,6 @@ namespace CatWare
 					}
 				}
 
-				// std::cout << name << '\n' << inputType << '\n' << inputCode << '\n';
 				if ( name != "" && inputType != "" && inputCode != "" )
 				{
 					int convertedCode = std::stoi( inputCode );

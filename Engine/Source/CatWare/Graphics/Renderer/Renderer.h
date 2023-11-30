@@ -3,7 +3,7 @@
 #include "CatWare/Core.h"
 #include "RendererAPI.h"
 #include "OpenGL/OpenGLRendererAPI.h"
-#include "CatWare/Utils/Vector.h"
+#include "CatWare/Types/Vector.h"
 #include "Shader.h"
 #include "Texture.h"
 #include "../Text.h"
@@ -43,7 +43,6 @@ namespace CatWare
 		static Rendering::RendererAPI* rendererAPI;
 
 		static Rendering::Shader* rectShader;
-		static Rendering::Shader* rectTexturedShader;
 		static Rendering::Shader* postProcessShader;
 		static Rendering::Shader* textShader;
 
@@ -53,6 +52,10 @@ namespace CatWare
 		static Rendering::VertexBuffer* rectVerts;
 		static Rendering::IndexBuffer* rectIndexes;
 		static Rendering::VertexArray* rectArray;
+
+		static Rendering::VertexBuffer* fbVerts;
+		static Rendering::IndexBuffer* fbIndexes;
+		static Rendering::VertexArray* fbArray;
 
 		static unsigned int width;
 		static unsigned int height;

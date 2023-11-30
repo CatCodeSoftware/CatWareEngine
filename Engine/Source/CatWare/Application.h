@@ -14,7 +14,7 @@
 #include "Graphics/Window.h"
 #include "Graphics/Renderer/Renderer.h"
 #include "Scene.h"
-#include "Utils/Time.h"
+#include "Time.h"
 
 namespace CatWare
 {
@@ -42,13 +42,10 @@ namespace CatWare
 	class CATWARE_API Application
 	{
 	public:
-		Application( );
-		virtual ~Application( );
-
 		virtual void Run( ) final;
 
 		// Overridable methods
-		virtual void PostInit( ) {}
+		virtual void PostInit( ) = 0;
 		virtual void PreDeInit( ) {}
 
 	protected:

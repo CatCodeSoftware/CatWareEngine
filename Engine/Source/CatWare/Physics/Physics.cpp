@@ -1,6 +1,6 @@
 #include "Physics.h"
 
-#include "..\Utils\Time.h"
+#include "CatWare\Time.h"
 
 #define UNIT_SCALE 8
 
@@ -111,14 +111,14 @@ namespace CatWare
 	{
 		for ( PhysicsObject* object : objects )
 		{
-			object->transform->position = object->transform->position + object->GetVelocity( ) * Vector2D( GlobalTime::GetDeltaTime( ) * UNIT_SCALE, GlobalTime::GetDeltaTime( ) * UNIT_SCALE );
-			object->transform->rotation += object->GetAngularVelocity( ) * GlobalTime::GetDeltaTime( );
+			object->transform->position = object->transform->position + object->GetVelocity( ) * Vector2D( Time::GetDeltaTime( ) * UNIT_SCALE, Time::GetDeltaTime( ) * UNIT_SCALE );
+			object->transform->rotation += object->GetAngularVelocity( ) * Time::GetDeltaTime( );
 		}
 	}
 
 	void PhysicsWorld::Tick( )
 	{
-		world->Step( 1.0 / GlobalTime::ticksPerSecond, 8, 3 );
+		world->Step( 1.0 / Time::ticksPerSecond, 8, 3 );
 
 
 		for ( PhysicsObject* object : objects )
@@ -158,18 +158,6 @@ namespace CatWare
 
 		object->body->GetUserData( ).pointer = ( uintptr_t ) object;
 
-		if ( floor != nullptr )
-		{
-			b2FrictionJointDef* fjdef = new b2FrictionJointDef;
-
-			fjdef->Initialize( object->body, floor, b2Vec2_zero );
-			
-			fjdef->maxForce = 1000;
-			fjdef->maxTorque = 1000;
-
-			world->CreateJoint( fjdef );
-		}
-
 		objects.push_back( object );
 
 		return object;
@@ -203,28 +191,6 @@ namespace CatWare
 	{
 		b2Vec2 gravity = world->GetGravity( );
 		return { gravity.x, gravity.y };
-	}
-
-	void PhysicsWorld::SetTopDown( float floorFriction )
-	{
-		b2BodyDef bodyDef;
-
-		bodyDef.type = b2_staticBody;
-		bodyDef.fixedRotation = true;
-		bodyDef.position.Set( -UINT32_MAX, -UINT32_MAX );
-		bodyDef.angle = 0;
-
-		b2FixtureDef fixtureDef;
-
-		PolygonShape* shape = new PolygonShape;
-		shape->SetAsRect( { UINT32_MAX, UINT32_MAX } );
-
-		fixtureDef.shape = shape->GetB2Shape( );
-		fixtureDef.friction = floorFriction;
-		fixtureDef.density = 1;
-
-		floor = world->CreateBody( &bodyDef );
-		floor->CreateFixture( &fixtureDef );
 	}
 
 	// CollisionCallback

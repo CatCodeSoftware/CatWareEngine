@@ -2,7 +2,7 @@
 
 #include <chrono>
 
-#include "..\Core.h"
+#include "Core.h"
 
 namespace CatWare
 {
@@ -22,7 +22,7 @@ namespace CatWare
 		std::chrono::time_point<std::chrono::high_resolution_clock> startTime;
 	};
 
-	class CATWARE_API GlobalTime
+	class CATWARE_API Time
 	{
 	public:
 		static double modifier;

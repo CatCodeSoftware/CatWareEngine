@@ -6,8 +6,8 @@
 #include <box2d/box2d.h>
 
 #include "CatWare/Core.h"
-#include "CatWare/Utils/Transform.h"
-#include "CatWare/Utils/Vector.h"
+#include "CatWare/Types/Transform.h"
+#include "CatWare/Types/Vector.h"
 
 namespace CatWare
 {
@@ -92,14 +92,10 @@ namespace CatWare
 		void SetGravity( Vector2D gravity );
 		Vector2D GetGravity( );
 
-		void SetTopDown( float floorFriction );
-
 	private:
 		CollisionCallback* collisionCallback;
 		std::vector<PhysicsObject*> objects;
 		b2World* world;
-
-		b2Body* floor = nullptr;
 	};
 
 }

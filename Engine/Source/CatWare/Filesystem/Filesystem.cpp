@@ -1,6 +1,6 @@
 #include "Filesystem.h"
 
-#include "CatWare/Utils/Log.h"
+#include "CatWare/Log.h"
 #include "CatWare/Error.h"
 
 namespace CatWare

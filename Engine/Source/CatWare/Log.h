@@ -16,7 +16,6 @@ namespace CatWare
 		{
 		public:
 			Logger( std::string category, std::string logFile );
-			~Logger( );
 
 			void Warning( std::string text, ... );
 			void Error( std::string text, ... );

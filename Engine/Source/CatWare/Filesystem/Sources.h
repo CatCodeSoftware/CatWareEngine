@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Filesystem.h"
-#include "CatWare/Utils/Types.h"
+#include "CatWare/Types/Types.h"
 
 #include <cstdio>
 

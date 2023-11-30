@@ -4,9 +4,9 @@
 #include <string>
 
 #include "CatWare/Core.h"
-#include "CatWare/Utils/Types.h"
-#include "CatWare/Utils/Vector.h"
-#include "CatWare/Utils/Log.h"
+#include "CatWare/Types/Types.h"
+#include "CatWare/Types/Vector.h"
+#include "CatWare/Log.h"
 
 namespace CatWare
 {
@@ -42,12 +42,6 @@ namespace CatWare
 		ComponentType* GetComponent( )
 		{
 			return &manager->enttRegistry.get<ComponentType>( ( entt::entity ) id );
-		}
-
-		template<typename ComponentType>
-		bool HasComponent( )
-		{
-			return false;
 		}
 
 		template<typename ComponentType>

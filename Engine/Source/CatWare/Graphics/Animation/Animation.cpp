@@ -9,7 +9,7 @@
 
 #include "CatWare/Graphics/Renderer/Renderer.h"
 #include "CatWare/Assets/Assets.h"
-#include "CatWare/Utils/Time.h"
+#include "CatWare/Time.h"
 
 
 namespace CatWare
@@ -41,7 +41,7 @@ namespace CatWare
 		this->fps = fps;
 		this->frames = frames;
 
-		currentFrameStartTime = GlobalTime::GetDeltaTime( );
+		currentFrameStartTime = Time::GetDeltaTime( );
 	}
 
 	void Animation::Draw( Vector2D position, Vector2D size, Color color, float rotation )
@@ -53,14 +53,14 @@ namespace CatWare
 
 	void Animation::Update( )
 	{
-		if ( GlobalTime::GetTime( ) - currentFrameStartTime > 1 / fps && !paused )
+		if ( Time::GetTime( ) - currentFrameStartTime > 1 / fps && !paused )
 		{
 			currentFrame++;
 
 			if ( currentFrame >= frames.size( ) )
 				currentFrame = 0;
 
-			currentFrameStartTime = GlobalTime::GetTime( );
+			currentFrameStartTime = Time::GetTime( );
 		}
 	}
 }

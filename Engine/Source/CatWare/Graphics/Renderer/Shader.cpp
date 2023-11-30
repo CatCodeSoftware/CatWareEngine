@@ -7,7 +7,7 @@
 #include "RendererAPI.h"
 #include "Renderer.h"
 #include "OpenGL/OpenGLShader.h"
-#include "CatWare/Utils/Log.h"
+#include "CatWare/Log.h"
 
 namespace CatWare
 {

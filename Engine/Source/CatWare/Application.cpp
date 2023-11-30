@@ -8,8 +8,8 @@
 
 #include "Debug/Debug.h"
 
-#include "Utils/Log.h"
-#include "Utils/Color.h"
+#include "Log.h"
+#include "Types/Color.h"
 #include "Graphics/Renderer/Renderer.h"
 #include "Error.h"
 #include "Graphics/Text.h"
@@ -25,16 +25,6 @@
 
 namespace CatWare
 {
-	Application::Application( )
-	{
-
-	}
-
-	Application::~Application( )
-	{
-
-	}
-
 	void Application::Run( )
 	{
 		Init( );
@@ -52,7 +42,7 @@ namespace CatWare
 			{
 				Update( );
 
-				int ticksElapsed = tickTimer.TimesTimeElapsed( ( 1.0 / GlobalTime::ticksPerSecond ) * GlobalTime::modifier );
+				int ticksElapsed = tickTimer.TimesTimeElapsed( ( 1.0 / Time::ticksPerSecond ) * Time::modifier );
 			
 				if ( ticksElapsed != 0 )
 				{
@@ -72,8 +62,8 @@ namespace CatWare
 			Assets::sounds.RunCleanup( );
 
 
-			while ( !frameTimer.HasTimeElapsed( 1 / GlobalTime::maxFPS ) && GlobalTime::frameRateLimited ) { }
-			GlobalTime::SetDeltaTime( frameTimer.GetTime( ) );
+			while ( !frameTimer.HasTimeElapsed( 1 / Time::maxFPS ) && Time::frameRateLimited ) { }
+			Time::SetDeltaTime( frameTimer.GetTime( ) );
 
 			window->SwapBuffers( );
 		}
@@ -85,13 +75,13 @@ namespace CatWare
 	{
 		CatWare::Logging::InitLoggers( );
 
+		CW_ENGINE_LOG->Info( "Initializing engine" );
+
 		CW_ENGINE_LOG->Info( "Initializing filesystem" );
 		FileSystem::AddSource( new DirectorySource( "Custom" ) );
 		FileSystem::AddSource( new DirectorySource( "." ) );
 
 		Random::Init( );
-
-		CW_ENGINE_LOG->Info( "Initializing engine" );
 
 		// temporary srand call - PT
 		std::srand( time( NULL ) );

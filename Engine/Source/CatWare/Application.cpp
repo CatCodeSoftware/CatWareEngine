@@ -75,13 +75,13 @@ namespace CatWare
 	{
 		CatWare::Logging::InitLoggers( );
 
+		CW_ENGINE_LOG->Info( "Initializing engine" );
+
 		CW_ENGINE_LOG->Info( "Initializing filesystem" );
 		FileSystem::AddSource( new DirectorySource( "Custom" ) );
 		FileSystem::AddSource( new DirectorySource( "." ) );
 
 		Random::Init( );
-
-		CW_ENGINE_LOG->Info( "Initializing engine" );
 
 		// temporary srand call - PT
 		std::srand( time( NULL ) );

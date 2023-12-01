@@ -25,11 +25,11 @@ namespace CatWare
 	class CATWARE_API Time
 	{
 	public:
-		static double modifier;
+		inline static double modifier = 1.0f;
 
-		static float ticksPerSecond;
-		static float maxFPS;
-		static bool frameRateLimited;
+		inline static float ticksPerSecond = 60;
+		inline static float maxFPS = 240;
+		inline static bool frameRateLimited = false;
 
 		inline static double GetDeltaTime( )
 		{
@@ -48,9 +48,9 @@ namespace CatWare
 		static void SetDeltaTime( double deltaTime );
 
 	private:
-		static double time;
-		static bool isTimePaused;
+		inline static double time;
+		inline static bool isTimePaused = false;
 
-		static double deltaTime;
+		inline static double deltaTime;
 	};
 }

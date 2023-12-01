@@ -13,7 +13,7 @@
 #include "Graphics/Renderer/Renderer.h"
 #include "Error.h"
 #include "Graphics/Text.h"
-#include "Audio/Audio.h"
+// #include "Audio/Audio.h"
 #include "Assets/Assets.h"
 #include "Input/Binds.h"
 #include "Random.h"
@@ -59,7 +59,7 @@ namespace CatWare
 			}
 
 			Assets::textures.RunCleanup( );
-			Assets::sounds.RunCleanup( );
+			// Assets::sounds.RunCleanup( );
 
 
 			while ( !frameTimer.HasTimeElapsed( 1 / Time::maxFPS ) && Time::frameRateLimited ) { }
@@ -83,28 +83,13 @@ namespace CatWare
 
 		Random::Init( );
 
-		// temporary srand call - PT
-		std::srand( time( NULL ) );
-
-		CW_ENGINE_LOG->Info( "Initializing ImGui" );
-
-		// initialze imgui - this is temporary
-		ImGui::CreateContext( );
-
-		ImGuiIO& io = ImGui::GetIO( ); ( void ) io;
-		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-		io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
-		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
-
-		ImGui::StyleColorsDark( );
-
 		window = new Window( initConfig.windowTitle, initConfig.windowWidth, initConfig.windowHeight, initConfig.windowFullscreen );
 
 		CW_ENGINE_LOG->Info( "Initializing renderer" );
 		renderingAPI = new Rendering::OpenGL::OpenGLAPI;
 		Renderer::Init( renderingAPI, initConfig.windowWidth, initConfig.windowHeight );
 
-		AudioEngine::InitAudio( );
+		// AudioEngine::InitAudio( );
 
 		Text::InitFreetype( );
 
@@ -121,10 +106,10 @@ namespace CatWare
 		Input::CleanUpBinds( );
 
 		Renderer::DeInit( );
-		AudioEngine::DeInitAudio( );
+		// AudioEngine::DeInitAudio( );
 
 		Assets::textures.Clear( );
-		Assets::sounds.Clear( );
+		// Assets::sounds.Clear( );
 
 		delete window;
 		delete renderingAPI;
@@ -161,7 +146,7 @@ namespace CatWare
 		currentScene->entityManager.Update( );
 		currentScene->physicsWorld.Update( );
 
-		AudioEngine::UpdateHandles( );
+		// AudioEngine::UpdateHandles( );
 	}
 
 	void Application::Tick( )
@@ -196,20 +181,6 @@ namespace CatWare
 		Scene* currentScene = SceneManager::GetCurrentScene( );
 
 		currentScene->DrawGUI( );
-
-		// ImGui stuff
-		ImGui_ImplOpenGL3_NewFrame( );
-		ImGui_ImplSDL2_NewFrame( );
-		ImGui::NewFrame( );
-
-		ImGui::ShowDemoWindow( nullptr );
-
-		ImGui::Render( );
-
-		ImGui::EndFrame( );
-
-		ImGui::UpdatePlatformWindows( );
-		ImGui::RenderPlatformWindowsDefault( );
 
 		Renderer::camera2D = oldCamera;
 		delete uiCamera;

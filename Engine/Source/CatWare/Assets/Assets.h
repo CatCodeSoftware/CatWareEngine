@@ -16,7 +16,6 @@
 #include "CatWare/Log.h"
 #include "CatWare/Types/Types.h"
 #include "CatWare/Graphics/Renderer/Texture.h"
-#include "CatWare/Audio/Audio.h"
 #include "CatWare/Graphics/Text.h"
 
 namespace CatWare
@@ -115,6 +114,7 @@ namespace CatWare
         }
     };
 
+    /*
     class SoundAsset : public Asset<Sound>
     {
     public:
@@ -142,6 +142,7 @@ namespace CatWare
             return ( asset->useCount > 0 );
         }
     };
+    */
 
     template<typename AssetClass, typename Asset>
     class AssetManager
@@ -205,6 +206,6 @@ namespace CatWare
     {
     public:
         static AssetManager<TextureAsset, Rendering::Texture2D> textures;
-        static AssetManager<SoundAsset, Sound> sounds;
+        // static AssetManager<SoundAsset, Sound> sounds;
     };
 }

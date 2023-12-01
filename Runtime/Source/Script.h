@@ -4,6 +4,8 @@
 
 #include <string>
 
+#include <Windows.h>
+
 class Script
 {
 public:

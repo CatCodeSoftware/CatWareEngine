@@ -5,3 +5,16 @@
 [submodule "Engine/Lib/glm"]
 	path = Engine/Lib/glm
 	url = https://github.com/g-truc/glm
+[submodule "Engine/Lib/SDL2"]
+	path = Engine/Lib/SDL2
+	url = https://github.com/libsdl-org/SDL
+	branch = SDL2
+[submodule "Engine/Lib/freetype"]
+	path = Engine/Lib/freetype
+	url = https://gitlab.freedesktop.org/freetype/freetype
+[submodule "Engine/Lib/soloud"]
+	path = Engine/Lib/soloud
+	url = https://github.com/jarikomppa/soloud
+[submodule "Engine/Lib/box2d"]
+	path = Engine/Lib/box2d
+	url = https://github.com/erincatto/box2d

@@ -1,10 +1,11 @@
 add_rules("mode.debug", "mode.release")
 
-add_requires("libsdl")
-add_requires("freetype")
-add_requires("soloud")
-add_requires("box2d")
-add_requires("entt")
+add_requires(
+	"libsdl",
+	"freetype",
+	"soloud",
+	"box2d"
+)
 
 option("buildTestScript")
 	set_default(true)
@@ -38,7 +39,12 @@ target("CatWareEngine")
 	add_includedirs("Engine/Lib/ImGui/backends")
 	add_includedirs("Engine/Lib/Single header")
 
-    add_packages("libsdl", "freetype", "soloud", "box2d", "entt")
+    add_packages(
+		"libsdl",
+		"freetype",
+		"soloud", 
+		"box2d"
+	)
 
 	-- self include dir
 	add_includedirs("Engine/Source/")
@@ -63,7 +69,7 @@ if has_config("buildTestScript") then
 
 		set_languages("cxx20")
 
-		add_packages("libsdl", "freetype", "soloud", "box2d", "entt")
+		add_packages("libsdl", "freetype", "soloud", "box2d")
 
 		add_defines("CW_PLATFORM_WIN64")
 		add_deps("CatWareEngine")
@@ -91,7 +97,7 @@ if has_config("useRuntime") then
 			add_deps("TestScript")
 		end
 
-		add_packages("libsdl", "freetype", "soloud", "box2d", "entt")
+		add_packages("libsdl", "freetype", "soloud", "box2d")
 
 		set_rundir("$(projectdir)/WorkDir")
 

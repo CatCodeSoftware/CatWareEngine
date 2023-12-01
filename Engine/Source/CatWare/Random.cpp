@@ -25,7 +25,7 @@ namespace CatWare
 			return dist( random );
 		}
 
-		UInt64 GetUInt( Int64 min, Int64 max )
+		UInt64 GetUInt( UInt64 min, UInt64 max )
 		{
 			std::uniform_int_distribution<UInt64> dist( min, max );
 			return dist( random );

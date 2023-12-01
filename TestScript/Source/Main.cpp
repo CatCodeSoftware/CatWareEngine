@@ -6,52 +6,40 @@ using namespace CatWare;
 
 Text::Font* font = nullptr;
 
-int boxNumber = 0;
-
-class TestEntityBehavior : public EntityBehavior
+class TestEntity : public Entity
 {
 public:
 	void Update( ) override
 	{
-		Transform* transform = GetComponent<Transform>( );
-
 		if ( Input::IsKeyPressed( Input::KEY_W ) )
 		{
-			transform->position.y -= 300 * Time::GetDeltaTime( );
+			transform.position.y -= 300 * Time::GetDeltaTime( );
 		}
 		if ( Input::IsKeyPressed( Input::KEY_S ) )
 		{
-			transform->position.y += 300 * Time::GetDeltaTime( );
+			transform.position.y += 300 * Time::GetDeltaTime( );
 		}
 		if ( Input::IsKeyPressed( Input::KEY_A ) )
 		{
-			transform->position.x -= 300 * Time::GetDeltaTime( );
+			transform.position.x -= 300 * Time::GetDeltaTime( );
 		}
 		if ( Input::IsKeyPressed( Input::KEY_D ) )
 		{
-			transform->position.x += 300 * Time::GetDeltaTime( );
+			transform.position.x += 300 * Time::GetDeltaTime( );
 		}
 	}
 
 	void Draw( )
 	{
-		for ( int i = 0; i < 16; i++ )
-		{
-			for ( int j = 0; j < 9; j++ )
-			{
-				Renderer::DrawRect( { 100.0 * i, 100.0 * j }, { 100, 100 }, { 255, 255, 0, 255 } );
-			}
-		}
-		
+		// Todo: Fix non textured rects
+		Renderer::DrawRect( transform.position, transform.size, { 255, 255, 255, 255 }, transform.rotation );
+	}
+
+	static Entity* Create( std::unordered_map<std::string, std::string> tags )
+	{
+		return new TestEntity;
 	}
 };
-
-void CreateTestEntity( EntityManager* manager, Vector2D position )
-{
-	manager->CreateEntity( "testEntity", { } )
-		.AddComponent<Transform>( position, Vector2D( 128, 200 ) )
-		.AddComponent<EntityBehaviorComponent>( new TestEntityBehavior );
-}
 
 class InGame : public Scene
 {
@@ -64,7 +52,7 @@ public:
 
 	void OnEnter( ) override
 	{
-		CreateTestEntity( &entityManager, { 128, 128 } );
+		entityManager.CreateEntityByClassName( "testEntity", { { 64, 64 }, { 64, 64 } }, { } );
 	}
 
 	void Update( ) override
@@ -115,13 +103,12 @@ EXPORT void PostInit( )
 {
 	font = new Text::Font( "EngineRes/Fonts/Oxanium-Regular.ttf", 50 );
 
-	inGame = new InGame;
-	SceneManager::SetScene( inGame );
-
 	Time::frameRateLimited = false;
 	Time::maxFPS = 240;
 
-	inGame - new InGame;
+	EntityRegistry::RegisterEntity<TestEntity>( "testEntity" );
+
+	inGame = new InGame;
 	SceneManager::SetScene( inGame );
 }
 

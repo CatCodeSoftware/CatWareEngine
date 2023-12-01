@@ -32,7 +32,7 @@ public:
 	void Draw( )
 	{
 		// Todo: Fix non textured rects
-		Renderer::DrawRectTextured( transform.position, transform.size, Assets::textures.GetAsset( "testTexture" ), { 255, 255, 255, 255 }, transform.rotation );
+		Renderer::DrawRect( transform.position, transform.size, { 255, 255, 255, 255 }, transform.rotation );
 	}
 
 	static Entity* Create( std::unordered_map<std::string, std::string> tags )

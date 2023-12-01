@@ -198,10 +198,11 @@ namespace CatWare
 
 		position = position / size;
 
+		rectShader->Bind( );
+
 		rectShader->SetUniform2f( "u_Size", size.x, size.y );
 		rectShader->SetUniform2f( "u_Position", position.x, position.y );
 
-		rectShader->Bind( );
 		rectShader->SetUniform1i( "u_IsTextured", false );
 		rectShader->SetUniform4f( "u_Tint", float( color.r ) / 255.0f, float( color.g ) / 255.0f, float( color.b ) / 255.0f, float( color.a ) / 255.0f );
 		rectShader->SetUniformMat4( "u_Projection", projectionMatrix );
@@ -240,7 +241,7 @@ namespace CatWare
 
 		rectShader->SetUniformMat4( "u_Projection", projectionMatrix );
 		rectShader->SetUniformMat4( "u_Transform", transformMatrix );
-
+		
 
 		texture->Bind( 0 );
 		rectShader->SetUniform1i( "u_IsTextured", true );

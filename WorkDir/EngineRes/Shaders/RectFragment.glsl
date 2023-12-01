@@ -9,7 +9,7 @@ out vec4 fragColor;
 in vec2 v_textureCoords;
 
 void main( )
-{
+{   
     if ( u_IsTextured )
         fragColor = texture( u_Texture, v_textureCoords ) * u_Tint;
     else

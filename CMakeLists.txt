@@ -43,7 +43,7 @@ file(GLOB_RECURSE CW_GLAD Engine/Lib/Glad/*.c)
 source_group(CW_SOURCE_FILES Source)
 source_group(CW_HEADER_FILES Source)
 
-add_compile_definitions(CW_PLATFORM_WIN64 CATWARE_BUILD)
+add_compile_definitions(CW_PLATFORM_WIN64)
 
 # import all libraries
 add_subdirectory("Engine/Lib/box2d")
@@ -83,7 +83,27 @@ include_directories(
 	"Engine/Lib/Single header"
 )
 
+add_link_options(
+    /LARGEADDRESSAWARE
+    /DEBUG
+    $<$<CONFIG:DEBUG>:/INCREMENTAL> # Do incremental linking.
+    $<$<CONFIG:DEBUG>:/OPT:NOREF> # No unreferenced data elimination.
+    $<$<CONFIG:DEBUG>:/OPT:NOICF> # No Identical COMDAT folding.
+)
+
 add_library(CatWareEngine SHARED ${CW_SOURCE_FILES} ${CW_GLAD} ${CW_HEADER_FILES})
+target_compile_definitions(CatWareEngine PRIVATE CATWARE_BUILD)
+
+# test script
+include_directories("Engine/Source/")
+link_libraries(CatWareEngine)
+
+add_library(TestScript SHARED TestScript/Source/Main.cpp)
+
+set(CMAKE_CXX_STANDARD 20)
+
+set_target_properties(TestScript PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/WorkDir/Scripts)
+set_target_properties(TestScript PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/WorkDir/Scripts)
 
 
 # -----------------------------------------------------
@@ -91,7 +111,10 @@ add_library(CatWareEngine SHARED ${CW_SOURCE_FILES} ${CW_GLAD} ${CW_HEADER_FILES
 # -----------------------------------------------------
 
 
-link_libraries(CatWareEngine)	
+link_libraries(
+	CatWareEngine
+	TestScript
+)	
 
 file(GLOB_RECURSE RUNTIME_SOURCE_FILES Runtime/Source/*.cpp)
 file(GLOB_RECURSE RUNTIME_HEADER_FILES Runtime/Source/*.h)
@@ -104,6 +127,7 @@ include_directories(
 )
 
 add_executable(Runtime ${RUNTIME_SOURCE_FILES} ${RUNTIME_HEADER_FILES})
+
 
 GroupSourcesByFolder(CatWareEngine)
 GroupSourcesByFolder(Runtime)

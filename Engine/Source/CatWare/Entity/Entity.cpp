@@ -113,11 +113,6 @@ namespace CatWare
 	// ----------------------------------------
 	std::unordered_map<std::string, Entity* ( * )( std::unordered_map<std::string, std::string> tags )> EntityRegistry::entityCreatePointers;
 
-	Entity* ( *EntityRegistry::GetCreateFunction( std::string name ) )( std::unordered_map<std::string, std::string>tags )
-	{
-		return entityCreatePointers[name];
-	}
-
 	// ----------------------------------------
 	// EntityManager --------------------------
 	// ----------------------------------------
@@ -145,7 +140,13 @@ namespace CatWare
 		{
 			usedIDs[id] = true;
 
-			Entity* entity = EntityRegistry::GetCreateFunction( className )( tags );
+			auto createFunc = EntityRegistry::GetCreateFunction( className );
+
+			if ( createFunc == nullptr )
+				CW_ABORT( "createFunc was nullptr" );
+
+			Entity* entity = createFunc( tags );
+
 			entity->transform = transform;
 			entity->id = id;
 

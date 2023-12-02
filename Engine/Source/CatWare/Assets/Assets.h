@@ -205,7 +205,7 @@ namespace CatWare
     class CATWARE_API Assets
     {
     public:
-        static AssetManager<TextureAsset, Rendering::Texture2D> textures;
+        inline static AssetManager<TextureAsset, Rendering::Texture2D> textures;
         // static AssetManager<SoundAsset, Sound> sounds;
     };
 }

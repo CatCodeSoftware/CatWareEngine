@@ -32,7 +32,7 @@ namespace CatWare
 	
 	bool DirectorySource::IsDir( std::string path )
 	{
-		fs::is_directory( fs::status( fs::path( rootPath + "/" + path ) ) );
+		return fs::is_directory( fs::status( fs::path( rootPath + "/" + path ) ) );
 	}
 	
 	FileHandle* DirectorySource::OpenFile( FileMode mode, std::string path )

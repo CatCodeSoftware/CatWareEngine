@@ -1,7 +1,12 @@
 #include "Log.h"
 
 #include <stdio.h>
-#include <Windows.h>
+#include <stdlib.h>
+#include <stdarg.h>
+
+#ifdef CW_PLATFORM_WIN64
+#	include <Windows.h>
+#endif
 
 // Todo: Make this not suck
 namespace CatWare
@@ -10,6 +15,30 @@ namespace CatWare
 	{
 		static Logger* engineLogger;
 		static Logger* gameLogger;
+
+		// Some utils
+		enum class Color
+		{
+			RED,
+			YELLOW,
+			RESET
+		};
+
+		void SetColor(Color color)
+		{
+			#ifdef CW_PLATFORM_WIN64
+
+			if (color == RED )
+				SetConsoleTextAttribute( GetStdHandle( STD_OUTPUT_HANDLE ), 0xC0 );
+			else if ( color == YELLOW )
+				SetConsoleTextAttribute( GetStdHandle( STD_OUTPUT_HANDLE ), 0xE0 );
+			else
+				SetConsoleTextAttribute( GetStdHandle( STD_OUTPUT_HANDLE ), 0x0F );
+
+			#else
+
+			#endif
+		}
 
 		// LOG CLASS
 		Logger::Logger( std::string category, std::string logFile )
@@ -27,9 +56,9 @@ namespace CatWare
 			va_list args;
 			va_start( args, text );
 
-			SetConsoleTextAttribute( GetStdHandle( STD_OUTPUT_HANDLE ), 0xC0 );
+			SetColor( Color::RED );
 			vprintf( text.c_str( ), args );
-			SetConsoleTextAttribute( GetStdHandle( STD_OUTPUT_HANDLE ), 0x0F );
+			SetColor( Color::RESET );
 		}
 
 		void Logger::Info( std::string text, ... )
@@ -39,10 +68,8 @@ namespace CatWare
 			va_list args;
 			va_start( args, text );
 
-			SetConsoleTextAttribute( GetStdHandle( STD_OUTPUT_HANDLE ), 0x0F );
+			SetColor( Color::RESET );
 			vprintf( text.c_str( ), args );
-			SetConsoleTextAttribute( GetStdHandle( STD_OUTPUT_HANDLE ), 0x0F );
-
 		}
 
 		void Logger::Warning( std::string text, ... )
@@ -52,9 +79,9 @@ namespace CatWare
 			va_list args;
 			va_start( args, text );
 
-			SetConsoleTextAttribute( GetStdHandle( STD_OUTPUT_HANDLE ), 0xE0 );
+			SetColor( Color::YELLOW );
 			vprintf( text.c_str( ), args );
-			SetConsoleTextAttribute( GetStdHandle( STD_OUTPUT_HANDLE ), 0x0F );
+			SetColor( Color::RESET );
 		}
 
 

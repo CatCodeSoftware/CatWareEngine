@@ -18,6 +18,8 @@
 #	else
 #		define CATWARE_API __declspec(dllimport)
 #	endif
+#elif defined(CW_PLATFORM_UNIX64)
+#   define CATWARE_API
 #else
 #	error Unsupported platform
 #endif

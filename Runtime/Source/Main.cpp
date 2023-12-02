@@ -12,7 +12,7 @@ public:
 	{
 		CatWare::Logging::InitLoggers( );
 
-		scripts = LoadScripts( "Scripts/" );
+		scripts = LoadScripts( "./Scripts/" );
 
 		for ( Script& script : scripts )
 		{

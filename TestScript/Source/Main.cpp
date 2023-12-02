@@ -1,4 +1,8 @@
-#define EXPORT extern "C" __declspec(dllexport)
+#ifdef CW_PLATFORM_WIN64
+#	define EXPORT extern "C" __declspec(dllexport)
+#else
+#	define EXPORT extern "C"
+#endif
 
 #include <CatWare.h>
 

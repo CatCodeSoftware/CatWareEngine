@@ -21,7 +21,7 @@ namespace CatWare
 
 // TODO: Make the entry point use WinMain and windows subsystem in release/distrubution mode
 
-#if defined(CW_PLATFORM_WIN64)
+#if defined(CW_PLATFORM_WIN64) || defined(CW_PLATFORM_UNIX64)
 	int main( int argc, char** argv )
 	{
 		CatWare::CreateApplication( )->Run( );

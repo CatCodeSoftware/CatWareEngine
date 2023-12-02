@@ -8,7 +8,7 @@
 #include "Renderer/OpenGL/OpenGLContext.h"
 #include "Renderer/Renderer.h"
 
-#include "..\Error.h"
+#include "../Error.h"
 
 namespace CatWare
 {

@@ -43,7 +43,15 @@ file(GLOB_RECURSE CW_GLAD Engine/Lib/Glad/*.c)
 source_group(CW_SOURCE_FILES Source)
 source_group(CW_HEADER_FILES Source)
 
-add_compile_definitions(CW_PLATFORM_WIN64)
+# platforms
+if (WIN32)
+    add_compile_definitions(CW_PLATFORM_WIN64)
+else()
+    # Not sure if i should call this platform linux or just generally unix
+    # cause it probably also works on bsd and other unix like systems
+    add_compile_definitions(CW_PLATFORM_UNIX64)
+    add_compile_options(-fPIC)
+endif()
 
 # import all libraries
 add_subdirectory("Engine/Lib/box2d")
@@ -96,6 +104,8 @@ set(CMAKE_CXX_STANDARD 20)
 
 set_target_properties(TestScript PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/WorkDir/Scripts)
 set_target_properties(TestScript PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/WorkDir/Scripts)
+set_target_properties(TestScript PROPERTIES LIBRARY_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/WorkDir/Scripts)
+set_target_properties(TestScript PROPERTIES LIBRARY_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/WorkDir/Scripts)
 
 
 # -----------------------------------------------------

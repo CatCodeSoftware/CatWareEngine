@@ -4,12 +4,15 @@
 
 #include <string>
 
-#include <Windows.h>
+#ifdef CW_PLATFORM_WIN64
+#	include <Windows.h>
+#else
+#endif
 
 class Script
 {
 public:
-	Script( std::string dllPath );
+	Script( const std::string& dllPath );
 
 	void ( *fptrPreInit )( CatWare::InitConfig* initConfig ) = nullptr;
 	void ( *fptrPostInit )( ) = nullptr;
@@ -17,7 +20,11 @@ public:
 	void ( *fptrDeInit )( ) = nullptr;
 
 private:
+#ifdef CW_PLATFORM_WIN64
 	HMODULE dll;
+#else
+	void* dll;
+#endif
 };
 
-std::vector<Script> LoadScripts( std::string scriptFolder );
+std::vector<Script> LoadScripts( const std::string& scriptFolder );

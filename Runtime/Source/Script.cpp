@@ -1,23 +1,53 @@
 #include "Script.h"
 
-#include <CatWare/Error.h>
-
-#include <Windows.h>
+#include <string>
 #include <filesystem>
 
-Script::Script( std::string dllPath )
+#include <CatWare/Error.h>
+
+typedef void ( *VoidFunc )( );
+
+#ifdef CW_PLATFORM_WIN64
+
+HMODULE LoadLib( std::string path )
 {
-	dll = LoadLibraryA( dllPath.c_str( ) );
+	return LoadLibraryA( path.c_str( ) );
+}
+
+VoidFunc LoadFunc( HMODULE dllHandle, std::string funcName )
+{
+	return GetProcAddress( dllHandle, funcName.c_str( ) );
+}
+
+#else
+
+#include <dlfcn.h>
+
+VoidFunc LoadFunc( void* dllHandle, const std::string& funcName )
+{
+	return ( VoidFunc ) dlsym( dllHandle, funcName.c_str( ) );
+}
+
+void* LoadLib( const std::string& path )
+{
+	return dlopen( path.c_str( ), RTLD_NOW );
+}
+
+#endif
+
+Script::Script( const std::string& dllPath )
+{
+	dll = LoadLib( dllPath );
 
 	if ( dll == nullptr )
 	{
 		CW_ABORT( "Couldn't load script " + dllPath );
 	}
 
-	fptrPreInit = ( void ( * )( CatWare::InitConfig* ) ) GetProcAddress( dll, "PreInit" );
-	fptrPostInit = ( void ( * )( ) ) GetProcAddress( dll, "PostInit" );
-	fptrActivate = ( void ( * )( ) ) GetProcAddress( dll, "Activate" );
-	fptrDeInit = ( void ( * )( ) ) GetProcAddress( dll, "DeInit" );
+	fptrPreInit = ( void ( * )( CatWare::InitConfig* ) ) LoadFunc( dll, "PreInit" );
+	fptrPostInit = ( void ( * )( ) ) LoadFunc( dll, "PostInit" );
+	fptrActivate = ( void ( * )( ) ) LoadFunc( dll, "Activate" );
+	fptrDeInit = ( void ( * )( ) ) LoadFunc( dll, "DeInit" );
 
 	if ( fptrPreInit == nullptr )
 	{
@@ -35,16 +65,16 @@ Script::Script( std::string dllPath )
 	}
 }
 
-std::vector<Script> LoadScripts( std::string scriptFolder )
+std::vector<Script> LoadScripts( const std::string& scriptFolder )
 {
 	std::vector<Script> scripts;
 
 	for ( auto& entry : std::filesystem::recursive_directory_iterator( scriptFolder ) )
 	{
-		if ( entry.path( ).string( ).ends_with( ".dll" ) )
+		if ( entry.path( ).string( ).ends_with( ".dll" ) || entry.path( ).string( ).ends_with( ".so" ) )
 		{
 			CW_ENGINE_LOG->Info( "Loading script %s", entry.path( ).string( ).c_str( ) );
-			scripts.push_back( Script( entry.path( ).string( ) ) );
+			scripts.emplace_back( entry.path( ).string( ) );
 		}
 	}
 

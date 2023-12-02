@@ -12,7 +12,7 @@ namespace CatWare
 	class CATWARE_API Window
 	{
 	public:
-		Window( std::string title, unsigned int width, unsigned int height, bool isFullscreen );
+		Window( const std::string& title, unsigned int width, unsigned int height, bool isFullscreen );
 		~Window( );
 
 		void HandleWindowEvents( );
@@ -21,7 +21,7 @@ namespace CatWare
 		void SetTitle( std::string title );
 		void SetFullscreen( bool isFullscreen );
 		void SetCursorShown( bool isCursorShown );
-		void SetCursorLocked( bool isCursorLocked );
+		void SetCursorLocked( bool cursorLocked );
 
 		unsigned int GetWidth( );
 		unsigned int GetHeight( );

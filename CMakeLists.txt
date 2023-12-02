@@ -83,14 +83,6 @@ include_directories(
 	"Engine/Lib/Single header"
 )
 
-add_link_options(
-    /LARGEADDRESSAWARE
-    /DEBUG
-    $<$<CONFIG:DEBUG>:/INCREMENTAL> # Do incremental linking.
-    $<$<CONFIG:DEBUG>:/OPT:NOREF> # No unreferenced data elimination.
-    $<$<CONFIG:DEBUG>:/OPT:NOICF> # No Identical COMDAT folding.
-)
-
 add_library(CatWareEngine SHARED ${CW_SOURCE_FILES} ${CW_GLAD} ${CW_HEADER_FILES})
 target_compile_definitions(CatWareEngine PRIVATE CATWARE_BUILD)
 

@@ -10,6 +10,7 @@
 #pragma once
 
 #include <vector>
+#include <stdlib.h>
 
 #include "CatWare/Core.h"
 

@@ -16,7 +16,7 @@ HMODULE LoadLib( std::string path )
 
 VoidFunc LoadFunc( HMODULE dllHandle, std::string funcName )
 {
-	return GetProcAddress( dllHandle, funcName.c_str( ) );
+	return ( VoidFunc ) GetProcAddress( dllHandle, funcName.c_str( ) );
 }
 
 #else

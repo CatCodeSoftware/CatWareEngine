@@ -30,7 +30,7 @@ namespace CatWare
 		// search the sources for a valid file
 		for ( FileSystemSource* source : sources )
 		{
-			if ( source->IsFile( path ) )
+			if ( source->IsValid( ) && source->IsFile( path ) )
 			{
 				return source->OpenFile( mode, path );
 			}

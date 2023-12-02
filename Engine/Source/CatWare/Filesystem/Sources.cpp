@@ -3,6 +3,8 @@
 #include <filesystem>
 #include <iostream>
 
+#include "CatWare/Error.h"
+#include "CatWare/Log.h"
 
 namespace fs = std::filesystem;
 
@@ -13,6 +15,13 @@ namespace CatWare
 	// -----------------------------------
 	DirectorySource::DirectorySource( std::string path )
 	{
+		if ( !fs::is_directory( fs::status( fs::path( path ) ) ) )
+		{
+			CW_ENGINE_LOG->Warning( "Failed to create DirectorySource: " + path + " does not exist" );
+			return;
+		}
+
+		isValid = true;
 		rootPath = path;
 	}
 	
@@ -23,7 +32,7 @@ namespace CatWare
 	
 	bool DirectorySource::IsDir( std::string path )
 	{
-		return false;
+		fs::is_directory( fs::status( fs::path( rootPath + "/" + path ) ) );
 	}
 	
 	FileHandle* DirectorySource::OpenFile( FileMode mode, std::string path )
@@ -68,6 +77,9 @@ namespace CatWare
 			cmode += "b";
 		
 		fileHandle = fopen( path.c_str( ), cmode.c_str( ) );
+
+		if ( fileHandle == nullptr )
+			CW_ABORT( "Could not load file " + path );
 	}
 	
 	UInt64 StandardFileHandle::GetSizeBytes( )

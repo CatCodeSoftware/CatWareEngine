@@ -35,7 +35,6 @@ public:
 
 	void Draw( )
 	{
-		// Todo: Fix non textured rects
 		Renderer::DrawRect( transform.position, transform.size, { 255, 255, 255, 255 }, transform.rotation );
 	}
 

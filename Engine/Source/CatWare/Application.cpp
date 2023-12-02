@@ -3,17 +3,11 @@
 #include <random>
 #include <sstream>
 #include <imgui.h>
-#include <backends/imgui_impl_sdl2.h>
-#include <backends/imgui_impl_opengl3.h>
-
 #include "Debug/Debug.h"
 
 #include "Log.h"
-#include "Types/Color.h"
 #include "Graphics/Renderer/Renderer.h"
-#include "Error.h"
 #include "Graphics/Text.h"
-// #include "Audio/Audio.h"
 #include "Assets/Assets.h"
 #include "Input/Binds.h"
 #include "Random.h"
@@ -36,7 +30,7 @@ namespace CatWare
 			window->HandleWindowEvents( );
 			running = !window->ShouldClose( );
 
-			Scene* currentScene = SceneManager::GetCurrentScene( );
+			const Scene* currentScene = SceneManager::GetCurrentScene( );
 
 			if ( currentScene != nullptr )
 			{
@@ -76,6 +70,10 @@ namespace CatWare
 		CatWare::Logging::InitLoggers( );
 
 		CW_ENGINE_LOG->Info( "Initializing engine" );
+
+		#ifdef CW_DEBUG
+			CW_ENGINE_LOG->Warning( "Memory debugging enabled" )
+		#endif
 
 		CW_ENGINE_LOG->Info( "Initializing filesystem" );
 		FileSystem::AddSource( new DirectorySource( "Custom" ) );

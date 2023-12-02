@@ -6,6 +6,7 @@
 #include "CatWare/Debug/Debug.h"
 
 #include "KeyboardAndMouse.h"
+#include "CatWare/Error.h"
 
 namespace CatWare
 {
@@ -108,13 +109,11 @@ namespace CatWare
 					int convertedCode = std::stoi( inputCode );
 
 					if ( inputType == "keyboard" )
-					{
 						AddBinding( name, new KeyBind( convertedCode ) );
-					}
 					else if ( inputType == "mouse" )
-					{
 						AddBinding( name, new MouseBind( convertedCode ) );
-					}
+					else
+						CW_ABORT( "Unknown input type " + inputType );
 				}
 			}
 		}

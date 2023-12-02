@@ -1,5 +1,6 @@
 #include "Log.h"
 
+#include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
@@ -28,14 +29,21 @@ namespace CatWare
 		{
 			#ifdef CW_PLATFORM_WIN64
 
-			if (color == RED )
+			if ( color == Color::RED )
 				SetConsoleTextAttribute( GetStdHandle( STD_OUTPUT_HANDLE ), 0xC0 );
-			else if ( color == YELLOW )
+			else if ( color == Color::YELLOW )
 				SetConsoleTextAttribute( GetStdHandle( STD_OUTPUT_HANDLE ), 0xE0 );
 			else
 				SetConsoleTextAttribute( GetStdHandle( STD_OUTPUT_HANDLE ), 0x0F );
 
 			#else
+
+			if ( color == Color::RED )
+				std::cout << "\033[30;41m";
+			else if ( color == Color::YELLOW )
+				std::cout << "\033[30;43m";
+			else
+				std::cout << "\033[39;49m";
 
 			#endif
 		}
@@ -51,7 +59,7 @@ namespace CatWare
 
 		void Logger::Error( std::string text, ... )
 		{
-			text = "[ " + category + " ] " + text + "\n";
+			text = "[ " + category + " ] Error: " + text + "\n";
 
 			va_list args;
 			va_start( args, text );
@@ -63,7 +71,7 @@ namespace CatWare
 
 		void Logger::Info( std::string text, ... )
 		{
-			text = "[ " + category + " ] " + text + "\n";
+			text = "[ " + category + " ] Info: " + text + "\n";
 
 			va_list args;
 			va_start( args, text );
@@ -74,7 +82,7 @@ namespace CatWare
 
 		void Logger::Warning( std::string text, ... )
 		{
-			text = "[ " + category + " ] " + text + "\n";
+			text = "[ " + category + " ] Warning: " + text + "\n";
 
 			va_list args;
 			va_start( args, text );

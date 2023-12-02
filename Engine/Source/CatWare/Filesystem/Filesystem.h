@@ -33,7 +33,7 @@ namespace CatWare
 		
 	protected:
 		FileHandle( bool isBinary, std::string path, FileMode mode );
-	
+
 		bool isBinary;
 		FileMode mode;
 		std::string path;
@@ -42,6 +42,8 @@ namespace CatWare
 	class CATWARE_API FileSystemSource
 	{
 	public:
+		inline bool IsValid( ) { return isValid; }
+
 		virtual std::string GetTitle( ) = 0;
 		virtual bool IsReadOnly( ) = 0;
 	
@@ -51,6 +53,9 @@ namespace CatWare
 		virtual FileHandle* OpenFile( FileMode mode, std::string path ) = 0; 
 		
 		virtual std::vector<std::string> ListDir( std::string path ) = 0;
+
+	protected:
+		bool isValid = false;
 	};
 	
 	class CATWARE_API FileSystem

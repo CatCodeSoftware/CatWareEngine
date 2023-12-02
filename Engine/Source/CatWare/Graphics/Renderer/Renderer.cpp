@@ -9,6 +9,7 @@
 #include "Buffer.h"
 #include "Shader.h"
 #include "Texture.h"
+#include "CatWare/Error.h"
 #include "CatWare/Log.h"
 
 
@@ -19,15 +20,23 @@ namespace CatWare
 	void Renderer::Init( RendererAPI* a_rendererAPI, int screenWidth, int screenHeight )
 	{
 		CW_ENGINE_LOG->Info( "Initializing renderer" );
-		
+
 		rendererAPI = a_rendererAPI;
+
+		if ( rendererAPI == nullptr )
+			CW_ABORT( "rendererAPI was nullptr" );
+		else if ( rendererAPI->GetRenderAPI( ) == RendererAPI::API::NONE )
+			CW_ABORT( "Renderer API was NONE" );
 
 		rendererAPI->SetBlendAlpha( true );
 
 		// Load shaders from EngineRes
-		rectShader = Shader::CreateFromFile( "EngineRes/Shaders/RectVertex.glsl", "EngineRes/Shaders/RectFragment.glsl" );
-		postProcessShader = Shader::CreateFromFile( "EngineRes/Shaders/PostProcessVertex.glsl", "EngineRes/Shaders/PostProcessFragment.glsl" );
-		textShader = Shader::CreateFromFile( "EngineRes/Shaders/TextVertex.glsl", "EngineRes/Shaders/TextFragment.glsl" );
+		rectShader = Shader::CreateFromFile( "EngineRes/Shaders/RectVertex.glsl",
+		                                     "EngineRes/Shaders/RectFragment.glsl" );
+		postProcessShader = Shader::CreateFromFile( "EngineRes/Shaders/PostProcessVertex.glsl",
+		                                            "EngineRes/Shaders/PostProcessFragment.glsl" );
+		textShader = Shader::CreateFromFile( "EngineRes/Shaders/TextVertex.glsl",
+		                                     "EngineRes/Shaders/TextFragment.glsl" );
 
 		width = screenWidth;
 		height = screenHeight;
@@ -44,22 +53,22 @@ namespace CatWare
 
 		// Create basic geometry for the rectangles
 		float rectVerteciesTemp[] = {
-			0, 0, 0, 0,
-			1, 0, 1, 0,
-			0, 1, 0, 1,
-			1, 1, 1, 1
+			0 , 0 , 0 , 0 ,
+			1 , 0 , 1 , 0 ,
+			0 , 1 , 0 , 1 ,
+			1 , 1 , 1 , 1
 		};
 
 		unsigned int rectIndiciesTemp[6] =
 		{
-			0, 1, 2, 2, 1, 3
+			0 , 1 , 2 , 2 , 1 , 3
 		};
 
 		rectVerts = Rendering::VertexBuffer::Create( sizeof( rectVerteciesTemp ), rectVerteciesTemp );
 
 		BufferLayout vertBufferLayout =
 		{
-			BufferElement( "position", ShaderDataType::Float2 ),
+			BufferElement( "position", ShaderDataType::Float2 ) ,
 			BufferElement( "textureCoord", ShaderDataType::Float2 )
 		};
 
@@ -94,18 +103,18 @@ namespace CatWare
 	void Renderer::EndDrawing( )
 	{
 		currentFrameBuffer->Unbind( );
-		
+
 		float vertecies[4 * 4] =
 		{
-			-1, -1, 0, 0,
-			1, -1, 1, 0,
-			-1, 1, 0, 1,
-			1, 1, 1, 1
+			-1 , -1 , 0 , 0 ,
+			1 , -1 , 1 , 0 ,
+			-1 , 1 , 0 , 1 ,
+			1 , 1 , 1 , 1
 		};
 
 		unsigned int indicies[6] =
 		{
-			0, 1, 2, 2, 1, 3
+			0 , 1 , 2 , 2 , 1 , 3
 		};
 
 		VertexBuffer* vertexBuffer = VertexBuffer::Create( sizeof( vertecies ), vertecies );
@@ -113,7 +122,7 @@ namespace CatWare
 
 		BufferLayout layout =
 		{
-			BufferElement( "position", ShaderDataType::Float2 ),
+			BufferElement( "position", ShaderDataType::Float2 ) ,
 			BufferElement( "textureCoord", ShaderDataType::Float2 )
 		};
 
@@ -162,7 +171,6 @@ namespace CatWare
 	}
 
 
-
 	void Renderer::Clear( Color color )
 	{
 		rendererAPI->SetClearColor( color );
@@ -171,7 +179,8 @@ namespace CatWare
 
 	void Renderer::DrawRect( Vector2D position, Vector2D size, Color color, glm::mat4 transformMatrix )
 	{
-		if ( ( position.x < 0 - size.x * 2 || position.x > width + size.x * 2 ) || ( position.y < 0 - size.y * 2 || position.y > height + size.y * 2 ) )
+		if ( ( position.x < 0 - size.x * 2 || position.x > width + size.x * 2 ) || (
+			     position.y < 0 - size.y * 2 || position.y > height + size.y * 2 ) )
 		{
 			return;
 		}
@@ -182,11 +191,12 @@ namespace CatWare
 
 		rectShader->Bind( );
 
-		rectShader->SetUniform2f( "u_Size", size.x, size.y );
+		rectShader->SetUniform2f( "u_Size", float( size.x ), float( size.y ) );
 		rectShader->SetUniform2f( "u_Position", position.x, position.y );
 
 		rectShader->SetUniform1i( "u_IsTextured", false );
-		rectShader->SetUniform4f( "u_Tint", float( color.r ) / 255.0f, float( color.g ) / 255.0f, float( color.b ) / 255.0f, float( color.a ) / 255.0f );
+		rectShader->SetUniform4f( "u_Tint", float( color.r ) / 255.0f, float( color.g ) / 255.0f,
+		                          float( color.b ) / 255.0f, float( color.a ) / 255.0f );
 		rectShader->SetUniformMat4( "u_Projection", projectionMatrix );
 		rectShader->SetUniformMat4( "u_Transform", transformMatrix );
 
@@ -197,33 +207,42 @@ namespace CatWare
 	{
 		glm::mat4 transformMatrix = glm::mat4( 1.0f );
 
-		transformMatrix = glm::translate( transformMatrix, glm::vec3( position.x + size.x / 2, position.y + size.y / 2, 0.0f ) );
+		transformMatrix = glm::translate( transformMatrix,
+		                                  glm::vec3( position.x + size.x / 2, position.y + size.y / 2, 0.0f ) );
 		transformMatrix = glm::rotate( transformMatrix, glm::radians( rotation ), glm::vec3( 0.0f, 0.0f, 1.0f ) );
-		transformMatrix = glm::translate( transformMatrix, glm::vec3( -( position.x + size.x / 2 ), -( position.y + size.y / 2 ), 0.0f ) );
-		
+		transformMatrix = glm::translate( transformMatrix,
+		                                  glm::vec3( -( position.x + size.x / 2 ), -( position.y + size.y / 2 ),
+		                                  0.0f ) );
+
 		DrawRect( position, size, color, transformMatrix );
 	}
 
-	void Renderer::DrawRectTextured( Vector2D position, Vector2D size, Rendering::Texture2D* texture, glm::mat4 transformMatrix, Color tint )
+	void Renderer::DrawRectTextured( Vector2D position, Vector2D size, Rendering::Texture2D* texture,
+	                                 glm::mat4 transformMatrix, Color tint )
 	{
-		if ( ( position.x < 0 - size.x * 2 || position.x > width + size.x * 2 ) || ( position.y < 0 - size.y * 2 || position.y > height + size.y * 2 ) )
+		if ( texture == nullptr )
+			CW_ABORT( "texture was nullptr" );
+
+		if ( ( position.x < 0 - size.x * 2 || position.x > width + size.x * 2 ) || (
+			     position.y < 0 - size.y * 2 || position.y > height + size.y * 2 ) )
 		{
 			return;
 		}
-		
+
 		glm::mat4 projectionMatrix = camera2D->CalculateProjectionMatrix( );
 
 		position = position / size;
 
 		rectShader->Bind( );
-		rectShader->SetUniform4f( "u_Tint", float( tint.r ) / 255.0f, float( tint.g ) / 255.0f, float( tint.b ) / 255.0f, float( tint.a ) / 255.0f );
+		rectShader->SetUniform4f( "u_Tint", float( tint.r ) / 255.0f, float( tint.g ) / 255.0f,
+		                          float( tint.b ) / 255.0f, float( tint.a ) / 255.0f );
 
 		rectShader->SetUniform2f( "u_Size", size.x, size.y );
 		rectShader->SetUniform2f( "u_Position", position.x, position.y );
 
 		rectShader->SetUniformMat4( "u_Projection", projectionMatrix );
 		rectShader->SetUniformMat4( "u_Transform", transformMatrix );
-		
+
 
 		texture->Bind( 0 );
 		rectShader->SetUniform1i( "u_IsTextured", true );
@@ -238,9 +257,12 @@ namespace CatWare
 	{
 		glm::mat4 transformMatrix = glm::mat4( 1.0f );
 
-		transformMatrix = glm::translate( transformMatrix, glm::vec3( position.x + size.x / 2, position.y + size.y / 2, 0.0f ) );
+		transformMatrix = glm::translate( transformMatrix,
+		                                  glm::vec3( position.x + size.x / 2, position.y + size.y / 2, 0.0f ) );
 		transformMatrix = glm::rotate( transformMatrix, glm::radians( rotation ), glm::vec3( 0.0f, 0.0f, 1.0f ) );
-		transformMatrix = glm::translate( transformMatrix, glm::vec3( -( position.x + size.x / 2 ), -( position.y + size.y / 2 ), 0.0f ) );
+		transformMatrix = glm::translate( transformMatrix,
+		                                  glm::vec3( -( position.x + size.x / 2 ), -( position.y + size.y / 2 ),
+		                                             0.0f ) );
 
 		DrawRectTextured( position, size, texture, transformMatrix, tint );
 	}
@@ -250,7 +272,8 @@ namespace CatWare
 		glm::mat4 projectionMatrix = camera2D->CalculateProjectionMatrix( );
 
 		textShader->Bind( );
-		textShader->SetUniform4f( "u_Color", float( color.r ) / 255.0f, float( color.g ) / 255.0f, float( color.b ) / 255.0f, float( color.a ) / 255.0f );
+		textShader->SetUniform4f( "u_Color", float( color.r ) / 255.0f, float( color.g ) / 255.0f,
+		                          float( color.b ) / 255.0f, float( color.a ) / 255.0f );
 		textShader->SetUniform1i( "u_Texture", 0 );
 		rectShader->SetUniformMat4( "u_Projection", projectionMatrix );
 
@@ -262,18 +285,18 @@ namespace CatWare
 
 		float vertices[6 * 4] =
 		{
-			xpos, ypos + h, 0, 1,
-			xpos, ypos, 0, 0,
-			xpos + w, ypos, 1, 0,
+			xpos , ypos + h , 0 , 1 ,
+			xpos , ypos , 0 , 0 ,
+			xpos + w , ypos , 1 , 0 ,
 
-			xpos, ypos + h, 0, 1,
-			xpos + w, ypos, 1, 0,
-			xpos + w, ypos + h, 1, 1
+			xpos , ypos + h , 0 , 1 ,
+			xpos + w , ypos , 1 , 0 ,
+			xpos + w , ypos + h , 1 , 1
 		};
 
 		unsigned int indicies[6] =
 		{
-			0, 1, 2, 3, 4, 5
+			0 , 1 , 2 , 3 , 4 , 5
 		};
 
 		character->texture->Bind( 0 );
@@ -283,7 +306,7 @@ namespace CatWare
 
 		BufferLayout layout =
 		{
-			BufferElement( "position", ShaderDataType::Float2 ),
+			BufferElement( "position", ShaderDataType::Float2 ) ,
 			BufferElement( "textureCoord", ShaderDataType::Float2 )
 		};
 
@@ -305,20 +328,21 @@ namespace CatWare
 	{
 		double offset = 0;
 
-		for ( char ch : string )
+		for ( char ch: string )
 		{
 			if ( ch == ' ' )
 			{
 				offset += font->spaceSize * size;
-			}
-			else if ( ch == '\t' )
+			} else if ( ch == '\t' )
 			{
 				offset += font->tabSize * size;
-			}
-			else
+			} else
 			{
 				Text::Character* character = font->GetCharacter( ch );
-				DrawCharacter( character, { position.x + offset, position.y + ( ( font->GetSize( ) - character->bearing.y ) * size ) }, size, color );
+				DrawCharacter( character, {
+					               position.x + offset ,
+					               position.y + ( ( font->GetSize( ) - character->bearing.y ) * size )
+				               }, size, color );
 
 				offset += ( character->size.x + character->bearing.x ) * size;
 			}

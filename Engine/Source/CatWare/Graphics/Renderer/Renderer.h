@@ -14,7 +14,7 @@ namespace CatWare
 	class CATWARE_API Renderer
 	{
 	public:
-		static OrthoCamera* camera2D;
+		inline static OrthoCamera* camera2D = nullptr;
 
 		static void Init( Rendering::RendererAPI* a_rendererAPI, int screenWidth, int screenHeight );
 		static void DeInit( );
@@ -40,24 +40,24 @@ namespace CatWare
 		static Rendering::RendererAPI::API GetAPI( ) { return rendererAPI->GetRenderAPI( ); }
 
 	private:
-		static Rendering::RendererAPI* rendererAPI;
+		inline static Rendering::RendererAPI* rendererAPI = nullptr;
 
-		static Rendering::Shader* rectShader;
-		static Rendering::Shader* postProcessShader;
-		static Rendering::Shader* textShader;
+		inline static Rendering::Shader* rectShader = nullptr;
+		inline static Rendering::Shader* postProcessShader = nullptr;
+		inline static Rendering::Shader* textShader = nullptr;
 
-		static Rendering::FrameBuffer* currentFrameBuffer;
-		static Rendering::FrameBuffer* defaultFrameBuffer;
+		inline static Rendering::FrameBuffer* currentFrameBuffer = nullptr;
+		inline static Rendering::FrameBuffer* defaultFrameBuffer = nullptr;
 
-		static Rendering::VertexBuffer* rectVerts;
-		static Rendering::IndexBuffer* rectIndexes;
-		static Rendering::VertexArray* rectArray;
+		inline static Rendering::VertexBuffer* rectVerts = nullptr;
+		inline static Rendering::IndexBuffer* rectIndexes = nullptr;
+		inline static Rendering::VertexArray* rectArray = nullptr;
 
-		static Rendering::VertexBuffer* fbVerts;
-		static Rendering::IndexBuffer* fbIndexes;
-		static Rendering::VertexArray* fbArray;
+		inline static Rendering::VertexBuffer* fbVerts = nullptr;
+		inline static Rendering::IndexBuffer* fbIndexes = nullptr;
+		inline static Rendering::VertexArray* fbArray = nullptr;
 
-		static unsigned int width;
-		static unsigned int height;
+		inline static unsigned int width = 0;
+		inline static unsigned int height = 0;
 	};
 }

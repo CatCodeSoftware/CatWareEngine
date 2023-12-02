@@ -16,24 +16,6 @@ using namespace CatWare::Rendering;
 
 namespace CatWare
 {
-	OrthoCamera* Renderer::camera2D = nullptr;
-
-	RendererAPI* Renderer::rendererAPI = nullptr;
-
-	Shader* Renderer::rectShader = nullptr;
-	Shader* Renderer::postProcessShader = nullptr;
-	Shader* Renderer::textShader = nullptr;
-
-	FrameBuffer* Renderer::currentFrameBuffer = nullptr;
-	FrameBuffer* Renderer::defaultFrameBuffer = nullptr;
-
-	Rendering::VertexBuffer* Renderer::rectVerts = nullptr;
-	Rendering::IndexBuffer* Renderer::rectIndexes = nullptr;
-	Rendering::VertexArray* Renderer::rectArray = nullptr;
-
-	unsigned int Renderer::width = 0;
-	unsigned int Renderer::height = 0;
-
 	void Renderer::Init( RendererAPI* a_rendererAPI, int screenWidth, int screenHeight )
 	{
 		CW_ENGINE_LOG->Info( "Initializing renderer" );

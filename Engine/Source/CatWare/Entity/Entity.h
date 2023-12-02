@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "CatWare/Core.h"
+#include "CatWare/Error.h"
 #include "CatWare/Types/Vector.h"
 #include "CatWare/Types/Types.h"
 #include "CatWare/Types/Transform.h"
@@ -69,10 +70,16 @@ namespace CatWare
 		template<typename T>
 		static void RegisterEntity( std::string name )
 		{
-			entityCreatePointers[name] = &( T::Create );
+			if ( &( T::Create ) == nullptr )
+				CW_ABORT( "Entity does not have a create function" );
+
+			EntityRegistry::entityCreatePointers.insert( { name, &( T::Create ) } );
 		}
 
-		static Entity* ( *GetCreateFunction( std::string name ) )( std::unordered_map<std::string, std::string> tags );
+		static Entity* ( *GetCreateFunction( std::string name ) )( std::unordered_map<std::string, std::string> tags )
+		{
+			return EntityRegistry::entityCreatePointers[name];
+		}
 
 	private:
 		// stores pointers to a create function

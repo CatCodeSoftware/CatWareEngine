@@ -31,17 +31,6 @@ namespace CatWare
 		startTime = std::chrono::high_resolution_clock::now( );
 	}
 
-	
-	double Time::time = 0;
-
-	double Time::deltaTime = 0;
-	double Time::modifier = 1.0;
-
-	bool Time::isTimePaused = false;
-
-	float Time::ticksPerSecond = 60; // 60 seems like a nice default value
-	float Time::maxFPS = 240;
-	bool Time::frameRateLimited = true;
 
 	void Time::SetDeltaTime( double deltaTime )
 	{

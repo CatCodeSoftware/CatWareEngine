@@ -53,6 +53,7 @@ public:
 	void OnEnter( ) override
 	{
 		entityManager.CreateEntityByClassName( "testEntity", { { 64, 64 }, { 64, 64 } }, { } );
+		// entityManager.CreateEntityByType<TestEntity>( { { 64, 64 }, { 64, 64 } }, { } );
 	}
 
 	void Update( ) override
@@ -95,8 +96,6 @@ EXPORT void PreInit( CatWare::InitConfig* config )
 	config->windowHeight = 900;
 
 	Time::modifier = 1.0;
-
-	Assets::textures.Add( "testTexture", "gato.jpg" );
 }
 
 EXPORT void PostInit( )
@@ -107,6 +106,8 @@ EXPORT void PostInit( )
 	Time::maxFPS = 240;
 
 	EntityRegistry::RegisterEntity<TestEntity>( "testEntity" );
+
+	Assets::textures.Add( "testTexture", "gato.jpg" );
 
 	inGame = new InGame;
 	SceneManager::SetScene( inGame );

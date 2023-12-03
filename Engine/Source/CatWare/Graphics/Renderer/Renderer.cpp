@@ -135,8 +135,17 @@ namespace CatWare
 
 		postProcessShader->Bind( );
 
+		postProcessShader->SetUniform2f( "u_Resolution", width, height );
+
 		currentFrameBuffer->GetColorAttachment( )->Bind( 0 );
-		postProcessShader->SetUniform1f( "u_Texture", 0 );
+		postProcessShader->SetUniform1i( "u_Texture", 0 );
+
+		postProcessShader->SetUniform1f( "u_Brightness", postProcess.brightness );
+		postProcessShader->SetUniform1f( "u_Contrast", postProcess.contrast );
+		postProcessShader->SetUniform1f( "u_Exposure", postProcess.exposure );
+		postProcessShader->SetUniform1f( "u_Saturation", postProcess.saturation );
+		postProcessShader->SetUniform1f( "u_Sharpness", postProcess.sharpness );
+		postProcessShader->SetUniform4f( "u_Tint", float( postProcess.tint.r ) / 255.0f, float( postProcess.tint.g ) / 255.0f, float( postProcess.tint.b ) / 255.0f, float( postProcess.tint.a ) / 255.0f );
 
 		rendererAPI->DrawIndexed( vertexArray );
 

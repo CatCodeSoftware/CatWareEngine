@@ -35,7 +35,12 @@ public:
 
 	void Draw( )
 	{
+<<<<<<< Updated upstream
 		Renderer::DrawRect( transform.position, transform.size, { 255, 255, 255, 255 }, transform.rotation );
+=======
+		// Todo: Fix non textured rects
+		Renderer::DrawRectTextured( transform.position, transform.size, Assets::textures.GetAsset( "testTexture" ), { 255, 255, 255, 255 }, transform.rotation );
+>>>>>>> Stashed changes
 	}
 
 	static Entity* Create( std::unordered_map<std::string, std::string> tags )
@@ -55,7 +60,7 @@ public:
 
 	void OnEnter( ) override
 	{
-		entityManager.CreateEntityByClassName( "testEntity", { { 64, 64 }, { 64, 64 } }, { } );
+		entityManager.CreateEntityByClassName( "testEntity", { { 64, 64 }, { 128, 128 } }, { } );
 		// entityManager.CreateEntityByType<TestEntity>( { { 64, 64 }, { 64, 64 } }, { } );
 	}
 

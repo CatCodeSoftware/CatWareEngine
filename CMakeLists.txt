@@ -38,7 +38,7 @@ set(CMAKE_CXX_STANDARD 20)
 file(GLOB_RECURSE CW_SOURCE_FILES Engine/Source/*.cpp)
 file(GLOB_RECURSE CW_HEADER_FILES Engine/Source/*.h)
 file(GLOB_RECURSE CW_GLAD Engine/Lib/Glad/*.c)
-
+file(GLOB CW_IMGUI Engine/Lib/ImGui/*.cpp)
 
 source_group(CW_SOURCE_FILES Source)
 source_group(CW_HEADER_FILES Source)
@@ -91,7 +91,7 @@ include_directories(
 	"Engine/Lib/Single header"
 )
 
-add_library(CatWareEngine SHARED ${CW_SOURCE_FILES} ${CW_GLAD} ${CW_HEADER_FILES})
+add_library(CatWareEngine SHARED ${CW_SOURCE_FILES} ${CW_GLAD} ${CW_HEADER_FILES} ${CW_IMGUI} ${PROJECT_SOURCE_DIR}/Engine/Lib/ImGui/backends/imgui_impl_opengl3.cpp ${PROJECT_SOURCE_DIR}/Engine/Lib/ImGui/backends/imgui_impl_sdl2.cpp )
 target_compile_definitions(CatWareEngine PRIVATE CATWARE_BUILD)
 
 # test script

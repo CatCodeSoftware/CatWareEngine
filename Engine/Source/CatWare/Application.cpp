@@ -81,6 +81,16 @@ namespace CatWare
 
 		Random::Init( );
 
+		// initialze imgui - this is temporary
+		ImGui::CreateContext( );
+
+		ImGuiIO& io = ImGui::GetIO( ); ( void ) io;
+		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+		io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
+
+		ImGui::StyleColorsDark( );
+
 		window = new Window( initConfig.windowTitle, initConfig.windowWidth, initConfig.windowHeight, initConfig.windowFullscreen );
 
 		CW_ENGINE_LOG->Info( "Initializing renderer" );
@@ -179,6 +189,45 @@ namespace CatWare
 		Scene* currentScene = SceneManager::GetCurrentScene( );
 
 		currentScene->DrawGUI( );
+
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplSDL2_NewFrame();
+		ImGui::NewFrame();
+
+		/*
+		ImGui::Begin( "post process", nullptr );
+
+		ImGui::SliderFloat( "Brightnes", &Renderer::postProcess.brightness, -1, 1 );
+		ImGui::SliderFloat( "Contrast", &Renderer::postProcess.contrast, 0, 10 );
+		ImGui::SliderFloat( "Exposure", &Renderer::postProcess.exposure, -10, 10 );
+		ImGui::SliderFloat( "Saturation", &Renderer::postProcess.saturation, -1, 1 );
+		ImGui::SliderFloat( "Sharpness", &Renderer::postProcess.sharpness, -10, 10 );
+
+		float colors[4] = {
+			float( Renderer::postProcess.tint.r ) / 255.0f,
+			float( Renderer::postProcess.tint.g ) / 255.0f,
+			float( Renderer::postProcess.tint.b ) / 255.0f,
+			float( Renderer::postProcess.tint.a ) / 255.0f,
+		};
+
+		ImGui::ColorPicker4( "Tint", colors );
+
+		Renderer::postProcess.tint.r = colors[0] * 255;
+		Renderer::postProcess.tint.g = colors[1] * 255;
+		Renderer::postProcess.tint.b = colors[2] * 255;
+		Renderer::postProcess.tint.a = colors[3] * 255;
+
+		ImGui::End( );
+		*/
+
+		ImGui::Render( );
+
+		ImGui::EndFrame( );
+
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+		ImGui::UpdatePlatformWindows( );
+		ImGui::RenderPlatformWindowsDefault( );
 
 		Renderer::camera2D = oldCamera;
 		delete uiCamera;

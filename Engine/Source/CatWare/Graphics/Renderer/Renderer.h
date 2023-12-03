@@ -11,10 +11,24 @@
 
 namespace CatWare
 {
+	class PostProcess
+	{
+	public:
+		float brightness = 0;
+		float contrast = 1;
+		float exposure = 1;
+		float saturation = 0;
+		float sharpness = 0;
+
+		Color tint;
+	};
+
 	class CATWARE_API Renderer
 	{
 	public:
 		inline static OrthoCamera* camera2D = nullptr;
+
+		inline static PostProcess postProcess;
 
 		static void Init( Rendering::RendererAPI* a_rendererAPI, int screenWidth, int screenHeight );
 		static void DeInit( );

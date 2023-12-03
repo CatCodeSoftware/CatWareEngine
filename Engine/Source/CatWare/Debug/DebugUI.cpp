@@ -63,4 +63,10 @@ namespace CatWare
 			}
 		}
 	}
+
+	void DebugUI::PrintToConsole( std::string text )
+	{
+		consoleContents.push_back( text );
+	}
+
 }

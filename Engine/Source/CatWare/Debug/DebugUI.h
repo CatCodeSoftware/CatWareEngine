@@ -17,6 +17,8 @@ namespace CatWare
 
 		static void Draw( );
 
+		static void PrintToConsole( std::string text );
+
 	private:
 		inline static char commandBuffer[256];
 		inline static std::vector<std::string> consoleContents;

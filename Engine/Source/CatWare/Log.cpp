@@ -17,15 +17,7 @@ namespace CatWare
 		static Logger* engineLogger;
 		static Logger* gameLogger;
 
-		// Some utils
-		enum class Color
-		{
-			RED,
-			YELLOW,
-			RESET
-		};
-
-		void SetColor(Color color)
+		void Logger::SetColor(Color color)
 		{
 			#ifdef CW_PLATFORM_WIN64
 
@@ -56,42 +48,6 @@ namespace CatWare
 
 			// for now no logging to file
 		}
-
-		void Logger::Error( std::string text, ... )
-		{
-			text = "[ " + category + " ] Error: " + text + "\n";
-
-			va_list args;
-			va_start( args, text );
-
-			SetColor( Color::RED );
-			vprintf( text.c_str( ), args );
-			SetColor( Color::RESET );
-		}
-
-		void Logger::Info( std::string text, ... )
-		{
-			text = "[ " + category + " ] Info: " + text + "\n";
-
-			va_list args;
-			va_start( args, text );
-
-			SetColor( Color::RESET );
-			vprintf( text.c_str( ), args );
-		}
-
-		void Logger::Warning( std::string text, ... )
-		{
-			text = "[ " + category + " ] Warning: " + text + "\n";
-
-			va_list args;
-			va_start( args, text );
-
-			SetColor( Color::YELLOW );
-			vprintf( text.c_str( ), args );
-			SetColor( Color::RESET );
-		}
-
 
 		// Log
 		void InitLoggers( )

@@ -41,13 +41,19 @@ namespace CatWare
 		}
 
 		// LOG CLASS
-		Logger::Logger( std::string category, std::string logFile )
+		Logger::Logger( std::string category, std::string logPath )
 		{
 			this->category = category;
 			this->logFileLocation = logFileLocation;
 
-			// for now no logging to file
+			logFile.open( logPath );
 		}
+
+		Logger::~Logger( )
+		{
+			logFile.close( );
+		}
+
 
 		// Log
 		void InitLoggers( )

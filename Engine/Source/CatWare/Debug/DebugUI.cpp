@@ -13,8 +13,25 @@ namespace CatWare
 			ImGui::Begin( "Debug tools", &enabled );
 
 			if ( ImGui::Button( "Post process UI" ) ) postProcessUIEnabled = true;
+			if ( ImGui::Button( "Console" ) ) consoleEnabled = true;
 
 			ImGui::End( );
+
+			if ( consoleEnabled )
+			{
+				ImGui::Begin( "Console" );
+
+				if ( ImGui::InputText( "Command", commandBuffer, 256, ImGuiInputTextFlags_EnterReturnsTrue ) )
+					consoleContents.push_back( std::string( commandBuffer ) );
+
+				ImGui::BeginChild( "output" );
+
+				for ( std::string text : consoleContents )
+					ImGui::Text( text.c_str( ) );
+
+				ImGui::EndChild( );
+				ImGui::End( );
+			}
 
 			if ( postProcessUIEnabled )
 			{

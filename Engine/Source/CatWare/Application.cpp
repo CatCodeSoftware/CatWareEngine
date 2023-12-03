@@ -3,23 +3,21 @@
 #include <random>
 #include <sstream>
 #include <imgui.h>
-#include "Debug/Debug.h"
+#include <backends/imgui_impl_sdl2.h>
+#include <backends/imgui_impl_opengl3.h>
+#include "SDL.h"
 
+#include "CatWare/Filesystem/Filesystem.h"
+#include "CatWare/Filesystem/Sources.h"
+#include "Debug/Debug.h"
 #include "Log.h"
 #include "Graphics/Renderer/Renderer.h"
 #include "Graphics/Text.h"
 #include "Assets/Assets.h"
 #include "Input/Binds.h"
 #include "Random.h"
+#include "CatWare/Debug/DebugUI.h"
 
-#include "SDL.h"
-
-#include "CatWare/Filesystem/Filesystem.h"
-#include "CatWare/Filesystem/Sources.h"
-
-#include <imgui.h>
-#include <backends/imgui_impl_sdl2.h>
-#include <backends/imgui_impl_opengl3.h>
 
 namespace CatWare
 {
@@ -198,31 +196,7 @@ namespace CatWare
 		ImGui_ImplSDL2_NewFrame();
 		ImGui::NewFrame();
 
-		/*
-		ImGui::Begin( "post process", nullptr );
-
-		ImGui::SliderFloat( "Brightnes", &Renderer::postProcess.brightness, -1, 1 );
-		ImGui::SliderFloat( "Contrast", &Renderer::postProcess.contrast, 0, 10 );
-		ImGui::SliderFloat( "Exposure", &Renderer::postProcess.exposure, -10, 10 );
-		ImGui::SliderFloat( "Saturation", &Renderer::postProcess.saturation, -1, 1 );
-		ImGui::SliderFloat( "Sharpness", &Renderer::postProcess.sharpness, -10, 10 );
-
-		float colors[4] = {
-			float( Renderer::postProcess.tint.r ) / 255.0f,
-			float( Renderer::postProcess.tint.g ) / 255.0f,
-			float( Renderer::postProcess.tint.b ) / 255.0f,
-			float( Renderer::postProcess.tint.a ) / 255.0f,
-		};
-
-		ImGui::ColorPicker4( "Tint", colors );
-
-		Renderer::postProcess.tint.r = colors[0] * 255;
-		Renderer::postProcess.tint.g = colors[1] * 255;
-		Renderer::postProcess.tint.b = colors[2] * 255;
-		Renderer::postProcess.tint.a = colors[3] * 255;
-
-		ImGui::End( );
-		*/
+		DebugUI::Draw( );
 
 		ImGui::Render( );
 

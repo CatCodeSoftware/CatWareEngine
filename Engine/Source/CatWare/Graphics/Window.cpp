@@ -11,6 +11,7 @@
 #include "Renderer/Renderer.h"
 
 #include "../Error.h"
+#include "CatWare/Debug/DebugUI.h"
 
 namespace CatWare
 {
@@ -65,6 +66,9 @@ namespace CatWare
 
 
 				case SDL_KEYDOWN:
+					if ( e.key.keysym.scancode == Input::KEY_GRAVE )
+						DebugUI::enabled = !DebugUI::enabled;
+
 					Input::SetKeyPressed( e.key.keysym.scancode, true );
 					break;
 

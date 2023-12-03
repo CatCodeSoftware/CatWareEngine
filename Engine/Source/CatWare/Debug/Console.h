@@ -3,13 +3,17 @@
 #include <vector>
 #include <string>
 
+#include "CatWare/Core.h"
+
 namespace CatWare
 {
 	class ConsoleCommand;
 
-	class Console
+	class CATWARE_API Console
 	{
 	public:
+		Console( );
+
 		inline void AddCommand( ConsoleCommand* command ) { commands.push_back( command ); }
 		void RunString( std::string line );
 
@@ -23,7 +27,7 @@ namespace CatWare
 		std::vector<ConsoleCommand*> commands;
 	};
 
-	class ConsoleCommand
+	class CATWARE_API ConsoleCommand
 	{
 	public:
 		ConsoleCommand( std::vector<std::string> names, unsigned int requiredArgsCount );
@@ -36,5 +40,16 @@ namespace CatWare
 	private:
 		std::vector<std::string> names;
 		unsigned int requiredArgsCount;
+	};
+
+	class CATWARE_API TestCommand : public ConsoleCommand
+	{
+	public:
+		TestCommand( ) : ConsoleCommand( { "test" }, 0 )
+		{
+
+		}
+
+		void Run( std::vector<std::string> args ) override;
 	};
 }

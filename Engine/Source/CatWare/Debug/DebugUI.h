@@ -1,9 +1,9 @@
 #pragma once
 
-#include <vector>
 #include <string>
 
 #include "CatWare/Core.h"
+#include "Console.h"
 
 namespace CatWare
 {
@@ -17,10 +17,8 @@ namespace CatWare
 
 		static void Draw( );
 
-		static void PrintToConsole( std::string text );
-
+		static Console* GetConsole( ) { return &console; }
 	private:
-		inline static char commandBuffer[256];
-		inline static std::vector<std::string> consoleContents;
+		inline static Console console;
 	};
 }

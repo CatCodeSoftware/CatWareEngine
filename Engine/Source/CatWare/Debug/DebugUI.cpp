@@ -19,18 +19,7 @@ namespace CatWare
 
 			if ( consoleEnabled )
 			{
-				ImGui::Begin( "Console" );
-
-				if ( ImGui::InputText( "Command", commandBuffer, 256, ImGuiInputTextFlags_EnterReturnsTrue ) )
-					consoleContents.push_back( std::string( commandBuffer ) );
-
-				ImGui::BeginChild( "output" );
-
-				for ( std::string text : consoleContents )
-					ImGui::Text( text.c_str( ) );
-
-				ImGui::EndChild( );
-				ImGui::End( );
+				console.Draw( );
 			}
 
 			if ( postProcessUIEnabled )
@@ -62,11 +51,6 @@ namespace CatWare
 				ImGui::End( );
 			}
 		}
-	}
-
-	void DebugUI::PrintToConsole( std::string text )
-	{
-		consoleContents.push_back( text );
 	}
 
 }

@@ -31,7 +31,7 @@ namespace CatWare
 				snprintf( buffer, bufferSize + 1, text.c_str( ), args... );
 
 				printf( buffer );
-				DebugUI::PrintToConsole( std::string( buffer ) );
+				DebugUI::GetConsole()->Print( std::string( buffer ) );
 				logFile << buffer;
 				logFile.flush( );
 

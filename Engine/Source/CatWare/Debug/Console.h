@@ -19,12 +19,15 @@ namespace CatWare
 	class ConVar
 	{
 	public:
+		ConVar( );
 		ConVar( const ConVarType& type, void* valuePtr );
 
+		inline bool IsValid( ) { return isValid; }
 		inline ConVarType GetType( ) { return type; }
 		inline void* GetValuePointer( ) { return valuePtr; }
 
 	private:
+		bool isValid;
 		ConVarType type;
 		void* valuePtr;
 	};
@@ -38,7 +41,7 @@ namespace CatWare
 		static void RunString( std::string line );
 
 		static inline void RegisterConVar( std::string name, ConVar convar ) { conVars.insert( { name, convar } ); }
-		static inline ConVar GetConVar( std::string name ) { return conVars.find( name )->second; }
+		static inline ConVar GetConVar( std::string name ) { return conVars[name]; }
 
 		static void Draw( );
 		static inline void Print( std::string text ) { consoleContents.push_back( text ); };
@@ -64,16 +67,5 @@ namespace CatWare
 	private:
 		std::vector<std::string> names;
 		unsigned int requiredArgsCount;
-	};
-
-	class CATWARE_API TestCommand : public ConsoleCommand
-	{
-	public:
-		TestCommand( ) : ConsoleCommand( { "test" }, 0 )
-		{
-
-		}
-
-		void Run( std::vector<std::string> args ) override;
 	};
 }

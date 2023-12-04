@@ -11,7 +11,7 @@
 #include "Texture.h"
 #include "CatWare/Error.h"
 #include "CatWare/Log.h"
-
+#include "CatWare/Debug/Console.h"
 
 using namespace CatWare::Rendering;
 
@@ -80,6 +80,12 @@ namespace CatWare
 
 		rectArray->AddVertexBuffer( rectVerts );
 		rectArray->SetIndexBuffer( rectIndexes );
+
+		Console::RegisterConVar( "r_pp_brightness", ConVar( ConVarType::FLOAT, &postProcess.brightness ) );
+		Console::RegisterConVar( "r_pp_contrast", ConVar( ConVarType::FLOAT, &postProcess.contrast ) );
+		Console::RegisterConVar( "r_pp_exposure", ConVar( ConVarType::FLOAT, &postProcess.exposure ) );
+		Console::RegisterConVar( "r_pp_saturation", ConVar( ConVarType::FLOAT, &postProcess.saturation ) );
+		Console::RegisterConVar( "r_pp_sharpness", ConVar( ConVarType::FLOAT, &postProcess.sharpness ) );
 	}
 
 	void Renderer::DeInit( )

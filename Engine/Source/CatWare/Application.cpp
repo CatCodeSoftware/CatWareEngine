@@ -106,6 +106,11 @@ namespace CatWare
 
 		PostInit( );
 
+		Console::RegisterConVar( "time_FPSLimited", ConVar( ConVarType::BOOL, &Time::frameRateLimited ) );
+		Console::RegisterConVar( "time_maxFPS", ConVar( ConVarType::FLOAT, &Time::maxFPS ) );
+		Console::RegisterConVar( "time_modifier", ConVar( ConVarType::FLOAT, &Time::modifier ) );
+		Console::RegisterConVar( "time_tickPerSecond", ConVar( ConVarType::FLOAT, &Time::ticksPerSecond ) );
+
 		frameTimer.Reset( );
 		tickTimer.Reset( );
 	}

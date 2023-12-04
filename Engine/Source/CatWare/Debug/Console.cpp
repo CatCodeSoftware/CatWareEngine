@@ -9,8 +9,16 @@
 
 namespace CatWare
 {
+	ConVar::ConVar( )
+	{
+		this->isValid = false;
+		this->type = ConVarType::BOOL;
+		this->valuePtr = nullptr;
+	}
+
 	ConVar::ConVar( const ConVarType& type, void* valuePtr )
 	{
+		this->isValid = true;
 		this->type = type;
 		this->valuePtr = valuePtr;
 	}
@@ -19,8 +27,6 @@ namespace CatWare
 	{
 		AddCommand( new Commands::Exit );
 		AddCommand( new Commands::Set );
-
-		RegisterConVar( "pp_sharpness", ConVar( ConVarType::FLOAT, &Renderer::postProcess.sharpness ) );
 	}
 
 
@@ -87,12 +93,5 @@ namespace CatWare
 		this->names = names;
 		this->requiredArgsCount = requiredArgsCount;
 	}
-
-
-	void TestCommand::Run( std::vector<std::string> args )
-	{
-		CW_ENGINE_LOG->Info( args[1] );
-	}
-
 
 }

@@ -69,7 +69,8 @@ namespace CatWare
 
 	void Application::Init( )
 	{
-		CatWare::Logging::InitLoggers( );
+		Logging::InitLoggers( );
+		Console::Init( );
 
 		CW_ENGINE_LOG->Info( "Initializing engine" );
 

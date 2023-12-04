@@ -3,12 +3,24 @@
 #include <imgui.h>
 
 #include "CatWare/Log.h"
+#include "CatWare/Graphics/Renderer/Renderer.h"
+
+#include "Commands.h"
 
 namespace CatWare
 {
-	Console::Console( )
+	ConVar::ConVar( const ConVarType& type, void* valuePtr )
 	{
-		AddCommand( new TestCommand );
+		this->type = type;
+		this->valuePtr = valuePtr;
+	}
+
+	void Console::Init( )
+	{
+		AddCommand( new Commands::Exit );
+		AddCommand( new Commands::Set );
+
+		RegisterConVar( "pp_sharpness", ConVar( ConVarType::FLOAT, &Renderer::postProcess.sharpness ) );
 	}
 
 
@@ -41,9 +53,14 @@ namespace CatWare
 			for ( std::string name : consoleCommand->GetNames( ) )
 			{
 				if ( name == splitString[0] )
+				{
 					consoleCommand->Run( splitString );
+					return;
+				}
 			}
 		}
+
+		CW_ENGINE_LOG->Error( "Command %s not found", splitString[0].c_str( ) );
 	}
 
 	void Console::Draw( )
@@ -51,7 +68,10 @@ namespace CatWare
 		ImGui::Begin( "Console" );
 
 		if ( ImGui::InputText( "Command", commandBuffer, 256, ImGuiInputTextFlags_EnterReturnsTrue ) )
+		{
 			RunString( std::string( commandBuffer ) );
+			strcpy( commandBuffer, "" );
+		}
 
 		ImGui::BeginChild( "output" );
 

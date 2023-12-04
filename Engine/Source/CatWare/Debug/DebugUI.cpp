@@ -19,7 +19,7 @@ namespace CatWare
 
 			if ( consoleEnabled )
 			{
-				console.Draw( );
+				Console::Draw( );
 			}
 
 			if ( postProcessUIEnabled )

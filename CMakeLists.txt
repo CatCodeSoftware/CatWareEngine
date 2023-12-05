@@ -100,7 +100,7 @@ link_libraries(CatWareEngine)
 
 add_library(TestScript SHARED TestScript/Source/Main.cpp)
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 17)
 
 set_target_properties(TestScript PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/WorkDir/Scripts)
 set_target_properties(TestScript PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/WorkDir/Scripts)
@@ -120,8 +120,6 @@ link_libraries(
 
 file(GLOB_RECURSE RUNTIME_SOURCE_FILES Runtime/Source/*.cpp)
 file(GLOB_RECURSE RUNTIME_HEADER_FILES Runtime/Source/*.h)
-
-set(CMAKE_CXX_STANDARD 20)
 
 include_directories(
 	"Runtime/Source"

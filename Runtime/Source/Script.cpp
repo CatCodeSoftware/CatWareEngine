@@ -35,6 +35,17 @@ void* LoadLib( const std::string& path )
 
 #endif
 
+inline bool StringEndsWith( std::string string, std::string end )
+{
+	// Get the last characters of the string
+	std::string stringEnd;
+
+	for ( unsigned int i = 0; i < end.length( ); i++ )
+		stringEnd += string[string.length( ) - end.length( ) + i];
+
+	return stringEnd == end;
+}
+
 Script::Script( const std::string& dllPath )
 {
 	dll = LoadLib( dllPath );
@@ -71,7 +82,7 @@ std::vector<Script> LoadScripts( const std::string& scriptFolder )
 
 	for ( auto& entry : std::filesystem::recursive_directory_iterator( scriptFolder ) )
 	{
-		if ( entry.path( ).string( ).ends_with( ".dll" ) || entry.path( ).string( ).ends_with( ".so" ) )
+		if ( StringEndsWith( entry.path( ).string( ), ".dll") || StringEndsWith( entry.path( ).string( ), ".so") )
 		{
 			CW_ENGINE_LOG->Info( "Loading script %s", entry.path( ).string( ).c_str( ) );
 			scripts.emplace_back( entry.path( ).string( ) );

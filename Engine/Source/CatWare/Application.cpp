@@ -18,7 +18,6 @@
 #include "Random.h"
 #include "CatWare/Debug/DebugUI.h"
 
-
 namespace CatWare
 {
 	void Application::Run( )

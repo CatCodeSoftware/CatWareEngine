@@ -1,11 +1,10 @@
 #pragma once
 
 #include <string>
+#include <fstream>
 
 #include "CatWare/Core.h"
 #include "CatWare/Debug/DebugUI.h"
-
-#include <fstream>
 
 // some macros for easier access
 #define CW_ENGINE_LOG CatWare::Logging::GetEngineLogger( )

@@ -1,12 +1,12 @@
 #include "Binds.h"
 
 #include <unordered_map>
-#include <fstream>
 
 #include "CatWare/Debug/Debug.h"
 
 #include "KeyboardAndMouse.h"
 #include "CatWare/Error.h"
+#include "CatWare/Filesystem/Filesystem.h"
 
 namespace CatWare
 {
@@ -67,11 +67,28 @@ namespace CatWare
 		void LoadBindsFromConfig( std::string filePath )
 		{
 			// Load file
-			std::ifstream file( filePath );
+			FileHandle* handle = FileSystem::OpenFile( filePath, FileMode::READ, true );
 
-			std::string line;
+			std::string contents = handle->Read( );
 
-			while ( getline ( file, line ) )
+			// split contents into lines
+			std::vector<std::string> lines;
+			std::string buffer = "";
+
+			for ( char c : contents )
+			{
+				if ( c == '\n' )
+				{
+					lines.push_back( buffer );
+					buffer = "";
+				}
+				else
+					buffer += c;
+			}
+
+			lines.push_back( buffer );
+
+			for  ( std::string& line : lines )
 			{
 				int stage = 0;
 

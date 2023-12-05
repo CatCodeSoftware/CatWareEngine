@@ -2,10 +2,16 @@
 .vscode
 .vs
 .idea
+
 cmake-build-debug
 cmake-build-release
+
 vsxmake2022
+
 build
 Build
+
 WorkDir/Scripts
+WorkDir/imgui.ini
+
 docs/html

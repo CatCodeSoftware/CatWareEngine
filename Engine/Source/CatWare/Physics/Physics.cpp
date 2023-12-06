@@ -15,6 +15,12 @@ namespace CatWare
 		this->collider = collider;
 	}
 
+	SurfaceBody::SurfaceBody( float frictionCoefficient, Collider* collider ) : PhysicsBody( BodyType::SURFACE )
+	{
+		this->frictionCoefficient = frictionCoefficient;
+		this->collider = collider;
+	}
+
 	void PhysicsWorld::AddBody( PhysicsBody* body )
 	{
 		physicsBodies.push_back( body );
@@ -55,18 +61,20 @@ namespace CatWare
 				DynamicBody* dynamicBody = ( DynamicBody* ) physicsBody;
 
 				// temporary gravity thingy
-				dynamicBody->force.y += dynamicBody->mass * 600;
+				dynamicBody->force.y += dynamicBody->mass * gravity;
 
 				dynamicBody->velocity += dynamicBody->force / dynamicBody->mass * deltaTime;
 				dynamicBody->position += dynamicBody->velocity * deltaTime;
 
+				dynamicBody->force = { 0, 0 };
+
 				// Collision checking, only brute force now
 				for ( PhysicsBody* physicsBody2 : physicsBodies )
 				{
+					if ( physicsBody == physicsBody2 ) break;
+
 					if ( physicsBody2->GetType( ) == BodyType::DYNAMIC )
 					{
-						if ( physicsBody == physicsBody2 ) break;
-
 						DynamicBody* dynamicBody2 = ( DynamicBody* ) physicsBody2;
 
 						// Update positions of colliders
@@ -83,9 +91,14 @@ namespace CatWare
 							break;
 						}
 					}
-				}
+					else if ( physicsBody2->GetType( ) == BodyType::SURFACE )
+					{
+						SurfaceBody* surface = ( SurfaceBody* ) physicsBody2;
 
-				dynamicBody->force = { 0, 0 };
+						// apply friction to the surface
+						dynamicBody->force -= dynamicBody->velocity * ( dynamicBody->mass * 10 ) * surface->frictionCoefficient;
+					}
+				}
 			}
 		}
 	}

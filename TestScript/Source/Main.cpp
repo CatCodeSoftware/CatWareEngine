@@ -28,13 +28,16 @@ public:
 
 	void Update( ) override
 	{
-		if ( pBody->position.y > 900 - transform.size.y )
-		{
-			pBody->position.y = 900 - transform.size.y;
-			pBody->velocity.y = 0;
-		}
+		if ( Input::IsKeyPressed( Input::KEY_W ) )
+			pBody->force.y -= 30000;
+		if ( Input::IsKeyPressed( Input::KEY_S ) )
+			pBody->force.y += 30000;
+		if ( Input::IsKeyPressed( Input::KEY_A ) )
+			pBody->force.x -= 30000;
+		if ( Input::IsKeyPressed( Input::KEY_D ) )
+			pBody->force.x += 30000;
 
-		transform.position = pBody->position;
+		transform.position = pBody->position + pBody->velocity * Time::GetDeltaTime( ); // smooth out the movements
 	}
 
 	void Draw( )
@@ -53,13 +56,13 @@ class InGame : public Scene
 public:
 	InGame( )
 	{
-
+		SurfaceBody* surface = new SurfaceBody( 0.9, new RectCollider( { 0, 0 }, { 1600, 900 } ) );
+		physicsWorld.AddBody( surface );
 	}
 
 	void OnEnter( ) override
 	{
 		entityManager.CreateEntityByClassName( "testEntity", { { 64, 64 }, { 64, 64 } }, { } );
-		entityManager.CreateEntityByClassName( "testEntity", { { 33, -128 }, { 64, 64 } }, { } );
 		// entityManager.CreateEntityByType<TestEntity>( { { 64, 64 }, { 64, 64 } }, { } );
 	}
 

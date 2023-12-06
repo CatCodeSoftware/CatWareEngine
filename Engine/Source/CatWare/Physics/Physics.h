@@ -19,12 +19,11 @@ namespace CatWare
 	class CATWARE_API PhysicsBody
 	{
 	public:
+		Vector2D position;
+
 		PhysicsBody( BodyType bodyType );
 
 		inline BodyType GetType( ) { return type; }
-
-		Vector2D position;
-
 	private:
 		BodyType type = BodyType::UNASSIGNED;
 	};
@@ -32,13 +31,24 @@ namespace CatWare
 	class CATWARE_API DynamicBody : public PhysicsBody
 	{
 	public:
+		Vector2D velocity;
+		Vector2D force;
+		float mass;
+
 		DynamicBody( float mass, Collider* collider );
 
 		inline Collider* GetCollider( ) { return collider; }
 
-		Vector2D velocity;
-		Vector2D force;
-		float mass;
+	protected:
+		Collider* collider;
+	};
+
+	class CATWARE_API SurfaceBody : public PhysicsBody
+	{
+	public:
+		float frictionCoefficient = 0.9;
+
+		SurfaceBody( float frictionCoefficient, Collider* collider );
 
 	protected:
 		Collider* collider;
@@ -48,6 +58,8 @@ namespace CatWare
 	class CATWARE_API PhysicsWorld
 	{
 	public:
+		float gravity = 0;
+
 		void AddBody( PhysicsBody* body );
 		void RemoveBody( PhysicsBody* body );
 

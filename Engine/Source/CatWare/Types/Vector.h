@@ -10,6 +10,11 @@
 
 #include <math.h>
 
+#define VEC_PAIRWISE_OP( op ) inline Vector2D operator op(const Vector2D& otherVec) { return { x op otherVec.x, y op otherVec.y }; }
+#define VEC_SINGLE_NUM_OP( op, numType )  inline Vector2D operator op(const numType& num) { return { x op num, y op num }; }
+#define VEC_ASSIGN_OP( op ) inline void operator op(const Vector2D& otherVec) { x op otherVec.x; y op otherVec.y; }
+#define VEC_ASSIGN_SN_OP( op, numType ) inline void operator op(const numType& num) { x op num; y op num; }
+
 class Vector2D
 {
 public:
@@ -55,91 +60,30 @@ public:
 		return { length * cos( tangents ), length * sin( tangents ) };
 	}
 
-	inline Vector2D operator*( const Vector2D& otherVec )
-	{
-		return { this->x * otherVec.x, this->y * otherVec.y };
-	}
+	VEC_PAIRWISE_OP( + )
+	VEC_PAIRWISE_OP( - )
+	VEC_PAIRWISE_OP( * )
+	VEC_PAIRWISE_OP( / )
 
-	inline Vector2D operator*( const float& f )
-	{
-		return { this->x * f, this->y * f };
-	}
+	VEC_SINGLE_NUM_OP( +, float );
+	VEC_SINGLE_NUM_OP( -, float );
+	VEC_SINGLE_NUM_OP( *, float );
+	VEC_SINGLE_NUM_OP( /, float );
 
-	inline Vector2D operator/( const Vector2D& otherVec )
-	{
-		return { this->x / otherVec.x, this->y / otherVec.y };
-	}
 
-	inline Vector2D operator/( const float& f )
-	{
-		return { this->x / f, this->y / f };
-	}
+	VEC_ASSIGN_OP( += )
+	VEC_ASSIGN_OP( -= )
+	VEC_ASSIGN_OP( *= )
+	VEC_ASSIGN_OP( /= )
 
-	inline Vector2D operator+( const Vector2D& otherVec )
-	{
-		return { this->x + otherVec.x, this->y + otherVec.y };
-	}
-
-	inline Vector2D operator+( const float& f )
-	{
-		return { this->x + f, this->y + f };
-	}
-
-	inline Vector2D operator-( const Vector2D& otherVec )
-	{
-		return { this->x - otherVec.x, this->y - otherVec.y };
-	}
-
-	inline Vector2D operator-( const float& f )
-	{
-		return { this->x - f, this->y - f };
-	}
-
-	inline void operator+=( const Vector2D& otherVec )
-	{
-		x += otherVec.x;
-		y += otherVec.y;
-	}
-
-	inline void operator+=( const float& f )
-	{
-		x += f;
-		y += f;
-	}
-
-	inline void operator-=( const Vector2D& otherVec )
-	{
-		x -= otherVec.x;
-		y -= otherVec.y;
-	}
-
-	inline void operator-=( const float& f )
-	{
-		x -= f;
-		y -= f;
-	}
-
-	inline void operator*=( const Vector2D& otherVec )
-	{
-		x *= otherVec.x;
-		y *= otherVec.y;
-	}
-
-	inline void operator*=( const float& f )
-	{
-		x *= f;
-		y *= f;
-	}
-
-	inline void operator/=( const Vector2D& otherVec )
-	{
-		x /= otherVec.x;
-		y /= otherVec.y;
-	}
-
-	inline void operator/=( const float& f )
-	{
-		x /= f;
-		y /= f;
-	}
+	VEC_ASSIGN_SN_OP( +=, float )
+	VEC_ASSIGN_SN_OP( -=, float )
+	VEC_ASSIGN_SN_OP( /=, float )
+	VEC_ASSIGN_SN_OP( *=, float )
 };
+
+// dont spill over to the game
+#undef VEC_PAIRWISE_OP
+#undef VEC_ASSIGN_OP
+#undef VEC_SINGLE_NUM_OP
+#undef VEC_ASSIGN_SN_OP

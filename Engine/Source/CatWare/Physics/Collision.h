@@ -3,8 +3,6 @@
 *
 * @brief Contains collider types and collision checking functions.
 *
-* @todo Make this not suck
-*
 * @author PointThink
 */
 

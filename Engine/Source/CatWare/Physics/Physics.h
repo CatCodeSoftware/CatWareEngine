@@ -4,6 +4,7 @@
 
 #include "Collision.h"
 #include "CatWare/Types/Vector.h"
+#include "CatWare/Core.h"
 
 namespace CatWare
 {
@@ -15,7 +16,7 @@ namespace CatWare
 		SURFACE, // Top down surface for applying friction -- to implement
 	};
 
-	class PhysicsBody
+	class CATWARE_API PhysicsBody
 	{
 	public:
 		PhysicsBody( BodyType bodyType );
@@ -28,7 +29,7 @@ namespace CatWare
 		BodyType type = BodyType::UNASSIGNED;
 	};
 
-	class DynamicBody : public PhysicsBody
+	class CATWARE_API DynamicBody : public PhysicsBody
 	{
 	public:
 		DynamicBody( float mass, Collider* collider );
@@ -44,7 +45,7 @@ namespace CatWare
 	};
 
 
-	class PhysicsWorld
+	class CATWARE_API PhysicsWorld
 	{
 	public:
 		void AddBody( PhysicsBody* body );

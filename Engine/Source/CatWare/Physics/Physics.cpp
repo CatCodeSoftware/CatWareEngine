@@ -1,5 +1,7 @@
 #include "Physics.h"
 
+#include <glm/glm.hpp>
+
 namespace CatWare
 {
 	PhysicsBody::PhysicsBody( BodyType bodyType )
@@ -52,6 +54,9 @@ namespace CatWare
 			{
 				DynamicBody* dynamicBody = ( DynamicBody* ) physicsBody;
 
+				// temporary gravity thingy
+				dynamicBody->force.y += dynamicBody->mass * 600;
+
 				dynamicBody->velocity += dynamicBody->force / dynamicBody->mass * deltaTime;
 				dynamicBody->position += dynamicBody->velocity * deltaTime;
 
@@ -72,9 +77,8 @@ namespace CatWare
 
 						if ( collisionInfo.hasCollision )
 						{
-							// Correct position
-							dynamicBody->position -= collisionInfo.normal * collisionInfo.penetration * 0.5;
-							dynamicBody2->position += collisionInfo.normal * collisionInfo.penetration * 0.5;
+							dynamicBody->position -= collisionInfo.normal * collisionInfo.penetration;
+							dynamicBody2->position += collisionInfo.normal * collisionInfo.penetration;
 
 							break;
 						}

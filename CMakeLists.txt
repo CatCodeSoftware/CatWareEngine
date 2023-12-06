@@ -53,11 +53,6 @@ else()
     add_compile_options(-fPIC)
 endif()
 
-# import all libraries
-add_subdirectory("Engine/Lib/box2d")
-link_libraries(box2d)
-set_target_properties(box2d PROPERTIES FOLDER "Libraries")
-
 add_subdirectory("Engine/Lib/freetype")
 link_libraries(freetype)
 set_target_properties(freetype PROPERTIES FOLDER "Libraries")
@@ -66,13 +61,6 @@ add_subdirectory("Engine/Lib/SDL2" EXCLUDE_FROM_ALL)
 link_libraries(SDL2-static)
 set_target_properties(SDL2-static PROPERTIES FOLDER "Libraries")
 
-# group some stupid fucking dependencies that came out of fucking nowhere ( mostly box2d )
-set_target_properties(glad PROPERTIES FOLDER "Libraries")
-set_target_properties(glfw PROPERTIES FOLDER "Libraries")
-set_target_properties(imgui PROPERTIES FOLDER "Libraries")
-set_target_properties(sajson PROPERTIES FOLDER "Libraries")
-set_target_properties(testbed PROPERTIES FOLDER "Libraries")
-set_target_properties(unit_test PROPERTIES FOLDER "Libraries")
 set_target_properties(sdl_headers_copy PROPERTIES FOLDER "Libraries")
 
 include_directories(

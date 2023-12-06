@@ -60,6 +60,11 @@ public:
 		return { length * cos( tangents ), length * sin( tangents ) };
 	}
 
+	inline static double Dot( Vector2D vec1, Vector2D vec2 )
+	{
+		return vec1.x * vec2.x + vec1.y * vec2.y;
+	}
+
 	VEC_PAIRWISE_OP( + )
 	VEC_PAIRWISE_OP( - )
 	VEC_PAIRWISE_OP( * )

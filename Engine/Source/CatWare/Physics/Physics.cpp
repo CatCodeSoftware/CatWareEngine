@@ -1,6 +1,7 @@
 #include "Physics.h"
 
 #include <glm/glm.hpp>
+#include <math.h>
 
 namespace CatWare
 {
@@ -9,9 +10,10 @@ namespace CatWare
 		this->type = bodyType;
 	}
 
-	DynamicBody::DynamicBody( float mass, Collider* collider ) : PhysicsBody( BodyType::DYNAMIC )
+	DynamicBody::DynamicBody( float mass, float restitution, Collider* collider ) : PhysicsBody( BodyType::DYNAMIC )
 	{
 		this->mass = mass;
+		this->restitution = restitution;
 		this->collider = collider;
 	}
 
@@ -54,49 +56,62 @@ namespace CatWare
 
 	void PhysicsWorld::Step( float deltaTime, unsigned substeps )
 	{
-		for ( PhysicsBody* physicsBody : physicsBodies )
+		deltaTime /= substeps;
+
+		// This code __WILL__ anger never-nesters
+		for ( unsigned int i = 0; i < substeps; i++ )
 		{
-			if ( physicsBody->GetType( ) == BodyType::DYNAMIC )
+			for ( PhysicsBody* physicsBody : physicsBodies )
 			{
-				DynamicBody* dynamicBody = ( DynamicBody* ) physicsBody;
-
-				// temporary gravity thingy
-				dynamicBody->force.y += dynamicBody->mass * gravity;
-
-				dynamicBody->velocity += dynamicBody->force / dynamicBody->mass * deltaTime;
-				dynamicBody->position += dynamicBody->velocity * deltaTime;
-
-				dynamicBody->force = { 0, 0 };
-
-				// Collision checking, only brute force now
-				for ( PhysicsBody* physicsBody2 : physicsBodies )
+				if ( physicsBody->GetType( ) == BodyType::DYNAMIC )
 				{
-					if ( physicsBody == physicsBody2 ) break;
+					DynamicBody* dynamicBody = ( DynamicBody* ) physicsBody;
 
-					if ( physicsBody2->GetType( ) == BodyType::DYNAMIC )
+					// temporary gravity thingy
+					dynamicBody->force.y += dynamicBody->mass * gravity;
+
+					dynamicBody->velocity += dynamicBody->force / dynamicBody->mass * deltaTime;
+					dynamicBody->position += dynamicBody->velocity * deltaTime;
+
+					dynamicBody->force = { 0, 0 };
+
+					// Collision checking, only brute force now
+					for ( PhysicsBody* physicsBody2 : physicsBodies )
 					{
-						DynamicBody* dynamicBody2 = ( DynamicBody* ) physicsBody2;
+						if ( physicsBody == physicsBody2 ) continue;
 
-						// Update positions of colliders
-						dynamicBody->GetCollider( )->position = dynamicBody->position;
-						dynamicBody2->GetCollider( )->position = dynamicBody2->position;
-
-						CollisionInfo collisionInfo = TestCollision( dynamicBody->GetCollider( ), dynamicBody2->GetCollider( ) );
-
-						if ( collisionInfo.hasCollision )
+						if ( physicsBody2->GetType( ) == BodyType::DYNAMIC )
 						{
-							dynamicBody->position -= collisionInfo.normal * collisionInfo.penetration;
-							dynamicBody2->position += collisionInfo.normal * collisionInfo.penetration;
+							DynamicBody* dynamicBody2 = ( DynamicBody* ) physicsBody2;
 
-							break;
+							// Update positions of colliders
+							dynamicBody->GetCollider( )->position = dynamicBody->position;
+							dynamicBody2->GetCollider( )->position = dynamicBody2->position;
+
+							CollisionInfo collisionInfo = TestCollision( dynamicBody->GetCollider( ), dynamicBody2->GetCollider( ) );
+
+							if ( collisionInfo.hasCollision )
+							{
+								dynamicBody->position -= collisionInfo.normal / 2;
+								dynamicBody2->position += collisionInfo.normal / 2;
+
+								Vector2D relativeVeloctity = dynamicBody2->velocity - dynamicBody->velocity;
+
+								float e = fmin( dynamicBody->restitution, dynamicBody2->restitution );
+								float j = -( 1.0f + e ) * Vector2D::Dot( relativeVeloctity, collisionInfo.normal );
+								j /= ( 1.0f / dynamicBody->mass ) + ( 1.0f / dynamicBody2->mass );
+
+								dynamicBody->velocity -= collisionInfo.normal * ( j / dynamicBody->mass );
+								dynamicBody2->velocity += collisionInfo.normal * ( j / dynamicBody2->mass );
+							}
 						}
-					}
-					else if ( physicsBody2->GetType( ) == BodyType::SURFACE )
-					{
-						SurfaceBody* surface = ( SurfaceBody* ) physicsBody2;
+						else if ( physicsBody2->GetType( ) == BodyType::SURFACE )
+						{
+							SurfaceBody* surface = ( SurfaceBody* ) physicsBody2;
 
-						// apply friction to the surface
-						dynamicBody->force -= dynamicBody->velocity * ( dynamicBody->mass * 10 ) * surface->frictionCoefficient;
+							// apply friction to the surface
+							dynamicBody->force -= dynamicBody->velocity * ( dynamicBody->mass * 10 ) * surface->frictionCoefficient;
+						}
 					}
 				}
 			}

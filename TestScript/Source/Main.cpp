@@ -11,9 +11,6 @@ using namespace CatWare;
 
 Text::Font* font = nullptr;
 
-PhysicsWorld physicsWorld;
-
-
 class TestEntity : public Entity
 {
 public:
@@ -21,13 +18,14 @@ public:
 
 	void Init( ) override
 	{
-		pBody = new DynamicBody( 10, new RectCollider( transform.position,  transform.size ) );
+		pBody = new DynamicBody( 10, 1, new RectCollider( transform.position,  transform.size ) );
 		pBody->position = transform.position;
-		physicsWorld.AddBody( pBody );
+		SceneManager::GetCurrentScene( )->physicsWorld.AddBody( pBody );
 	}
 
 	void Update( ) override
 	{
+		/*
 		if ( Input::IsKeyPressed( Input::KEY_W ) )
 			pBody->force.y -= 30000;
 		if ( Input::IsKeyPressed( Input::KEY_S ) )
@@ -36,8 +34,16 @@ public:
 			pBody->force.x -= 30000;
 		if ( Input::IsKeyPressed( Input::KEY_D ) )
 			pBody->force.x += 30000;
+		*/
 
-		transform.position = pBody->position + pBody->velocity * Time::GetDeltaTime( ); // smooth out the movements
+		if ( pBody->position.y > 900 - transform.size.y )
+		{
+			pBody->position.y = 900 - transform.size.y;
+			pBody->velocity.y = 0;
+			pBody->force.y = 0;
+		}
+
+		transform.position = pBody->position + pBody->velocity * Time::GetDeltaTime( ); // smooth out the movement
 	}
 
 	void Draw( )
@@ -56,13 +62,15 @@ class InGame : public Scene
 public:
 	InGame( )
 	{
-		SurfaceBody* surface = new SurfaceBody( 0.9, new RectCollider( { 0, 0 }, { 1600, 900 } ) );
-		physicsWorld.AddBody( surface );
+		physicsWorld.gravity = 500;
 	}
 
 	void OnEnter( ) override
 	{
-		entityManager.CreateEntityByClassName( "testEntity", { { 64, 64 }, { 64, 64 } }, { } );
+		for ( unsigned int i = 0; i < 20; i++ )
+		{
+			entityManager.CreateEntityByClassName( "testEntity", { { Random::GetDouble( 0, 1600 ), Random::GetDouble( 0, 900 ) }, { 64, 64 } }, { } );
+		}
 		// entityManager.CreateEntityByType<TestEntity>( { { 64, 64 }, { 64, 64 } }, { } );
 	}
 
@@ -73,8 +81,6 @@ public:
 
 	void Tick( ) override
 	{
-		physicsWorld.Step( 1.0f / Time::ticksPerSecond );
-
 		if ( Input::IsKeyPressed( Input::KEY_UP ) )
 		{
 			Time::maxFPS++;
@@ -82,10 +88,6 @@ public:
 		if ( Input::IsKeyPressed( Input::KEY_DOWN ) )
 		{
 			Time::maxFPS--;
-		}
-
-		if ( Input::IsMousePressed( 1 ) )
-		{
 		}
 	}
 

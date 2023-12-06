@@ -168,6 +168,7 @@ namespace CatWare
 		Scene* currentScene = SceneManager::GetCurrentScene( );
 
 		currentScene->Tick( );
+		currentScene->physicsWorld.Step( 1.0f / Time::ticksPerSecond );
 		currentScene->entityManager.Tick( );
 	}
 

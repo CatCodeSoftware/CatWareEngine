@@ -34,8 +34,9 @@ namespace CatWare
 		Vector2D velocity;
 		Vector2D force;
 		float mass;
+		float restitution;
 
-		DynamicBody( float mass, Collider* collider );
+		DynamicBody( float mass, float restitution, Collider* collider );
 
 		inline Collider* GetCollider( ) { return collider; }
 
@@ -63,7 +64,7 @@ namespace CatWare
 		void AddBody( PhysicsBody* body );
 		void RemoveBody( PhysicsBody* body );
 
-		void Step( float deltaTime, unsigned int substeps = 4 );
+		void Step( float deltaTime, unsigned int substeps = 8 );
 
 	private:
 		std::vector<PhysicsBody*> physicsBodies;

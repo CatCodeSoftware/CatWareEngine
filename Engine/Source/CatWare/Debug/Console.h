@@ -1,3 +1,11 @@
+/**
+* @file Console.h
+*
+* @brief The developer console in the debug utilities
+*
+* @author PointThink
+*/
+
 #pragma once
 
 #include <vector>
@@ -16,6 +24,12 @@ namespace CatWare
 		FLOAT, BOOL, STRING
 	};
 
+	/**
+	* Short for Console Variable.
+	* This allows variables to be changed through the developer console
+	*
+	* Eg. "set variable 10"
+	*/
 	class ConVar
 	{
 	public:

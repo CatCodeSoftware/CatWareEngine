@@ -19,9 +19,7 @@
 #include "CatWare/Assets/Assets.h"
 #include "CatWare/Time.h"
 #include "CatWare/Graphics/Text.h"
-#include "CatWare/Physics/Physics.h"
 #include "CatWare/Graphics/Animation/Animation.h"
-#include "CatWare/Physics/Physics.h"
 #include "CatWare/Random.h"
 #include "CatWare/Entity/Components.h"
 

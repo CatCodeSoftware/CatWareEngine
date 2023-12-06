@@ -8,21 +8,6 @@
 
 namespace CatWare
 {
-	void CollisionBegin( PhysicsObject* object1, PhysicsObject* object2 )
-	{
-		if ( object1 != nullptr && object2 != nullptr )
-		{
-			if ( object1->attachedEntity != nullptr ) object1->attachedEntity->OnCollisionBegin( object2 );
-			if ( object2->attachedEntity != nullptr ) object2->attachedEntity->OnCollisionBegin( object1 );
-		}
-	}
-
-	void CollisionEnd( PhysicsObject* object1, PhysicsObject* object2 )
-	{
-		if ( object1->attachedEntity != nullptr ) object1->attachedEntity->OnCollisionEnd( object2 );
-		if ( object2->attachedEntity != nullptr ) object2->attachedEntity->OnCollisionEnd( object1 );
-	}
-
 	// ----------------------------------------
 	// Entity ---------------------------------
 	// ----------------------------------------
@@ -68,44 +53,6 @@ namespace CatWare
 	UInt64 Entity::GetID( )
 	{
 		return id;
-	}
-
-
-	PhysicsObject* Entity::AttachPhysicsObject( Shape* shape, bool dynamic, float density, float friction, Vector2D attachOffset )
-	{
-		if ( attachedPhysicsObject != nullptr )
-		{
-			CW_ENGINE_LOG->Warning( "Attempted to attach a physics object to an entity that already has one" );
-			return attachedPhysicsObject;
-		}
-
-		PhysicsWorld* physicsWorld = &SceneManager::GetCurrentScene( )->physicsWorld;
-
-		attachedPhysicsObject = physicsWorld->CreateObject( &transform, shape, dynamic, density, friction, attachOffset );
-		attachedPhysicsObject->attachedEntity = this;
-		attachedPhysicsObject->onCollideBegin = &CollisionBegin;
-		attachedPhysicsObject->onCollideEnd = &CollisionEnd;
-
-		return attachedPhysicsObject;
-	}
-
-	PhysicsObject* Entity::GetAttachedPhysicsObject( )
-	{
-		return attachedPhysicsObject;
-	}
-
-	void Entity::DetachPhysicsObject( )
-	{
-		if ( attachedPhysicsObject == nullptr )
-		{
-			CW_ENGINE_LOG->Warning( "Attempted to detach a physics object from entity which doesn't have one" );
-			return;
-		}
-
-		SceneManager::GetCurrentScene( )->physicsWorld.RemoveObject( attachedPhysicsObject );
-
-		SceneManager::GetCurrentScene( )->physicsWorld.RemoveObject( attachedPhysicsObject );
-		attachedPhysicsObject = nullptr;
 	}
 
 	// ----------------------------------------

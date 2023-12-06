@@ -9,7 +9,6 @@
 #include "CatWare/Types/Vector.h"
 #include "CatWare/Types/Types.h"
 #include "CatWare/Types/Transform.h"
-#include "CatWare/Physics/Physics.h"
 
 #undef GetClassName // stupid windows
 
@@ -40,14 +39,6 @@ namespace CatWare
 
 		UInt64 GetID( );
 
-		// Physics object stuff
-		PhysicsObject* AttachPhysicsObject( Shape* shape, bool dynamic, float density, float friction, Vector2D attachOffset = { 0, 0 } );
-		PhysicsObject* GetAttachedPhysicsObject( );
-		void DetachPhysicsObject( );
-
-		virtual void OnCollisionBegin( PhysicsObject* object ) { };
-		virtual void OnCollisionEnd( PhysicsObject* object ) { };
-
 		static Entity* Create( std::unordered_map<std::string, std::string> tags ) { return nullptr; }
 
 	protected:
@@ -59,8 +50,6 @@ namespace CatWare
 		UInt64 id = 0;
 
 		bool shouldDelete = false;
-
-		PhysicsObject* attachedPhysicsObject = nullptr;
 	};
 
 	// This static class holds info about how to create entities

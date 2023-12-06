@@ -1,3 +1,12 @@
+/**
+* @file Random.h
+*
+* @author PointThink
+*
+* @brief Collection of functions for randomly
+* generating files.
+*/
+
 #pragma once
 
 #include "Types/Types.h"

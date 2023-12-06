@@ -159,7 +159,6 @@ namespace CatWare
 
 		currentScene->Update( );
 		currentScene->entityManager.Update( );
-		currentScene->physicsWorld.Update( );
 
 		// AudioEngine::UpdateHandles( );
 	}
@@ -170,8 +169,6 @@ namespace CatWare
 
 		currentScene->Tick( );
 		currentScene->entityManager.Tick( );
-
-		currentScene->physicsWorld.Tick( );
 	}
 
 	void Application::Draw( )

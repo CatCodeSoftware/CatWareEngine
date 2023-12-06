@@ -10,7 +10,6 @@
 
 #include "Core.h"
 #include "Entity/Entity.h"
-#include "Physics/Physics.h"
 
 namespace CatWare
 {
@@ -35,7 +34,6 @@ namespace CatWare
 		virtual void DrawGUI( ) {} // Ignores the render offset
 
 		EntityManager entityManager;
-		PhysicsWorld physicsWorld;
 	};
 
 	class CATWARE_API SceneManager

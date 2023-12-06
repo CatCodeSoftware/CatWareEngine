@@ -5,32 +5,36 @@
 #endif
 
 #include <CatWare.h>
+#include <CatWare/Physics/Physics.h>
 
 using namespace CatWare;
 
 Text::Font* font = nullptr;
 
+PhysicsWorld physicsWorld;
+
+
 class TestEntity : public Entity
 {
 public:
+	DynamicBody* pBody;
+
+	void Init( ) override
+	{
+		pBody = new DynamicBody( 10, new RectCollider( transform.position,  transform.size ) );
+		pBody->position = transform.position;
+		physicsWorld.AddBody( pBody );
+	}
+
 	void Update( ) override
 	{
-		if ( Input::IsKeyPressed( Input::KEY_W ) )
+		if ( pBody->position.y > 900 - transform.size.y )
 		{
-			transform.position.y -= 300 * Time::GetDeltaTime( );
+			pBody->position.y = 900 - transform.size.y;
+			pBody->velocity.y = 0;
 		}
-		if ( Input::IsKeyPressed( Input::KEY_S ) )
-		{
-			transform.position.y += 300 * Time::GetDeltaTime( );
-		}
-		if ( Input::IsKeyPressed( Input::KEY_A ) )
-		{
-			transform.position.x -= 300 * Time::GetDeltaTime( );
-		}
-		if ( Input::IsKeyPressed( Input::KEY_D ) )
-		{
-			transform.position.x += 300 * Time::GetDeltaTime( );
-		}
+
+		transform.position = pBody->position;
 	}
 
 	void Draw( )
@@ -47,15 +51,15 @@ public:
 class InGame : public Scene
 {
 public:
-
 	InGame( )
 	{
-		
+
 	}
 
 	void OnEnter( ) override
 	{
-		entityManager.CreateEntityByClassName( "testEntity", { { 64, 64 }, { 128, 128 } }, { } );
+		entityManager.CreateEntityByClassName( "testEntity", { { 64, 64 }, { 64, 64 } }, { } );
+		entityManager.CreateEntityByClassName( "testEntity", { { 33, -128 }, { 64, 64 } }, { } );
 		// entityManager.CreateEntityByType<TestEntity>( { { 64, 64 }, { 64, 64 } }, { } );
 	}
 
@@ -66,6 +70,8 @@ public:
 
 	void Tick( ) override
 	{
+		physicsWorld.Step( 1.0f / Time::ticksPerSecond );
+
 		if ( Input::IsKeyPressed( Input::KEY_UP ) )
 		{
 			Time::maxFPS++;

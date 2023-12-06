@@ -2,6 +2,7 @@
 
 #include <vector>
 
+#include "Collision.h"
 #include "CatWare/Types/Vector.h"
 
 namespace CatWare
@@ -30,17 +31,25 @@ namespace CatWare
 	class DynamicBody : public PhysicsBody
 	{
 	public:
-		DynamicBody( float mass );
+		DynamicBody( float mass, Collider* collider );
+
+		inline Collider* GetCollider( ) { return collider; }
 
 		Vector2D velocity;
 		Vector2D force;
 		float mass;
+
+	protected:
+		Collider* collider;
 	};
 
 
 	class PhysicsWorld
 	{
 	public:
+		void AddBody( PhysicsBody* body );
+		void RemoveBody( PhysicsBody* body );
+
 		void Step( float deltaTime, unsigned int substeps = 4 );
 
 	private:

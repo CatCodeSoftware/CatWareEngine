@@ -60,9 +60,19 @@ public:
 		return { this->x * otherVec.x, this->y * otherVec.y };
 	}
 
+	inline Vector2D operator*( const float& f )
+	{
+		return { this->x * f, this->y * f };
+	}
+
 	inline Vector2D operator/( const Vector2D& otherVec )
 	{
 		return { this->x / otherVec.x, this->y / otherVec.y };
+	}
+
+	inline Vector2D operator/( const float& f )
+	{
+		return { this->x / f, this->y / f };
 	}
 
 	inline Vector2D operator+( const Vector2D& otherVec )
@@ -70,8 +80,66 @@ public:
 		return { this->x + otherVec.x, this->y + otherVec.y };
 	}
 
+	inline Vector2D operator+( const float& f )
+	{
+		return { this->x + f, this->y + f };
+	}
+
 	inline Vector2D operator-( const Vector2D& otherVec )
 	{
 		return { this->x - otherVec.x, this->y - otherVec.y };
+	}
+
+	inline Vector2D operator-( const float& f )
+	{
+		return { this->x - f, this->y - f };
+	}
+
+	inline void operator+=( const Vector2D& otherVec )
+	{
+		x += otherVec.x;
+		y += otherVec.y;
+	}
+
+	inline void operator+=( const float& f )
+	{
+		x += f;
+		y += f;
+	}
+
+	inline void operator-=( const Vector2D& otherVec )
+	{
+		x -= otherVec.x;
+		y -= otherVec.y;
+	}
+
+	inline void operator-=( const float& f )
+	{
+		x -= f;
+		y -= f;
+	}
+
+	inline void operator*=( const Vector2D& otherVec )
+	{
+		x *= otherVec.x;
+		y *= otherVec.y;
+	}
+
+	inline void operator*=( const float& f )
+	{
+		x *= f;
+		y *= f;
+	}
+
+	inline void operator/=( const Vector2D& otherVec )
+	{
+		x /= otherVec.x;
+		y /= otherVec.y;
+	}
+
+	inline void operator/=( const float& f )
+	{
+		x /= f;
+		y /= f;
 	}
 };

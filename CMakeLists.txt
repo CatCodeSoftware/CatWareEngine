@@ -104,10 +104,11 @@ endif()
 # -----------------------------------------------------
 
 
-link_libraries(
-	CatWareEngine
-	TestScript
-)	
+link_libraries(CatWareEngine)	
+
+if (buildTestScript)
+	link_libraries(TestScript)
+endif()
 
 file(GLOB_RECURSE RUNTIME_SOURCE_FILES Runtime/Source/*.cpp)
 file(GLOB_RECURSE RUNTIME_HEADER_FILES Runtime/Source/*.h)

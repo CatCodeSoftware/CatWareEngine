@@ -65,6 +65,7 @@ namespace CatWare
 				glDebugMessageCallback( MessageCallback, 0 );
 
 				ImGui_ImplSDL2_InitForOpenGL( windowHandle, glContext );
+
 				ImGui_ImplOpenGL3_Init( "#version 460" );
 			}
 

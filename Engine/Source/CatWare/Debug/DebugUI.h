@@ -10,7 +10,7 @@ namespace CatWare
 	class CATWARE_API DebugUI
 	{
 	public:
-		inline static bool enabled = true;
+		inline static bool enabled = false;
 
 		inline static bool consoleEnabled = false;
 		inline static bool postProcessUIEnabled = false;

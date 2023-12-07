@@ -12,7 +12,7 @@ namespace CatWare
 	class CATWARE_API Window
 	{
 	public:
-		Window( const std::string& title, unsigned int width, unsigned int height, bool isFullscreen );
+		Window( const std::string& title, unsigned int width, unsigned int height, bool isFullscreen, const bool resizable );
 		~Window( );
 
 		void HandleWindowEvents( );

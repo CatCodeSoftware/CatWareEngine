@@ -39,6 +39,7 @@ namespace CatWare
 		static void EndDrawing( );
 
 		static void SetRenderTarget( Rendering::FrameBuffer* frameBuffer );
+		static inline Rendering::FrameBuffer* GetRenderTarget( ) { return currentFrameBuffer; }
 
 		static void DrawRect( Vector2D position, Vector2D size, Color color, glm::mat4 transformMatrix );
 		static void DrawRect( Vector2D position, Vector2D size, Color color, float rotation = 0 );

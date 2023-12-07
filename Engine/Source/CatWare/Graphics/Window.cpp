@@ -15,15 +15,21 @@
 
 namespace CatWare
 {
-	Window::Window( const std::string& title, const unsigned int width, const unsigned int height, const bool isFullscreen )
+	Window::Window( const std::string& title, const unsigned int width, const unsigned int height, const bool isFullscreen, const bool resizable )
 	{
+		SDL_Init( SDL_INIT_VIDEO );
+
 		CW_ENGINE_LOG->Info( "Creating %dx%d window with title %s", width, height, title.c_str( ) );
+
+		UInt32 resizableFlag = NULL;
+		if ( resizable )
+			resizableFlag = SDL_WINDOW_RESIZABLE;
 
 		sdlWindow = SDL_CreateWindow(
 			title.c_str( ),
 			SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
 			width, height,
-			SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL
+			SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | resizableFlag
 			);
 
 		SetFullscreen( isFullscreen );
@@ -53,6 +59,8 @@ namespace CatWare
 	void Window::HandleWindowEvents( )
 	{
 		SDL_Event e;
+
+		SDL_PumpEvents( );
 
 		while ( SDL_PollEvent( &e ) )
 		{

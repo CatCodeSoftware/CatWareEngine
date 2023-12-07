@@ -93,7 +93,7 @@ namespace CatWare
 
 		ImGui::StyleColorsDark( );
 
-		window = new Window( initConfig.windowTitle, initConfig.windowWidth, initConfig.windowHeight, initConfig.windowFullscreen );
+		window = new Window( initConfig.windowTitle, initConfig.windowWidth, initConfig.windowHeight, initConfig.windowFullscreen, initConfig.windowResizable );
 
 		CW_ENGINE_LOG->Info( "Initializing renderer" );
 		renderingAPI = new Rendering::OpenGL::OpenGLAPI;
@@ -193,11 +193,11 @@ namespace CatWare
 
 		Scene* currentScene = SceneManager::GetCurrentScene( );
 
-		currentScene->DrawGUI( );
-
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplSDL2_NewFrame();
 		ImGui::NewFrame();
+
+		currentScene->DrawGUI( );
 
 		DebugUI::Draw( );
 

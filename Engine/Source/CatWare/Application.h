@@ -31,6 +31,7 @@ namespace CatWare
 		UInt16 windowWidth = 1280;
 		UInt16 windowHeight = 720;
 		bool windowFullscreen = false;
+		bool windowResizable = false;
 
 		Rendering::RendererAPI::API renderAPI = Rendering::RendererAPI::API::OPENGL;
 	};

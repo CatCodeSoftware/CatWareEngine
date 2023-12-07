@@ -1,0 +1,21 @@
+[Engine][Info] Initializing engine
+[Engine][Info] Initializing filesystem
+[Engine][Info] Creating 1600x900 window with title CatWare
+[Engine][Info] Initializing OpenGL
+[Engine][Info] Vendor:   AMD
+[Engine][Info] Renderer: RENOIR (renoir, LLVM 15.0.7, DRM 3.54, 6.5.6-76060506-generic)
+[Engine][Info] Version:  4.6 (Core Profile) Mesa 23.2.1-1pop0~1699535617~22.04~6cd9a72
+[Engine][Info] Initializing renderer
+[Engine][Info] Initializing renderer
+[Engine][Info] Loading shader from files:
+	Vertex: EngineRes/Shaders/RectVertex.glsl
+	Fragment: EngineRes/Shaders/RectFragment.glsl
+[Engine][Info] Loading shader from files:
+	Vertex: EngineRes/Shaders/PostProcessVertex.glsl
+	Fragment: EngineRes/Shaders/PostProcessFragment.glsl
+[Engine][Info] Loading shader from files:
+	Vertex: EngineRes/Shaders/TextVertex.glsl
+	Fragment: EngineRes/Shaders/TextFragment.glsl
+[Engine][Info] Loading texture from gato.jpg
+[Engine][Info] Unloading texture gato.jpg
+[Engine][Info] Closing window

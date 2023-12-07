@@ -58,14 +58,13 @@ link_libraries(freetype)
 set_target_properties(freetype PROPERTIES FOLDER "Libraries")
 
 add_subdirectory("Engine/Lib/SDL2" EXCLUDE_FROM_ALL)
-link_libraries(SDL2-static)
-set_target_properties(SDL2-static PROPERTIES FOLDER "Libraries")
+link_libraries(SDL2)
+set_target_properties(SDL2 PROPERTIES FOLDER "Libraries")
 
 set_target_properties(sdl_headers_copy PROPERTIES FOLDER "Libraries")
 
 include_directories(
 	"Engine/Source"
-
 	"Engine/Lib/SDL2/include"
 	"Engine/Lib/freetype/include"
 	
@@ -83,18 +82,22 @@ add_library(CatWareEngine SHARED ${CW_SOURCE_FILES} ${CW_GLAD} ${CW_HEADER_FILES
 target_compile_definitions(CatWareEngine PRIVATE CATWARE_BUILD)
 
 # test script
-include_directories("Engine/Source/")
-link_libraries(CatWareEngine)
+option(buildTestScript "buildTestScript" OFF)
 
-add_library(TestScript SHARED TestScript/Source/Main.cpp)
+if (buildTestScript)
+	include_directories("Engine/Source/")
+	link_libraries(CatWareEngine)
 
-set(CMAKE_CXX_STANDARD 17)
+	add_library(TestScript SHARED TestScript/Source/Main.cpp)
 
-set_target_properties(TestScript PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/WorkDir/Scripts)
-set_target_properties(TestScript PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/WorkDir/Scripts)
-set_target_properties(TestScript PROPERTIES LIBRARY_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/WorkDir/Scripts)
-set_target_properties(TestScript PROPERTIES LIBRARY_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/WorkDir/Scripts)
+	set(CMAKE_CXX_STANDARD 17)
 
+	set_target_properties(TestScript PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/WorkDir/Scripts)
+	set_target_properties(TestScript PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/WorkDir/Scripts)
+	set_target_properties(TestScript PROPERTIES LIBRARY_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/WorkDir/Scripts)
+	set_target_properties(TestScript PROPERTIES LIBRARY_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/WorkDir/Scripts)
+
+endif()
 
 # -----------------------------------------------------
 # Runtime
@@ -116,6 +119,19 @@ include_directories(
 
 add_executable(Runtime ${RUNTIME_SOURCE_FILES} ${RUNTIME_HEADER_FILES})
 
+file(GLOB_RECURSE EDITOR_SOURCE_FILES Editor/Source/*.cpp)
+file(GLOB_RECURSE EDITOR_HEADER_FILES Editor/Source/*.h)
+
+add_executable(Meowditor ${EDITOR_SOURCE_FILES} ${EDITOR_HEADER_FILES})
+
+target_include_directories(
+        Meowditor
+        PRIVATE
+
+        "Editor/Source"
+        "Engine/Source"
+)
 
 GroupSourcesByFolder(CatWareEngine)
+GroupSourcesByFolder(Meowditor)
 GroupSourcesByFolder(Runtime)

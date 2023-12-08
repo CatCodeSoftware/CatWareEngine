@@ -1,6 +1,6 @@
 [Engine][Info] Initializing engine
 [Engine][Info] Initializing filesystem
-[Engine][Info] Creating 1280x720 window with title CatWare
+[Engine][Info] Creating 1600x900 window with title CatWare
 [Engine][Info] Initializing OpenGL
 [Engine][Info] Vendor:   AMD
 [Engine][Info] Renderer: RENOIR (renoir, LLVM 15.0.7, DRM 3.54, 6.5.6-76060506-generic)
@@ -16,4 +16,6 @@
 [Engine][Info] Loading shader from files:
 	Vertex: EngineRes/Shaders/TextVertex.glsl
 	Fragment: EngineRes/Shaders/TextFragment.glsl
+[Engine][Info] Loading texture from gato.jpg
+[Engine][Info] Unloading texture gato.jpg
 [Engine][Info] Closing window

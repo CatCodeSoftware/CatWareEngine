@@ -61,16 +61,17 @@ add_subdirectory("Engine/Lib/SDL2" EXCLUDE_FROM_ALL)
 link_libraries(SDL2)
 set_target_properties(SDL2 PROPERTIES FOLDER "Libraries")
 
+add_subdirectory("Engine/Lib/yaml-cpp")
+link_libraries(yaml-cpp)
+set_target_properties(yaml-cpp PROPERTIES FOLDER "Libraries")
+
 set_target_properties(sdl_headers_copy PROPERTIES FOLDER "Libraries")
 
 include_directories(
 	"Engine/Source"
 	"Engine/Lib/SDL2/include"
 	"Engine/Lib/freetype/include"
-	
-	"Engine/Lib/soloud/include"
-	"Engine/Lib/box2d/include"
-	
+	"Engine/Lib/yaml-cpp/include"
 	"Engine/Lib/Glad/include"
 	"Engine/Lib/glm"
 	"Engine/Lib/ImGui"

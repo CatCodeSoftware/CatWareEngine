@@ -12,3 +12,6 @@
 [submodule "Engine/Lib/freetype"]
 	path = Engine/Lib/freetype
 	url = https://gitlab.freedesktop.org/freetype/freetype
+[submodule "Engine/Lib/yaml-cpp"]
+	path = Engine/Lib/yaml-cpp
+	url = https://github.com/jbeder/yaml-cpp

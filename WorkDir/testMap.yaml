@@ -1,0 +1,12 @@
+map:
+  entities:
+    - "testEntity":
+        transform:
+          position:
+            x: 200
+            y: 200
+          size:
+            x: 64
+            y: 64
+
+          rotation: 0

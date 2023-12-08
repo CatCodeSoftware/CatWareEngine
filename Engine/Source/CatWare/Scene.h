@@ -22,9 +22,9 @@ namespace CatWare
 	{
 		friend class Application;
 
+	public:
 		World world;
 
-	public:
 		// called when the currentScene is set to this
 		virtual void OnEnter( ) {}
 

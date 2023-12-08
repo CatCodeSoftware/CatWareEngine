@@ -20,7 +20,7 @@ public:
 	{
 		pBody = new DynamicBody( 10, 1, new RectCollider( transform.position,  transform.size ) );
 		pBody->position = transform.position;
-		SceneManager::GetCurrentScene( )->physicsWorld.AddBody( pBody );
+		SceneManager::GetCurrentScene( )->world.physicsWorld.AddBody( pBody );
 	}
 
 	void Update( ) override
@@ -62,14 +62,14 @@ class InGame : public Scene
 public:
 	InGame( )
 	{
-		physicsWorld.gravity = 500;
+		world.physicsWorld.gravity = 500;
 	}
 
 	void OnEnter( ) override
 	{
 		for ( unsigned int i = 0; i < 20; i++ )
 		{
-			entityManager.CreateEntityByClassName( "testEntity", { { Random::GetDouble( 0, 1600 ), Random::GetDouble( 0, 900 ) }, { 64, 64 } }, { } );
+			world.entities.CreateEntityByClassName( "testEntity", { { Random::GetDouble( 0, 1600 ), Random::GetDouble( 0, 900 ) }, { 64, 64 } }, { } );
 		}
 		// entityManager.CreateEntityByType<TestEntity>( { { 64, 64 }, { 64, 64 } }, { } );
 	}

@@ -43,16 +43,6 @@ file(GLOB CW_IMGUI Engine/Lib/ImGui/*.cpp)
 source_group(CW_SOURCE_FILES Source)
 source_group(CW_HEADER_FILES Source)
 
-# platforms
-if (WIN32)
-    add_compile_definitions(CW_PLATFORM_WIN64)
-else()
-    # Not sure if i should call this platform linux or just generally unix
-    # cause it probably also works on bsd and other unix like systems
-    add_compile_definitions(CW_PLATFORM_UNIX64)
-    add_compile_options(-fPIC)
-endif()
-
 add_subdirectory("Engine/Lib/freetype")
 link_libraries(freetype)
 set_target_properties(freetype PROPERTIES FOLDER "Libraries")
@@ -78,6 +68,16 @@ include_directories(
 	"Engine/Lib/ImGui/backends"
 	"Engine/Lib/Single header"
 )
+
+# platforms
+if (WIN32)
+    add_compile_definitions(CW_PLATFORM_WIN64)
+else()
+    # Not sure if i should call this platform linux or just generally unix
+    # cause it probably also works on bsd and other unix like systems
+    add_compile_definitions(CW_PLATFORM_UNIX64)
+    add_compile_options(-fPIC)
+endif()
 
 add_library(CatWareEngine SHARED ${CW_SOURCE_FILES} ${CW_GLAD} ${CW_HEADER_FILES} ${CW_IMGUI} ${PROJECT_SOURCE_DIR}/Engine/Lib/ImGui/backends/imgui_impl_opengl3.cpp ${PROJECT_SOURCE_DIR}/Engine/Lib/ImGui/backends/imgui_impl_sdl2.cpp)
 target_compile_definitions(CatWareEngine PRIVATE CATWARE_BUILD)

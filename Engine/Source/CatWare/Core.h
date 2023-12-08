@@ -12,6 +12,7 @@
 #   define SDL_MAIN_HANDLED
 #endif
 
+// TODO: Make imgui  a seperate shared library
 #if defined(CW_PLATFORM_WIN64)
 #	if defined(CATWARE_BUILD)
 #		define CATWARE_API __declspec(dllexport)

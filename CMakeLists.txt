@@ -30,6 +30,10 @@ function(GroupSourcesByFolder target)
   endif()
 endfunction()
 
+# ImGui
+file(GLOB CW_IMGUI Engine/Lib/ImGui/*.cpp)
+
+
 # -----------------------------------------------------
 # CatWareEngine
 # -----------------------------------------------------
@@ -38,7 +42,6 @@ set(CMAKE_CXX_STANDARD 20)
 file(GLOB_RECURSE CW_SOURCE_FILES Engine/Source/*.cpp)
 file(GLOB_RECURSE CW_HEADER_FILES Engine/Source/*.h)
 file(GLOB_RECURSE CW_GLAD Engine/Lib/Glad/*.c)
-file(GLOB CW_IMGUI Engine/Lib/ImGui/*.cpp)
 
 source_group(CW_SOURCE_FILES Source)
 source_group(CW_HEADER_FILES Source)
@@ -46,6 +49,7 @@ source_group(CW_HEADER_FILES Source)
 # platforms
 if (WIN32)
     add_compile_definitions(CW_PLATFORM_WIN64)
+    add_compile_definitions()
 else()
     # Not sure if i should call this platform linux or just generally unix
     # cause it probably also works on bsd and other unix like systems
@@ -125,7 +129,7 @@ add_executable(Runtime ${RUNTIME_SOURCE_FILES} ${RUNTIME_HEADER_FILES})
 file(GLOB_RECURSE EDITOR_SOURCE_FILES Editor/Source/*.cpp)
 file(GLOB_RECURSE EDITOR_HEADER_FILES Editor/Source/*.h)
 
-add_executable(Meowditor ${EDITOR_SOURCE_FILES} ${EDITOR_HEADER_FILES})
+add_executable(Meowditor ${EDITOR_SOURCE_FILES} ${EDITOR_HEADER_FILES} ${CW_IMGUI} ${PROJECT_SOURCE_DIR}/Engine/Lib/ImGui/backends/imgui_impl_opengl3.cpp ${PROJECT_SOURCE_DIR}/Engine/Lib/ImGui/backends/imgui_impl_sdl2.cpp)
 
 target_include_directories(
         Meowditor

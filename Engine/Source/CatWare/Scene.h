@@ -9,8 +9,8 @@
 #pragma once
 
 #include "Core.h"
-#include "Entity/Entity.h"
-#include "Physics/Physics.h"
+
+#include "World.h"
 
 namespace CatWare
 {
@@ -21,6 +21,8 @@ namespace CatWare
 	class Scene
 	{
 		friend class Application;
+
+		World world;
 
 	public:
 		// called when the currentScene is set to this
@@ -33,9 +35,6 @@ namespace CatWare
 		virtual void Tick( ) {}
 		virtual void Draw( ) {}
 		virtual void DrawGUI( ) {} // Ignores the render offset
-
-		EntityManager entityManager;
-		PhysicsWorld physicsWorld;
 	};
 
 	class CATWARE_API SceneManager

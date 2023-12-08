@@ -158,7 +158,7 @@ namespace CatWare
 		Scene* currentScene = SceneManager::GetCurrentScene( );
 
 		currentScene->Update( );
-		currentScene->entityManager.Update( );
+		currentScene->world.entities.Update( );
 
 		// AudioEngine::UpdateHandles( );
 	}
@@ -168,8 +168,8 @@ namespace CatWare
 		Scene* currentScene = SceneManager::GetCurrentScene( );
 
 		currentScene->Tick( );
-		currentScene->physicsWorld.Step( 1.0f / Time::ticksPerSecond );
-		currentScene->entityManager.Tick( );
+		currentScene->world.physicsWorld.Step( 1.0f / Time::ticksPerSecond );
+		currentScene->world.entities.Tick( );
 	}
 
 	void Application::Draw( )
@@ -179,7 +179,7 @@ namespace CatWare
 		Renderer::StartDrawing( );
 
 		currentScene->Draw( );
-		currentScene->entityManager.Draw( );
+		currentScene->world.entities.Draw( );
 
 		Renderer::EndDrawing( );
 	}

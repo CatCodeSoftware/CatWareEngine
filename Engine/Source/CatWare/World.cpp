@@ -7,6 +7,12 @@
 
 namespace CatWare
 {
+	void World::Clean( )
+	{
+		entities.CleanUp( );
+		physicsWorld.Clean( );
+	}
+
 
 	void World::LoadFromMapFile( const std::string &mapPath )
 	{

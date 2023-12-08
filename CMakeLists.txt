@@ -91,8 +91,9 @@ target_include_directories(
         "Engine/Lib/Single header"
 )
 
-
-
+if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+	target_compile_definitions(CatWareEngine PRIVATE CW_DEBUG)
+endif()
 # -----------------------------------------------------
 # TestScript
 # -----------------------------------------------------
@@ -113,6 +114,7 @@ if (buildTestScript)
 
 		"Engine/Source"
 		"Engine/Lib/freetype/include"
+		"Engine/Lib/SDL2/include"
 		"Engine/Lib/glm"
 		"Engine/Lib/ImGui"
 		"Engine/Lib/ImGui/backends"
@@ -150,6 +152,7 @@ target_include_directories(
 	"Runtime/Source"
 	"Engine/Source"
 	"Engine/Lib/freetype/include"
+	"Engine/Lib/SDL2/include"
 	"Engine/Lib/glm"
 	"Engine/Lib/ImGui"
 	"Engine/Lib/ImGui/backends"
@@ -173,6 +176,7 @@ target_include_directories(
         "Editor/Source"
 		"Engine/Source"
 		"Engine/Lib/freetype/include"
+		"Engine/Lib/SDL2/include"
 		"Engine/Lib/glm"
 		"Engine/Lib/ImGui"
 		"Engine/Lib/ImGui/backends"

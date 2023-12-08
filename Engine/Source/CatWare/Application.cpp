@@ -22,7 +22,7 @@ namespace CatWare
 	void Application::Run( )
 	{
 		Init( );
-		
+
 		while ( running )
 		{
 			frameTimer.Reset( );
@@ -72,9 +72,11 @@ namespace CatWare
 
 		CW_ENGINE_LOG->Info( "Initializing engine" );
 
+		/*
 		#ifdef CW_DEBUG
-			CW_ENGINE_LOG->Warning( "Memory debugging enabled" )
+			CW_ENGINE_LOG->Warning( "Memory debugging enabled" );
 		#endif
+		*/
 
 		CW_ENGINE_LOG->Info( "Initializing filesystem" );
 		FileSystem::AddSource( new DirectorySource( "Custom" ) );
@@ -128,6 +130,7 @@ namespace CatWare
 		delete window;
 		delete renderingAPI;
 
+		/*
 		#ifdef CW_DEBUG
 		// Generate memory report
 		std::stringstream memReport;
@@ -150,6 +153,7 @@ namespace CatWare
 
 		CW_ENGINE_LOG->Info( memReport.str( ).c_str( ) );
 		#endif
+		*/
 	}
 
 	void Application::Update( )

@@ -66,6 +66,8 @@ namespace CatWare
 
 		void Step( float deltaTime, unsigned int substeps = 8 );
 
+		void Clean( );
+
 	private:
 		std::vector<PhysicsBody*> physicsBodies;
 	};

@@ -11,6 +11,8 @@ namespace CatWare
 		EntityManager entities;
 		PhysicsWorld physicsWorld;
 
+		void Clean( );
+
 		void LoadFromMapFile( const std::string& mapPath );
 	};
 }

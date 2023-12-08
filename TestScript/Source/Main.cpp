@@ -16,6 +16,13 @@ class TestEntity : public Entity
 public:
 	DynamicBody* pBody;
 
+	std::string textureID;
+
+	TestEntity( std::string textureID )
+	{
+		this->textureID = textureID;
+	}
+
 	void Init( ) override
 	{
 		pBody = new DynamicBody( 10, 1, new RectCollider( transform.position,  transform.size ) );
@@ -48,12 +55,12 @@ public:
 
 	void Draw( )
 	{
-		Renderer::DrawRectTextured( transform.position, transform.size, Assets::textures.GetAsset( "testTexture" ), { 255, 255, 255, 255 }, transform.rotation );
+		Renderer::DrawRectTextured( transform.position, transform.size, Assets::textures.GetAsset( textureID ), { 255, 255, 255, 255 }, transform.rotation );
 	}
 
 	static Entity* Create( std::unordered_map<std::string, std::string> tags )
 	{
-		return new TestEntity;
+		return new TestEntity( tags["texture"] );
 	}
 };
 
@@ -67,10 +74,8 @@ public:
 
 	void OnEnter( ) override
 	{
-		for ( unsigned int i = 0; i < 20; i++ )
-		{
-			world.entities.CreateEntityByClassName( "testEntity", { { Random::GetDouble( 0, 1600 ), Random::GetDouble( 0, 900 ) }, { 64, 64 } }, { } );
-		}
+		world.LoadFromMapFile( "testMap.yaml" );
+
 		// entityManager.CreateEntityByType<TestEntity>( { { 64, 64 }, { 64, 64 } }, { } );
 	}
 

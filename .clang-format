@@ -43,8 +43,12 @@ MacroBlockBegin: ''
 MacroBlockEnd: ''
 MaxEmptyLinesToKeep: 2
 NamespaceIndentation: All
+SpaceAfterCStyleCast: true
+SpaceInEmptyParentheses: true
 SpacesInAngles: true
 SpacesInConditionalStatement: true
+SpacesInCStyleCastParentheses: true
+SpacesInParentheses: true
 TabWidth: 4
 UseTab: Always
 ...

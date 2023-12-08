@@ -8,14 +8,56 @@
 namespace CatWare
 {
 
-	void World::LoadFromMapFile(const std::string &mapPath)
+	void World::LoadFromMapFile( const std::string &mapPath )
 	{
 		// Load yaml file
-		FileHandle* fileHandle = FileSystem::OpenFile( mapPath, FileMode::READ, true );
-		char* content = fileHandle->Read( );
+		FileHandle *fileHandle = FileSystem::OpenFile( mapPath, FileMode::READ, true );
+		char *content = fileHandle->Read( );
 
 		YAML::Node mapFile = YAML::Load( content );
 
-		CW_ENGINE_LOG->Error( "%d", mapFile["map"]["testEntity"]["position"]["x"].as<int>( ) );
+		auto baseNode = mapFile["map"].as< YAML::Node >( );
+
+		YAML::Node entitiesNode = baseNode["entities"].as< YAML::Node >( );
+
+		for ( YAML::Node entityNode : entitiesNode )
+		{
+			std::string className = entityNode["class"].as< std::string >( );
+
+			YAML::Node transformNode = entityNode["transform"].as< YAML::Node >( );
+
+			YAML::Node positionNode = transformNode["position"].as< YAML::Node >( );
+
+			Vector2D positionVec = {
+				positionNode["x"].as< double >( ),
+				positionNode["y"].as< double >( )
+			};
+
+			YAML::Node sizeNode = transformNode["size"].as< YAML::Node >( );
+
+			Vector2D sizeVec = {
+				sizeNode["x"].as< double >( ),
+				sizeNode["y"].as< double >( )
+			};
+
+			double rotation = transformNode["rotation"].as< double >( );
+
+			Transform finalTransform;
+			finalTransform.position = positionVec;
+			finalTransform.size = sizeVec;
+			finalTransform.rotation = rotation;
+
+			YAML::Node tagsNode = entityNode["tags"].as< YAML::Node >( );
+			std::unordered_map< std::string, std::string > tags;
+
+			for ( YAML::Node tag : tagsNode )
+			{
+				YAML::Node node = tag.as< YAML::Node >( );
+
+				tags.insert( { node[0].as< std::string >( ), node[1].as< std::string >( ) } );
+			}
+
+			entities.CreateEntityByClassName( className, finalTransform, tags );
+		}
 	}
 }

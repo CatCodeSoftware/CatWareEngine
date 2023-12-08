@@ -1,7 +1,6 @@
 #include "OpenGLShader.h"
 
 #include "CatWare/Debug/Debug.h"
-
 #include "CatWare/Log.h"
 
 namespace CatWare

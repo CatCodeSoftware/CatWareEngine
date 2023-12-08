@@ -109,9 +109,9 @@ namespace CatWare
 		UInt64 CreateEntityByClassName( std::string className, Transform transform, std::unordered_map<std::string, std::string> tags );
 
 		Entity* GetEntityByID( UInt64 id );
-		Entity* GetEntityByUniqueName( std::string uniqueName );
-		std::vector<Entity*> GetEntitiesByClassName( std::string name );
-		std::vector<Entity*> GetEntitiesByGroup( std::string groupName );
+		Entity* GetEntityByUniqueName( const std::string &uniqueName );
+		std::vector<Entity*> GetEntitiesByClassName( const std::string &className );
+		std::vector<Entity*> GetEntitiesByGroup( const std::string &groupName );
 
 		void DestroyEntity( UInt64 id );
 

@@ -24,7 +24,7 @@ namespace CatWare
 
 	void Entity::RemoveFromGroup( std::string name )
 	{
-		for ( std::vector<std::string>::iterator it; it != groups.end( ); it++ )
+		for ( std::vector< std::string >::iterator it; it != groups.end( ); it++ )
 		{
 			if ( ( *it ) == name )
 			{
@@ -34,7 +34,7 @@ namespace CatWare
 		}
 	}
 
-	std::vector<std::string>& Entity::GetGroups( )
+	std::vector< std::string > &Entity::GetGroups( )
 	{
 		return groups;
 	}
@@ -58,13 +58,15 @@ namespace CatWare
 	// ----------------------------------------
 	// EntityRegistry -------------------------
 	// ----------------------------------------
-	std::unordered_map<std::string, Entity* ( * )( std::unordered_map<std::string, std::string> tags )> EntityRegistry::entityCreatePointers;
+	std::unordered_map< std::string, Entity* ( * )( std::unordered_map< std::string, std::string > tags ) >
+	EntityRegistry::entityCreatePointers;
 
 	// ----------------------------------------
 	// EntityManager --------------------------
 	// ----------------------------------------
 	EntityManager::EntityManager( )
-	{ }
+	{
+	}
 
 	EntityManager::~EntityManager( )
 	{
@@ -73,13 +75,15 @@ namespace CatWare
 
 	void EntityManager::CleanUp( )
 	{
-		for ( Entity* entity : entities )
+		for ( Entity *entity : entities )
 		{
 			delete entity;
 		}
 	}
 
-	UInt64 EntityManager::CreateEntityByClassName( std::string className, Transform transform, std::unordered_map<std::string, std::string> tags )
+	UInt64 EntityManager::CreateEntityByClassName(
+		std::string className, Transform transform, std::unordered_map< std::string, std::string > tags
+		)
 	{
 		UInt64 id = Random::GetUInt( 0, UINT64_MAX );
 
@@ -92,7 +96,7 @@ namespace CatWare
 			if ( createFunc == nullptr )
 				CW_ABORT( "createFunc was nullptr" );
 
-			Entity* entity = createFunc( tags );
+			Entity *entity = createFunc( tags );
 
 			entity->transform = transform;
 			entity->id = id;
@@ -108,9 +112,9 @@ namespace CatWare
 	}
 
 
-	Entity* EntityManager::GetEntityByID( UInt64 id )
+	Entity *EntityManager::GetEntityByID( UInt64 id )
 	{
-		for ( Entity* entity : entities )
+		for ( Entity *entity : entities )
 		{
 			if ( id == entity->id )
 			{
@@ -121,9 +125,9 @@ namespace CatWare
 		return nullptr;
 	}
 
-	Entity* EntityManager::GetEntityByUniqueName( std::string uniqueName )
+	Entity *EntityManager::GetEntityByUniqueName( const std::string& uniqueName )
 	{
-		for ( Entity* entity : entities )
+		for ( Entity *entity : entities )
 		{
 			if ( uniqueName == entity->uniqueName )
 			{
@@ -134,11 +138,11 @@ namespace CatWare
 		return nullptr;
 	}
 
-	std::vector<Entity*> EntityManager::GetEntitiesByClassName( std::string className )
+	std::vector< Entity * > EntityManager::GetEntitiesByClassName( const std::string& className )
 	{
-		std::vector<Entity*> gatheredEntities;
+		std::vector< Entity * > gatheredEntities;
 
-		for ( Entity* entity : entities )
+		for ( Entity *entity : entities )
 		{
 			if ( entity->className == className )
 			{
@@ -149,14 +153,14 @@ namespace CatWare
 		return gatheredEntities;
 	}
 
-	std::vector<Entity*> EntityManager::GetEntitiesByGroup( std::string groupName )
+	std::vector< Entity * > EntityManager::GetEntitiesByGroup( const std::string& groupName )
 	{
-		std::vector<Entity*> gatheredEntities;
+		std::vector< Entity * > gatheredEntities;
 
-		for ( Entity* entity : entities )
+		for ( Entity *entity : entities )
 		{
 			// Todo: Find a better name for groupName2
-			for ( std::string groupName2 : entity->groups )
+			for ( const std::string& groupName2 : entity->groups )
 			{
 				if ( groupName == groupName2 )
 				{
@@ -172,15 +176,14 @@ namespace CatWare
 
 	void EntityManager::Update( )
 	{
-		for ( std::vector<Entity*>::iterator it = entities.begin( ); it != entities.end( ); )
+		for ( std::vector< Entity * >::iterator it = entities.begin( ); it != entities.end( ); )
 		{
-			Entity* entity = ( *it );
+			Entity *entity = ( *it );
 
 			if ( entity->shouldDelete )
 			{
 				DestroyEntity( entity->id );
-			}
-			else
+			} else
 			{
 				entity->Update( );
 				it++;
@@ -190,7 +193,7 @@ namespace CatWare
 
 	void EntityManager::Tick( )
 	{
-		for ( Entity* entity : entities )
+		for ( Entity *entity : entities )
 		{
 			entity->Tick( );
 		}
@@ -198,7 +201,7 @@ namespace CatWare
 
 	void EntityManager::Draw( )
 	{
-		for ( Entity* entity : entities )
+		for ( Entity *entity : entities )
 		{
 			entity->Draw( );
 		}

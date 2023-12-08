@@ -2,10 +2,10 @@
 
 #include <string>
 
-#include <SDL.h>
-
 #include "CatWare/Core.h"
 #include "Renderer/Context.h"
+
+struct SDL_Window;
 
 namespace CatWare
 {

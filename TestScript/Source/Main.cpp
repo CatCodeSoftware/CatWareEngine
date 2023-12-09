@@ -119,7 +119,7 @@ EXPORT void PreInit( CatWare::InitConfig* config )
 
 EXPORT void PostInit( )
 {
-	font = new Text::Font( "EngineRes/Fonts/Oxanium-Regular.ttf", 50 );
+	font = new Text::Font( "EngineRes/Fonts/Jura-Regular.ttf", 30 );
 
 	Time::frameRateLimited = false;
 	Time::maxFPS = 240;

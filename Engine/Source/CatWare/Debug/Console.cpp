@@ -27,6 +27,7 @@ namespace CatWare
 	{
 		AddCommand( new Commands::Exit );
 		AddCommand( new Commands::Set );
+		AddCommand( new Commands::Map );
 	}
 
 

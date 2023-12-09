@@ -113,7 +113,7 @@ namespace CatWare
 		std::vector<Entity*> GetEntitiesByClassName( const std::string &className );
 		std::vector<Entity*> GetEntitiesByGroup( const std::string &groupName );
 
-		void DestroyEntity( UInt64 id );
+		void DestroyEntities( );
 
 		void Update( );
 		void Tick( );
@@ -121,5 +121,6 @@ namespace CatWare
 	private:
 		std::unordered_map<UInt64, bool> usedIDs;
 		std::vector<Entity*> entities;
+		std::vector<Entity*> entityDeleteQueue;
 	};
 }

@@ -16,6 +16,7 @@
 [Engine][Info] Loading shader from files:
 	Vertex: EngineRes/Shaders/TextVertex.glsl
 	Fragment: EngineRes/Shaders/TextFragment.glsl
+[Engine][Info] Loading map from testMap.yaml
 [Engine][Info] Loading texture from gato.jpg
 [Engine][Info] Unloading texture gato.jpg
 [Engine][Info] Closing window

@@ -79,6 +79,8 @@ namespace CatWare
 		{
 			delete entity;
 		}
+
+		entities.clear( );
 	}
 
 	UInt64 EntityManager::CreateEntityByClassName(
@@ -176,19 +178,17 @@ namespace CatWare
 
 	void EntityManager::Update( )
 	{
-		for ( std::vector< Entity * >::iterator it = entities.begin( ); it != entities.end( ); )
+		for ( std::vector< Entity * >::iterator it = entities.begin( ); it != entities.end( ); it++ )
 		{
 			Entity *entity = ( *it );
 
 			if ( entity->shouldDelete )
-			{
-				DestroyEntity( entity->id );
-			} else
-			{
-				entity->Update( );
-				it++;
-			}
+				entityDeleteQueue.push_back( entity );
+
+			entity->Update( );
 		}
+
+		DestroyEntities( );
 	}
 
 	void EntityManager::Tick( )
@@ -207,17 +207,22 @@ namespace CatWare
 		}
 	}
 
-	void EntityManager::DestroyEntity( UInt64 id )
+	void EntityManager::DestroyEntities( )
 	{
-		for ( auto it = entities.begin( ); it != entities.end( ); it++ )
+		for ( Entity* entity : entityDeleteQueue )
 		{
-			if ( ( *it )->GetID( ) == id )
-			{
-				delete ( *it );
-				entities.erase( it );
+			delete entity;
 
-				break;
+			for ( auto it = entities.begin( ); it != entities.end( ); it++ )
+			{
+				if ( ( *it ) == entity )
+				{
+					entities.erase( it );
+					break;
+				}
 			}
 		}
+
+		entityDeleteQueue.clear( );
 	}
 }

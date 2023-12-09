@@ -1,6 +1,7 @@
 #include "Commands.h"
 
 #include "CatWare/Log.h"
+#include "CatWare/Scene.h"
 #include "CatWare/Types/Types.h"
 
 namespace CatWare
@@ -47,5 +48,15 @@ namespace CatWare
 				case ConVarType::STRING: *( ( std::string* ) conVar.GetValuePointer( ) ) = args[2]; return;
 			}
 		}
+
+		Map::Map( ) : ConsoleCommand( { "map", "loadMap" }, 1 ) { }
+
+		void Map::Run( std::vector< std::string > args )
+		{
+			SceneManager::GetCurrentScene( )->world.Clean( );
+			SceneManager::GetCurrentScene( )->world.LoadFromMapFile( args[1] );
+		}
+
+
 	}
 }

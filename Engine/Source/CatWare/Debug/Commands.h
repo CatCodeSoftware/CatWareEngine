@@ -19,5 +19,12 @@ namespace CatWare
 			Set( );
 			void Run(std::vector<std::string> args) override;
 		};
+
+		class Map : public ConsoleCommand
+		{
+		public:
+			Map( );
+			void Run(std::vector<std::string> args) override;
+		};
 	}
 }

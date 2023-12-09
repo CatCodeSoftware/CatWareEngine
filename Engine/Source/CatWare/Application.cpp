@@ -30,14 +30,14 @@ namespace CatWare
 			window->HandleWindowEvents( );
 			running = !window->ShouldClose( );
 
-			const Scene* currentScene = SceneManager::GetCurrentScene( );
+			const Scene *currentScene = SceneManager::GetCurrentScene( );
 
 			if ( currentScene != nullptr )
 			{
 				Update( );
 
 				int ticksElapsed = tickTimer.TimesTimeElapsed( ( 1.0 / Time::ticksPerSecond ) * Time::modifier );
-			
+
 				if ( ticksElapsed != 0 )
 				{
 					tickTimer.Reset( );
@@ -56,7 +56,9 @@ namespace CatWare
 			// Assets::sounds.RunCleanup( );
 
 
-			while ( !frameTimer.HasTimeElapsed( 1 / Time::maxFPS ) && Time::frameRateLimited ) { }
+			while ( !frameTimer.HasTimeElapsed( 1 / Time::maxFPS ) && Time::frameRateLimited )
+			{
+			}
 			Time::SetDeltaTime( frameTimer.GetTime( ) );
 
 			window->SwapBuffers( );
@@ -87,14 +89,76 @@ namespace CatWare
 		// initialze imgui - this is temporary
 		ImGui::CreateContext( );
 
-		ImGuiIO& io = ImGui::GetIO( ); ( void ) io;
-		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-		io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
-		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
+		ImGuiIO &io = ImGui::GetIO( );
+		( void ) io;
+		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
+		io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad; // Enable Gamepad Controls
+		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable; // Enable Docking
 
-		ImGui::StyleColorsDark( );
+		io.Fonts->AddFontFromFileTTF( "EngineRes/Fonts/IBMPlexMono-Medium.ttf", 18 );
 
-		window = new Window( initConfig.windowTitle, initConfig.windowWidth, initConfig.windowHeight, initConfig.windowFullscreen, initConfig.windowResizable );
+		// imgui style i stole from the internet
+		ImVec4 *colors = ImGui::GetStyle( ).Colors;
+		colors[ImGuiCol_Text] = ImVec4( 1.00f, 1.00f, 1.00f, 1.00f );
+		colors[ImGuiCol_TextDisabled] = ImVec4( 0.50f, 0.50f, 0.50f, 1.00f );
+		colors[ImGuiCol_WindowBg] = ImVec4( 0.15f, 0.15f, 0.15f, 1.00f );
+		colors[ImGuiCol_ChildBg] = ImVec4( 0.00f, 0.00f, 0.00f, 0.00f );
+		colors[ImGuiCol_PopupBg] = ImVec4( 0.19f, 0.19f, 0.19f, 0.92f );
+		colors[ImGuiCol_Border] = ImVec4( 0.39f, 0.39f, 0.39f, 1.0f );
+		colors[ImGuiCol_BorderShadow] = ImVec4( 0.00f, 0.00f, 0.00f, 0.24f );
+		colors[ImGuiCol_FrameBg] = ImVec4( 0.05f, 0.05f, 0.05f, 0.54f );
+		colors[ImGuiCol_FrameBgHovered] = ImVec4( 0.19f, 0.19f, 0.19f, 0.54f );
+		colors[ImGuiCol_FrameBgActive] = ImVec4( 0.20f, 0.22f, 0.23f, 1.00f );
+		colors[ImGuiCol_TitleBg] = ImVec4( 0.00f, 0.00f, 0.00f, 1.00f );
+		colors[ImGuiCol_TitleBgActive] = ImVec4( 0.06f, 0.06f, 0.06f, 1.00f );
+		colors[ImGuiCol_TitleBgCollapsed] = ImVec4( 0.00f, 0.00f, 0.00f, 1.00f );
+		colors[ImGuiCol_MenuBarBg] = ImVec4( 0.14f, 0.14f, 0.14f, 1.00f );
+		colors[ImGuiCol_ScrollbarBg] = ImVec4( 0.05f, 0.05f, 0.05f, 0.54f );
+		colors[ImGuiCol_ScrollbarGrab] = ImVec4( 0.34f, 0.34f, 0.34f, 0.54f );
+		colors[ImGuiCol_ScrollbarGrabHovered] = ImVec4( 0.40f, 0.40f, 0.40f, 0.54f );
+		colors[ImGuiCol_ScrollbarGrabActive] = ImVec4( 0.56f, 0.56f, 0.56f, 0.54f );
+		colors[ImGuiCol_CheckMark] = ImVec4( 0.33f, 0.67f, 0.86f, 1.00f );
+		colors[ImGuiCol_SliderGrab] = ImVec4( 0.34f, 0.34f, 0.34f, 0.54f );
+		colors[ImGuiCol_SliderGrabActive] = ImVec4( 0.56f, 0.56f, 0.56f, 0.54f );
+		colors[ImGuiCol_Button] = ImVec4( 0.05f, 0.05f, 0.05f, 0.54f );
+		colors[ImGuiCol_ButtonHovered] = ImVec4( 0.19f, 0.19f, 0.19f, 0.54f );
+		colors[ImGuiCol_ButtonActive] = ImVec4( 0.20f, 0.22f, 0.23f, 1.00f );
+		colors[ImGuiCol_Header] = ImVec4( 0.00f, 0.00f, 0.00f, 0.52f );
+		colors[ImGuiCol_HeaderHovered] = ImVec4( 0.00f, 0.00f, 0.00f, 0.36f );
+		colors[ImGuiCol_HeaderActive] = ImVec4( 0.20f, 0.22f, 0.23f, 0.33f );
+		colors[ImGuiCol_Separator] = ImVec4( 0.28f, 0.28f, 0.28f, 0.29f );
+		colors[ImGuiCol_SeparatorHovered] = ImVec4( 0.44f, 0.44f, 0.44f, 0.29f );
+		colors[ImGuiCol_SeparatorActive] = ImVec4( 0.40f, 0.44f, 0.47f, 1.00f );
+		colors[ImGuiCol_ResizeGrip] = ImVec4( 0.28f, 0.28f, 0.28f, 0.29f );
+		colors[ImGuiCol_ResizeGripHovered] = ImVec4( 0.44f, 0.44f, 0.44f, 0.29f );
+		colors[ImGuiCol_ResizeGripActive] = ImVec4( 0.40f, 0.44f, 0.47f, 1.00f );
+		colors[ImGuiCol_Tab] = ImVec4( 0.00f, 0.00f, 0.00f, 0.52f );
+		colors[ImGuiCol_TabHovered] = ImVec4( 0.14f, 0.14f, 0.14f, 1.00f );
+		colors[ImGuiCol_TabActive] = ImVec4( 0.20f, 0.20f, 0.20f, 0.36f );
+		colors[ImGuiCol_TabUnfocused] = ImVec4( 0.00f, 0.00f, 0.00f, 0.52f );
+		colors[ImGuiCol_TabUnfocusedActive] = ImVec4( 0.14f, 0.14f, 0.14f, 1.00f );
+		colors[ImGuiCol_DockingPreview] = ImVec4( 0.33f, 0.67f, 0.86f, 1.00f );
+		colors[ImGuiCol_DockingEmptyBg] = ImVec4( 1.00f, 0.00f, 0.00f, 1.00f );
+		colors[ImGuiCol_PlotLines] = ImVec4( 1.00f, 0.00f, 0.00f, 1.00f );
+		colors[ImGuiCol_PlotLinesHovered] = ImVec4( 1.00f, 0.00f, 0.00f, 1.00f );
+		colors[ImGuiCol_PlotHistogram] = ImVec4( 1.00f, 0.00f, 0.00f, 1.00f );
+		colors[ImGuiCol_PlotHistogramHovered] = ImVec4( 1.00f, 0.00f, 0.00f, 1.00f );
+		colors[ImGuiCol_TableHeaderBg] = ImVec4( 0.00f, 0.00f, 0.00f, 0.52f );
+		colors[ImGuiCol_TableBorderStrong] = ImVec4( 0.39f, 0.39f, 0.39f, 1.0f );
+		colors[ImGuiCol_TableBorderLight] = ImVec4( 0.39f, 0.39f, 0.39f, 1.0f );
+		colors[ImGuiCol_TableRowBg] = ImVec4( 0.00f, 0.00f, 0.00f, 0.00f );
+		colors[ImGuiCol_TableRowBgAlt] = ImVec4( 1.00f, 1.00f, 1.00f, 0.06f );
+		colors[ImGuiCol_TextSelectedBg] = ImVec4( 0.20f, 0.22f, 0.23f, 1.00f );
+		colors[ImGuiCol_DragDropTarget] = ImVec4( 0.33f, 0.67f, 0.86f, 1.00f );
+		colors[ImGuiCol_NavHighlight] = ImVec4( 1.00f, 0.00f, 0.00f, 1.00f );
+		colors[ImGuiCol_NavWindowingHighlight] = ImVec4( 1.00f, 0.00f, 0.00f, 0.70f );
+		colors[ImGuiCol_NavWindowingDimBg] = ImVec4( 1.00f, 0.00f, 0.00f, 0.20f );
+		colors[ImGuiCol_ModalWindowDimBg] = ImVec4( 1.00f, 0.00f, 0.00f, 0.35f );
+
+		window = new Window(
+			initConfig.windowTitle, initConfig.windowWidth, initConfig.windowHeight, initConfig.windowFullscreen,
+			initConfig.windowResizable
+			);
 
 		CW_ENGINE_LOG->Info( "Initializing renderer" );
 		renderingAPI = new Rendering::OpenGL::OpenGLAPI;
@@ -118,7 +182,7 @@ namespace CatWare
 	void Application::DeInit( )
 	{
 		PreDeInit( );
-		
+
 		Input::CleanUpBinds( );
 
 		Renderer::DeInit( );
@@ -158,7 +222,7 @@ namespace CatWare
 
 	void Application::Update( )
 	{
-		Scene* currentScene = SceneManager::GetCurrentScene( );
+		Scene *currentScene = SceneManager::GetCurrentScene( );
 
 		currentScene->Update( );
 		currentScene->world.entities.Update( );
@@ -168,7 +232,7 @@ namespace CatWare
 
 	void Application::Tick( )
 	{
-		Scene* currentScene = SceneManager::GetCurrentScene( );
+		Scene *currentScene = SceneManager::GetCurrentScene( );
 
 		currentScene->Tick( );
 		currentScene->world.physicsWorld.Step( 1.0f / Time::ticksPerSecond );
@@ -177,7 +241,7 @@ namespace CatWare
 
 	void Application::Draw( )
 	{
-		Scene* currentScene = SceneManager::GetCurrentScene( );
+		Scene *currentScene = SceneManager::GetCurrentScene( );
 
 		Renderer::StartDrawing( );
 
@@ -189,16 +253,16 @@ namespace CatWare
 
 	void Application::DrawGUI( )
 	{
-		OrthoCamera* uiCamera = new OrthoCamera( window->GetWidth( ), window->GetHeight( ) );
-		OrthoCamera* oldCamera = Renderer::camera2D;
+		OrthoCamera *uiCamera = new OrthoCamera( window->GetWidth( ), window->GetHeight( ) );
+		OrthoCamera *oldCamera = Renderer::camera2D;
 
 		Renderer::camera2D = uiCamera;
 
-		Scene* currentScene = SceneManager::GetCurrentScene( );
+		Scene *currentScene = SceneManager::GetCurrentScene( );
 
-		ImGui_ImplOpenGL3_NewFrame();
-		ImGui_ImplSDL2_NewFrame();
-		ImGui::NewFrame();
+		ImGui_ImplOpenGL3_NewFrame( );
+		ImGui_ImplSDL2_NewFrame( );
+		ImGui::NewFrame( );
 
 		currentScene->DrawGUI( );
 
@@ -208,7 +272,7 @@ namespace CatWare
 
 		ImGui::EndFrame( );
 
-		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+		ImGui_ImplOpenGL3_RenderDrawData( ImGui::GetDrawData( ) );
 
 		ImGui::UpdatePlatformWindows( );
 		ImGui::RenderPlatformWindowsDefault( );

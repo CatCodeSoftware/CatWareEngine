@@ -14,8 +14,10 @@ namespace CatWare
 	}
 
 
-	void World::LoadFromMapFile( const std::string &mapPath )
+	void World::LoadFromMapFile( const std::string& mapPath )
 	{
+		CW_ENGINE_LOG->Info( "Loading map from %s", mapPath.c_str( ) );
+
 		// Load yaml file
 		FileHandle *fileHandle = FileSystem::OpenFile( mapPath, FileMode::READ, true );
 		char *content = fileHandle->Read( );
@@ -60,7 +62,7 @@ namespace CatWare
 			{
 				YAML::Node node = tag.as< YAML::Node >( );
 
-				tags.insert( { node[0].as< std::string >( ), node[1].as< std::string >( ) } );
+				tags.insert( {node[0].as< std::string >( ), node[1].as< std::string >( )} );
 			}
 
 			entities.CreateEntityByClassName( className, finalTransform, tags );

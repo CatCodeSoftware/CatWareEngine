@@ -66,8 +66,8 @@ target_link_libraries(CatWareEngine PRIVATE freetype)
 set_target_properties(freetype PROPERTIES FOLDER "Libraries")
 
 add_subdirectory("Engine/Lib/SDL2" EXCLUDE_FROM_ALL)
-target_link_libraries(CatWareEngine PRIVATE SDL2)
-set_target_properties(SDL2 PROPERTIES FOLDER "Libraries")
+target_link_libraries(CatWareEngine PRIVATE SDL2-static)
+set_target_properties(SDL2-static PROPERTIES FOLDER "Libraries")
 
 add_subdirectory("Engine/Lib/yaml-cpp")
 target_link_libraries(CatWareEngine PRIVATE yaml-cpp)

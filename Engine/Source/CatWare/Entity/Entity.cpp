@@ -181,8 +181,9 @@ namespace CatWare
 
 	void EntityManager::Update( )
 	{
-		for ( Entity* entity : entities )
+		for ( int i = 0; i < entities.size( ); i++ )
 		{
+			Entity* entity = entities[i];
 			if ( entity->shouldDelete )
 				entityDeleteQueue.push_back( entity );
 

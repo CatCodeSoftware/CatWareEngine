@@ -14,6 +14,8 @@ namespace CatWare
 				return true;
 			if ( string == "false" || string == "0" )
 				return false;
+
+			return false;
 		}
 
 		Exit::Exit( ) : ConsoleCommand( { "exit", "quit" }, 0 ) {}

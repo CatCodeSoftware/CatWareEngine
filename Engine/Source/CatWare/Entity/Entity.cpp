@@ -24,17 +24,20 @@ namespace CatWare
 
 	void Entity::RemoveFromGroup( std::string name )
 	{
-		for ( std::vector< std::string >::iterator it; it != groups.end( ); it++ )
+		int index = 0;
+		for ( std::string nameInGroups : groups )
 		{
-			if ( ( *it ) == name )
+			if ( name == nameInGroups )
 			{
-				groups.erase( it );
+				groups.erase( groups.begin( ) + index );
 				break;
 			}
+
+			index++;
 		}
 	}
 
-	std::vector< std::string > &Entity::GetGroups( )
+	std::vector< std::string >& Entity::GetGroups( )
 	{
 		return groups;
 	}
@@ -75,7 +78,7 @@ namespace CatWare
 
 	void EntityManager::CleanUp( )
 	{
-		for ( Entity *entity : entities )
+		for ( Entity* entity : entities )
 		{
 			delete entity;
 		}
@@ -85,7 +88,7 @@ namespace CatWare
 
 	UInt64 EntityManager::CreateEntityByClassName(
 		std::string className, Transform transform, std::unordered_map< std::string, std::string > tags
-		)
+	)
 	{
 		UInt64 id = Random::GetUInt( 0, UINT64_MAX );
 
@@ -98,7 +101,7 @@ namespace CatWare
 			if ( createFunc == nullptr )
 				CW_ABORT( "createFunc was nullptr" );
 
-			Entity *entity = createFunc( tags );
+			Entity* entity = createFunc( tags );
 
 			entity->transform = transform;
 			entity->id = id;
@@ -114,9 +117,9 @@ namespace CatWare
 	}
 
 
-	Entity *EntityManager::GetEntityByID( UInt64 id )
+	Entity* EntityManager::GetEntityByID( UInt64 id )
 	{
-		for ( Entity *entity : entities )
+		for ( Entity* entity : entities )
 		{
 			if ( id == entity->id )
 			{
@@ -127,9 +130,9 @@ namespace CatWare
 		return nullptr;
 	}
 
-	Entity *EntityManager::GetEntityByUniqueName( const std::string& uniqueName )
+	Entity* EntityManager::GetEntityByUniqueName( const std::string& uniqueName )
 	{
-		for ( Entity *entity : entities )
+		for ( Entity* entity : entities )
 		{
 			if ( uniqueName == entity->uniqueName )
 			{
@@ -140,11 +143,11 @@ namespace CatWare
 		return nullptr;
 	}
 
-	std::vector< Entity * > EntityManager::GetEntitiesByClassName( const std::string& className )
+	std::vector< Entity* > EntityManager::GetEntitiesByClassName( const std::string& className )
 	{
-		std::vector< Entity * > gatheredEntities;
+		std::vector< Entity* > gatheredEntities;
 
-		for ( Entity *entity : entities )
+		for ( Entity* entity : entities )
 		{
 			if ( entity->className == className )
 			{
@@ -155,11 +158,11 @@ namespace CatWare
 		return gatheredEntities;
 	}
 
-	std::vector< Entity * > EntityManager::GetEntitiesByGroup( const std::string& groupName )
+	std::vector< Entity* > EntityManager::GetEntitiesByGroup( const std::string& groupName )
 	{
-		std::vector< Entity * > gatheredEntities;
+		std::vector< Entity* > gatheredEntities;
 
-		for ( Entity *entity : entities )
+		for ( Entity* entity : entities )
 		{
 			// Todo: Find a better name for groupName2
 			for ( const std::string& groupName2 : entity->groups )
@@ -178,10 +181,8 @@ namespace CatWare
 
 	void EntityManager::Update( )
 	{
-		for ( std::vector< Entity * >::iterator it = entities.begin( ); it != entities.end( ); it++ )
+		for ( Entity* entity : entities )
 		{
-			Entity *entity = ( *it );
-
 			if ( entity->shouldDelete )
 				entityDeleteQueue.push_back( entity );
 
@@ -193,7 +194,7 @@ namespace CatWare
 
 	void EntityManager::Tick( )
 	{
-		for ( Entity *entity : entities )
+		for ( Entity* entity : entities )
 		{
 			entity->Tick( );
 		}
@@ -201,7 +202,7 @@ namespace CatWare
 
 	void EntityManager::Draw( )
 	{
-		for ( Entity *entity : entities )
+		for ( Entity* entity : entities )
 		{
 			entity->Draw( );
 		}

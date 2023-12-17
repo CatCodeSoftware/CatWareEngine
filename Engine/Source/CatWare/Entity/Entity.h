@@ -6,6 +6,7 @@
 
 #include "CatWare/Core.h"
 #include "CatWare/Error.h"
+#include "CatWare/Physics/Physics.h"
 #include "CatWare/Types/Vector.h"
 #include "CatWare/Types/Types.h"
 #include "CatWare/Types/Transform.h"
@@ -16,6 +17,8 @@
 
 namespace CatWare
 {
+	void EntityCollisionCallback( PhysicsBody* body1, PhysicsBody* body2 );
+
 	// This is a base class for all entities in the game
 	class CATWARE_API Entity
 	{
@@ -40,6 +43,8 @@ namespace CatWare
 		std::string GetUniqueName( );
 
 		UInt64 GetID( );
+
+		virtual void OnCollide( Entity* other ) {}
 
 		static Entity* Create( std::unordered_map<std::string, std::string> tags ) { return nullptr; }
 

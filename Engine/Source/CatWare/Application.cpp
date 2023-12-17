@@ -30,7 +30,7 @@ namespace CatWare
 			window->HandleWindowEvents( );
 			running = !window->ShouldClose( );
 
-			const Scene *currentScene = SceneManager::GetCurrentScene( );
+			const Scene* currentScene = SceneManager::GetCurrentScene( );
 
 			if ( currentScene != nullptr )
 			{
@@ -89,7 +89,7 @@ namespace CatWare
 		// initialze imgui - this is temporary
 		ImGui::CreateContext( );
 
-		ImGuiIO &io = ImGui::GetIO( );
+		ImGuiIO& io = ImGui::GetIO( );
 		( void ) io;
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad; // Enable Gamepad Controls
@@ -98,7 +98,7 @@ namespace CatWare
 		io.Fonts->AddFontFromFileTTF( "EngineRes/Fonts/IBMPlexMono-Medium.ttf", 18 );
 
 		// imgui style i stole from the internet
-		ImVec4 *colors = ImGui::GetStyle( ).Colors;
+		ImVec4* colors = ImGui::GetStyle( ).Colors;
 		colors[ImGuiCol_Text] = ImVec4( 1.00f, 1.00f, 1.00f, 1.00f );
 		colors[ImGuiCol_TextDisabled] = ImVec4( 0.50f, 0.50f, 0.50f, 1.00f );
 		colors[ImGuiCol_WindowBg] = ImVec4( 0.15f, 0.15f, 0.15f, 1.00f );
@@ -158,7 +158,7 @@ namespace CatWare
 		window = new Window(
 			initConfig.windowTitle, initConfig.windowWidth, initConfig.windowHeight, initConfig.windowFullscreen,
 			initConfig.windowResizable
-			);
+		);
 
 		CW_ENGINE_LOG->Info( "Initializing renderer" );
 		renderingAPI = new Rendering::OpenGL::OpenGLAPI;
@@ -222,7 +222,7 @@ namespace CatWare
 
 	void Application::Update( )
 	{
-		Scene *currentScene = SceneManager::GetCurrentScene( );
+		Scene* currentScene = SceneManager::GetCurrentScene( );
 
 		currentScene->Update( );
 		currentScene->world.entities.Update( );
@@ -232,7 +232,7 @@ namespace CatWare
 
 	void Application::Tick( )
 	{
-		Scene *currentScene = SceneManager::GetCurrentScene( );
+		Scene* currentScene = SceneManager::GetCurrentScene( );
 
 		currentScene->Tick( );
 		currentScene->world.physicsWorld.Step( 1.0f / Time::ticksPerSecond );
@@ -241,7 +241,7 @@ namespace CatWare
 
 	void Application::Draw( )
 	{
-		Scene *currentScene = SceneManager::GetCurrentScene( );
+		Scene* currentScene = SceneManager::GetCurrentScene( );
 
 		Renderer::StartDrawing( );
 
@@ -253,12 +253,12 @@ namespace CatWare
 
 	void Application::DrawGUI( )
 	{
-		OrthoCamera *uiCamera = new OrthoCamera( window->GetWidth( ), window->GetHeight( ) );
-		OrthoCamera *oldCamera = Renderer::camera2D;
+		OrthoCamera* uiCamera = new OrthoCamera( window->GetWidth( ), window->GetHeight( ) );
+		OrthoCamera* oldCamera = Renderer::camera2D;
 
 		Renderer::camera2D = uiCamera;
 
-		Scene *currentScene = SceneManager::GetCurrentScene( );
+		Scene* currentScene = SceneManager::GetCurrentScene( );
 
 		ImGui_ImplOpenGL3_NewFrame( );
 		ImGui_ImplSDL2_NewFrame( );

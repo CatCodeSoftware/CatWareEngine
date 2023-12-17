@@ -12,6 +12,7 @@
 #include "CatWare/Error.h"
 #include "CatWare/Log.h"
 #include "CatWare/Debug/Console.h"
+#include "CatWare/Types/Transform.h"
 
 using namespace CatWare::Rendering;
 
@@ -232,6 +233,11 @@ namespace CatWare
 		DrawRect( position, size, color, transformMatrix );
 	}
 
+	void Renderer::DrawRect( Transform transform, Color color )
+	{
+		DrawRect( transform.position, transform.size, color, transform.rotation );
+	}
+
 	void Renderer::DrawRectTextured( Vector2D position, Vector2D size, Rendering::Texture2D* texture,
 	                                 glm::mat4 transformMatrix, Color tint )
 	{
@@ -280,6 +286,11 @@ namespace CatWare
 		                                             0.0f ) );
 
 		DrawRectTextured( position, size, texture, transformMatrix, tint );
+	}
+
+	void Renderer::DrawRectTextured( Transform transform, Rendering::Texture2D* texture, Color tint )
+	{
+		DrawRectTextured( transform.position, transform.size, texture, tint, transform.rotation );
 	}
 
 	void Renderer::DrawCharacter( Text::Character* character, Vector2D position, unsigned int size, Color color )

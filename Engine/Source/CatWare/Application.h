@@ -47,7 +47,10 @@ namespace CatWare
 
 		// Overridable methods
 		virtual void PostInit( ) = 0;
-		virtual void PreDeInit( ) {}
+
+		virtual void PreDeInit( )
+		{
+		}
 
 	protected:
 		bool running = true;

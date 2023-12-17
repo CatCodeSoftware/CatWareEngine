@@ -12,6 +12,8 @@
 
 #undef GetClassName // stupid windows
 
+#define CW_ENTITY_CREATE( tagsName ) inline static Entity* Create( std::unordered_map< std::string, std::string> tagsName )
+
 namespace CatWare
 {
 	// This is a base class for all entities in the game

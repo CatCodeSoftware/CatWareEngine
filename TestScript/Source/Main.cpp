@@ -5,7 +5,6 @@
 #endif
 
 #include <CatWare.h>
-#include <CatWare/Physics/Physics.h>
 
 using namespace CatWare;
 
@@ -55,10 +54,10 @@ public:
 
 	void Draw( )
 	{
-		Renderer::DrawRectTextured( transform.position, transform.size, Assets::textures.GetAsset( textureID ), { 255, 255, 255, 255 }, transform.rotation );
+		Renderer::DrawRectTextured( transform, Assets::textures.GetAsset( textureID ) );
 	}
 
-	static Entity* Create( std::unordered_map<std::string, std::string> tags )
+	CW_ENTITY_CREATE( tags )
 	{
 		return new TestEntity( tags["texture"] );
 	}

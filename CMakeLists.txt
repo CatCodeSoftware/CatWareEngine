@@ -159,7 +159,7 @@ target_include_directories(
 )
 
 
-
+#[[
 # -----------------------------------------------------
 # Meowditor
 # -----------------------------------------------------
@@ -185,3 +185,4 @@ target_include_directories(
 GroupSourcesByFolder(CatWareEngine)
 GroupSourcesByFolder(Meowditor)
 GroupSourcesByFolder(Runtime)
+#]]

@@ -20,6 +20,9 @@ namespace CatWare
 	{
 	public:
 		Vector2D position;
+		void* userData;
+
+		void ( *collisionCallback )( PhysicsBody* body1, PhysicsBody* body2 ) = nullptr;
 
 		PhysicsBody( BodyType bodyType );
 

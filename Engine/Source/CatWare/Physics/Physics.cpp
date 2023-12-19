@@ -86,7 +86,7 @@ namespace CatWare
 						if ( physicsBody->collisionCallback != nullptr )
 							physicsBody->collisionCallback( physicsBody, physicsBody2 );
 						if ( physicsBody2->collisionCallback != nullptr )
-							physicsBody->collisionCallback( physicsBody2, physicsBody );
+							physicsBody2->collisionCallback( physicsBody2, physicsBody );
 
 
 						if ( physicsBody2->GetType( ) == BodyType::DYNAMIC )

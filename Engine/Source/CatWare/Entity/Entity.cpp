@@ -13,7 +13,6 @@ namespace CatWare
 		if ( body1->userData != nullptr && body2->userData != nullptr )
 		{
 			( ( Entity* ) body1->userData )->OnCollide( ( Entity* ) body2->userData );
-			( ( Entity* ) body2->userData )->OnCollide( ( Entity* ) body1->userData );
 		}
 	}
 
@@ -198,8 +197,6 @@ namespace CatWare
 
 			entity->Update( );
 		}
-
-		DestroyEntities( );
 	}
 
 	void EntityManager::Tick( )

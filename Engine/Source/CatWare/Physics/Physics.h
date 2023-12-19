@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <string>
 
 #include "Collision.h"
 #include "CatWare/Types/Vector.h"
@@ -13,7 +14,7 @@ namespace CatWare
 		UNASSIGNED, // Invalid body
 		DYNAMIC, // A standard rigidbody
 		TRIGGER, // A non movable body that triggers events when collided with -- to implement
-		SURFACE, // Top down surface for applying friction -- to implement
+		SURFACE, // Top down surface for applying friction
 	};
 
 	class CATWARE_API PhysicsBody
@@ -27,6 +28,7 @@ namespace CatWare
 		PhysicsBody( BodyType bodyType );
 
 		inline BodyType GetType( ) { return type; }
+
 	private:
 		BodyType type = BodyType::UNASSIGNED;
 	};
@@ -58,7 +60,6 @@ namespace CatWare
 		Collider* collider;
 	};
 
-
 	class CATWARE_API PhysicsWorld
 	{
 	public:
@@ -72,6 +73,6 @@ namespace CatWare
 		void Clean( );
 
 	private:
-		std::vector<PhysicsBody*> physicsBodies;
+		std::vector< PhysicsBody* > physicsBodies;
 	};
 }

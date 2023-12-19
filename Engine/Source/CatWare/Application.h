@@ -43,7 +43,7 @@ namespace CatWare
 	class CATWARE_API Application
 	{
 	public:
-		virtual void Run( ) final;
+		void Run( );
 
 		// Overridable methods
 		virtual void PostInit( ) = 0;

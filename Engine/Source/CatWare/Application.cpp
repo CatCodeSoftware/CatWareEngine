@@ -30,7 +30,7 @@ namespace CatWare
 			window->HandleWindowEvents( );
 			running = !window->ShouldClose( );
 
-			const Scene* currentScene = SceneManager::GetCurrentScene( );
+			Scene* currentScene = SceneManager::GetCurrentScene( );
 
 			if ( currentScene != nullptr )
 			{
@@ -47,6 +47,8 @@ namespace CatWare
 				{
 					Tick( );
 				}
+
+				currentScene->world.entities.DestroyEntities( );
 
 				Draw( );
 				DrawGUI( );

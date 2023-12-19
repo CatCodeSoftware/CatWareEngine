@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <string>
+#include <unordered_set>
 
 #include "Collision.h"
 #include "CatWare/Types/Vector.h"
@@ -71,8 +72,10 @@ namespace CatWare
 		void Step( float deltaTime, unsigned int substeps = 8 );
 
 		void Clean( );
+		void RemoveItems( );
 
 	private:
 		std::vector< PhysicsBody* > physicsBodies;
+		std::unordered_set< PhysicsBody* > bodiesToRemove;
 	};
 }

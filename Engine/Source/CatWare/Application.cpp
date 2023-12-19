@@ -49,6 +49,7 @@ namespace CatWare
 				}
 
 				currentScene->world.entities.DestroyEntities( );
+				currentScene->world.physicsWorld.RemoveItems( );
 
 				Draw( );
 				DrawGUI( );

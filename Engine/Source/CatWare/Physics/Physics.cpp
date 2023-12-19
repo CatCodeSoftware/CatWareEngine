@@ -32,28 +32,38 @@ namespace CatWare
 
 	void PhysicsWorld::RemoveBody( PhysicsBody *body )
 	{
-		// loop through the vector until you find the body
-		unsigned int index = 0;
-		for ( PhysicsBody *body2 : physicsBodies )
+		bodiesToRemove.emplace( body );
+	}
+
+	void PhysicsWorld::RemoveItems( )
+	{
+		// Every signle fucking problem i've had in the past week was fucking vectors
+		// I might be stupid. But removing elements from a vector that is being looped
+		// through every frame is the most error prone operation you could do in c++.
+		// If you do something wrong your debugger will tell you that it couldn't access
+		// some random memory address in a random function because stack corruption or something
+		// I hate vectors and i hate myself
+		// For now i switched to recreating the vector without the removed elements
+		std::vector<PhysicsBody*> tempVec = physicsBodies;
+		physicsBodies.clear( );
+
+		for ( PhysicsBody* physicsBody : tempVec )
 		{
-			if ( body == body2 )
+			bool add = true;
+			for ( PhysicsBody* physicsBody2 : bodiesToRemove )
 			{
-				// since we don't care about order we can use the switch and pop method
-				unsigned int lastIndex = physicsBodies.size( ) - 1;
-
-				PhysicsBody *tempBody = physicsBodies[lastIndex];
-
-				physicsBodies[lastIndex] = physicsBodies[index];
-				physicsBodies[index] = tempBody;
-
-				delete body;
-				physicsBodies.pop_back( );
-
-				break;
+				if ( physicsBody == physicsBody2 )
+				{
+					add = false;
+					break;
+				}
 			}
 
-			index++;
+			if ( add )
+				physicsBodies.push_back( physicsBody );
 		}
+
+		bodiesToRemove.clear( );
 	}
 
 	void PhysicsWorld::Step( float deltaTime, unsigned substeps )
@@ -86,10 +96,7 @@ namespace CatWare
 
 						if ( physicsBody2->GetType( ) == BodyType::DYNAMIC )
 						{
-							if ( physicsBody->collisionCallback != nullptr )
-								physicsBody->collisionCallback( physicsBody, physicsBody2 );
-							if ( physicsBody2->collisionCallback != nullptr )
-								physicsBody2->collisionCallback( physicsBody2, physicsBody );
+
 
 							DynamicBody *dynamicBody2 = ( DynamicBody * ) physicsBody2;
 
@@ -103,6 +110,11 @@ namespace CatWare
 
 							if ( collisionInfo.hasCollision )
 							{
+								if ( physicsBody->collisionCallback != nullptr )
+									physicsBody->collisionCallback( physicsBody, physicsBody2 );
+								if ( physicsBody2->collisionCallback != nullptr )
+									physicsBody2->collisionCallback( physicsBody2, physicsBody );
+
 								dynamicBody->position -= collisionInfo.normal / 2;
 								dynamicBody2->position += collisionInfo.normal / 2;
 

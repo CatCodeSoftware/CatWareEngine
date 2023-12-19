@@ -22,5 +22,6 @@
 #include "CatWare/Graphics/Animation/Animation.h"
 #include "CatWare/Random.h"
 #include "CatWare/Entity/Components.h"
+#include "CatWare/ScriptInterface.h"
 
 #undef CW_DEBUG // Don't let the debug shit spill over to the game

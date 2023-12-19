@@ -1,9 +1,3 @@
-#ifdef CW_PLATFORM_WIN64
-#	define EXPORT extern "C" __declspec(dllexport)
-#else
-#	define EXPORT extern "C"
-#endif
-
 #include <CatWare.h>
 
 using namespace CatWare;
@@ -74,8 +68,6 @@ public:
 	void OnEnter( ) override
 	{
 		world.LoadFromMapFile( "testMap.yaml" );
-
-		// entityManager.CreateEntityByType<TestEntity>( { { 64, 64 }, { 64, 64 } }, { } );
 	}
 
 	void Update( ) override
@@ -108,7 +100,7 @@ public:
 
 InGame* inGame;
 
-EXPORT void PreInit( CatWare::InitConfig* config )
+CW_SCRIPT_EXPORT void PreInit( CatWare::InitConfig* config )
 {
 	config->windowWidth = 1600;
 	config->windowHeight = 900;
@@ -116,7 +108,7 @@ EXPORT void PreInit( CatWare::InitConfig* config )
 	Time::modifier = 1.0;
 }
 
-EXPORT void PostInit( )
+CW_SCRIPT_EXPORT void PostInit( )
 {
 	font = new Text::Font( "EngineRes/Fonts/Jura-Regular.ttf", 30 );
 
@@ -131,12 +123,12 @@ EXPORT void PostInit( )
 	SceneManager::SetScene( inGame );
 }
 
-EXPORT void Activate( )
+CW_SCRIPT_EXPORT void Activate( )
 {
 
 }
 
-EXPORT void DeInit( )
+CW_SCRIPT_EXPORT void DeInit( )
 {
 	delete font;
 }

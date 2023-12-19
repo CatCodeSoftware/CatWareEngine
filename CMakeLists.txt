@@ -77,19 +77,25 @@ set_target_properties(sdl_headers_copy PROPERTIES FOLDER "Libraries")
 
 
 target_include_directories(
+		CatWareEngine PUBLIC
+		"Engine/Source"
+		"Engine/Lib/freetype/include"
+		"Engine/Lib/SDL2/include"
+		"Engine/Lib/glm"
+		"Engine/Lib/ImGui"
+		"Engine/Lib/ImGui/backends"
+)
+
+target_include_directories(
         CatWareEngine
         PRIVATE
 
         "Engine/Source"
-        "Engine/Lib/SDL2/include"
-        "Engine/Lib/freetype/include"
         "Engine/Lib/yaml-cpp/include"
         "Engine/Lib/Glad/include"
-        "Engine/Lib/glm"
-        "Engine/Lib/ImGui"
-        "Engine/Lib/ImGui/backends"
         "Engine/Lib/Single header"
 )
+
 
 if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
 	target_compile_definitions(CatWareEngine PRIVATE CW_DEBUG)
@@ -113,11 +119,6 @@ if (buildTestScript)
 		PRIVATE
 
 		"Engine/Source"
-		"Engine/Lib/freetype/include"
-		"Engine/Lib/SDL2/include"
-		"Engine/Lib/glm"
-		"Engine/Lib/ImGui"
-		"Engine/Lib/ImGui/backends"
 	)
 
 
@@ -151,11 +152,6 @@ target_include_directories(
 
 	"Runtime/Source"
 	"Engine/Source"
-	"Engine/Lib/freetype/include"
-	"Engine/Lib/SDL2/include"
-	"Engine/Lib/glm"
-	"Engine/Lib/ImGui"
-	"Engine/Lib/ImGui/backends"
 )
 
 
@@ -175,11 +171,6 @@ target_include_directories(
 
         "Editor/Source"
 		"Engine/Source"
-		"Engine/Lib/freetype/include"
-		"Engine/Lib/SDL2/include"
-		"Engine/Lib/glm"
-		"Engine/Lib/ImGui"
-		"Engine/Lib/ImGui/backends"
 )
 
 GroupSourcesByFolder(CatWareEngine)

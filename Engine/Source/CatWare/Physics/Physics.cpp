@@ -111,9 +111,9 @@ namespace CatWare
 							if ( collisionInfo.hasCollision )
 							{
 								if ( physicsBody->collisionCallback != nullptr )
-									physicsBody->collisionCallback( physicsBody, physicsBody2 );
+									physicsBody->collisionCallback( collisionInfo, physicsBody, physicsBody2 );
 								if ( physicsBody2->collisionCallback != nullptr )
-									physicsBody2->collisionCallback( physicsBody2, physicsBody );
+									physicsBody2->collisionCallback( collisionInfo, physicsBody2, physicsBody );
 
 								dynamicBody->position -= collisionInfo.normal / 2;
 								dynamicBody2->position += collisionInfo.normal / 2;

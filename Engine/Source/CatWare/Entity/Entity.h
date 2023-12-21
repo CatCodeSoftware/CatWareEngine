@@ -17,7 +17,7 @@
 
 namespace CatWare
 {
-	void EntityCollisionCallback( PhysicsBody* body1, PhysicsBody* body2 );
+	void EntityCollisionCallback( CollisionInfo info, PhysicsBody* body1, PhysicsBody* body2 );
 
 	// This is a base class for all entities in the game
 	class CATWARE_API Entity
@@ -44,7 +44,7 @@ namespace CatWare
 
 		UInt64 GetID( );
 
-		virtual void OnCollide( Entity* other ) {}
+		virtual void OnCollide( CollisionInfo info, PhysicsBody* body, Entity* other ) {}
 
 		static Entity* Create( std::unordered_map<std::string, std::string> tags ) { return nullptr; }
 

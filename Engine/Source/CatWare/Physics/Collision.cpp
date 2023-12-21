@@ -26,7 +26,7 @@ namespace CatWare
 			ci.hasCollision = true;
 			ci.penetration = distance - ( a->radius + b->radius );
 
-			ci.normal = Vector2D::Normalize( a->position.GetRotationTo( b->position ), ci.penetration );
+			ci.normal = Vector2D::Normalize( a->position.GetRotationTo( b->position ), 1 );
 		}
 		else
 		{

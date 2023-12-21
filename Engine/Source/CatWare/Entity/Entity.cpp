@@ -8,11 +8,11 @@
 
 namespace CatWare
 {
-	void EntityCollisionCallback( PhysicsBody* body1, PhysicsBody* body2 )
+	void EntityCollisionCallback( CollisionInfo info, PhysicsBody* body1, PhysicsBody* body2 )
 	{
 		if ( body1->userData != nullptr && body2->userData != nullptr )
 		{
-			( ( Entity* ) body1->userData )->OnCollide( ( Entity* ) body2->userData );
+			( ( Entity* ) body1->userData )->OnCollide( info, body2, ( Entity* ) body2->userData );
 		}
 	}
 

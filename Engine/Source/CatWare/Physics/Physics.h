@@ -24,7 +24,7 @@ namespace CatWare
 		Vector2D position;
 		void* userData;
 
-		void ( *collisionCallback )( PhysicsBody* body1, PhysicsBody* body2 ) = nullptr;
+		void ( *collisionCallback )( CollisionInfo info, PhysicsBody* body1, PhysicsBody* body2 ) = nullptr;
 
 		PhysicsBody( BodyType bodyType );
 

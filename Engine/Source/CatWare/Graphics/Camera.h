@@ -21,6 +21,7 @@ namespace CatWare
 		glm::mat4 CalculateProjectionMatrix( ) override;
 
 		void SetFocus( Vector2D focus );
+		inline Vector2D GetOffset( ) { return Vector2D( renderOffsetX, renderOffsetY ); }
 
 	private:
 		int renderOffsetX = 0;

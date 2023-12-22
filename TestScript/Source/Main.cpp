@@ -36,14 +36,16 @@ public:
 			pBody->force.x += 30000;
 		*/
 
+		/*
 		if ( pBody->position.y > 900 - transform.size.y )
 		{
 			pBody->position.y = 900 - transform.size.y;
 			pBody->velocity.y = 0;
 			pBody->force.y = 0;
-		}
+		}*/
 
 		transform.position = pBody->position + pBody->velocity * Time::GetDeltaTime( ); // smooth out the movement
+		Renderer::camera2D->SetFocus( transform.position + transform.size / 2 );
 	}
 
 	void Draw( )

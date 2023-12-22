@@ -244,8 +244,10 @@ namespace CatWare
 		if ( texture == nullptr )
 			CW_ABORT( "texture was nullptr" );
 
-		if ( ( position.x < 0 - size.x * 2 || position.x > width + size.x * 2 ) || (
-			     position.y < 0 - size.y * 2 || position.y > height + size.y * 2 ) )
+		Vector2D renderOffset = camera2D->GetOffset( );
+
+		if ( ( position.x + renderOffset.x < 0 - size.x * 2 || position.x  + renderOffset.x > width + size.x * 2 ) || (
+			     position.y  + renderOffset.y < 0 - size.y * 2 || position.y  + renderOffset.y > height + size.y * 2 ) )
 		{
 			return;
 		}

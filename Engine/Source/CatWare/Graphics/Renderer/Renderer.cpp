@@ -195,8 +195,10 @@ namespace CatWare
 
 	void Renderer::DrawRect( Vector2D position, Vector2D size, Color color, glm::mat4 transformMatrix )
 	{
-		if ( ( position.x < 0 - size.x * 2 || position.x > width + size.x * 2 ) || (
-			     position.y < 0 - size.y * 2 || position.y > height + size.y * 2 ) )
+		Vector2D renderOffset = camera2D->GetOffset( );
+
+		if ( ( position.x + renderOffset.x < 0 - size.x * 2 || position.x  + renderOffset.x > width + size.x * 2 ) || (
+				 position.y  + renderOffset.y < 0 - size.y * 2 || position.y  + renderOffset.y > height + size.y * 2 ) )
 		{
 			return;
 		}

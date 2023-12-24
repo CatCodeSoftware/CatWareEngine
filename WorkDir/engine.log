@@ -3,8 +3,8 @@
 [Engine][Info] Creating 1600x900 window with title CatWare
 [Engine][Info] Initializing OpenGL
 [Engine][Info] Vendor:   AMD
-[Engine][Info] Renderer: RENOIR (renoir, LLVM 15.0.7, DRM 3.54, 6.6.6-76060606-generic)
-[Engine][Info] Version:  4.6 (Core Profile) Mesa 23.2.1-1pop0~1699535617~22.04~6cd9a72
+[Engine][Info] Renderer: AMD Radeon Graphics (renoir, LLVM 16.0.6, DRM 3.54, 6.5.6-300.fc39.x86_64)
+[Engine][Info] Version:  4.6 (Core Profile) Mesa 23.2.1
 [Engine][Info] Initializing renderer
 [Engine][Info] Initializing renderer
 [Engine][Info] Loading shader from files:

@@ -6,6 +6,8 @@ Text::Font* font = nullptr;
 
 class TestEntity : public Entity
 {
+	ParticleEmmiter emmiter;
+
 public:
 	DynamicBody* pBody;
 
@@ -21,10 +23,25 @@ public:
 		pBody = new DynamicBody( 10, 1, new RectCollider( transform.position,  transform.size ) );
 		pBody->position = transform.position;
 		SceneManager::GetCurrentScene( )->world.physicsWorld.AddBody( pBody );
+
+		emmiter.gravity = { 0, 500 };
+		emmiter.angle = 90;
+		emmiter.spread = 6;
+		emmiter.numParticles = 3;
+		emmiter.numParticlesRandomness = 3;
+		emmiter.delay = 1;
+		emmiter.speed = 300;
+		emmiter.speedRandomness = 100;
+		emmiter.lifetime = 3;
+
+		emmiter.startColor = { 100, 100, 255, 255 };
+		emmiter.endColor = { 255, 255, 255, 0 };
 	}
 
 	void Update( ) override
 	{
+		emmiter.position = transform.position;
+
 		/*
 		if ( Input::IsKeyPressed( Input::KEY_W ) )
 			pBody->force.y -= 30000;
@@ -36,21 +53,23 @@ public:
 			pBody->force.x += 30000;
 		*/
 
-		/*
 		if ( pBody->position.y > 900 - transform.size.y )
 		{
 			pBody->position.y = 900 - transform.size.y;
 			pBody->velocity.y = 0;
 			pBody->force.y = 0;
-		}*/
+		}
 
 		transform.position = pBody->position + pBody->velocity * Time::GetDeltaTime( ); // smooth out the movement
-		Renderer::camera2D->SetFocus( transform.position + transform.size / 2 );
+		// Renderer::camera2D->SetFocus( transform.position + transform.size / 2 );
+
+		emmiter.Emit( );
 	}
 
 	void Draw( )
 	{
 		Renderer::DrawRectTextured( transform, Assets::textures.GetAsset( textureID ) );
+		emmiter.Draw( );
 	}
 
 	CW_ENTITY_CREATE( tags )
@@ -64,7 +83,7 @@ class InGame : public Scene
 public:
 	InGame( )
 	{
-		world.physicsWorld.gravity = 500;
+		world.physicsWorld.gravity = 0;
 	}
 
 	void OnEnter( ) override

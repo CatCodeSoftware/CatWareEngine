@@ -7,6 +7,10 @@
 * @author PointThink
 */
 
+/* Younger me thought it would be an awesome idea to be clever
+and to make this crime against humanity with templates
+TODO: Remake this entire piece of shit */
+
 #pragma once
 
 #include <string>

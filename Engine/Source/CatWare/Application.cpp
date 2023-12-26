@@ -250,6 +250,7 @@ namespace CatWare
 
 		currentScene->Draw( );
 		currentScene->world.entities.Draw( );
+		currentScene->world.particles.Draw( );
 
 		Renderer::EndDrawing( );
 	}

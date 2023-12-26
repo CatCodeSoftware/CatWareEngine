@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Particles.h"
 #include "CatWare/Entity/Entity.h"
 #include "CatWare/Physics/Physics.h"
 
@@ -10,6 +11,7 @@ namespace CatWare
 	public:
 		EntityManager entities;
 		PhysicsWorld physicsWorld;
+		Particles particles;
 
 		void Clean( );
 

@@ -7,7 +7,7 @@ namespace CatWare
 	class Color
 	{
 	public:
-		Color( UInt8 r, UInt8 g, UInt8 b, UInt8 a )
+		Color( float r, float g, float b, float a )
 		{
 			this->r = r;
 			this->g = g;
@@ -23,7 +23,7 @@ namespace CatWare
 			a = 255;
 		}
 		
-		UInt8 r, g, b, a;
+		float r, g, b, a;
 	};
 
 	typedef Color Colour;

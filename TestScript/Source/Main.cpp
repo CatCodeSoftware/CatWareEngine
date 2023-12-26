@@ -24,25 +24,35 @@ public:
 		pBody->position = transform.position;
 		SceneManager::GetCurrentScene( )->world.physicsWorld.AddBody( pBody );
 
-		emmiter.gravity = { 0, 500 };
-		emmiter.angle = 90;
-		emmiter.spread = 6;
-		emmiter.numParticles = 3;
-		emmiter.numParticlesRandomness = 3;
-		emmiter.delay = 1;
-		emmiter.speed = 300;
-		emmiter.speedRandomness = 100;
-		emmiter.lifetime = 3;
+		emmiter.gravity = { 0, 0 };
+		emmiter.angle = -90;
+		emmiter.spread = 360;
+		emmiter.numParticles = 50;
+		emmiter.numParticlesRandomness = 1;
+		emmiter.delay = 0;
+		emmiter.speed = 200;
+		emmiter.speedRandomness = 400;
+		emmiter.airResistance = 0.1;
+		emmiter.lifetime = 20;
+		emmiter.lifetimeRandomness = 10;
+		emmiter.size = { 500, 500 };
+		emmiter.endSize = { 1000, 1000 };
 
-		emmiter.startColor = { 100, 100, 255, 255 };
+		emmiter.startColor = { 128, 128, 128, 10 };
 		emmiter.endColor = { 255, 255, 255, 0 };
+		emmiter.velocityStrech = false;
+
+		emmiter.textured = true;
+		emmiter.textureIDs = { "smoke1", "smoke2", "smoke3" };
+
+		emmiter.once = true;
+		// emmiter.colorVariation = { 10, 10, 0, 20 };
 	}
 
 	void Update( ) override
 	{
-		emmiter.position = transform.position;
+		emmiter.position = transform.position + transform.size / 2;
 
-		/*
 		if ( Input::IsKeyPressed( Input::KEY_W ) )
 			pBody->force.y -= 30000;
 		if ( Input::IsKeyPressed( Input::KEY_S ) )
@@ -51,7 +61,6 @@ public:
 			pBody->force.x -= 30000;
 		if ( Input::IsKeyPressed( Input::KEY_D ) )
 			pBody->force.x += 30000;
-		*/
 
 		if ( pBody->position.y > 900 - transform.size.y )
 		{
@@ -69,7 +78,6 @@ public:
 	void Draw( )
 	{
 		Renderer::DrawRectTextured( transform, Assets::textures.GetAsset( textureID ) );
-		emmiter.Draw( );
 	}
 
 	CW_ENTITY_CREATE( tags )
@@ -83,7 +91,7 @@ class InGame : public Scene
 public:
 	InGame( )
 	{
-		world.physicsWorld.gravity = 0;
+		world.physicsWorld.gravity = 400;
 	}
 
 	void OnEnter( ) override
@@ -139,6 +147,9 @@ CW_SCRIPT_EXPORT void PostInit( )
 	EntityRegistry::RegisterEntity<TestEntity>( "testEntity" );
 
 	Assets::textures.Add( "testTexture", "gato.jpg" );
+	Assets::textures.Add( "smoke1", "whitePuff00.png" );
+	Assets::textures.Add( "smoke2", "whitePuff01.png" );
+	Assets::textures.Add( "smoke3", "whitePuff02.png" );
 
 	inGame = new InGame;
 	SceneManager::SetScene( inGame );

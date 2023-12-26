@@ -96,8 +96,6 @@ namespace CatWare
 
 						if ( physicsBody2->GetType( ) == BodyType::DYNAMIC )
 						{
-
-
 							DynamicBody *dynamicBody2 = ( DynamicBody * ) physicsBody2;
 
 							// Update positions of colliders
@@ -108,7 +106,7 @@ namespace CatWare
 								dynamicBody->GetCollider( ), dynamicBody2->GetCollider( )
 							);
 
-							if ( collisionInfo.hasCollision )
+							if ( collisionInfo.hasCollision && substeps == 0 )
 							{
 								if ( physicsBody->collisionCallback != nullptr )
 									physicsBody->collisionCallback( collisionInfo, physicsBody, physicsBody2 );

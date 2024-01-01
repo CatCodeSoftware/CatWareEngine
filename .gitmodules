@@ -1,7 +1,7 @@
 [submodule "Engine/Lib/ImGui"]
 	path = Engine/Lib/ImGui
 	url = https://github.com/ocornut/imgui
-	branch = docking
+	branch = master
 [submodule "Engine/Lib/glm"]
 	path = Engine/Lib/glm
 	url = https://github.com/g-truc/glm

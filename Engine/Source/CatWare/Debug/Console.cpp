@@ -1,9 +1,10 @@
 #include "Console.h"
 
 #include <imgui.h>
+#include <imgui_internal.h>
 
-#include "CatWare/Log.h"
 #include "CatWare/Graphics/Renderer/Renderer.h"
+#include "CatWare/Log.h"
 
 #include "Commands.h"
 
@@ -78,6 +79,36 @@ namespace CatWare
 		{
 			RunString( std::string( commandBuffer ) );
 			strcpy( commandBuffer, "" );
+		}
+
+		// autocomplete
+		// get all commands that begin with the contents of the buffer
+		std::vector<std::string> autocompleteCommands;
+
+		for ( ConsoleCommand* command : commands )
+		{
+			for ( std::string commandName : command->GetNames( ) )
+			{
+				bool beginsWithBuffer = true;
+
+				for ( unsigned int i = 0; i < strlen( commandBuffer ); i++ )
+				{
+					if ( i > commandName.length( ) || commandName[i] != commandBuffer[i] )
+						beginsWithBuffer = false;
+				}
+
+				if ( beginsWithBuffer )
+					autocompleteCommands.push_back( commandName );
+			}
+		}
+
+		if ( ImGui::BeginCombo( "##combo", NULL, ImGuiComboFlags_NoPreview ) )
+		{
+			for ( std::string autocompleteCommand : autocompleteCommands )
+				if ( ImGui::Selectable( autocompleteCommand.c_str( ) ) )
+					strcpy( commandBuffer, autocompleteCommand.c_str( ) );
+
+			ImGui::EndCombo( );
 		}
 
 		ImGui::BeginChild( "output" );

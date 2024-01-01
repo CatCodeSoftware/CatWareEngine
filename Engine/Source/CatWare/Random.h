@@ -4,7 +4,7 @@
 * @author PointThink
 *
 * @brief Collection of functions for randomly
-* generating files.
+* generating numbers.
 */
 
 #pragma once

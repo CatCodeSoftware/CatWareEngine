@@ -1,1 +1,28 @@
-[Engine][Info] Loading script ./Scripts/libTestScript.so
+[Engine][Info] Initializing engine
+[Engine][Info] Initializing filesystem
+[Engine][Info] Creating 1600x900 window with title CatWare
+[Engine][Info] Initializing OpenGL
+[Engine][Info] Vendor:   AMD
+[Engine][Info] Renderer: AMD Radeon Graphics (radeonsi, renoir, LLVM 17.0.6, DRM 3.54, 6.6.8-200.fc39.x86_64)
+[Engine][Info] Version:  4.6 (Core Profile) Mesa 23.3.1
+[Engine][Info] Initializing renderer
+[Engine][Info] Initializing renderer
+[Engine][Info] Loading shader from files:
+	Vertex: EngineRes/Shaders/RectVertex.glsl
+	Fragment: EngineRes/Shaders/RectFragment.glsl
+[Engine][Info] Loading shader from files:
+	Vertex: EngineRes/Shaders/PostProcessVertex.glsl
+	Fragment: EngineRes/Shaders/PostProcessFragment.glsl
+[Engine][Info] Loading shader from files:
+	Vertex: EngineRes/Shaders/TextVertex.glsl
+	Fragment: EngineRes/Shaders/TextFragment.glsl
+[Engine][Info] Loading map from testMap.yaml
+[Engine][Info] Loading texture from gato.jpg
+[Engine][Info] Loading texture from whitePuff01.png
+[Engine][Info] Loading texture from whitePuff02.png
+[Engine][Info] Loading texture from whitePuff00.png
+[Engine][Info] Unloading texture whitePuff02.png
+[Engine][Info] Unloading texture whitePuff01.png
+[Engine][Info] Unloading texture whitePuff00.png
+[Engine][Info] Unloading texture gato.jpg
+[Engine][Info] Closing window

@@ -96,7 +96,7 @@ namespace CatWare
 		( void ) io;
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad; // Enable Gamepad Controls
-		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable; // Enable Docking
+		// io.ConfigFlags |= ImGuiConfigFlags_DockingEnable; // Enable Docking
 
 		io.Fonts->AddFontFromFileTTF( "EngineRes/Fonts/IBMPlexMono-Medium.ttf", 18 );
 
@@ -140,8 +140,8 @@ namespace CatWare
 		colors[ImGuiCol_TabActive] = ImVec4( 0.20f, 0.20f, 0.20f, 0.36f );
 		colors[ImGuiCol_TabUnfocused] = ImVec4( 0.00f, 0.00f, 0.00f, 0.52f );
 		colors[ImGuiCol_TabUnfocusedActive] = ImVec4( 0.14f, 0.14f, 0.14f, 1.00f );
-		colors[ImGuiCol_DockingPreview] = ImVec4( 0.33f, 0.67f, 0.86f, 1.00f );
-		colors[ImGuiCol_DockingEmptyBg] = ImVec4( 1.00f, 0.00f, 0.00f, 1.00f );
+		// colors[ImGuiCol_DockingPreview] = ImVec4( 0.33f, 0.67f, 0.86f, 1.00f );
+		// colors[ImGuiCol_DockingEmptyBg] = ImVec4( 1.00f, 0.00f, 0.00f, 1.00f );
 		colors[ImGuiCol_PlotLines] = ImVec4( 1.00f, 0.00f, 0.00f, 1.00f );
 		colors[ImGuiCol_PlotLinesHovered] = ImVec4( 1.00f, 0.00f, 0.00f, 1.00f );
 		colors[ImGuiCol_PlotHistogram] = ImVec4( 1.00f, 0.00f, 0.00f, 1.00f );
@@ -278,8 +278,8 @@ namespace CatWare
 
 		ImGui_ImplOpenGL3_RenderDrawData( ImGui::GetDrawData( ) );
 
-		ImGui::UpdatePlatformWindows( );
-		ImGui::RenderPlatformWindowsDefault( );
+		// ImGui::UpdatePlatformWindows( );
+		// ImGui::RenderPlatformWindowsDefault( );
 
 		Renderer::camera2D = oldCamera;
 		delete uiCamera;

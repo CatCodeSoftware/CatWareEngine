@@ -46,6 +46,18 @@ namespace CatWare
 		void* valuePtr;
 	};
 
+	enum class ConsoleColor
+	{
+		RED, WHITE, ORANGE
+	};
+
+	class ConsoleText
+	{
+	public:
+		std::string text;
+		ConsoleColor color;
+	};
+
 	class CATWARE_API Console
 	{
 	public:
@@ -58,11 +70,14 @@ namespace CatWare
 		static inline ConVar GetConVar( std::string name ) { return conVars[name]; }
 
 		static void Draw( );
-		static inline void Print( std::string text ) { consoleContents.push_back( text ); };
+		static inline void SetColor( ConsoleColor color ) { currentColor = color; }
+		static inline void Print( std::string text ) { consoleContents.push_back( ConsoleText { text, currentColor } ); };
 
 	private:
+		inline static ConsoleColor currentColor = ConsoleColor::WHITE;
+
 		inline static char commandBuffer[256];
-		inline static std::vector<std::string> consoleContents;
+		inline static std::vector<ConsoleText> consoleContents;
 
 		inline static std::vector<ConsoleCommand*> commands;
 		inline static std::unordered_map<std::string, ConVar> conVars;

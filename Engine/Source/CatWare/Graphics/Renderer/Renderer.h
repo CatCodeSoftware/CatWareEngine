@@ -35,6 +35,7 @@ namespace CatWare
 		static void DeInit( );
 
 		static void SetScreenSize( unsigned int width, unsigned int height );
+		static inline Vector2D GetScreenSize( ) { return Vector2D( width, height ); }
 
 		static void StartDrawing( );
 		static void EndDrawing( );

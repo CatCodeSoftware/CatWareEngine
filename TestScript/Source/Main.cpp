@@ -2,6 +2,8 @@
 
 using namespace CatWare;
 
+int i = 1;
+
 Text::Font* font = nullptr;
 
 class TestEntity : public Entity
@@ -108,11 +110,17 @@ public:
 	{
 		if ( Input::IsKeyPressed( Input::KEY_UP ) )
 		{
+			CW_LOG->Warning( "ahh %d", i );
+			i++;
+
 			Time::maxFPS++;
 		}
 		if ( Input::IsKeyPressed( Input::KEY_DOWN ) )
 		{
 			Time::maxFPS--;
+
+			CW_LOG->Error( "AHH %d", i );
+			i++;
 		}
 	}
 

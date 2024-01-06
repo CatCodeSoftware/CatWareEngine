@@ -38,6 +38,13 @@ namespace CatWare
 				std::cout << "\033[39;49m";
 
 			#endif
+
+			if ( color == Color::RED )
+				Console::SetColor( ConsoleColor::RED );
+			if ( color == Color::YELLOW )
+				Console::SetColor( ConsoleColor::ORANGE );
+			if ( color == Color::RESET )
+				Console::SetColor( ConsoleColor::WHITE );
 		}
 
 		// LOG CLASS

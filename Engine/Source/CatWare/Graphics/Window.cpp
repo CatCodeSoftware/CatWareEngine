@@ -75,7 +75,7 @@ namespace CatWare
 
 				case SDL_KEYDOWN:
 					if ( e.key.keysym.scancode == Input::KEY_GRAVE )
-						DebugUI::enabled = !DebugUI::enabled;
+						DebugUI::Open( );
 
 					Input::SetKeyPressed( e.key.keysym.scancode, true );
 					break;

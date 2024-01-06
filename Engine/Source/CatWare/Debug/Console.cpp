@@ -73,7 +73,7 @@ namespace CatWare
 
 	void Console::Draw( )
 	{
-		ImGui::Begin( "Console" );
+		ImGui::Begin( "Console", NULL, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoDecoration );
 
 		if ( ImGui::InputText( "Command", commandBuffer, 256, ImGuiInputTextFlags_EnterReturnsTrue ) )
 		{
@@ -113,8 +113,19 @@ namespace CatWare
 
 		ImGui::BeginChild( "output" );
 
-		for ( std::string text : consoleContents )
-			ImGui::Text( text.c_str( ) );
+		for ( ConsoleText text : consoleContents )
+		{
+			switch ( text.color )
+			{
+			case ConsoleColor::RED: ImGui::PushStyleColor( ImGuiCol_Text, ImVec4( 1, 0, 0, 1 ) ); break;
+			case ConsoleColor::ORANGE: ImGui::PushStyleColor( ImGuiCol_Text, ImVec4( 1, 0.8, 0, 1 ) ); break;
+			case ConsoleColor::WHITE: ImGui::PushStyleColor( ImGuiCol_Text, ImVec4( 1, 1, 1, 1 ) ); break;
+			}
+
+			ImGui::Text( text.text.c_str( ) );
+
+			ImGui::PopStyleColor( 1 );
+		}
 
 		ImGui::EndChild( );
 		ImGui::End( );

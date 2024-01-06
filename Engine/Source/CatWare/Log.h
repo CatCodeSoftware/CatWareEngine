@@ -25,22 +25,35 @@ namespace CatWare
 			{
 				text = "[" + category + "]" + text + "\n";
 
+				std::string buffer = Format( text, args... );
+
+				printf( buffer.c_str(  ) );
+				Console::Print( std::string( buffer ) );
+				logFile << buffer;
+				logFile.flush( );
+			}
+
+			template<typename... Args>
+			std::string Format( std::string text, Args... args )
+			{
 				size_t bufferSize = snprintf( nullptr, 0, text.c_str( ), args... );
 				char* buffer = new char[bufferSize + 1];
 				snprintf( buffer, bufferSize + 1, text.c_str( ), args... );
 
-				printf( buffer );
-				Console::Print( std::string( buffer ) );
-				logFile << buffer;
-				logFile.flush( );
-
+				std::string returnStr = std::string( buffer );
 				delete[] buffer;
+
+				return returnStr;
 			}
 
 			template<typename... Args>
 			void Warning( std::string text, Args... args )
 			{
 				SetColor( Color::YELLOW );
+
+
+				DebugUI::NotifyWarning( Format( text, args... ), category );
+
 
 				text = "[Warning] " + text;
 				PrintGeneric( text, args... );
@@ -52,6 +65,8 @@ namespace CatWare
 			void Error( std::string text, Args... args )
 			{
 				SetColor( Color::RED );
+
+				DebugUI::NotifyError( Format( text, args... ), category );
 
 				text = "[Error] " + text;
 				PrintGeneric( text, args... );

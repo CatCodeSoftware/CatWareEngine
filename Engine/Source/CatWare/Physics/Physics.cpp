@@ -111,7 +111,7 @@ namespace CatWare
 
 							if ( collisionInfo.hasCollision )
 							{
-								if ( i == substeps - 1 )
+								if ( i == 0 )
 								{
 									if ( physicsBody->collisionCallback != nullptr )
 										physicsBody->collisionCallback( collisionInfo, physicsBody, physicsBody2 );

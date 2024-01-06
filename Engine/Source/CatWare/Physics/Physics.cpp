@@ -3,6 +3,9 @@
 #include <glm/glm.hpp>
 #include <math.h>
 
+
+#include "CatWare/Graphics/Renderer/Renderer.h"
+
 namespace CatWare
 {
 	PhysicsBody::PhysicsBody( BodyType bodyType )
@@ -73,22 +76,23 @@ namespace CatWare
 		// This code __WILL__ anger never-nesters
 		for ( unsigned int i = 0; i < substeps; i++ )
 		{
-			for ( PhysicsBody *physicsBody : physicsBodies )
+			for ( PhysicsBody* physicsBody : physicsBodies )
 			{
 				if ( physicsBody->GetType( ) == BodyType::DYNAMIC )
 				{
-					DynamicBody *dynamicBody = ( DynamicBody * ) physicsBody;
+					DynamicBody* dynamicBody = ( DynamicBody* ) physicsBody;
 
 					// temporary gravity thingy
 					dynamicBody->force.y += dynamicBody->mass * gravity;
 
 					dynamicBody->velocity += dynamicBody->force / dynamicBody->mass * deltaTime;
 					dynamicBody->position += dynamicBody->velocity * deltaTime;
+					dynamicBody->GetCollider( )->position = dynamicBody->position;
 
-					dynamicBody->force = {0, 0};
+					dynamicBody->force = { 0, 0 };
 
 					// Collision checking, only brute force now
-					for ( PhysicsBody *physicsBody2 : physicsBodies )
+					for ( PhysicsBody* physicsBody2 : physicsBodies )
 					{
 						if ( physicsBody == physicsBody2 )
 							continue;
@@ -96,15 +100,14 @@ namespace CatWare
 
 						if ( physicsBody2->GetType( ) == BodyType::DYNAMIC )
 						{
-							DynamicBody *dynamicBody2 = ( DynamicBody * ) physicsBody2;
+							DynamicBody* dynamicBody2 = ( DynamicBody* ) physicsBody2;
 
 							// Update positions of colliders
 							dynamicBody->GetCollider( )->position = dynamicBody->position;
 							dynamicBody2->GetCollider( )->position = dynamicBody2->position;
 
-							CollisionInfo collisionInfo = TestCollision(
-								dynamicBody->GetCollider( ), dynamicBody2->GetCollider( )
-							);
+							CollisionInfo collisionInfo =
+								TestCollision( dynamicBody->GetCollider( ), dynamicBody2->GetCollider( ) );
 
 							if ( collisionInfo.hasCollision && substeps == 0 )
 							{
@@ -127,14 +130,27 @@ namespace CatWare
 							}
 						} else if ( physicsBody2->GetType( ) == BodyType::SURFACE )
 						{
-							SurfaceBody *surface = ( SurfaceBody * ) physicsBody2;
+							SurfaceBody* surface = ( SurfaceBody* ) physicsBody2;
 
 							// apply friction to the surface
-							dynamicBody->force -= dynamicBody->velocity * ( dynamicBody->mass * 10 ) * surface->
-								frictionCoefficient;
+							dynamicBody->force -=
+								dynamicBody->velocity * ( dynamicBody->mass * 10 ) * surface->frictionCoefficient;
 						}
 					}
 				}
+			}
+		}
+	}
+
+	void PhysicsWorld::DrawColliders( )
+	{
+		for ( PhysicsBody* body : physicsBodies )
+		{
+			if ( body->GetType( ) == BodyType::DYNAMIC )
+			{
+				RectCollider* collider = ( RectCollider* ) ( ( DynamicBody* ) body )->GetCollider( );
+
+				Renderer::DrawRect( collider->position, collider->size, Color( 255, 0, 0, 100 ), 0 );
 			}
 		}
 	}

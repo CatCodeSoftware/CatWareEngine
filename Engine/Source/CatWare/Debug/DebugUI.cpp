@@ -10,8 +10,6 @@
 
 namespace CatWare
 {
-
-
 	void DebugUI::Open( )
 	{
 		double consoleSize = 0.3;
@@ -47,6 +45,8 @@ namespace CatWare
 			if ( ImGui::Button( "Entities" ) ) debugToolsTab = 0;
 			ImGui::SameLine( );
 			if ( ImGui::Button( "Time" ) ) debugToolsTab = 1;
+			ImGui::SameLine( );
+			if ( ImGui::Button( "Physics" ) ) debugToolsTab = 2;
 
 			ImGui::BeginChild( "Tool window" );
 
@@ -61,6 +61,9 @@ namespace CatWare
 
 				if ( ImGui::Button( "Reset" ) )
 					Time::modifier = 1;
+
+			case 2:
+				ImGui::Checkbox( "Draw colliders", &SceneManager::GetCurrentScene( )->world.physicsWorld.drawColliders );
 
 				break;
 			}
@@ -173,7 +176,7 @@ namespace CatWare
 				ImGui::InputDouble( "Size Y", &entity->transform.size.y );
 				ImGui::InputFloat( "Rotation", &entity->transform.rotation );
 
-				ImGui::Unindent( 8 );
+				ImGui::Unindent( 16 );
 
 				ImGui::TreePop(  );
 			}

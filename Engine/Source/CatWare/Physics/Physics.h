@@ -64,12 +64,15 @@ namespace CatWare
 	class CATWARE_API PhysicsWorld
 	{
 	public:
+		bool drawColliders = false;
+
 		float gravity = 0;
 
 		void AddBody( PhysicsBody* body );
 		void RemoveBody( PhysicsBody* body );
 
 		void Step( float deltaTime, unsigned int substeps = 8 );
+		void DrawColliders( );
 
 		void Clean( );
 		void RemoveItems( );

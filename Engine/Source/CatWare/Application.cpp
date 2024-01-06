@@ -283,6 +283,9 @@ namespace CatWare
 		currentScene->world.entities.Draw( );
 		currentScene->world.particles.Draw( );
 
+		if ( currentScene->world.physicsWorld.drawColliders )
+			currentScene->world.physicsWorld.DrawColliders( );
+
 		Renderer::EndDrawing( );
 	}
 

@@ -109,7 +109,7 @@ namespace CatWare
 							CollisionInfo collisionInfo =
 								TestCollision( dynamicBody->GetCollider( ), dynamicBody2->GetCollider( ) );
 
-							if ( collisionInfo.hasCollision && substeps == 0 )
+							if ( collisionInfo.hasCollision && i == 0 )
 							{
 								if ( physicsBody->collisionCallback != nullptr )
 									physicsBody->collisionCallback( collisionInfo, physicsBody, physicsBody2 );

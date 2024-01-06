@@ -29,12 +29,12 @@ namespace CatWare
 
 		consoleDropDownReverse = enabled;
 		enabled = !enabled;
+
+		Console::scrollToBottom = true;
 	}
 
 	void DebugUI::Draw( )
 	{
-		ShowErrorNotifications( );
-
 		if ( enabled || Time::GetTime( ) < consoleDropDownEnd )
 		{
 			// get progression of animation
@@ -57,7 +57,11 @@ namespace CatWare
 			ImGui::SetNextWindowSize(
 				{ float( Renderer::GetScreenSize( ).x ), float( Renderer::GetScreenSize( ).y * 0.6 ) } );
 
+			ImGui::PushStyleVar( ImGuiStyleVar_WindowRounding, 0 );
+
 			Console::Draw( );
+
+			ImGui::PopStyleVar( 1 );
 
 			if ( postProcessUIEnabled )
 			{
@@ -88,7 +92,8 @@ namespace CatWare
 
 				ImGui::End( );
 			}
-		}
+		} else
+			ShowErrorNotifications( );
 	}
 
 	void DebugUI::NotifyError( std::string text, std::string category )

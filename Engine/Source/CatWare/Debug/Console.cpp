@@ -75,10 +75,11 @@ namespace CatWare
 	{
 		ImGui::Begin( "Console", NULL, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoDecoration );
 
-		if ( ImGui::InputText( "Command", commandBuffer, 256, ImGuiInputTextFlags_EnterReturnsTrue ) )
+		if ( ImGui::InputText( "##Command", commandBuffer, 256, ImGuiInputTextFlags_EnterReturnsTrue ) )
 		{
 			RunString( std::string( commandBuffer ) );
 			strcpy( commandBuffer, "" );
+			scrollToBottom = true;
 		}
 
 		// autocomplete
@@ -102,6 +103,7 @@ namespace CatWare
 			}
 		}
 
+		ImGui::SameLine( );
 		if ( ImGui::BeginCombo( "##combo", NULL, ImGuiComboFlags_NoPreview ) )
 		{
 			for ( std::string autocompleteCommand : autocompleteCommands )
@@ -110,6 +112,13 @@ namespace CatWare
 
 			ImGui::EndCombo( );
 		}
+
+		ImGui::SameLine( );
+		if ( ImGui::Button( "Clear Console" ) )
+			consoleContents.clear( );
+
+		ImGui::SameLine( );
+		ImGui::Checkbox( "Autoscroll", &autoScroll );
 
 		ImGui::BeginChild( "output" );
 
@@ -125,6 +134,12 @@ namespace CatWare
 			ImGui::Text( text.text.c_str( ) );
 
 			ImGui::PopStyleColor( 1 );
+
+			if ( scrollToBottom && autoScroll )
+			{
+				ImGui::SetScrollFromPosY( ImGui::GetWindowHeight(  ) );
+				scrollToBottom = false;
+			}
 		}
 
 		ImGui::EndChild( );

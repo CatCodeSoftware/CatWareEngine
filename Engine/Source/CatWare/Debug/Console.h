@@ -61,6 +61,9 @@ namespace CatWare
 	class CATWARE_API Console
 	{
 	public:
+		inline static bool scrollToBottom = true;
+		inline static bool autoScroll = true;
+
 		static void Init( );
 
 		static inline void AddCommand( ConsoleCommand* command ) { commands.push_back( command ); }

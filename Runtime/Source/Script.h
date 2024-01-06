@@ -14,10 +14,7 @@ class Script
 public:
 	Script( const std::string& dllPath );
 
-	void ( *fptrPreInit )( CatWare::InitConfig* initConfig ) = nullptr;
-	void ( *fptrPostInit )( ) = nullptr;
-	void ( *fptrActivate )( ) = nullptr;
-	void ( *fptrDeInit )( ) = nullptr;
+	CatWare::Script* script;
 
 private:
 #ifdef CW_PLATFORM_WIN64

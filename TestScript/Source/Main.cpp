@@ -137,38 +137,44 @@ public:
 
 InGame* inGame;
 
-CW_SCRIPT_EXPORT void PreInit( CatWare::InitConfig* config )
+class Game : Script
 {
-	config->windowWidth = 1600;
-	config->windowHeight = 900;
+public:
+	void PreInit(CatWare::InitConfig* initConfig) override
+	{
+		initConfig->windowWidth = 1600;
+		initConfig->windowHeight = 900;
 
-	Time::modifier = 1.0;
-}
+		Time::modifier = 1.0;
+	}
 
-CW_SCRIPT_EXPORT void PostInit( )
-{
-	font = new Text::Font( "EngineRes/Fonts/Jura-Regular.ttf", 30 );
+	void Start() override
+	{
+		font = new Text::Font( "EngineRes/Fonts/Jura-Regular.ttf", 30 );
 
-	Time::frameRateLimited = false;
-	Time::maxFPS = 240;
+		Time::frameRateLimited = false;
+		Time::maxFPS = 240;
 
-	EntityRegistry::RegisterEntity<TestEntity>( "testEntity" );
+		EntityRegistry::RegisterEntity<TestEntity>( "testEntity" );
 
-	Assets::textures.Add( "testTexture", "gato.jpg" );
-	Assets::textures.Add( "smoke1", "whitePuff00.png" );
-	Assets::textures.Add( "smoke2", "whitePuff01.png" );
-	Assets::textures.Add( "smoke3", "whitePuff02.png" );
+		Assets::textures.Add( "testTexture", "gato.jpg" );
+		Assets::textures.Add( "smoke1", "whitePuff00.png" );
+		Assets::textures.Add( "smoke2", "whitePuff01.png" );
+		Assets::textures.Add( "smoke3", "whitePuff02.png" );
 
-	inGame = new InGame;
-	SceneManager::SetScene( inGame );
-}
+		inGame = new InGame;
+		SceneManager::SetScene( inGame );
+	}
 
-CW_SCRIPT_EXPORT void Activate( )
-{
+	void Activate() override
+	{
 
-}
+	}
 
-CW_SCRIPT_EXPORT void DeInit( )
-{
-	delete font;
-}
+	void Exit() override
+	{
+		delete font;
+	}
+};
+
+CW_REGISTER_SCRIPT( Game );

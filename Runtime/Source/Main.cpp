@@ -16,8 +16,8 @@ public:
 
 		for ( Script& script : scripts )
 		{
-			if ( script.fptrPreInit != nullptr )
-				script.fptrPreInit( &initConfig );
+			if ( script.script != nullptr )
+				script.script->PreInit( &initConfig );
 		}
 	}
 
@@ -25,14 +25,14 @@ public:
 	{
 		for ( Script& script : scripts )
 		{
-			if ( script.fptrPostInit != nullptr )
-				script.fptrPostInit( );
+			if ( script.script != nullptr )
+				script.script->Start( );
 		}
 
 		for ( Script& script : scripts )
 		{
-			if ( script.fptrActivate != nullptr )
-				script.fptrActivate( ); 
+			if ( script.script != nullptr )
+				script.script->Activate( );
 		}
 	}
 
@@ -40,8 +40,8 @@ public:
 	{
 		for ( Script& script : scripts )
 		{
-			if ( script.fptrDeInit != nullptr )
-				script.fptrDeInit( );
+			if ( script.script != nullptr )
+				script.script->Exit( );
 		}
 	}
 };

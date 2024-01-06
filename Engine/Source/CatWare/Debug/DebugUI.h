@@ -63,6 +63,8 @@ namespace CatWare
 
 		inline static bool enabled = false;
 
+		inline static unsigned int tab = 0;
+
 		inline static double consoleDropDownReverse = false;
 		inline static double consoleDropDownTime = 0.5;
 		inline static double consoleDropDownBegin = 0;

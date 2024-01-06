@@ -55,25 +55,8 @@ Script::Script( const std::string& dllPath )
 		CW_ABORT( "Couldn't load script " + dllPath );
 	}
 
-	fptrPreInit = ( void ( * )( CatWare::InitConfig* ) ) LoadFunc( dll, "PreInit" );
-	fptrPostInit = ( void ( * )( ) ) LoadFunc( dll, "PostInit" );
-	fptrActivate = ( void ( * )( ) ) LoadFunc( dll, "Activate" );
-	fptrDeInit = ( void ( * )( ) ) LoadFunc( dll, "DeInit" );
-
-	if ( fptrPreInit == nullptr )
-	{
-		CW_ENGINE_LOG->Error( "Couldn't load script " + dllPath + " because the function \"PreInit\" could not be loaded" );
-	}
-
-	if ( fptrPostInit == nullptr )
-	{
-		CW_ENGINE_LOG->Error( "Couldn't load script " + dllPath + " because the function \"PostInit\" could not be loaded" );
-	}
-
-	if ( fptrDeInit == nullptr )
-	{
-		CW_ENGINE_LOG->Error( "Couldn't load script " + dllPath + " because the function \"DeInit\" could not be loaded" );
-	}
+	CatWare::Script* ( *scriptGetFunc )( ) = ( CatWare::Script* ( * )( ) ) LoadFunc( dll, "GetCWScript" );
+	script = scriptGetFunc( );
 }
 
 std::vector<Script> LoadScripts( const std::string& scriptFolder )

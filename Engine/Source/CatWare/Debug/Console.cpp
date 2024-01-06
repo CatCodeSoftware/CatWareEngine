@@ -73,7 +73,7 @@ namespace CatWare
 
 	void Console::Draw( )
 	{
-		ImGui::Begin( "Console", NULL, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoDecoration );
+		ImGui::Begin( "Console", NULL /* , ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoDecoration */ );
 
 		if ( ImGui::InputText( "##Command", commandBuffer, 256, ImGuiInputTextFlags_EnterReturnsTrue ) )
 		{

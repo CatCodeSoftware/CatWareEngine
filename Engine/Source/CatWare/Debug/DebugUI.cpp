@@ -1,6 +1,7 @@
 #include "DebugUI.h"
 
 #include <imgui.h>
+#include <imgui_internal.h>
 
 #include "CatWare/Graphics/Renderer/Renderer.h"
 #include "CatWare/Time.h"
@@ -33,8 +34,8 @@ namespace CatWare
 		Console::scrollToBottom = true;
 	}
 
-	void DebugUI::Draw( )
-	{
+	void DebugUI::Draw( ){
+
 		if ( enabled || Time::GetTime( ) < consoleDropDownEnd )
 		{
 			// get progression of animation
@@ -54,8 +55,7 @@ namespace CatWare
 			position.y = EaseIn( 1 - timeProgress ) * Lerp( beginPos.y, desiredPos.y, timeProgress );
 
 			ImGui::SetNextWindowPos( { float( position.x ), float( position.y ) } );
-			ImGui::SetNextWindowSize(
-				{ float( Renderer::GetScreenSize( ).x ), float( Renderer::GetScreenSize( ).y * 0.6 ) } );
+			ImGui::SetNextWindowSize( { float( Renderer::GetScreenSize( ).x ), float( Renderer::GetScreenSize( ).y * 0.6 ) } );
 
 			ImGui::PushStyleVar( ImGuiStyleVar_WindowRounding, 0 );
 
@@ -63,35 +63,6 @@ namespace CatWare
 
 			ImGui::PopStyleVar( 1 );
 
-			if ( postProcessUIEnabled )
-			{
-				ImGui::Begin( "Post process", &postProcessUIEnabled );
-
-				if ( ImGui::Button( "Reset" ) )
-					Renderer::postProcess = PostProcess( );
-
-				ImGui::SliderFloat( "Brightnes", &Renderer::postProcess.brightness, -1, 1 );
-				ImGui::SliderFloat( "Contrast", &Renderer::postProcess.contrast, 0, 10 );
-				ImGui::SliderFloat( "Exposure", &Renderer::postProcess.exposure, -10, 10 );
-				ImGui::SliderFloat( "Saturation", &Renderer::postProcess.saturation, -1, 1 );
-				ImGui::SliderFloat( "Sharpness", &Renderer::postProcess.sharpness, -10, 10 );
-
-				float colors[4] = {
-					float( Renderer::postProcess.tint.r ) / 255.0f,
-					float( Renderer::postProcess.tint.g ) / 255.0f,
-					float( Renderer::postProcess.tint.b ) / 255.0f,
-					float( Renderer::postProcess.tint.a ) / 255.0f,
-				};
-
-				ImGui::ColorPicker4( "Tint", colors );
-
-				Renderer::postProcess.tint.r = colors[0] * 255;
-				Renderer::postProcess.tint.g = colors[1] * 255;
-				Renderer::postProcess.tint.b = colors[2] * 255;
-				Renderer::postProcess.tint.a = colors[3] * 255;
-
-				ImGui::End( );
-			}
 		} else
 			ShowErrorNotifications( );
 	}

@@ -17,6 +17,7 @@
 
 namespace CatWare
 {
+	class DebugUI;
 	void EntityCollisionCallback( CollisionInfo info, PhysicsBody* body1, PhysicsBody* body2 );
 
 	// This is a base class for all entities in the game
@@ -85,6 +86,8 @@ namespace CatWare
 	// This is a scene specific class that manages all entities
 	class CATWARE_API EntityManager
 	{
+		friend DebugUI;
+
 	public:
 		EntityManager( );
 		~EntityManager( );

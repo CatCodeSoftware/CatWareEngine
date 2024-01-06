@@ -73,7 +73,7 @@ namespace CatWare
 
 	void Console::Draw( )
 	{
-		ImGui::Begin( "Console", NULL /* , ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoDecoration */ );
+		ImGui::Begin( "Console", NULL, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoDecoration );
 
 		if ( ImGui::InputText( "##Command", commandBuffer, 256, ImGuiInputTextFlags_EnterReturnsTrue ) )
 		{
@@ -120,14 +120,24 @@ namespace CatWare
 		ImGui::SameLine( );
 		ImGui::Checkbox( "Autoscroll", &autoScroll );
 
+		ImGui::Checkbox( "Errors", &showErrors );
+		ImGui::SameLine( );
+		ImGui::Checkbox( "Warnings", &showWarnings );
+		ImGui::SameLine( );
+		ImGui::Checkbox( "Info", &showInfo );
+
 		ImGui::BeginChild( "output" );
 
 		for ( ConsoleText text : consoleContents )
 		{
+			if ( text.color == ConsoleColor::RED && !showErrors ) continue;
+			if ( text.color == ConsoleColor::ORANGE && !showWarnings ) continue;
+			if ( text.color == ConsoleColor::WHITE && !showInfo ) continue;
+
 			switch ( text.color )
 			{
-			case ConsoleColor::RED: ImGui::PushStyleColor( ImGuiCol_Text, ImVec4( 1, 0, 0, 1 ) ); break;
-			case ConsoleColor::ORANGE: ImGui::PushStyleColor( ImGuiCol_Text, ImVec4( 1, 0.8, 0, 1 ) ); break;
+			case ConsoleColor::RED: ImGui::PushStyleColor( ImGuiCol_Text, ImVec4( 1, 0.1, 0.1, 1 ) ); break;
+			case ConsoleColor::ORANGE: ImGui::PushStyleColor( ImGuiCol_Text, ImVec4( 1, 0.6, 0, 1 ) ); break;
 			case ConsoleColor::WHITE: ImGui::PushStyleColor( ImGuiCol_Text, ImVec4( 1, 1, 1, 1 ) ); break;
 			}
 
@@ -141,8 +151,8 @@ namespace CatWare
 				scrollToBottom = false;
 			}
 		}
-
 		ImGui::EndChild( );
+
 		ImGui::End( );
 	}
 

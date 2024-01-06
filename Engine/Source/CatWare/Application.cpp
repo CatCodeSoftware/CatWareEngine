@@ -36,7 +36,7 @@ namespace CatWare
 			{
 				Update( );
 
-				int ticksElapsed = tickTimer.TimesTimeElapsed( ( 1.0 / Time::ticksPerSecond ) * Time::modifier );
+				int ticksElapsed = tickTimer.TimesTimeElapsed( ( 1.0 / Time::ticksPerSecond ) / Time::modifier );
 
 				if ( ticksElapsed != 0 )
 				{
@@ -98,7 +98,7 @@ namespace CatWare
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad; // Enable Gamepad Controls
 		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable; // Enable Docking
 
-		io.Fonts->AddFontFromFileTTF( "EngineRes/Fonts/IBMPlexMono-Medium.ttf", 18 );
+		io.Fonts->AddFontFromFileTTF( "EngineRes/Fonts/IBMPlexMono-Medium.ttf", 16 );
 
 		// Setup style
 		// Moonlight style by Madam-Herta from ImThemes
@@ -137,7 +137,7 @@ namespace CatWare
 		
 		style.Colors[ImGuiCol_Text] = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
 		style.Colors[ImGuiCol_TextDisabled] = ImVec4(0.2745098173618317f, 0.3176470696926117f, 0.4509803950786591f, 1.0f);
-		style.Colors[ImGuiCol_WindowBg] = ImVec4(0.0784313753247261f, 0.08627451211214066f, 0.1019607856869698f, 0.9f);
+		style.Colors[ImGuiCol_WindowBg] = ImVec4(0.0784313753247261f, 0.08627451211214066f, 0.1019607856869698f, 1.0f);
 		style.Colors[ImGuiCol_ChildBg] = ImVec4(0.09411764889955521f, 0.1019607856869698f, 0.1176470592617989f, 1.0f);
 		style.Colors[ImGuiCol_PopupBg] = ImVec4(0.0784313753247261f, 0.08627451211214066f, 0.1019607856869698f, 1.0f);
 		style.Colors[ImGuiCol_Border] = ImVec4(0.1568627506494522f, 0.168627455830574f, 0.1921568661928177f, 1.0f);

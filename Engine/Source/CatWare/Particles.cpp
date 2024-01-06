@@ -8,12 +8,12 @@
 #include "Graphics/Renderer/Renderer.h"
 #include "Log.h"
 #include "Random.h"
-#include "Scene.h"
+#include "GameState/Scene.h"
 #include "Time.h"
 
 namespace CatWare
 {
-	float Lerp( float v0, float v1, float t )
+	inline static float Lerp( float v0, float v1, float t )
 	{
 		return v0 + t * ( v1 - v0 );
 	}

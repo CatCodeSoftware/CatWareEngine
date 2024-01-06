@@ -13,7 +13,7 @@
 #include "Core.h"
 #include "Graphics/Window.h"
 #include "Graphics/Renderer/Renderer.h"
-#include "Scene.h"
+#include "GameState/Scene.h"
 #include "Time.h"
 
 namespace CatWare

@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "Core.h"
+#include "CatWare/Core.h"
 
 #include "World.h"
 

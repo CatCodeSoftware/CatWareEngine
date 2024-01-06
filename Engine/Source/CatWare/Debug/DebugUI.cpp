@@ -3,63 +3,78 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
+#include "CatWare/GameState/Scene.h"
 #include "CatWare/Graphics/Renderer/Renderer.h"
 #include "CatWare/Time.h"
 
-static inline float Lerp( float v0, float v1, float t )
-{
-	return v0 + t * ( v1 - v0 );
-}
-
-static inline float EaseIn( float x )
-{
-	return x * x * x;
-}
-
-static inline float EaseOutCubic( float x )
-{
-	return 1 - pow( x, 3 );
-}
 
 namespace CatWare
 {
+
+
 	void DebugUI::Open( )
 	{
-		consoleDropDownBegin = Time::GetTime( );
-		consoleDropDownEnd = consoleDropDownBegin + consoleDropDownTime;
+		double consoleSize = 0.3;
+		double debugToolsSizeX = 0.3;
+		double debugToolsSizeY = 0.7;
 
-		consoleDropDownReverse = enabled;
+		console = AnimatedWindow( { 0, Renderer::GetScreenSize( ).y * -consoleSize }, { 0, 0 }, { Renderer::GetScreenSize( ).x, Renderer::GetScreenSize( ).y * consoleSize } );
+		debugTools = AnimatedWindow( { -( Renderer::GetScreenSize( ).x * debugToolsSizeX ), Renderer::GetScreenSize( ).y - ( Renderer::GetScreenSize( ).y * debugToolsSizeY ) }, { 0, Renderer::GetScreenSize( ).y - ( Renderer::GetScreenSize( ).y * debugToolsSizeY ) }, { Renderer::GetScreenSize( ).x * debugToolsSizeX, Renderer::GetScreenSize( ).y * debugToolsSizeY } );
+		gameViewport = AnimatedWindow( { Renderer::GetScreenSize( ).x + ( Renderer::GetScreenSize( ).x * debugToolsSizeX ), Renderer::GetScreenSize( ).y * consoleSize }, { Renderer::GetScreenSize( ).x * debugToolsSizeX, Renderer::GetScreenSize( ).y * consoleSize }, { Renderer::GetScreenSize( ).x * ( 1.0 - debugToolsSizeX ), Renderer::GetScreenSize( ).y * ( 1.0 - consoleSize ) } );
+
+		console.Start( enabled, 0.5 );
+		debugTools.Start( enabled, 0.5 );
+		gameViewport.Start( enabled, 0.5 );
 		enabled = !enabled;
 
 		Console::scrollToBottom = true;
 	}
 
-	void DebugUI::Draw( ){
+	void DebugUI::Draw( )
+	{
 
-		if ( enabled || Time::GetTime( ) < consoleDropDownEnd )
+		if ( enabled || Time::GetTime( ) < console.endTime )
 		{
-			// get progression of animation
-			Vector2D beginPos = { 0, Renderer::GetScreenSize( ).y * -0.6 };
-			Vector2D desiredPos = { 0, 0 };
-
-			float timeProgress = ( Time::GetTime( ) - consoleDropDownBegin ) / consoleDropDownTime;
-
-			if ( timeProgress > 1 )
-				timeProgress = 1;
-
-			if ( consoleDropDownReverse )
-				timeProgress = 1 - timeProgress;
-
-			// lerp it
-			Vector2D position = { 0, 0 };
-			position.y = EaseIn( 1 - timeProgress ) * Lerp( beginPos.y, desiredPos.y, timeProgress );
-
-			ImGui::SetNextWindowPos( { float( position.x ), float( position.y ) } );
-			ImGui::SetNextWindowSize( { float( Renderer::GetScreenSize( ).x ), float( Renderer::GetScreenSize( ).y * 0.6 ) } );
-
 			ImGui::PushStyleVar( ImGuiStyleVar_WindowRounding, 0 );
 
+			console.Animate( );
 			Console::Draw( );
+
+			debugTools.Animate( );
+			ImGui::Begin( "Debug tools", NULL, ImGuiWindowFlags_NoDecoration );
+
+			ImGui::SameLine( );
+			if ( ImGui::Button( "Entities" ) ) debugToolsTab = 0;
+			ImGui::SameLine( );
+			if ( ImGui::Button( "Time" ) ) debugToolsTab = 1;
+
+			ImGui::BeginChild( "Tool window" );
+
+			switch ( debugToolsTab )
+			{
+			case 0:
+				ShowEntityViewer( );
+				break;
+			case 1:
+				ImGui::Text( "Time: %lf", Time::GetTime(  ) );
+				ImGui::SliderFloat( "Time multiplier", &Time::modifier, 0.25, 2 );
+
+				if ( ImGui::Button( "Reset" ) )
+					Time::modifier = 1;
+
+				break;
+			}
+
+			ImGui::EndChild( );
+
+			ImGui::End( );
+
+			gameViewport.Animate( );
+			ImGui::Begin( "Game view", NULL, ImGuiWindowFlags_NoDecoration );
+
+			ImGui::Image( ( ImTextureID ) Renderer::GetRenderTarget( )->GetColorAttachment( )->GetTextureID( ), ImGui::GetContentRegionAvail( ), { 0, 1 }, { 1, 0 } );
+
+			ImGui::End( );
 
 			ImGui::PopStyleVar( 1 );
 
@@ -98,8 +113,8 @@ namespace CatWare
 
 				// lerp it
 				Vector2D position = notificationsOrigin;
-				position.x = Lerp( beginPos.x, desiredPos.x, EaseOutCubic( 1 - timeProgress ) );
-				position.y = Lerp( beginPos.y, desiredPos.y, EaseOutCubic( 1 - timeProgress ) );
+				position.x = Lerp2( beginPos.x, desiredPos.x, EaseOutCubic( 1 - timeProgress ) );
+				position.y = Lerp2( beginPos.y, desiredPos.y, EaseOutCubic( 1 - timeProgress ) );
 
 				ImGui::SetNextWindowPos( { float( position.x ), float( position.y ) } );
 			}
@@ -119,8 +134,8 @@ namespace CatWare
 
 				// lerp it
 				Vector2D position = notificationsOrigin;
-				position.x = Lerp( beginPos.x, desiredPos.x, EaseOutCubic( 1 - timeProgress ) );
-				position.y = Lerp( beginPos.y, desiredPos.y, EaseOutCubic( 1 - timeProgress ) );
+				position.x = Lerp2( beginPos.x, desiredPos.x, EaseOutCubic( 1 - timeProgress ) );
+				position.y = Lerp2( beginPos.y, desiredPos.y, EaseOutCubic( 1 - timeProgress ) );
 
 				ImGui::SetNextWindowPos( { float( position.x ), float( position.y ) } );
 			}
@@ -142,4 +157,26 @@ namespace CatWare
 		}
 	}
 
+	void DebugUI::ShowEntityViewer( )
+	{
+		for ( Entity* entity : SceneManager::GetCurrentScene( )->world.entities.entities )
+		{
+			if ( ImGui::TreeNode( ( entity->GetClassName( ) + " - " + std::to_string( entity->GetID( ) ) ).c_str(  ) ) )
+			{
+				ImGui::Indent( 16 );
+
+				if ( ImGui::Button( "Destroy" ) ) entity->Destroy( );
+
+				ImGui::InputDouble( "Position X", &entity->transform.position.x );
+				ImGui::InputDouble( "Position Y", &entity->transform.position.y );
+				ImGui::InputDouble( "Size X", &entity->transform.size.x );
+				ImGui::InputDouble( "Size Y", &entity->transform.size.y );
+				ImGui::InputFloat( "Rotation", &entity->transform.rotation );
+
+				ImGui::Unindent( 8 );
+
+				ImGui::TreePop(  );
+			}
+		}
+	}
 } // namespace CatWare

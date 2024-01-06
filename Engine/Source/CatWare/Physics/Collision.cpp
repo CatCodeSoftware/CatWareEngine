@@ -11,7 +11,7 @@ namespace CatWare
 		if ( a->colliderType == ColliderType::RECT && b->colliderType == ColliderType::RECT ) { return TestCollisionRectRect( (RectCollider* ) a, ( RectCollider* ) b ); }
 		else if ( a->colliderType == ColliderType::CIRCLE && b->colliderType == ColliderType::CIRCLE ) { return TestCollisionCircleCircle( ( CircleCollider* ) a, ( CircleCollider* ) b ); }
 
-		return CollisionInfo( );
+		return { };
 	}
 
 	CollisionInfo TestCollisionCircleCircle( CircleCollider* a, CircleCollider* b )

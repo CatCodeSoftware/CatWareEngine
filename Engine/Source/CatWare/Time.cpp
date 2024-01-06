@@ -22,7 +22,6 @@ namespace CatWare
 
 	int InternalTimer::TimesTimeElapsed( double time )
 	{
-		double result = GetTime( ) / time;
 		return GetTime( ) / time;
 	}
 

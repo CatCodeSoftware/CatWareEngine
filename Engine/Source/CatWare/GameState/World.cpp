@@ -2,8 +2,8 @@
 
 #include <yaml-cpp/yaml.h>
 
-#include "Log.h"
-#include "Filesystem/Filesystem.h"
+#include "CatWare/Log.h"
+#include "CatWare/Filesystem/Filesystem.h"
 
 namespace CatWare
 {

@@ -2,7 +2,7 @@
 
 #include "CatWare/Debug/Debug.h"
 
-#include "Error.h"
+#include "CatWare/Error.h"
 
 namespace CatWare
 {

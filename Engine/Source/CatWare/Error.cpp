@@ -4,6 +4,7 @@
 
 #include <SDL.h>
 
+#include "Log.h"
 #include "Types/Types.h"
 
 #if defined(CW_PLATFORM_WIN64)
@@ -24,6 +25,8 @@ namespace CatWare
 		#if defined(CW_DEBUG)
 				// *( ( UInt8* ) NULL ) = NULL; // trigger a segfault to set off IDE debuggers
 		#endif
+
+		CW_ENGINE_LOG->Error( ( "Fatal error occured in file " + file + " in line " + std::to_string( line ) + "\n\n" + message ).c_str( ) );
 
 		exit( 1 );
 	}

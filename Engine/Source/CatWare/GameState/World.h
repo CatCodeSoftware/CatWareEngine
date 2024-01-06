@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Particles.h"
+#include "CatWare/Particles.h"
 #include "CatWare/Entity/Entity.h"
 #include "CatWare/Physics/Physics.h"
 

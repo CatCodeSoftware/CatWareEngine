@@ -18,6 +18,8 @@ public:
 	TestEntity( std::string textureID )
 	{
 		this->textureID = textureID;
+
+		className = "testEntity";
 	}
 
 	void Init( ) override
@@ -142,8 +144,10 @@ class Game : Script
 public:
 	void PreInit(CatWare::InitConfig* initConfig) override
 	{
-		initConfig->windowWidth = 1600;
-		initConfig->windowHeight = 900;
+		initConfig->windowWidth = 1920;
+		initConfig->windowHeight = 1080;
+
+		initConfig->windowFullscreen = true;
 
 		Time::modifier = 1.0;
 	}

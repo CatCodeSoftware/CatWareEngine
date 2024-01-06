@@ -74,10 +74,14 @@ namespace CatWare
 
 		static void Draw( );
 		static inline void SetColor( ConsoleColor color ) { currentColor = color; }
-		static inline void Print( std::string text ) { consoleContents.push_back( ConsoleText { text, currentColor } ); };
+		static inline void Print( std::string text ) { consoleContents.push_back( ConsoleText { text, currentColor } ); scrollToBottom = true; };
 
 	private:
 		inline static ConsoleColor currentColor = ConsoleColor::WHITE;
+
+		inline static bool showInfo = true;
+		inline static bool showErrors = true;
+		inline static bool showWarnings = true;
 
 		inline static char commandBuffer[256];
 		inline static std::vector<ConsoleText> consoleContents;

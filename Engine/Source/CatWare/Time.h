@@ -25,7 +25,7 @@ namespace CatWare
 	class CATWARE_API Time
 	{
 	public:
-		inline static double modifier = 1.0f;
+		inline static float modifier = 1.0f;
 
 		inline static float ticksPerSecond = 60;
 		inline static float maxFPS = 240;
@@ -36,7 +36,7 @@ namespace CatWare
 			if ( isTimePaused )
 				return 0;
 
-			return deltaTime * modifier;
+			return deltaTime;
 		}
 
 		inline static double GetTime( )

@@ -1,7 +1,7 @@
 #include "Commands.h"
 
 #include "CatWare/Log.h"
-#include "CatWare/Scene.h"
+#include "CatWare/GameState/Scene.h"
 #include "CatWare/Types/Types.h"
 
 namespace CatWare

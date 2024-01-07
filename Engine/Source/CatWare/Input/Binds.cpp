@@ -4,10 +4,11 @@
 
 #include "CatWare/Debug/Debug.h"
 
-#include "SDL.h"
 #include "CatWare/Error.h"
 #include "CatWare/Filesystem/Filesystem.h"
+#include "CatWare/Log.h"
 #include "KeyboardAndMouse.h"
+#include "SDL.h"
 
 namespace CatWare
 {
@@ -124,12 +125,22 @@ namespace CatWare
 
 				if ( name != "" && inputType != "" && inputCode != "" )
 				{
-					int convertedCode = SDL_GetScancodeFromName( inputCode.c_str( ) );
+					int convertedCode;
 
 					if ( inputType == "keyboard" )
+					{
+						convertedCode  = SDL_GetScancodeFromName( inputCode.c_str( ) );
+
+						if ( convertedCode == SDL_SCANCODE_UNKNOWN  )
+							CW_ENGINE_LOG->Error( "Unknown key name %s", inputCode.c_str( ) );
+
 						AddBinding( name, new KeyBind( convertedCode ) );
+					}
 					else if ( inputType == "mouse" )
+					{
+						convertedCode = std::stoi( inputCode );
 						AddBinding( name, new MouseBind( convertedCode ) );
+					}
 					else
 						CW_ABORT( "Unknown input type " + inputType );
 				}

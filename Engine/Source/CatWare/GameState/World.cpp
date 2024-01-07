@@ -65,7 +65,7 @@ namespace CatWare
 				tags.insert( {node[0].as< std::string >( ), node[1].as< std::string >( )} );
 			}
 
-			entities.CreateEntityByClassName( className, finalTransform, tags );
+			entities.CreateEntity( className, finalTransform, tags );
 		}
 	}
 }

@@ -20,7 +20,7 @@ namespace CatWare
 		scene->OnEnter( );
 	}
 
-	Scene* SceneManager::GetCurrentScene( )
+	Scene* SceneManager::GetScene( )
 	{
 		return currentScene;
 	}

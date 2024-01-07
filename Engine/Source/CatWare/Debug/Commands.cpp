@@ -55,8 +55,8 @@ namespace CatWare
 
 		void Map::Run( std::vector< std::string > args )
 		{
-			SceneManager::GetCurrentScene( )->world.Clean( );
-			SceneManager::GetCurrentScene( )->world.LoadFromMapFile( args[1] );
+			SceneManager::GetScene( )->world.Clean( );
+			SceneManager::GetScene( )->world.LoadFromMapFile( args[1] );
 		}
 
 

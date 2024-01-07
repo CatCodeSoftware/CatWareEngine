@@ -70,7 +70,7 @@ namespace CatWare
 				particles = 0;
 
 			if ( particles != 0 )
-				SceneManager::GetCurrentScene( )->world.particles.ReserveSpace( particles );
+				SceneManager::GetScene( )->world.particles.ReserveSpace( particles );
 
 			for ( unsigned int i = 0; i < particles; i++ )
 			{
@@ -102,7 +102,7 @@ namespace CatWare
 				if ( textured )
 					part.textureID = textureIDs[Random::GetUInt( 0, textureIDs.size( ) - 1 )];
 
-				SceneManager::GetCurrentScene( )->world.particles.AddParticle( part );
+				SceneManager::GetScene( )->world.particles.AddParticle( part );
 			}
 
 			numEmmisions++;

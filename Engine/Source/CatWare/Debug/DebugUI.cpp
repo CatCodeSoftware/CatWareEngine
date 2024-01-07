@@ -62,8 +62,10 @@ namespace CatWare
 				if ( ImGui::Button( "Reset" ) )
 					Time::modifier = 1;
 
+				break;
+
 			case 2:
-				ImGui::Checkbox( "Draw colliders", &SceneManager::GetCurrentScene( )->world.physicsWorld.drawColliders );
+				ImGui::Checkbox( "Draw colliders", &SceneManager::GetScene( )->world.physicsWorld.drawColliders );
 
 				break;
 			}
@@ -162,7 +164,7 @@ namespace CatWare
 
 	void DebugUI::ShowEntityViewer( )
 	{
-		for ( Entity* entity : SceneManager::GetCurrentScene( )->world.entities.entities )
+		for ( Entity* entity : SceneManager::GetScene( )->world.entities.entities )
 		{
 			if ( ImGui::TreeNode( ( entity->GetClassName( ) + " - " + std::to_string( entity->GetID( ) ) ).c_str(  ) ) )
 			{

@@ -41,7 +41,7 @@ namespace CatWare
 	{
 	public:
 		static void SetScene( Scene* scene );
-		static Scene* GetCurrentScene( );
+		static Scene* GetScene( );
 
 	private:
 		static Scene* currentScene;

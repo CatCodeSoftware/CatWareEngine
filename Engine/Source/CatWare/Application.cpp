@@ -16,11 +16,23 @@
 #include "Input/Binds.h"
 #include "Random.h"
 #include "CatWare/Debug/DebugUI.h"
+#include "CatWare/Error.h"
+
+#ifdef CW_PLATFORM_UNIX64
+#include <signal.h>
+#endif
 
 namespace CatWare
 {
 	void Application::Run( )
 	{
+
+		// Crash handling on linux
+#ifdef CW_PLATFORM_UNIX64
+		signal( SIGSEGV, &CrashHandler );
+		signal( SIGFPE, &CrashHandler );
+#endif
+
 		Init( );
 
 		while ( running )
@@ -30,7 +42,7 @@ namespace CatWare
 			window->HandleWindowEvents( );
 			running = !window->ShouldClose( );
 
-			Scene* currentScene = SceneManager::GetCurrentScene( );
+			Scene* currentScene = SceneManager::GetScene( );
 
 			if ( currentScene != nullptr )
 			{
@@ -256,7 +268,7 @@ namespace CatWare
 
 	void Application::Update( )
 	{
-		Scene* currentScene = SceneManager::GetCurrentScene( );
+		Scene* currentScene = SceneManager::GetScene( );
 
 		currentScene->Update( );
 		currentScene->world.entities.Update( );
@@ -266,7 +278,7 @@ namespace CatWare
 
 	void Application::Tick( )
 	{
-		Scene* currentScene = SceneManager::GetCurrentScene( );
+		Scene* currentScene = SceneManager::GetScene( );
 
 		currentScene->Tick( );
 		currentScene->world.physicsWorld.Step( 1.0f / Time::ticksPerSecond );
@@ -275,7 +287,7 @@ namespace CatWare
 
 	void Application::Draw( )
 	{
-		Scene* currentScene = SceneManager::GetCurrentScene( );
+		Scene* currentScene = SceneManager::GetScene( );
 
 		Renderer::StartDrawing( );
 
@@ -296,7 +308,7 @@ namespace CatWare
 
 		Renderer::camera2D = uiCamera;
 
-		Scene* currentScene = SceneManager::GetCurrentScene( );
+		Scene* currentScene = SceneManager::GetScene( );
 
 		ImGui_ImplOpenGL3_NewFrame( );
 		ImGui_ImplSDL2_NewFrame( );

@@ -17,4 +17,5 @@
 namespace CatWare
 {
 	CATWARE_API void FatalError( std::string file, int line, std::string message );
+	CATWARE_API void CrashHandler( int sig );
 }

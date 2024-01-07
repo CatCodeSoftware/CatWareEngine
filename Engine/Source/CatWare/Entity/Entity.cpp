@@ -94,7 +94,7 @@ namespace CatWare
 		entities.clear( );
 	}
 
-	UInt64 EntityManager::CreateEntityByClassName(
+	UInt64 EntityManager::CreateEntity(
 		std::string className, Transform transform, std::unordered_map< std::string, std::string > tags
 	)
 	{
@@ -113,6 +113,7 @@ namespace CatWare
 
 			entity->transform = transform;
 			entity->id = id;
+			entity->className = className;
 
 			entities.push_back( entity );
 

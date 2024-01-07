@@ -94,29 +94,7 @@ namespace CatWare
 
 		void CleanUp( );
 
-		// Function for creating an entity by type
-		template<typename T>
-		UInt64 CreateEntityByType( Transform transform, std::unordered_map<std::string, std::string> tags )
-		{
-			UInt64 id = std::rand( );
-
-			Entity* entity = T::Create( tags );
-			entity->transform = transform;
-
-			entity->id = id;
-
-			if ( usedIDs[id] == false )
-			{
-				usedIDs[id] = true;
-
-				entities.push_back( entity );
-				return id;
-			}
-
-			return 0;
-		}
-
-		UInt64 CreateEntityByClassName( std::string className, Transform transform, std::unordered_map<std::string, std::string> tags );
+		UInt64 CreateEntity( std::string className, Transform transform, std::unordered_map<std::string, std::string> tags );
 
 		Entity* GetEntityByID( UInt64 id );
 		Entity* GetEntityByUniqueName( const std::string &uniqueName );

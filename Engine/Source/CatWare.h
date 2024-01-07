@@ -21,7 +21,6 @@
 #include "CatWare/Graphics/Text.h"
 #include "CatWare/Graphics/Animation/Animation.h"
 #include "CatWare/Random.h"
-#include "CatWare/Entity/Components.h"
 #include "CatWare/ScriptInterface.h"
 #include "CatWare/Particles.h"
 

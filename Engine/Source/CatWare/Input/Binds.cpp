@@ -4,9 +4,10 @@
 
 #include "CatWare/Debug/Debug.h"
 
-#include "KeyboardAndMouse.h"
+#include "SDL.h"
 #include "CatWare/Error.h"
 #include "CatWare/Filesystem/Filesystem.h"
+#include "KeyboardAndMouse.h"
 
 namespace CatWare
 {
@@ -123,7 +124,7 @@ namespace CatWare
 
 				if ( name != "" && inputType != "" && inputCode != "" )
 				{
-					int convertedCode = std::stoi( inputCode );
+					int convertedCode = SDL_GetScancodeFromName( inputCode.c_str( ) );
 
 					if ( inputType == "keyboard" )
 						AddBinding( name, new KeyBind( convertedCode ) );

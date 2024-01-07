@@ -98,15 +98,23 @@ namespace CatWare
 				std::string inputType;
 				std::string inputCode;
 
+				bool inQuotes = false;
+
 				// process the line char by char
 				for ( char c : line )
 				{
-					if ( c != ' ' )
+					if ( c == '"' )
+					{
+						inQuotes = !inQuotes;
+					} else
 					{
 						if ( c == '#' )
 						{
 							break;
 						}
+
+						if ( c == ' ' && !inQuotes )
+							stage++;
 						else
 						{
 							if ( stage == 0 )
@@ -116,10 +124,6 @@ namespace CatWare
 							else if ( stage == 2 )
 								inputCode += c;
 						}
-					}
-					else
-					{
-						stage++;
 					}
 				}
 

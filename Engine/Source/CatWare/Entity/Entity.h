@@ -7,9 +7,10 @@
 #include "CatWare/Core.h"
 #include "CatWare/Error.h"
 #include "CatWare/Physics/Physics.h"
-#include "CatWare/Types/Vector.h"
-#include "CatWare/Types/Types.h"
+#include "CatWare/Random.h"
 #include "CatWare/Types/Transform.h"
+#include "CatWare/Types/Types.h"
+#include "CatWare/Types/Vector.h"
 
 #undef GetClassName // stupid windows
 
@@ -95,6 +96,32 @@ namespace CatWare
 		void CleanUp( );
 
 		UInt64 CreateEntity( std::string className, Transform transform, std::unordered_map<std::string, std::string> tags );
+
+
+		template<typename EntityType, class... Types>
+		UInt64 CreateEntity( std::string className, Transform transform, Types... vargs )
+		{
+			UInt64 id = Random::GetUInt( 0, UINT64_MAX );
+
+			if ( usedIDs[id] == false )
+			{
+				usedIDs[id] = true;
+
+				EntityType* entity = new EntityType( vargs... );
+
+				entity->transform = transform;
+				entity->id = id;
+				entity->className = className;
+
+				entities.push_back( entity );
+
+				entity->Init( );
+
+				return id;
+			}
+
+			return 0;
+		}
 
 		Entity* GetEntityByID( UInt64 id );
 		Entity* GetEntityByUniqueName( const std::string &uniqueName );

@@ -95,8 +95,7 @@ namespace CatWare
 	}
 
 	UInt64 EntityManager::CreateEntity(
-		std::string className, Transform transform, std::unordered_map< std::string, std::string > tags
-	)
+		std::string className, Transform transform, std::unordered_map< std::string, std::string > tags )
 	{
 		UInt64 id = Random::GetUInt( 0, UINT64_MAX );
 
@@ -124,6 +123,7 @@ namespace CatWare
 
 		return 0;
 	}
+
 
 
 	Entity* EntityManager::GetEntityByID( UInt64 id )

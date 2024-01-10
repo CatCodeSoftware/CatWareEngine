@@ -52,8 +52,9 @@ namespace CatWare
 				SetColor( Color::YELLOW );
 
 
+				#ifdef CW_DEBUG
 				DebugUI::NotifyWarning( Format( text, args... ), category );
-
+				#endif
 
 				text = "[Warning] " + text;
 				PrintGeneric( text, args... );

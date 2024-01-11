@@ -35,12 +35,7 @@ namespace CatWare
 
 		if ( velocityStrech )
 		{
-			tempSize.x += ( ( velocity.x + velocity.y ) / 2 ) / 20;
-
-			if ( tempSize.x < size.x )
-				tempSize.x = size.x;
-			if ( tempSize.y < size.x )
-				tempSize.x = size.x;
+			tempSize.x = ( ( velocity.x + velocity.y ) / 2 ) / 20;
 		}
 
 		if ( !textured )

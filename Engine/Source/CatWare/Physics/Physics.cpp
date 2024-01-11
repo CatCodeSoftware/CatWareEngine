@@ -35,18 +35,12 @@ namespace CatWare
 
 	void PhysicsWorld::RemoveBody( PhysicsBody *body )
 	{
+		body->collisionCallback = nullptr;
 		bodiesToRemove.emplace( body );
 	}
 
 	void PhysicsWorld::RemoveItems( )
 	{
-		// Every signle fucking problem i've had in the past week was fucking vectors
-		// I might be stupid. But removing elements from a vector that is being looped
-		// through every frame is the most error prone operation you could do in c++.
-		// If you do something wrong your debugger will tell you that it couldn't access
-		// some random memory address in a random function because stack corruption or something
-		// I hate vectors and i hate myself
-		// For now i switched to recreating the vector without the removed elements
 		std::vector<PhysicsBody*> tempVec = physicsBodies;
 		physicsBodies.clear( );
 
@@ -111,14 +105,6 @@ namespace CatWare
 
 							if ( collisionInfo.hasCollision )
 							{
-								if ( i == 0 )
-								{
-									if ( physicsBody->collisionCallback != nullptr )
-										physicsBody->collisionCallback( collisionInfo, physicsBody, physicsBody2 );
-									if ( physicsBody2->collisionCallback != nullptr )
-										physicsBody2->collisionCallback( collisionInfo, physicsBody2, physicsBody );
-								}
-
 								dynamicBody->position -= collisionInfo.normal / 2;
 								dynamicBody2->position += collisionInfo.normal / 2;
 
@@ -130,6 +116,11 @@ namespace CatWare
 
 								dynamicBody->velocity -= collisionInfo.normal * ( j / dynamicBody->mass );
 								dynamicBody2->velocity += collisionInfo.normal * ( j / dynamicBody2->mass );
+
+								if ( physicsBody->collisionCallback != nullptr )
+									physicsBody->collisionCallback( collisionInfo, physicsBody, physicsBody2 );
+								if ( physicsBody2->collisionCallback != nullptr )
+									physicsBody2->collisionCallback( collisionInfo, physicsBody2, physicsBody );
 							}
 						} else if ( physicsBody2->GetType( ) == BodyType::SURFACE )
 						{

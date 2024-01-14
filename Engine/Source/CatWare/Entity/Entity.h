@@ -46,7 +46,7 @@ namespace CatWare
 		void RemoveFromGroup( std::string name );
 		std::vector<std::string>& GetGroups( );
 
-		bool BelongsToGroup( std::string& group );
+		bool BelongsToGroup( std::string group );
 
 		std::string GetClassName( );
 		std::string GetUniqueName( );

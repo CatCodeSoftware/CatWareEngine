@@ -50,7 +50,7 @@ namespace CatWare
 		return groups;
 	}
 
-	bool Entity::BelongsToGroup( std::string& group )
+	bool Entity::BelongsToGroup( std::string group )
 	{
 		for ( std::string& group2 : groups )
 		{

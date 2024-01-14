@@ -42,10 +42,10 @@ namespace CatWare
 		double radius;
 	};
 
-	class CATWARE_API RectCollider : public Collider
+	class CATWARE_API AABBCollider : public Collider
 	{
 	public:
-		RectCollider( Vector2D position, Vector2D size )
+		AABBCollider( Vector2D position, Vector2D size )
 		{
 			this->position = position;
 			this->size = size;
@@ -77,7 +77,7 @@ namespace CatWare
 	CATWARE_API CollisionInfo TestCollision( Collider* a, Collider* b );
 
 	CATWARE_API CollisionInfo TestCollisionCircleCircle( CircleCollider* a, CircleCollider* b );
-	CATWARE_API CollisionInfo TestCollisionRectRect( RectCollider* a, RectCollider* b );
-	CATWARE_API CollisionInfo TestCollisionRectPoint( RectCollider* a, PointCollider* b );
+	CATWARE_API CollisionInfo TestCollisionRectRect( AABBCollider* a, AABBCollider* b );
+	CATWARE_API CollisionInfo TestCollisionRectPoint( AABBCollider* a, PointCollider* b );
 	CATWARE_API CollisionInfo TestCollisionCirclePoint( CircleCollider* a, PointCollider* b );
 }

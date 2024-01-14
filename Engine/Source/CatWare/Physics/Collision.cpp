@@ -8,7 +8,7 @@ namespace CatWare
 {
 	CollisionInfo TestCollision( Collider* a, Collider* b )
 	{
-		if ( a->colliderType == ColliderType::RECT && b->colliderType == ColliderType::RECT ) { return TestCollisionRectRect( (RectCollider* ) a, ( RectCollider* ) b ); }
+		if ( a->colliderType == ColliderType::RECT && b->colliderType == ColliderType::RECT ) { return TestCollisionRectRect( (AABBCollider* ) a, ( AABBCollider* ) b ); }
 		else if ( a->colliderType == ColliderType::CIRCLE && b->colliderType == ColliderType::CIRCLE ) { return TestCollisionCircleCircle( ( CircleCollider* ) a, ( CircleCollider* ) b ); }
 
 		return { };
@@ -36,7 +36,7 @@ namespace CatWare
 		return ci;
 	}
 
-	CollisionInfo TestCollisionRectRect( RectCollider* a, RectCollider* b )
+	CollisionInfo TestCollisionRectRect( AABBCollider* a, AABBCollider* b )
 	{
 		CollisionInfo ci;
 
@@ -88,7 +88,7 @@ namespace CatWare
 		return ci;
 	}
 
-	CollisionInfo TestCollisionRectPoint( RectCollider* a, PointCollider* b )
+	CollisionInfo TestCollisionRectPoint( AABBCollider* a, PointCollider* b )
 	{
 		return CollisionInfo( );
 	}

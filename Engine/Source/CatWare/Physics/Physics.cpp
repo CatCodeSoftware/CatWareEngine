@@ -142,7 +142,7 @@ namespace CatWare
 		{
 			if ( body->GetType( ) == BodyType::DYNAMIC )
 			{
-				RectCollider* collider = ( RectCollider* ) ( ( DynamicBody* ) body )->GetCollider( );
+				AABBCollider* collider = ( AABBCollider* ) ( ( DynamicBody* ) body )->GetCollider( );
 
 				Renderer::DrawRect( collider->position, collider->size, Color( 255, 0, 0, 100 ), 0 );
 			}

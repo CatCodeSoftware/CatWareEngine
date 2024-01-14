@@ -27,6 +27,7 @@ namespace CatWare
 		friend class EntityManager;
 
 	public:
+		virtual ~Entity() = default;
 		Transform transform;
 		Vector2D velocity = { 0, 0 };
 
@@ -37,16 +38,20 @@ namespace CatWare
 
 		void Destroy( );
 
+		// interaction
+		virtual void OnCollide( CollisionInfo info, PhysicsBody* body, Entity* other ) {}
+		virtual void Use( Entity* user ) { } // triggered by things like triggers and the player using interactible objects
+
 		void AddToGroup( std::string name );
 		void RemoveFromGroup( std::string name );
 		std::vector<std::string>& GetGroups( );
+
+		bool BelongsToGroup( std::string& group );
 
 		std::string GetClassName( );
 		std::string GetUniqueName( );
 
 		UInt64 GetID( );
-
-		virtual void OnCollide( CollisionInfo info, PhysicsBody* body, Entity* other ) {}
 
 		static Entity* Create( std::unordered_map<std::string, std::string> tags ) { return nullptr; }
 

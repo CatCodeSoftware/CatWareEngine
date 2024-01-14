@@ -50,6 +50,17 @@ namespace CatWare
 		return groups;
 	}
 
+	bool Entity::BelongsToGroup( std::string& group )
+	{
+		for ( std::string& group2 : groups )
+		{
+			if ( group == group2 )
+				return true;
+		}
+
+		return false;
+	}
+
 
 	std::string Entity::GetClassName( )
 	{

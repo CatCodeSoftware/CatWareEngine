@@ -305,7 +305,7 @@ namespace CatWare
 		textShader->SetUniform4f( "u_Color", float( color.r ) / 255.0f, float( color.g ) / 255.0f,
 		                          float( color.b ) / 255.0f, float( color.a ) / 255.0f );
 		textShader->SetUniform1i( "u_Texture", 0 );
-		rectShader->SetUniformMat4( "u_Projection", projectionMatrix );
+		textShader->SetUniformMat4( "u_Projection", projectionMatrix );
 
 		float xpos = position.x + character->bearing.x * size;
 		float ypos = position.y * size;
@@ -348,6 +348,10 @@ namespace CatWare
 		vertexArray->SetIndexBuffer( indexBuffer );
 
 		rendererAPI->DrawIndexed( vertexArray );
+
+		vertexBuffer->Unbind();
+		indexBuffer->Unbind( );
+		vertexArray->Unbind( );
 
 		delete vertexArray;
 		delete vertexBuffer;

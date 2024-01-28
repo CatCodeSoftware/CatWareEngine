@@ -12,6 +12,8 @@
 
 #include "World.h"
 
+#define CW_CURRENT_SCENE CatWare::SceneManager::GetScene( )
+
 namespace CatWare
 {
 	/**

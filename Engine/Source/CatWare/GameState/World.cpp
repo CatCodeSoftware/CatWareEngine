@@ -50,10 +50,13 @@ namespace CatWare
 
 			double rotation = transformNode["rotation"].as< double >( );
 
+			int layer = transformNode["layer"].as< int >( );
+
 			Transform finalTransform;
 			finalTransform.position = positionVec;
 			finalTransform.size = sizeVec;
 			finalTransform.rotation = rotation;
+			finalTransform.layer = layer;
 
 			YAML::Node tagsNode = entityNode["tags"].as< YAML::Node >( );
 			std::unordered_map< std::string, std::string > tags;

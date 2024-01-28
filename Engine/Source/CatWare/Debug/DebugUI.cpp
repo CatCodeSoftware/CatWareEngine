@@ -177,6 +177,7 @@ namespace CatWare
 				ImGui::InputDouble( "Size X", &entity->transform.size.x );
 				ImGui::InputDouble( "Size Y", &entity->transform.size.y );
 				ImGui::InputFloat( "Rotation", &entity->transform.rotation );
+				ImGui::InputInt( "Layer", &entity->transform.layer );
 
 				ImGui::Unindent( 16 );
 

@@ -1,5 +1,7 @@
 #include "Entity.h"
 
+#include <algorithm>
+
 #include "CatWare/Debug/Debug.h"
 
 #include "CatWare/Application.h"
@@ -8,6 +10,15 @@
 
 namespace CatWare
 {
+	class LessThanKey
+	{
+	public:
+		inline bool operator() (const Entity* struct1, const Entity* struct2)
+		{
+			return (struct1->transform.layer < struct2->transform.layer);
+		}
+	};
+
 	void EntityCollisionCallback( CollisionInfo info, PhysicsBody* body1, PhysicsBody* body2 )
 	{
 		if ( body1->userData != nullptr && body2->userData != nullptr )
@@ -221,7 +232,10 @@ namespace CatWare
 
 	void EntityManager::Draw( )
 	{
-		for ( Entity* entity : entities )
+		std::vector<Entity*> sortedList = entities;
+		std::sort( sortedList.begin( ), sortedList.end( ), LessThanKey( ) );
+
+		for ( Entity* entity : sortedList )
 		{
 			entity->Draw( );
 		}

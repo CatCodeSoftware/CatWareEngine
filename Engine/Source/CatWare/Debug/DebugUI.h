@@ -126,6 +126,8 @@ namespace CatWare
 
 		static void Open();
 
+		static inline bool IsOpen( ) { return enabled; }
+
 	private:
 		inline static std::vector<Notification> notifications;
 

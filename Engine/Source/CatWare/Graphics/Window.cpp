@@ -71,35 +71,29 @@ namespace CatWare
 			case SDL_QUIT:
 				shouldClose = true;
 				break;
-			}
 
-			if ( !DebugUI::IsOpen( ) )
-			{
-				switch ( e.type )
-				{
-				case SDL_KEYDOWN:
-					if ( e.key.keysym.scancode == Input::KEY_GRAVE )
-						DebugUI::Open( );
+			case SDL_KEYDOWN:
+				if ( e.key.keysym.scancode == Input::KEY_GRAVE )
+					DebugUI::Open( );
 
-					Input::SetKeyPressed( e.key.keysym.scancode, true );
-					break;
+				if ( !DebugUI::IsOpen(  ) ) Input::SetKeyPressed( e.key.keysym.scancode, true );
+				break;
 
-				case SDL_KEYUP:
-					Input::SetKeyPressed( e.key.keysym.scancode, false );
-					break;
+			case SDL_KEYUP:
+				if ( !DebugUI::IsOpen(  ) ) Input::SetKeyPressed( e.key.keysym.scancode, false );
+				break;
 
-				case SDL_MOUSEBUTTONDOWN:
-					Input::SetMousePressed( e.button.button, true );
-					break;
+			case SDL_MOUSEBUTTONDOWN:
+				if ( !DebugUI::IsOpen(  ) ) Input::SetMousePressed( e.button.button, true );
+				break;
 
-				case SDL_MOUSEBUTTONUP:
-					Input::SetMousePressed( e.button.button, false );
-					break;
+			case SDL_MOUSEBUTTONUP:
+				if ( !DebugUI::IsOpen(  ) ) Input::SetMousePressed( e.button.button, false );
+				break;
 
 
-				case SDL_MOUSEMOTION:
-					Input::SetMouseMotion( { ( double ) e.motion.x, ( double ) e.motion.y } );
-				}
+			case SDL_MOUSEMOTION:
+				if ( !DebugUI::IsOpen(  ) ) Input::SetMouseMotion( { ( double ) e.motion.x, ( double ) e.motion.y } );
 			}
 		}
 	}

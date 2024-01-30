@@ -84,6 +84,7 @@ target_include_directories(
 		"Engine/Lib/glm"
 		"Engine/Lib/ImGui"
 		"Engine/Lib/ImGui/backends"
+		"Engine/Lib/miniaudio"
 )
 
 target_include_directories(

@@ -80,4 +80,5 @@ namespace CatWare
 	CATWARE_API CollisionInfo TestCollisionRectRect( AABBCollider* a, AABBCollider* b );
 	CATWARE_API CollisionInfo TestCollisionRectPoint( AABBCollider* a, PointCollider* b );
 	CATWARE_API CollisionInfo TestCollisionCirclePoint( CircleCollider* a, PointCollider* b );
+	CATWARE_API CollisionInfo TestCollisionPointPoint( PointCollider* a, PointCollider* b );
 }

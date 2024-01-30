@@ -316,49 +316,14 @@ namespace CatWare
 		float w = character->size.x * size;
 		float h = character->size.y * size;
 
-		float vertices[6 * 4] =
-		{
-			xpos , ypos + h , 0 , 1 ,
-			xpos , ypos , 0 , 0 ,
-			xpos + w , ypos , 1 , 0 ,
+		glm::mat4 transformMatrix = glm::translate( glm::mat4( 1.0f ), glm::vec3( xpos, ypos, 1 ) );
+		transformMatrix = glm::scale( transformMatrix, glm::vec3( w, h, 1 ) );
 
-			xpos , ypos + h , 0 , 1 ,
-			xpos + w , ypos , 1 , 0 ,
-			xpos + w , ypos + h , 1 , 1
-		};
-
-		unsigned int indicies[6] =
-		{
-			0 , 1 , 2 , 3 , 4 , 5
-		};
+		textShader->SetUniformMat4( "u_Transform", transformMatrix );
 
 		character->texture->Bind( 0 );
 
-		VertexBuffer* vertexBuffer = VertexBuffer::Create( sizeof( vertices ), vertices );
-		IndexBuffer* indexBuffer = IndexBuffer::Create( 6, indicies );
-
-		BufferLayout layout =
-		{
-			BufferElement( "position", ShaderDataType::Float2 ) ,
-			BufferElement( "textureCoord", ShaderDataType::Float2 )
-		};
-
-		vertexBuffer->SetLayout( layout );
-
-		VertexArray* vertexArray = VertexArray::Create( );
-
-		vertexArray->AddVertexBuffer( vertexBuffer );
-		vertexArray->SetIndexBuffer( indexBuffer );
-
-		rendererAPI->DrawIndexed( vertexArray );
-
-		vertexBuffer->Unbind();
-		indexBuffer->Unbind( );
-		vertexArray->Unbind( );
-
-		delete vertexArray;
-		delete vertexBuffer;
-		delete indexBuffer;
+		SubmitMesh( rectMesh );
 	}
 
 	void Renderer::DrawString( std::string string, Vector2D position, unsigned int size, Text::Font* font, Color color )

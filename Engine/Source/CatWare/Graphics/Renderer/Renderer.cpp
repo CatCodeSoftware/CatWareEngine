@@ -108,40 +108,13 @@ namespace CatWare
 	{
 		currentFrameBuffer->Unbind( );
 
-		float vertecies[4 * 4] =
-		{
-			-1 , -1 , 0 , 0 ,
-			1 , -1 , 1 , 0 ,
-			-1 , 1 , 0 , 1 ,
-			1 , 1 , 1 , 1
-		};
-
-		unsigned int indicies[6] =
-		{
-			0 , 1 , 2 , 2 , 1 , 3
-		};
-
-		VertexBuffer* vertexBuffer = VertexBuffer::Create( sizeof( vertecies ), vertecies );
-		IndexBuffer* indexBuffer = IndexBuffer::Create( 6, indicies );
-
-		BufferLayout layout =
-		{
-			BufferElement( "position", ShaderDataType::Float2 ) ,
-			BufferElement( "textureCoord", ShaderDataType::Float2 )
-		};
-
-		vertexBuffer->SetLayout( layout );
-
-		VertexArray* vertexArray = VertexArray::Create( );
-
-		vertexArray->AddVertexBuffer( vertexBuffer );
-		vertexArray->SetIndexBuffer( indexBuffer );
-
 		postProcessShader->Bind( );
 
-		postProcessShader->SetUniform2f( "u_Resolution", width, height );
+		glm::mat4 projection = glm::ortho( 0, 1, 0, 1 );
 
 		currentFrameBuffer->GetColorAttachment( )->Bind( 0 );
+
+		postProcessShader->SetUniformMat4( "u_Projection", projection );
 		postProcessShader->SetUniform1i( "u_Texture", 0 );
 
 		postProcessShader->SetUniform1f( "u_Brightness", postProcess.brightness );
@@ -151,11 +124,7 @@ namespace CatWare
 		postProcessShader->SetUniform1f( "u_Sharpness", postProcess.sharpness );
 		postProcessShader->SetUniform4f( "u_Tint", float( postProcess.tint.r ) / 255.0f, float( postProcess.tint.g ) / 255.0f, float( postProcess.tint.b ) / 255.0f, float( postProcess.tint.a ) / 255.0f );
 
-		rendererAPI->DrawIndexed( vertexArray );
-
-		delete vertexArray;
-		delete vertexBuffer;
-		delete indexBuffer;
+		SubmitMesh( rectMesh );
 	}
 
 	void Renderer::SetRenderTarget( FrameBuffer* frameBuffer )
@@ -210,12 +179,7 @@ namespace CatWare
 
 		glm::mat4 projectionMatrix = camera2D->CalculateProjectionMatrix( );
 
-		// position = position / size;
-
 		rectShader->Bind( );
-
-		// rectShader->SetUniform2f( "u_Size", float( size.x ), float( size.y ) );
-		// rectShader->SetUniform2f( "u_Position", position.x, position.y );
 
 		rectShader->SetUniform1i( "u_IsTextured", false );
 		rectShader->SetUniform4f( "u_Tint", float( color.r ) / 255.0f, float( color.g ) / 255.0f,

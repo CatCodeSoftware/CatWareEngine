@@ -6,6 +6,8 @@ map:
         position: { x: 200, y: 200 }
         size: { x: 64, y: 128 }
         rotation: 0
+        layer: 1
 
       tags:
         - ["texture", "testTexture"]
+

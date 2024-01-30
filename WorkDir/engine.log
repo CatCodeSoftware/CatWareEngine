@@ -18,11 +18,17 @@
 	Fragment: EngineRes/Shaders/TextFragment.glsl
 [Engine][Info] Loading map from testMap.yaml
 [Engine][Info] Loading texture from gato.jpg
-[Engine][Info] Loading texture from whitePuff02.png
 [Engine][Info] Loading texture from whitePuff00.png
 [Engine][Info] Loading texture from whitePuff01.png
+[Engine][Info] Loading texture from whitePuff02.png
 [Engine][Info] Unloading texture whitePuff02.png
 [Engine][Info] Unloading texture whitePuff01.png
+[Engine][Info] Unloading texture whitePuff00.png
+[Engine][Info] Loading texture from whitePuff02.png
+[Engine][Info] Unloading texture whitePuff02.png
+[Engine][Info] Loading texture from whitePuff01.png
+[Engine][Info] Unloading texture whitePuff01.png
+[Engine][Info] Loading texture from whitePuff00.png
 [Engine][Info] Unloading texture whitePuff00.png
 [Engine][Info] Unloading texture gato.jpg
 [Engine][Info] Closing window

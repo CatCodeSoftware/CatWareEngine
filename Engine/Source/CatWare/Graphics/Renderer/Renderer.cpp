@@ -80,7 +80,6 @@ namespace CatWare
 
 		rectMesh = new Mesh( rectVerts, rectIndexes );
 
-
 		Console::RegisterConVar( "r_pp_brightness", ConVar( ConVarType::FLOAT, &postProcess.brightness ) );
 		Console::RegisterConVar( "r_pp_contrast", ConVar( ConVarType::FLOAT, &postProcess.contrast ) );
 		Console::RegisterConVar( "r_pp_exposure", ConVar( ConVarType::FLOAT, &postProcess.exposure ) );
@@ -91,7 +90,6 @@ namespace CatWare
 	void Renderer::DeInit( )
 	{
 		delete rectMesh;
-
 		delete rectShader;
 		delete postProcessShader;
 		delete textShader;
@@ -166,6 +164,7 @@ namespace CatWare
 
 	void Renderer::DrawRect( Vector2D position, Vector2D size, Color color, glm::mat4 transformMatrix )
 	{
+		/*
 		Vector2D renderOffset = camera2D->GetOffset( );
 
 		if ( ( position.x + renderOffset.x < 0 - size.x * 2 || position.x  + renderOffset.x > width + size.x * 2 ) || (
@@ -173,11 +172,13 @@ namespace CatWare
 		{
 			return;
 		}
+		*/
 
+		transformMatrix = transformMatrix * camera2D->GetViewMatrix( );
 		transformMatrix = glm::translate( transformMatrix, glm::vec3( position.x, position.y, 1 ) );
 		transformMatrix = glm::scale( transformMatrix, glm::vec3( size.x, size.y, 1 ) );
 
-		glm::mat4 projectionMatrix = camera2D->CalculateProjectionMatrix( );
+		glm::mat4 projectionMatrix = camera2D->GetProjectionMatrix( );
 
 		rectShader->Bind( );
 
@@ -215,6 +216,7 @@ namespace CatWare
 		if ( texture == nullptr )
 			CW_ABORT( "texture was nullptr" );
 
+		/*
 		Vector2D renderOffset = camera2D->GetOffset( );
 
 		if ( ( position.x + renderOffset.x < 0 - size.x * 2 || position.x  + renderOffset.x > width + size.x * 2 ) || (
@@ -222,11 +224,13 @@ namespace CatWare
 		{
 			return;
 		}
+		*/
 
+		transformMatrix = transformMatrix * camera2D->GetViewMatrix( );
 		transformMatrix = glm::translate( transformMatrix, glm::vec3( position.x, position.y, 1 ) );
 		transformMatrix = glm::scale( transformMatrix, glm::vec3( size.x, size.y, 1 ) );
 
-		glm::mat4 projectionMatrix = camera2D->CalculateProjectionMatrix( );
+		glm::mat4 projectionMatrix = camera2D->GetProjectionMatrix( );
 
 		rectShader->Bind( );
 		rectShader->SetUniform4f( "u_Tint", float( tint.r ) / 255.0f, float( tint.g ) / 255.0f,
@@ -266,7 +270,7 @@ namespace CatWare
 
 	void Renderer::DrawCharacter( Text::Character* character, Vector2D position, unsigned int size, Color color )
 	{
-		glm::mat4 projectionMatrix = camera2D->CalculateProjectionMatrix( );
+		glm::mat4 projectionMatrix = camera2D->GetProjectionMatrix( );
 
 		textShader->Bind( );
 		textShader->SetUniform4f( "u_Color", float( color.r ) / 255.0f, float( color.g ) / 255.0f,
@@ -280,7 +284,8 @@ namespace CatWare
 		float w = character->size.x * size;
 		float h = character->size.y * size;
 
-		glm::mat4 transformMatrix = glm::translate( glm::mat4( 1.0f ), glm::vec3( xpos, ypos, 1 ) );
+		glm::mat4  transformMatrix = transformMatrix * camera2D->GetViewMatrix( );
+		transformMatrix = glm::translate( glm::mat4( 1.0f ), glm::vec3( xpos, ypos, 1 ) );
 		transformMatrix = glm::scale( transformMatrix, glm::vec3( w, h, 1 ) );
 
 		textShader->SetUniformMat4( "u_Transform", transformMatrix );

@@ -3,25 +3,24 @@
 #include "glm/common.hpp"
 #include "glm/ext.hpp"
 
+#define RADS_PER_DEGREE 0.0174532925f
+
 namespace CatWare
 {
 	OrthoCamera::OrthoCamera( int screenWidth, int screenHeight )
 	{
-		this->screenWidth = screenWidth;
-		this->screenHeight = screenHeight;
-
-		SetFocus( { double( screenWidth - screenWidth / 2 ), double( screenHeight - screenHeight / 2 ) } );
+		projection = glm::ortho( ( float ) 0, ( float ) screenWidth, ( float ) screenHeight, ( float ) 0 );
+		RecalculateViewMatrix( );
 	}
 
-	glm::mat4 OrthoCamera::CalculateProjectionMatrix( )
+	void OrthoCamera::RecalculateViewMatrix( )
 	{
-		glm::mat4 proj = glm::ortho( float( -renderOffsetX ), float( screenWidth - renderOffsetX ), float( screenHeight - renderOffsetY ), float( -renderOffsetY ) );
-		return proj;
+		view = glm::translate( glm::mat4( 1.0f ), glm::vec3( focus.x, focus.y, 1 ) ) *
+			glm::rotate( glm::mat4( 1.0f ), rotation * RADS_PER_DEGREE, glm::vec3( 0, 0, 1 ) );
+
+		view = glm::scale( view, glm::vec3( 1 / scale, 1 / scale, 1 ) );
+
+		view = glm::inverse( view );
 	}
 
-	void OrthoCamera::SetFocus( Vector2D focus )
-	{
-		renderOffsetX = screenWidth / 2 - focus.x;
-		renderOffsetY = screenHeight / 2 - focus.y;
-	}
-}
+} // namespace CatWare

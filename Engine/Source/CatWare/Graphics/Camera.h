@@ -10,7 +10,14 @@ namespace CatWare
 	class Camera
 	{
 	public:
-		virtual glm::mat4 CalculateProjectionMatrix( ) = 0;
+		inline glm::mat4 GetProjectionMatrix( ) { return projection; }
+		inline glm::mat4 GetViewMatrix( ) { return view; }
+
+		virtual void RecalculateViewMatrix( ) = 0;
+
+	protected:
+		glm::mat4 projection;
+		glm::mat4 view;
 	};
 
 	class CATWARE_API OrthoCamera : public Camera
@@ -18,16 +25,19 @@ namespace CatWare
 	public:
 		OrthoCamera( int screenWidth, int screenHeight );
 
-		glm::mat4 CalculateProjectionMatrix( ) override;
+		inline void SetFocus( Vector2D focus ) { this->focus = focus; RecalculateViewMatrix( ); }
+		inline void SetRotation( float rotation ) { this->rotation = rotation; RecalculateViewMatrix( ); }
+		inline void SetScale( float scale ) { this->scale = scale; RecalculateViewMatrix( ); }
 
-		void SetFocus( Vector2D focus );
-		inline Vector2D GetOffset( ) { return Vector2D( renderOffsetX, renderOffsetY ); }
+		inline Vector2D GetFocus( ) { return focus; }
+		inline float GetRotation( ) { return rotation; }
+		inline float GetScale( ) { return  scale; }
+
+		void RecalculateViewMatrix( ) override;
 
 	private:
-		int renderOffsetX = 0;
-		int renderOffsetY = 0;
-
-		int screenWidth = 0;
-		int screenHeight = 0;
+		Vector2D focus = { 0, 0 };
+		float rotation = 0;
+		float scale = 1;
 	};
 }

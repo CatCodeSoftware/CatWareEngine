@@ -205,14 +205,17 @@ namespace CatWare
 			return;
 		}
 
+		transformMatrix = glm::translate( transformMatrix, glm::vec3( position.x, position.y, 1 ) );
+		transformMatrix = glm::scale( transformMatrix, glm::vec3( size.x, size.y, 1 ) );
+
 		glm::mat4 projectionMatrix = camera2D->CalculateProjectionMatrix( );
 
-		position = position / size;
+		// position = position / size;
 
 		rectShader->Bind( );
 
-		rectShader->SetUniform2f( "u_Size", float( size.x ), float( size.y ) );
-		rectShader->SetUniform2f( "u_Position", position.x, position.y );
+		// rectShader->SetUniform2f( "u_Size", float( size.x ), float( size.y ) );
+		// rectShader->SetUniform2f( "u_Position", position.x, position.y );
 
 		rectShader->SetUniform1i( "u_IsTextured", false );
 		rectShader->SetUniform4f( "u_Tint", float( color.r ) / 255.0f, float( color.g ) / 255.0f,
@@ -256,16 +259,14 @@ namespace CatWare
 			return;
 		}
 
-		glm::mat4 projectionMatrix = camera2D->CalculateProjectionMatrix( );
+		transformMatrix = glm::translate( transformMatrix, glm::vec3( position.x, position.y, 1 ) );
+		transformMatrix = glm::scale( transformMatrix, glm::vec3( size.x, size.y, 1 ) );
 
-		position = position / size;
+		glm::mat4 projectionMatrix = camera2D->CalculateProjectionMatrix( );
 
 		rectShader->Bind( );
 		rectShader->SetUniform4f( "u_Tint", float( tint.r ) / 255.0f, float( tint.g ) / 255.0f,
 		                          float( tint.b ) / 255.0f, float( tint.a ) / 255.0f );
-
-		rectShader->SetUniform2f( "u_Size", size.x, size.y );
-		rectShader->SetUniform2f( "u_Position", position.x, position.y );
 
 		rectShader->SetUniformMat4( "u_Projection", projectionMatrix );
 		rectShader->SetUniformMat4( "u_Transform", transformMatrix );

@@ -1,14 +1,15 @@
 #pragma once
 
+#include "../Camera.h"
+#include "../Text.h"
 #include "CatWare/Core.h"
-#include "RendererAPI.h"
-#include "OpenGL/OpenGLRendererAPI.h"
+#include "CatWare/Types/Transform.h"
 #include "CatWare/Types/Vector.h"
+#include "Mesh.h"
+#include "OpenGL/OpenGLRendererAPI.h"
+#include "RendererAPI.h"
 #include "Shader.h"
 #include "Texture.h"
-#include "../Text.h"
-#include "../Camera.h"
-#include "CatWare/Types/Transform.h"
 
 namespace CatWare
 {
@@ -43,6 +44,9 @@ namespace CatWare
 		static void SetRenderTarget( Rendering::FrameBuffer* frameBuffer );
 		static inline Rendering::FrameBuffer* GetRenderTarget( ) { return currentFrameBuffer; }
 
+		static void SubmitMesh( Mesh* mesh );
+
+
 		static void DrawRect( Vector2D position, Vector2D size, Color color, glm::mat4 transformMatrix );
 		static void DrawRect( Vector2D position, Vector2D size, Color color, float rotation = 0 );
 		static void DrawRect( Transform transform, Color color );
@@ -68,9 +72,7 @@ namespace CatWare
 		inline static Rendering::FrameBuffer* currentFrameBuffer = nullptr;
 		inline static Rendering::FrameBuffer* defaultFrameBuffer = nullptr;
 
-		inline static Rendering::VertexBuffer* rectVerts = nullptr;
-		inline static Rendering::IndexBuffer* rectIndexes = nullptr;
-		inline static Rendering::VertexArray* rectArray = nullptr;
+		inline static Mesh* rectMesh = nullptr;
 
 		inline static Rendering::VertexBuffer* fbVerts = nullptr;
 		inline static Rendering::IndexBuffer* fbIndexes = nullptr;

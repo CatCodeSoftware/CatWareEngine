@@ -65,7 +65,7 @@ namespace CatWare
 			0 , 1 , 2 , 2 , 1 , 3
 		};
 
-		rectVerts = Rendering::VertexBuffer::Create( sizeof( rectVerteciesTemp ), rectVerteciesTemp );
+		Rendering::VertexBuffer* rectVerts = Rendering::VertexBuffer::Create( sizeof( rectVerteciesTemp ), rectVerteciesTemp );
 
 		BufferLayout vertBufferLayout =
 		{
@@ -73,14 +73,13 @@ namespace CatWare
 			BufferElement( "textureCoord", ShaderDataType::Float2 )
 		};
 
-		rectIndexes = Rendering::IndexBuffer::Create( 6, rectIndiciesTemp );
-
 		rectVerts->SetLayout( vertBufferLayout );
 
-		rectArray = Rendering::VertexArray::Create( );
 
-		rectArray->AddVertexBuffer( rectVerts );
-		rectArray->SetIndexBuffer( rectIndexes );
+		Rendering::IndexBuffer* rectIndexes = Rendering::IndexBuffer::Create( 6, rectIndiciesTemp );
+
+		rectMesh = new Mesh( rectVerts, rectIndexes );
+
 
 		Console::RegisterConVar( "r_pp_brightness", ConVar( ConVarType::FLOAT, &postProcess.brightness ) );
 		Console::RegisterConVar( "r_pp_contrast", ConVar( ConVarType::FLOAT, &postProcess.contrast ) );
@@ -91,9 +90,7 @@ namespace CatWare
 
 	void Renderer::DeInit( )
 	{
-		delete rectVerts;
-		delete rectIndexes;
-		delete rectArray;
+		delete rectMesh;
 
 		delete rectShader;
 		delete postProcessShader;
@@ -193,6 +190,11 @@ namespace CatWare
 		rendererAPI->Clear( );
 	}
 
+	void Renderer::SubmitMesh( Mesh* mesh )
+	{
+		rendererAPI->DrawIndexed( mesh->GetVertexArray( ) );
+	}
+
 	void Renderer::DrawRect( Vector2D position, Vector2D size, Color color, glm::mat4 transformMatrix )
 	{
 		Vector2D renderOffset = camera2D->GetOffset( );
@@ -218,7 +220,7 @@ namespace CatWare
 		rectShader->SetUniformMat4( "u_Projection", projectionMatrix );
 		rectShader->SetUniformMat4( "u_Transform", transformMatrix );
 
-		rendererAPI->DrawIndexed( rectArray );
+		SubmitMesh( rectMesh );
 	}
 
 	void Renderer::DrawRect( Vector2D position, Vector2D size, Color color, float rotation )
@@ -273,7 +275,7 @@ namespace CatWare
 		rectShader->SetUniform1i( "u_IsTextured", true );
 		rectShader->SetUniform1f( "u_Texture", 0 );
 
-		rendererAPI->DrawIndexed( rectArray );
+		SubmitMesh( rectMesh );
 
 		texture->Unbind( );
 	}

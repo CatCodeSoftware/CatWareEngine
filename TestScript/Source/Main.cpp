@@ -24,9 +24,9 @@ public:
 
 	void Init( ) override
 	{
-		pBody = new DynamicBody( 10, 1, new RectCollider( transform.position,  transform.size ) );
+		pBody = new DynamicBody( 10, 1, new AABBCollider( transform.position,  transform.size ) );
 		pBody->position = transform.position;
-		SceneManager::GetCurrentScene( )->world.physicsWorld.AddBody( pBody );
+		SceneManager::GetScene( )->world.physicsWorld.AddBody( pBody );
 
 		emmiter.gravity = { 0, 0 };
 		emmiter.angle = -90;

@@ -48,46 +48,55 @@ namespace CatWare
 
 			void OpenGLShader::SetUniform1i( std::string name, int i )
 			{
+				if ( uniformIDs.find( name ) == uniformIDs.end( ) ) { CW_ENGINE_LOG->Error( "No uniform named %s", name.c_str( ) ); return; }
 				glUniform1i( uniformIDs[name], i );
 			}
 
 			void OpenGLShader::SetUniform2i( std::string name, int i, int i2 )
 			{
+				if ( uniformIDs.find( name ) == uniformIDs.end( ) ) { CW_ENGINE_LOG->Error( "No uniform named %s", name.c_str( ) ); return; }
 				glUniform2i( uniformIDs[name], i, i2 );
 			}
 
 			void OpenGLShader::SetUniform3i( std::string name, int i, int i2, int i3 )
 			{
+				if ( uniformIDs.find( name ) == uniformIDs.end( ) ) { CW_ENGINE_LOG->Error( "No uniform named %s", name.c_str( ) ); return; }
 				glUniform3i( uniformIDs[name], i, i2, i3 );
 			}
 
 			void OpenGLShader::SetUniform4i( std::string name, int i, int i2, int i3, int i4 )
 			{
+				if ( uniformIDs.find( name ) == uniformIDs.end( ) ) { CW_ENGINE_LOG->Error( "No uniform named %s", name.c_str( ) ); return; }
 				glUniform4i( uniformIDs[name], i, i2, i3, i4 );
 			}
 
 			void OpenGLShader::SetUniform1f( std::string name, float f )
 			{
+				if ( uniformIDs.find( name ) == uniformIDs.end( ) ) { CW_ENGINE_LOG->Error( "No uniform named %s", name.c_str( ) ); return; }
 				glUniform1f( uniformIDs[name], f );
 			}
 
 			void OpenGLShader::SetUniform2f( std::string name, float f, float f2 )
 			{
+				if ( uniformIDs.find( name ) == uniformIDs.end( ) ) { CW_ENGINE_LOG->Error( "No uniform named %s", name.c_str( ) ); return; }
 				glUniform2f( uniformIDs[name], f, f2 );
 			}
 
 			void OpenGLShader::SetUniform3f( std::string name, float f, float f2, float f3 )
 			{
+				if ( uniformIDs.find( name ) == uniformIDs.end( ) ) { CW_ENGINE_LOG->Error( "No uniform named %s", name.c_str( ) ); return; }
 				glUniform3f( uniformIDs[name], f, f2, f3 );
 			}
 
 			void OpenGLShader::SetUniform4f( std::string name, float f, float f2, float f3, float f4 )
 			{
+				if ( uniformIDs.find( name ) == uniformIDs.end( ) ) { CW_ENGINE_LOG->Error( "No uniform named %s", name.c_str( ) ); return; }
 				glUniform4f( uniformIDs[name], f, f2, f3, f4 );
 			}
 
 			void OpenGLShader::SetUniformMat4( std::string name, glm::mat4 mat )
 			{
+				if ( uniformIDs.find( name ) == uniformIDs.end( ) ) { CW_ENGINE_LOG->Error( "No uniform named %s", name.c_str( ) ); return; }
 				glUniformMatrix4fv( uniformIDs[name], 1, true, &mat[0][0] );
 			}
 

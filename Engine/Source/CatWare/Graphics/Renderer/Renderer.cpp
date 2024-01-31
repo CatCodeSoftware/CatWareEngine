@@ -160,14 +160,13 @@ namespace CatWare
 	{
 		glm::mat4 transformMatrix = glm::mat4( 1.0f );
 
+		transformMatrix = transformMatrix * camera2D->GetViewMatrix( );
 		transformMatrix = glm::translate( transformMatrix,
 										  glm::vec3( position.x + size.x / 2, position.y + size.y / 2, 0.0f ) );
 		transformMatrix = glm::rotate( transformMatrix, glm::radians( rotation ), glm::vec3( 0.0f, 0.0f, 1.0f ) );
 		transformMatrix = glm::translate( transformMatrix,
 										  glm::vec3( -( position.x + size.x / 2 ), -( position.y + size.y / 2 ),
 													 0.0f ) );
-
-		transformMatrix = transformMatrix * camera2D->GetViewMatrix( );
 		transformMatrix = glm::translate( transformMatrix, glm::vec3( position.x, position.y, 1 ) );
 		transformMatrix = glm::scale( transformMatrix, glm::vec3( size.x, size.y, 1 ) );
 

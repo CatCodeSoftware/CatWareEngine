@@ -81,8 +81,6 @@ namespace CatWare
 					ci.hasCollision = true;
 				}
 			}
-
-			ci.normal = ci.normal;
 		}
 
 		return ci;

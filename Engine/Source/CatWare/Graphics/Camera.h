@@ -25,7 +25,11 @@ namespace CatWare
 	public:
 		OrthoCamera( int screenWidth, int screenHeight );
 
-		inline void SetFocus( Vector2D focus ) { this->focus = focus; RecalculateViewMatrix( ); }
+		inline void SetFocus( Vector2D focus )
+		{
+			RecalculateViewMatrix( );
+			this->focus = focus;
+		}
 		inline void SetRotation( float rotation ) { this->rotation = rotation; RecalculateViewMatrix( ); }
 		inline void SetScale( float scale ) { this->scale = scale; RecalculateViewMatrix( ); }
 

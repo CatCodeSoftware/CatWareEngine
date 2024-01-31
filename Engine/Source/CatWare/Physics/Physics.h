@@ -71,7 +71,9 @@ namespace CatWare
 		void AddBody( PhysicsBody* body );
 		void RemoveBody( PhysicsBody* body );
 
-		void Step( float deltaTime, unsigned int substeps = 8 );
+		void Step( float deltaTime, unsigned int substeps = 6 );
+		void DispatchCollisionThread( int rangeBegin, int rangeEnd, float deltaTime );
+		void HandleCollisions( std::vector<PhysicsBody*> physicsBodies, float deltaTime, int substeps );
 		void DrawColliders( );
 
 		void Clean( );

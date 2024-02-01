@@ -103,6 +103,7 @@ namespace CatWare
 
 	void Renderer::EndDrawing( )
 	{
+		camera2D->RecalculateViewMatrix( );
 		currentFrameBuffer->Unbind( );
 
 		postProcessShader->Bind( );
@@ -156,16 +157,16 @@ namespace CatWare
 		rendererAPI->Clear( );
 	}
 
-	glm::mat4 Renderer::GenTransform( Vector2D position, Vector2D size, float rotation )
+	glm::mat4 Renderer::GenTransform( Vector2D position, Vector2D size, float rotation, Vector2D rotationOrigin )
 	{
 		glm::mat4 transformMatrix = glm::mat4( 1.0f );
 
 		transformMatrix = transformMatrix * camera2D->GetViewMatrix( );
 		transformMatrix = glm::translate( transformMatrix,
-										  glm::vec3( position.x + size.x / 2, position.y + size.y / 2, 0.0f ) );
+										  glm::vec3( position.x + rotationOrigin.x, position.y + rotationOrigin.y, 0.0f ) );
 		transformMatrix = glm::rotate( transformMatrix, glm::radians( rotation ), glm::vec3( 0.0f, 0.0f, 1.0f ) );
 		transformMatrix = glm::translate( transformMatrix,
-										  glm::vec3( -( position.x + size.x / 2 ), -( position.y + size.y / 2 ),
+										  glm::vec3( -( position.x + rotationOrigin.x ), -( position.y + rotationOrigin.y ),
 													 0.0f ) );
 		transformMatrix = glm::translate( transformMatrix, glm::vec3( position.x, position.y, 1 ) );
 		transformMatrix = glm::scale( transformMatrix, glm::vec3( size.x, size.y, 1 ) );
@@ -183,8 +184,12 @@ namespace CatWare
 		rendererAPI->DrawIndexed( mesh->GetVertexArray( ) );
 	}
 
-	void Renderer::DrawRect( Vector2D position, Vector2D size, Color color, float rotation )
+	void Renderer::DrawRect( Vector2D position, Vector2D size, Color color, float rotation, Vector2D rotationOrigin )
 	{
+		if ( rotationOrigin.x == -1 && rotationOrigin.y == -1 )
+			rotationOrigin = size / 2;
+
+
 		/*
 		Vector2D renderOffset = camera2D->GetOffset( );
 
@@ -203,7 +208,7 @@ namespace CatWare
 		rectShader->SetUniform4f( "u_Tint", float( color.r ) / 255.0f, float( color.g ) / 255.0f,
 		                          float( color.b ) / 255.0f, float( color.a ) / 255.0f );
 
-		SubmitMesh( rectMesh, rectShader, GenTransform( position, size, rotation ) );
+		SubmitMesh( rectMesh, rectShader, GenTransform( position, size, rotation, rotationOrigin ) );
 	}
 
 
@@ -213,10 +218,23 @@ namespace CatWare
 	}
 
 	void Renderer::DrawRectTextured( Vector2D position, Vector2D size, Rendering::Texture2D* texture,
-	                                 Color tint, float rotation )
+	                                 Color tint, float rotation, bool wrapped )
 	{
 		if ( texture == nullptr )
 			CW_ABORT( "texture was nullptr" );
+
+		if ( wrapped )
+		{
+			for ( int i = 0; i < size.x / texture->GetTextureWidth( ); i++ )
+			{
+				for ( int j = 0; j < size.y / texture->GetTextureHeight( ); j++ )
+				{
+					DrawRectTextured( position + Vector2D(  texture->GetTextureWidth( ) * i, texture->GetTextureHeight( ) * j ), { ( double ) texture->GetTextureWidth( ), ( double ) texture->GetTextureHeight( ) }, texture, tint );
+				}
+			}
+
+			return;
+		}
 
 		/*
 		Vector2D renderOffset = camera2D->GetOffset( );
@@ -238,14 +256,23 @@ namespace CatWare
 		rectShader->SetUniform1i( "u_IsTextured", true );
 		rectShader->SetUniform1f( "u_Texture", 0 );
 
-		SubmitMesh( rectMesh, rectShader, GenTransform( position, size, rotation ) );
+		SubmitMesh( rectMesh, rectShader, GenTransform( position, size, rotation, size / 2 ) );
 
 		texture->Unbind( );
 	}
 
-	void Renderer::DrawRectTextured( Transform transform, Rendering::Texture2D* texture, Color tint )
+	void Renderer::DrawRectTextured( Transform transform, Rendering::Texture2D* texture, Color tint, bool wrapped )
 	{
-		DrawRectTextured( transform.position, transform.size, texture, tint, transform.rotation );
+		DrawRectTextured( transform.position, transform.size, texture, tint, transform.rotation, wrapped );
+	}
+
+	void Renderer::DrawLine( Vector2D begin, Vector2D end, Color color )
+	{
+		// hacky way to draw a line with a rect
+		float rotation = begin.GetRotationTo( end );
+		float lineLength = begin.GetDistanceTo( end );
+
+		DrawRect( begin, { -lineLength, 1 }, color, rotation, { 0, 0 } );
 	}
 
 	void Renderer::DrawCharacter( Text::Character* character, Vector2D position, unsigned int size, Color color )
@@ -265,7 +292,7 @@ namespace CatWare
 
 		character->texture->Bind( 0 );
 
-		SubmitMesh( rectMesh, textShader, GenTransform( { xpos, ypos }, { w, h }, 0 ) );
+		SubmitMesh( rectMesh, textShader, GenTransform( { xpos, ypos }, { w, h }, 0, { 0, 0 } ) );
 	}
 
 	void Renderer::DrawString( std::string string, Vector2D position, unsigned int size, Text::Font* font, Color color )

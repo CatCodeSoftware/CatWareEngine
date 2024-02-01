@@ -27,11 +27,11 @@ namespace CatWare
 
 		inline void SetFocus( Vector2D focus )
 		{
-			RecalculateViewMatrix( );
+			// RecalculateViewMatrix( );
 			this->focus = focus;
 		}
-		inline void SetRotation( float rotation ) { this->rotation = rotation; RecalculateViewMatrix( ); }
-		inline void SetScale( float scale ) { this->scale = scale; RecalculateViewMatrix( ); }
+		inline void SetRotation( float rotation ) { this->rotation = rotation; /* RecalculateViewMatrix( ); */ }
+		inline void SetScale( float scale ) { this->scale = scale; /* RecalculateViewMatrix( ); */ }
 
 		inline Vector2D GetFocus( ) { return focus; }
 		inline float GetRotation( ) { return rotation; }

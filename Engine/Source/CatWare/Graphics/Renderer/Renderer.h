@@ -46,11 +46,13 @@ namespace CatWare
 
 		static void SubmitMesh( Mesh* mesh, Rendering::Shader* shader, glm::mat4 transform );
 
-		static void DrawRect( Vector2D position, Vector2D size, Color color, float rotation = 0 );
+		static void DrawRect( Vector2D position, Vector2D size, Color color, float rotation = 0, Vector2D rotationOrigin = { -1, -1 } );
 		static void DrawRect( Transform transform, Color color );
 
-		static void DrawRectTextured( Vector2D position, Vector2D size, Rendering::Texture2D* texture, Color tint = { 255, 255, 255, 255 }, float rotation = 0 );
-		static void DrawRectTextured( Transform transform, Rendering::Texture2D* texture, Color tint = { 255, 255, 255, 255 } );
+		static void DrawRectTextured( Vector2D position, Vector2D size, Rendering::Texture2D* texture, Color tint = { 255, 255, 255, 255 }, float rotation = 0, bool wrapped = false );
+		static void DrawRectTextured( Transform transform, Rendering::Texture2D* texture, Color tint = { 255, 255, 255, 255 }, bool wrapped = false	 );
+
+		static void DrawLine( Vector2D begin, Vector2D end, Color color );
 
 		static void DrawCharacter( Text::Character* character, Vector2D position, unsigned int scale , Color color = { 0, 0, 0, 255 } );
 		static void DrawString( std::string string, Vector2D position, unsigned int scale, Text::Font* font, Color color = { 0, 0, 0, 255 } );
@@ -78,6 +80,6 @@ namespace CatWare
 		inline static unsigned int width = 0;
 		inline static unsigned int height = 0;
 
-		static glm::mat4 GenTransform( Vector2D position, Vector2D size, float rotation );
+		static glm::mat4 GenTransform( Vector2D position, Vector2D size, float rotation, Vector2D rotationOrigin );
 	};
 }

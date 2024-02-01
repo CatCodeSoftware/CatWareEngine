@@ -100,9 +100,6 @@ namespace CatWare
 
 					if ( physicsBody2->GetType( ) == BodyType::DYNAMIC )
 					{
-						if ( physicsBody->position.GetDistanceTo( physicsBody2->position ) > 200 )
-							continue;
-
 						DynamicBody* dynamicBody2 = ( DynamicBody* ) physicsBody2;
 
 						// Update positions of colliders
@@ -155,6 +152,35 @@ namespace CatWare
 				Renderer::DrawRect( collider->position, collider->size, Color( 255, 0, 0, 100 ), 0 );
 			}
 		}
+	}
+
+	PhysicsBody* PhysicsWorld::CastRay( Vector2D rayOrigin, Vector2D rayEnd, unsigned int pixelsPerStep, bool ( *ContinueCallback )( PhysicsBody* body ) )
+	{
+		unsigned int steps = rayOrigin.GetDistanceTo( rayEnd ) / pixelsPerStep;
+		float rotation = rayOrigin.GetRotationTo( rayEnd );
+
+		Vector2D currentPos = rayOrigin;
+		PointCollider* pointCollider = new PointCollider( rayOrigin );
+
+		for ( unsigned int i = 0; i < steps; i++ )
+		{
+			pointCollider->position = currentPos;
+
+			for ( PhysicsBody* pb : physicsBodies )
+			{
+				if ( pb->GetType( ) == BodyType::DYNAMIC )
+				{
+					CollisionInfo result = TestCollision( pointCollider, ( ( DynamicBody* ) ( pb ) )->GetCollider( ) );
+
+					if ( result.hasCollision && ( ContinueCallback != nullptr && !ContinueCallback( pb ) ) )
+						return pb;
+
+					currentPos += Vector2D::Normalize( rotation, pixelsPerStep );
+				}
+			}
+		}
+
+		return nullptr;
 	}
 
 	void PhysicsWorld::Clean( )

@@ -8,17 +8,40 @@ namespace CatWare
 {
 	CollisionInfo TestCollision( Collider* a, Collider* b )
 	{
-		if ( a->colliderType == ColliderType::RECT && b->colliderType == ColliderType::RECT ) { return TestCollisionRectRect( (AABBCollider* ) a, ( AABBCollider* ) b ); }
-		else if ( a->colliderType == ColliderType::CIRCLE && b->colliderType == ColliderType::CIRCLE ) { return TestCollisionCircleCircle( ( CircleCollider* ) a, ( CircleCollider* ) b ); }
+		if ( a->colliderType == ColliderType::RECT && b->colliderType == ColliderType::RECT )
+		{
+			return TestCollisionRectRect( ( AABBCollider* ) a, ( AABBCollider* ) b );
+		}
+		if ( a->colliderType == ColliderType::CIRCLE && b->colliderType == ColliderType::CIRCLE )
+		{
+			return TestCollisionCircleCircle( ( CircleCollider* ) a, ( CircleCollider* ) b );
+		}
+		if ( a->colliderType == ColliderType::CIRCLE && b->colliderType == ColliderType::POINT )
+		{
+			return TestCollisionCirclePoint( ( CircleCollider* ) a, ( PointCollider* ) b );
+		}
+		if ( a->colliderType == ColliderType::POINT && b->colliderType == ColliderType::CIRCLE )
+		{
+			return TestCollisionCirclePoint( ( CircleCollider* ) b, ( PointCollider* ) a );
+		}
+		if ( a->colliderType == ColliderType::RECT && b->colliderType == ColliderType::POINT )
+		{
+			return TestCollisionRectPoint( ( AABBCollider* ) a, ( PointCollider* ) b );
+		}
+		if ( a->colliderType == ColliderType::POINT && b->colliderType == ColliderType::RECT )
+		{
+			return TestCollisionRectPoint( ( AABBCollider* ) b, ( PointCollider* ) a );
+		}
 
-		return { };
+		return {};
 	}
 
 	CollisionInfo TestCollisionCircleCircle( CircleCollider* a, CircleCollider* b )
 	{
 		CollisionInfo ci;
 
-		double distance = std::sqrt( ( b->position.x - a->position.x ) * ( b->position.x - a->position.x ) +
+		double distance = std::sqrt(
+			( b->position.x - a->position.x ) * ( b->position.x - a->position.x ) +
 			( b->position.y - a->position.y ) * ( b->position.y - a->position.y ) );
 
 		if ( distance <= a->radius + b->radius )
@@ -27,8 +50,7 @@ namespace CatWare
 			ci.penetration = distance - ( a->radius + b->radius );
 
 			ci.normal = Vector2D::Normalize( a->position.GetRotationTo( b->position ), 1 );
-		}
-		else
+		} else
 		{
 			ci.hasCollision = false;
 		}
@@ -63,19 +85,18 @@ namespace CatWare
 				if ( xOverlap > yOverlap )
 				{
 					if ( n.y < 0 )
-						ci.normal = { 0, 1 };
+						ci.normal = {0, 1};
 					else
-						ci.normal = { 0, -1 };
+						ci.normal = {0, -1};
 
 					ci.penetration = yOverlap;
 					ci.hasCollision = true;
-				}
-				else
+				} else
 				{
 					if ( n.x < 0 )
-						ci.normal = { 1, 0 };
+						ci.normal = {1, 0};
 					else
-						ci.normal = { -1, 0 };
+						ci.normal = {-1, 0};
 
 					ci.penetration = xOverlap;
 					ci.hasCollision = true;
@@ -88,11 +109,21 @@ namespace CatWare
 
 	CollisionInfo TestCollisionRectPoint( AABBCollider* a, PointCollider* b )
 	{
-		return CollisionInfo( );
+		CollisionInfo result;
+
+		if ( ( b->position.x >= a->position.x && b->position.y >= a->position.y ) && ( b->position.x <= a->position.x + a->size.x && b->position.y <= a->position.y + a->size.y ) )
+			result.hasCollision = true;
+
+		return result;
 	}
 
 	CollisionInfo TestCollisionCirclePoint( CircleCollider* a, PointCollider* b )
 	{
-		return CollisionInfo( );
+		CollisionInfo result;
+
+		if ( a->position.GetDistanceTo( b->position ) < a->radius )
+			result.hasCollision = true;
+
+		return result;
 	}
 }

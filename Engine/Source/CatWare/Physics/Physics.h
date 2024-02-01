@@ -78,7 +78,8 @@ namespace CatWare
 
 		// returns physics body the ray intersected with or nullptr if the path was clear
 		// The ContinueCallback gets called to determine if a physics body should be ignored
-		PhysicsBody* CastRay( Vector2D rayOrigin, Vector2D rayEnd, unsigned int pixelsPerStep = 3, bool ( *ContinueCallback )( PhysicsBody* body ) = nullptr );
+		PhysicsBody* CastRay( Vector2D rayOrigin, Vector2D rayEnd, float pixelsPerStep = 3, bool ( *ContinueCallback )( PhysicsBody* body ) =
+			                      nullptr );
 
 		void Clean( );
 		void RemoveItems( );

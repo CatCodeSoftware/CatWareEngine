@@ -154,28 +154,30 @@ namespace CatWare
 		}
 	}
 
-	PhysicsBody* PhysicsWorld::CastRay( Vector2D rayOrigin, Vector2D rayEnd, unsigned int pixelsPerStep, bool ( *ContinueCallback )( PhysicsBody* body ) )
+	PhysicsBody* PhysicsWorld::CastRay( Vector2D rayOrigin, Vector2D rayEnd, float pixelsPerStep, bool ( *ContinueCallback )( PhysicsBody* body ) )
 	{
-		unsigned int steps = rayOrigin.GetDistanceTo( rayEnd ) / pixelsPerStep;
-		float rotation = rayOrigin.GetRotationTo( rayEnd );
+		float rayLenght = rayOrigin.GetDistanceTo( rayEnd );
+		float rayAngle = rayOrigin.GetRotationTo( rayEnd );
+		Vector2D currentPosition = rayOrigin;
 
-		Vector2D currentPos = rayOrigin;
-		PointCollider* pointCollider = new PointCollider( rayOrigin );
+		PointCollider* pointCollider = new PointCollider( currentPosition );
 
-		for ( unsigned int i = 0; i < steps; i++ )
+		while ( currentPosition.GetDistanceTo( rayOrigin ) < rayLenght )
 		{
-			pointCollider->position = currentPos;
+			pointCollider->position = currentPosition;
 
-			for ( PhysicsBody* pb : physicsBodies )
+			for ( PhysicsBody* body : physicsBodies )
 			{
-				if ( pb->GetType( ) == BodyType::DYNAMIC )
+				if ( body->GetType( ) == BodyType::DYNAMIC )
 				{
-					CollisionInfo result = TestCollision( pointCollider, ( ( DynamicBody* ) ( pb ) )->GetCollider( ) );
+					CollisionInfo result = TestCollision( static_cast<DynamicBody*>( body )->GetCollider( ), pointCollider );
 
-					if ( result.hasCollision && ( ContinueCallback != nullptr && !ContinueCallback( pb ) ) )
-						return pb;
+					if ( result.hasCollision && !ContinueCallback( body ) )
+						return body;
 
-					currentPos += Vector2D::Normalize( rotation, pixelsPerStep );
+					currentPosition -= Vector2D::Normalize( rayAngle, pixelsPerStep );
+
+					// Renderer::DrawRect( currentPosition, { 1, 1 }, { 255, 255, 255, 255 } );
 				}
 			}
 		}

@@ -133,6 +133,7 @@ public:
 
 	void DrawGUI( ) override
 	{
+		Renderer::DrawString( "FPS: " + std::to_string( 1.0 / Time::GetDeltaTime( ) ), { 22, 22 }, 1, font, { 0, 0, 0, 255 } );
 		Renderer::DrawString( "FPS: " + std::to_string( 1.0 / Time::GetDeltaTime( ) ), { 20, 20 }, 1, font, { 255, 255, 255, 255 } );
 	}
 };

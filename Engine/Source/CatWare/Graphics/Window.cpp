@@ -72,29 +72,28 @@ namespace CatWare
 				shouldClose = true;
 				break;
 
-			case SDL_KEYDOWN:
-				if ( e.key.keysym.scancode == Input::KEY_GRAVE )
-					DebugUI::Open( );
-
-				if ( !DebugUI::IsOpen(  ) ) Input::SetKeyPressed( e.key.keysym.scancode, true );
+			switch ( e.type )
+			{
+				if ( !DebugUI::IsOpen( ) ) Input::SetKeyPressed( e.key.keysym.scancode, true );
 				break;
 
 			case SDL_KEYUP:
-				if ( !DebugUI::IsOpen(  ) ) Input::SetKeyPressed( e.key.keysym.scancode, false );
+				if ( !DebugUI::IsOpen( ) ) Input::SetKeyPressed( e.key.keysym.scancode, false );
 				break;
 
 			case SDL_MOUSEBUTTONDOWN:
-				if ( !DebugUI::IsOpen(  ) ) Input::SetMousePressed( e.button.button, true );
+				if ( !DebugUI::IsOpen( ) ) Input::SetMousePressed( e.button.button, true );
 				break;
 
 			case SDL_MOUSEBUTTONUP:
-				if ( !DebugUI::IsOpen(  ) ) Input::SetMousePressed( e.button.button, false );
+				if ( !DebugUI::IsOpen( ) ) Input::SetMousePressed( e.button.button, false );
 				break;
 
 
 			case SDL_MOUSEMOTION:
-				if ( !DebugUI::IsOpen(  ) ) Input::SetMouseMotion( { ( double ) e.motion.x, ( double ) e.motion.y } );
+				if ( !DebugUI::IsOpen( ) ) Input::SetMouseMotion( { ( double ) e.motion.x, ( double ) e.motion.y } );
 			}
+
 		}
 	}
 

@@ -11,25 +11,26 @@ namespace CatWare
 		if ( a->colliderType == ColliderType::RECT && b->colliderType == ColliderType::RECT )
 		{
 			return TestCollisionRectRect( ( AABBCollider* ) a, ( AABBCollider* ) b );
-		} else if ( a->colliderType == ColliderType::CIRCLE && b->colliderType == ColliderType::CIRCLE )
+		}
+		if ( a->colliderType == ColliderType::CIRCLE && b->colliderType == ColliderType::CIRCLE )
 		{
 			return TestCollisionCircleCircle( ( CircleCollider* ) a, ( CircleCollider* ) b );
-
-		} else if ( a->colliderType == ColliderType::CIRCLE && b->colliderType == ColliderType::POINT )
+		}
+		if ( a->colliderType == ColliderType::CIRCLE && b->colliderType == ColliderType::POINT )
 		{
 			return TestCollisionCirclePoint( ( CircleCollider* ) a, ( PointCollider* ) b );
-		} else if ( a->colliderType == ColliderType::RECT && b->colliderType == ColliderType::POINT )
+		}
+		if ( a->colliderType == ColliderType::POINT && b->colliderType == ColliderType::CIRCLE )
+		{
+			return TestCollisionCirclePoint( ( CircleCollider* ) b, ( PointCollider* ) a );
+		}
+		if ( a->colliderType == ColliderType::RECT && b->colliderType == ColliderType::POINT )
 		{
 			return TestCollisionRectPoint( ( AABBCollider* ) a, ( PointCollider* ) b );
-		} else if ( a->colliderType == ColliderType::POINT && b->colliderType == ColliderType::CIRCLE )
+		}
+		if ( a->colliderType == ColliderType::POINT && b->colliderType == ColliderType::RECT )
 		{
-			return TestCollisionCirclePoint( ( CircleCollider* ) b, ( PointCollider* ) a );
-		} else if ( a->colliderType == ColliderType::POINT && b->colliderType == ColliderType::RECT )
-		{
-			return TestCollisionCirclePoint( ( CircleCollider* ) b, ( PointCollider* ) a );
-		} else if ( a->colliderType == ColliderType::POINT && b->colliderType == ColliderType::POINT )
-		{
-			return TestCollisionPointPoint( ( PointCollider* ) a, ( PointCollider* ) b );
+			return TestCollisionRectPoint( ( AABBCollider* ) b, ( PointCollider* ) a );
 		}
 
 		return {};
@@ -101,8 +102,6 @@ namespace CatWare
 					ci.hasCollision = true;
 				}
 			}
-
-			ci.normal = ci.normal;
 		}
 
 		return ci;
@@ -110,32 +109,21 @@ namespace CatWare
 
 	CollisionInfo TestCollisionRectPoint( AABBCollider* a, PointCollider* b )
 	{
-		AABBCollider* tempCollider = new AABBCollider( b->position, { 1, 1 } );
-		CollisionInfo ci = TestCollisionRectRect( a, tempCollider );
-		delete tempCollider;
-		return ci;
+		CollisionInfo result;
+
+		if ( ( b->position.x >= a->position.x && b->position.y >= a->position.y ) && ( b->position.x <= a->position.x + a->size.x && b->position.y <= a->position.y + a->size.y ) )
+			result.hasCollision = true;
+
+		return result;
 	}
 
 	CollisionInfo TestCollisionCirclePoint( CircleCollider* a, PointCollider* b )
 	{
-		CollisionInfo ci;
+		CollisionInfo result;
 
-		ci.hasCollision = b->position.GetDistanceTo( a->position ) <= a->radius;
+		if ( a->position.GetDistanceTo( b->position ) < a->radius )
+			result.hasCollision = true;
 
-		if ( ci.hasCollision )
-		{
-			ci.normal = Vector2D::Normalize( 1, a->position.GetRotationTo( b->position ) );
-			ci.penetration = a->radius - a->position.GetRotationTo( b->position );
-		}
-
-		return ci;
-	}
-
-	CollisionInfo TestCollisionPointPoint( PointCollider* a, PointCollider* b )
-	{
-		CollisionInfo ci;
-		ci.hasCollision = ( a->position.x == b->position.x ) && ( a->position.y == b->position.y );
-
-		return ci;
+		return result;
 	}
 }

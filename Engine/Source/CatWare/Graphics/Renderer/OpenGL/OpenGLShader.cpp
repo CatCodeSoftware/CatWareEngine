@@ -20,66 +20,84 @@ namespace CatWare
 				glAttachShader( programID, fragmentShader );
 
 				glLinkProgram( programID );
+
+				GLint i;
+				GLint count;
+
+				GLint size; // size of the variable
+				GLenum type; // type of the variable (float, vec3 or mat4, etc)
+
+				const GLsizei bufSize = 16; // maximum name length
+				GLchar name[bufSize]; // variable name in GLSL
+				GLsizei length; // name length
+
+				glGetProgramiv( programID, GL_ACTIVE_UNIFORMS, &count );
+
+				for ( i = 0; i < count; i++ )
+				{
+					glGetActiveUniform( programID, ( GLuint ) i, bufSize, &length, &size, &type, name );
+					uniformIDs.insert( { std::string( name ), i } );
+				}
 			}
 
-			OpenGLShader::~OpenGLShader( )
-			{
-				glDeleteProgram( programID );
-			}
+			OpenGLShader::~OpenGLShader( ) { glDeleteProgram( programID ); }
 
-			void OpenGLShader::Bind( )
-			{
-				glUseProgram( programID );
-			}
+			void OpenGLShader::Bind( ) { glUseProgram( programID ); }
 
-			void OpenGLShader::Unbind( )
-			{
-				glUseProgram( 0 );
-			}
+			void OpenGLShader::Unbind( ) { glUseProgram( 0 ); }
 
 			void OpenGLShader::SetUniform1i( std::string name, int i )
 			{
-				glUniform1i( glGetUniformLocation( programID, name.c_str( ) ), i );
+				if ( uniformIDs.find( name ) == uniformIDs.end( ) ) { CW_ENGINE_LOG->Error( "No uniform named %s", name.c_str( ) ); return; }
+				glUniform1i( uniformIDs[name], i );
 			}
 
 			void OpenGLShader::SetUniform2i( std::string name, int i, int i2 )
 			{
-				glUniform2i( glGetUniformLocation( programID, name.c_str( ) ), i, i2 );
+				if ( uniformIDs.find( name ) == uniformIDs.end( ) ) { CW_ENGINE_LOG->Error( "No uniform named %s", name.c_str( ) ); return; }
+				glUniform2i( uniformIDs[name], i, i2 );
 			}
 
 			void OpenGLShader::SetUniform3i( std::string name, int i, int i2, int i3 )
 			{
-				glUniform3i( glGetUniformLocation( programID, name.c_str( ) ), i, i2, i3 );
+				if ( uniformIDs.find( name ) == uniformIDs.end( ) ) { CW_ENGINE_LOG->Error( "No uniform named %s", name.c_str( ) ); return; }
+				glUniform3i( uniformIDs[name], i, i2, i3 );
 			}
 
 			void OpenGLShader::SetUniform4i( std::string name, int i, int i2, int i3, int i4 )
 			{
-				glUniform4i( glGetUniformLocation( programID, name.c_str( ) ), i, i2, i3, i4 );
+				if ( uniformIDs.find( name ) == uniformIDs.end( ) ) { CW_ENGINE_LOG->Error( "No uniform named %s", name.c_str( ) ); return; }
+				glUniform4i( uniformIDs[name], i, i2, i3, i4 );
 			}
 
 			void OpenGLShader::SetUniform1f( std::string name, float f )
 			{
-				glUniform1f( glGetUniformLocation( programID, name.c_str( ) ), f );
+				if ( uniformIDs.find( name ) == uniformIDs.end( ) ) { CW_ENGINE_LOG->Error( "No uniform named %s", name.c_str( ) ); return; }
+				glUniform1f( uniformIDs[name], f );
 			}
 
 			void OpenGLShader::SetUniform2f( std::string name, float f, float f2 )
 			{
-				glUniform2f( glGetUniformLocation( programID, name.c_str( ) ), f, f2 );
+				if ( uniformIDs.find( name ) == uniformIDs.end( ) ) { CW_ENGINE_LOG->Error( "No uniform named %s", name.c_str( ) ); return; }
+				glUniform2f( uniformIDs[name], f, f2 );
 			}
 
 			void OpenGLShader::SetUniform3f( std::string name, float f, float f2, float f3 )
 			{
-				glUniform3f( glGetUniformLocation( programID, name.c_str( ) ), f, f2, f3 );
+				if ( uniformIDs.find( name ) == uniformIDs.end( ) ) { CW_ENGINE_LOG->Error( "No uniform named %s", name.c_str( ) ); return; }
+				glUniform3f( uniformIDs[name], f, f2, f3 );
 			}
 
 			void OpenGLShader::SetUniform4f( std::string name, float f, float f2, float f3, float f4 )
 			{
-				glUniform4f( glGetUniformLocation( programID, name.c_str( ) ), f, f2, f3, f4 );
+				if ( uniformIDs.find( name ) == uniformIDs.end( ) ) { CW_ENGINE_LOG->Error( "No uniform named %s", name.c_str( ) ); return; }
+				glUniform4f( uniformIDs[name], f, f2, f3, f4 );
 			}
 
 			void OpenGLShader::SetUniformMat4( std::string name, glm::mat4 mat )
 			{
-				glUniformMatrix4fv( glGetUniformLocation( programID, name.c_str( ) ), 1, true, &mat[0][0] );
+				if ( uniformIDs.find( name ) == uniformIDs.end( ) ) { CW_ENGINE_LOG->Error( "No uniform named %s", name.c_str( ) ); return; }
+				glUniformMatrix4fv( uniformIDs[name], 1, true, &mat[0][0] );
 			}
 
 			unsigned int OpenGLShader::CompileShader( std::string source, GLenum type )
@@ -112,6 +130,6 @@ namespace CatWare
 
 				return shader;
 			}
-		}
-	}
-}
+		} // namespace OpenGL
+	} // namespace Rendering
+} // namespace CatWare

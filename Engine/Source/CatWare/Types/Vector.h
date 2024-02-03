@@ -53,7 +53,7 @@ public:
 		return direction;
 	}
 
-	inline static Vector2D Normalize( int rotation, double length )
+	inline static Vector2D Normalize( float rotation, double length )
 	{
 		double tangents = rotation / 57.2957795;
 

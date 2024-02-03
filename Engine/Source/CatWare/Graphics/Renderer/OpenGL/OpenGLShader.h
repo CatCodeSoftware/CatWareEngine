@@ -1,6 +1,7 @@
 #pragma once
 
 #include <glad/glad.h>
+#include <unordered_map>
 
 #include "CatWare/Graphics/Renderer/Shader.h"
 
@@ -35,6 +36,8 @@ namespace CatWare
 				unsigned int programID;
 
 				unsigned int CompileShader( std::string source, GLenum type );
+
+				std::unordered_map< std::string, unsigned int > uniformIDs;
 			};
 		}
 	}

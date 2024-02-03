@@ -71,8 +71,15 @@ namespace CatWare
 		void AddBody( PhysicsBody* body );
 		void RemoveBody( PhysicsBody* body );
 
-		void Step( float deltaTime, unsigned int substeps = 8 );
+		void Step( float deltaTime, unsigned int substeps = 6 );
+		void DispatchCollisionThread( int rangeBegin, int rangeEnd, float deltaTime );
+		void HandleCollisions( std::vector<PhysicsBody*> physicsBodies, float deltaTime, int substeps );
 		void DrawColliders( );
+
+		// returns physics body the ray intersected with or nullptr if the path was clear
+		// The ContinueCallback gets called to determine if a physics body should be ignored
+		PhysicsBody* CastRay( Vector2D rayOrigin, Vector2D rayEnd, float pixelsPerStep = 3, bool ( *ContinueCallback )( PhysicsBody* body ) =
+			                      nullptr );
 
 		void Clean( );
 		void RemoveItems( );

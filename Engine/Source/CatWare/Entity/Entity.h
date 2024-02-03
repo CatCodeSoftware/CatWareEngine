@@ -38,9 +38,13 @@ namespace CatWare
 
 		void Destroy( );
 
-		// interaction
-		virtual void OnCollide( CollisionInfo info, PhysicsBody* body, Entity* other ) {}
 		virtual void Use( Entity* user ) { } // triggered by things like triggers and the player using interactible objects
+
+		// Physics stuff
+		void AttachPhysicsBody( PhysicsBody* physicsBody ); // !!! passes ownership of body to entity !!!
+		void DetachPhysicsBody( );
+		PhysicsBody* GetPhysicsBody( ) { return physicsBody; }
+		virtual void OnCollide( CollisionInfo info, PhysicsBody* body, Entity* other ) {}
 
 		void AddToGroup( std::string name );
 		void RemoveFromGroup( std::string name );
@@ -61,6 +65,7 @@ namespace CatWare
 
 		std::vector<std::string> groups;
 	private:
+		CatWare::PhysicsBody* physicsBody = nullptr;
 		UInt64 id = 0;
 
 		bool shouldDelete = false;

@@ -36,6 +36,21 @@ namespace CatWare
 	}
 
 
+	void Entity::AttachPhysicsBody( PhysicsBody* physicsBody )
+	{
+		this->physicsBody = physicsBody;
+		physicsBody->position = transform.position;
+		physicsBody->userData = this;
+		physicsBody->collisionCallback = &EntityCollisionCallback;
+		CW_CURRENT_SCENE->world.physicsWorld.AddBody( physicsBody );
+	}
+
+	void Entity::DetachPhysicsBody( )
+	{
+		CW_CURRENT_SCENE->world.physicsWorld.RemoveBody( physicsBody );
+		physicsBody = nullptr;
+	}
+
 	void Entity::AddToGroup( std::string name )
 	{
 		groups.push_back( name );
@@ -219,6 +234,9 @@ namespace CatWare
 				entityDeleteQueue.push_back( entity );
 
 			entity->Update( );
+
+			if ( entity->physicsBody != nullptr )
+				entity->transform.position = entity->physicsBody->position;
 		}
 	}
 
@@ -245,6 +263,9 @@ namespace CatWare
 	{
 		for ( Entity* entity : entityDeleteQueue )
 		{
+			if ( entity->physicsBody != nullptr )
+				entity->DetachPhysicsBody( );
+
 			delete entity;
 
 			for ( auto it = entities.begin( ); it != entities.end( ); it++ )

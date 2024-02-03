@@ -71,9 +71,7 @@ namespace CatWare
 			case SDL_QUIT:
 				shouldClose = true;
 				break;
-
-			switch ( e.type )
-			{
+			case SDL_KEYDOWN:
 				if ( !DebugUI::IsOpen( ) ) Input::SetKeyPressed( e.key.keysym.scancode, true );
 				break;
 
@@ -93,7 +91,6 @@ namespace CatWare
 			case SDL_MOUSEMOTION:
 				if ( !DebugUI::IsOpen( ) ) Input::SetMouseMotion( { ( double ) e.motion.x, ( double ) e.motion.y } );
 			}
-
 		}
 	}
 

@@ -46,7 +46,6 @@ namespace CatWare
 			return IsMousePressed( keyCode );
 		}
 
-
 		// BIND MANAGER
 		std::unordered_map<std::string, Binding*> bindings;
 

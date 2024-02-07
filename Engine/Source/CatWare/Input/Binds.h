@@ -13,6 +13,9 @@ namespace CatWare
 		public:
 			virtual bool IsDown( ) = 0;
 			virtual float GetPercentDown( ) = 0; // For supporting pressure sensitive buttons in the future, maybe those weird pressure sensitive keyboard will be popular in the future
+
+		private:
+			bool downLastFrame = false;
 	 	};
 
 		class CATWARE_API KeyBind : public Binding

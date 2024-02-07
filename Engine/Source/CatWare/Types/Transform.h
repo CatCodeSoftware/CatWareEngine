@@ -15,6 +15,8 @@ namespace CatWare
 			this->layer = layer;
 		}
 
+		inline Vector2D Center( ) { return position + size / 2; }
+
 		Vector2D position = { 0, 0 };
 		Vector2D size = { 0, 0 };
 

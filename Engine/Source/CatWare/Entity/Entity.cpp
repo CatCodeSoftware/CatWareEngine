@@ -143,7 +143,7 @@ namespace CatWare
 			auto createFunc = EntityRegistry::GetCreateFunction( className );
 
 			if ( createFunc == nullptr )
-				CW_ABORT( "createFunc was nullptr" );
+				CW_ABORT( "createFunc for " + className + " was nullptr" );
 
 			Entity* entity = createFunc( tags );
 

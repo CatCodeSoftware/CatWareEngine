@@ -55,7 +55,7 @@ public:
 
 	inline static Vector2D Normalize( float rotation, double length )
 	{
-		double tangents = rotation / 57.2957795;
+		double tangents = ( 180 + rotation ) * 0.0174532925;
 
 		return { length * cos( tangents ), length * sin( tangents ) };
 	}

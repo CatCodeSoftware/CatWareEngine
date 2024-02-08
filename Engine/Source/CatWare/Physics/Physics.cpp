@@ -175,7 +175,7 @@ namespace CatWare
 					if ( result.hasCollision && ( ContinueCallback == nullptr || !ContinueCallback( body ) ) )
 						return body;
 
-					currentPosition -= Vector2D::Normalize( rayAngle, pixelsPerStep );
+					currentPosition += Vector2D::Normalize( rayAngle, pixelsPerStep );
 
 					// Renderer::DrawRect( currentPosition, { 1, 1 }, { 255, 255, 255, 255 } );
 				}

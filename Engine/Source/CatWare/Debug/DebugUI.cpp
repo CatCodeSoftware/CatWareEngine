@@ -3,6 +3,7 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
+#include "CatWare/Profiling.h"
 #include "CatWare/GameState/Scene.h"
 #include "CatWare/Graphics/Renderer/Renderer.h"
 #include "CatWare/Time.h"
@@ -47,6 +48,8 @@ namespace CatWare
 			if ( ImGui::Button( "Time" ) ) debugToolsTab = 1;
 			ImGui::SameLine( );
 			if ( ImGui::Button( "Physics" ) ) debugToolsTab = 2;
+			ImGui::SameLine( );
+			if ( ImGui::Button( "Profiling" ) ) debugToolsTab = 3;
 
 			ImGui::BeginChild( "Tool window" );
 
@@ -68,6 +71,8 @@ namespace CatWare
 				ImGui::Checkbox( "Draw colliders", &SceneManager::GetScene( )->world.physicsWorld.drawColliders );
 
 				break;
+			case 3:
+				Profiling::DrawProfilingPanel( );
 			}
 
 			ImGui::EndChild( );

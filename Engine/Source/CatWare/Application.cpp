@@ -13,6 +13,7 @@
 #include "Graphics/Renderer/Renderer.h"
 #include "Graphics/Text.h"
 // #include "Assets/Assets.h"
+#include "Profiling.h"
 #include "Input/Binds.h"
 #include "Random.h"
 #include "CatWare/Debug/DebugUI.h"
@@ -46,6 +47,8 @@ namespace CatWare
 
 			if ( currentScene != nullptr )
 			{
+				CW_PROFILE_FUNC;
+
 				Update( );
 
 				int ticksElapsed = tickTimer.TimesTimeElapsed( ( 1.0 / Time::ticksPerSecond ) / Time::modifier );
@@ -65,18 +68,21 @@ namespace CatWare
 
 				Draw( );
 				DrawGUI( );
+
+				CW_PROFILE_END;
 			}
 
 			TextureManager::DoCleanup( );
 			// Assets::sounds.RunCleanup( );
 
 
+
 			while ( !frameTimer.HasTimeElapsed( 1 / Time::maxFPS ) && Time::frameRateLimited )
 			{
 			}
-			Time::SetDeltaTime( frameTimer.GetTime( ) );
 
 			window->SwapBuffers( );
+			Time::SetDeltaTime( frameTimer.GetTime( ) );
 		}
 
 		DeInit( );

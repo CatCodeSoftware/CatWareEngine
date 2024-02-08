@@ -124,7 +124,8 @@ namespace CatWare
 		{
 			if ( particles[i].endTime < Time::GetTime( ) )
 			{
-				delete particles[i].texture;
+				if ( particles[i].textured )
+					delete particles[i].texture;
 				particles.erase( particles.begin( ) + i );
 			}
 		}

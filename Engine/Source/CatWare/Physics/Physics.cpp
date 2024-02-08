@@ -172,7 +172,7 @@ namespace CatWare
 				{
 					CollisionInfo result = TestCollision( static_cast<DynamicBody*>( body )->GetCollider( ), pointCollider );
 
-					if ( result.hasCollision && !ContinueCallback( body ) )
+					if ( result.hasCollision && ( ContinueCallback == nullptr || !ContinueCallback( body ) ) )
 						return body;
 
 					currentPosition -= Vector2D::Normalize( rayAngle, pixelsPerStep );

@@ -73,7 +73,9 @@ namespace CatWare
 	void TextureManager::AddRef( TextureRef* ref )
 	{
 		if ( textures.find( ref->GetPath( ) ) == textures.end( ) )
-			CW_ABORT( "Attempted to refrence texture " + ref->GetPath( ) + " that does not exist" );
+		{
+			AddTexture( ref->GetPath( ), Rendering::TextureFilter::LINEAR );
+		}
 
 		TextureAsset* asset = textures[ref->GetPath( )];
 

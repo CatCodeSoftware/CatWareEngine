@@ -13,12 +13,10 @@ class TestEntity : public Entity
 public:
 	DynamicBody* pBody;
 
-	std::string textureID;
+	TextureRef texture = TextureRef( "gato.jpg" );
 
-	TestEntity( std::string textureID )
+	TestEntity( )
 	{
-		this->textureID = textureID;
-
 		className = "testEntity";
 	}
 
@@ -47,7 +45,7 @@ public:
 		emmiter.velocityStrech = false;
 
 		emmiter.textured = true;
-		emmiter.textureIDs = { "smoke1", "smoke2", "smoke3" };
+		emmiter.textureIDs = { "whitePuff00.png", "whitePuff01.png", "whitePuff02.png" };
 
 		emmiter.once = true;
 		// emmiter.colorVariation = { 10, 10, 0, 20 };
@@ -81,12 +79,12 @@ public:
 
 	void Draw( )
 	{
-		Renderer::DrawRectTextured( transform, Assets::textures.GetAsset( textureID ) );
+		Renderer::DrawRectTextured( transform, texture.Get( ) );
 	}
 
 	CW_ENTITY_CREATE( tags )
 	{
-		return new TestEntity( tags["texture"] );
+		return new TestEntity( );
 	}
 };
 
@@ -162,10 +160,10 @@ public:
 
 		EntityRegistry::RegisterEntity<TestEntity>( "testEntity" );
 
-		Assets::textures.Add( "testTexture", "gato.jpg" );
-		Assets::textures.Add( "smoke1", "whitePuff00.png" );
-		Assets::textures.Add( "smoke2", "whitePuff01.png" );
-		Assets::textures.Add( "smoke3", "whitePuff02.png" );
+		TextureManager::AddTexture( "gato.jpg", Rendering::TextureFilter::LINEAR );
+		TextureManager::AddTexture( "whitePuff00.png", Rendering::TextureFilter::LINEAR );
+		TextureManager::AddTexture( "whitePuff01.png", Rendering::TextureFilter::LINEAR );
+		TextureManager::AddTexture( "whitePuff02.png", Rendering::TextureFilter::LINEAR );
 
 		inGame = new InGame;
 		SceneManager::SetScene( inGame );

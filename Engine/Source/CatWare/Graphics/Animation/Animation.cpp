@@ -8,7 +8,7 @@
 #include "CatWare/Debug/Debug.h"
 
 #include "CatWare/Graphics/Renderer/Renderer.h"
-#include "CatWare/Assets/Assets.h"
+#include "CatWare/Assets/TextureAsset.h"
 #include "CatWare/Time.h"
 
 
@@ -39,7 +39,10 @@ namespace CatWare
 	Animation::Animation( float fps, std::vector<std::string> frames )
 	{
 		this->fps = fps;
-		this->frames = frames;
+		for ( int i = 0; i < frames.size( ); i++ )
+		{
+			this->frames[i] = TextureRef( frames[i] );
+		}
 
 		currentFrameStartTime = Time::GetDeltaTime( );
 	}
@@ -48,7 +51,7 @@ namespace CatWare
 	{
 		Update( );
 
-		Renderer::DrawRectTextured( position, size, Assets::textures.GetAsset( frames[currentFrame] ), color, rotation );
+		Renderer::DrawRectTextured( position, size, frames[currentFrame].Get( ), color, rotation );
 	}
 
 	void Animation::Update( )

@@ -6,6 +6,7 @@
 #include "CatWare/Core.h"
 #include "CatWare/Types/Color.h"
 #include "CatWare/Types/Vector.h"
+#include "CatWare/Assets/TextureAsset.h"
 
 namespace CatWare
 {
@@ -24,7 +25,7 @@ namespace CatWare
 	private:
 		void Update( );
 
-		std::vector<std::string> frames;
+		std::vector<TextureRef> frames;
 
 		double currentFrameStartTime = 0;
 	};

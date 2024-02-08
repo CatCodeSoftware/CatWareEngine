@@ -16,7 +16,7 @@
 #include "CatWare/Input/Binds.h"
 #include "CatWare/Graphics/Renderer/Renderer.h"
 #include "CatWare/Entity/Entity.h"
-#include "CatWare/Assets/Assets.h"
+#include "CatWare/Assets/TextureAsset.h"
 #include "CatWare/Time.h"
 #include "CatWare/Graphics/Text.h"
 #include "CatWare/Graphics/Animation/Animation.h"

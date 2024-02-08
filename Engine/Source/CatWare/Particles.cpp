@@ -4,7 +4,7 @@
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/glm.hpp>
 
-#include "Assets/Assets.h"
+#include "Assets/TextureAsset.h"
 #include "Graphics/Renderer/Renderer.h"
 #include "Log.h"
 #include "Random.h"
@@ -41,7 +41,7 @@ namespace CatWare
 		if ( !textured )
 			Renderer::DrawRect( position, tempSize, color, angle );
 		else
-			Renderer::DrawRectTextured( position - tempSize / 2, tempSize, Assets::textures.GetAsset( textureID ), color, angle );
+			Renderer::DrawRectTextured( position - tempSize / 2, tempSize, texture->Get( ), color, angle );
 	}
 
 	void Particle::Update( )
@@ -95,7 +95,7 @@ namespace CatWare
 				part.textured = textured;
 
 				if ( textured )
-					part.textureID = textureIDs[Random::GetUInt( 0, textureIDs.size( ) - 1 )];
+					part.texture = new TextureRef( textureIDs[Random::GetUInt( 0, textureIDs.size( ) - 1 )] );
 
 				SceneManager::GetScene( )->world.particles.AddParticle( part );
 			}
@@ -123,7 +123,10 @@ namespace CatWare
 		for ( unsigned int i = 0; i < particles.size( ); i++ )
 		{
 			if ( particles[i].endTime < Time::GetTime( ) )
+			{
+				delete particles[i].texture;
 				particles.erase( particles.begin( ) + i );
+			}
 		}
 
 		for ( int i = particles.size( ) - 1; i >= 0; i-- )

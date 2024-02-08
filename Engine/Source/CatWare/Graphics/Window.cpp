@@ -72,6 +72,9 @@ namespace CatWare
 				shouldClose = true;
 				break;
 			case SDL_KEYDOWN:
+				if ( e.key.keysym.scancode == Input::KEY_GRAVE )
+					DebugUI::Open( );
+
 				if ( !DebugUI::IsOpen( ) ) Input::SetKeyPressed( e.key.keysym.scancode, true );
 				break;
 

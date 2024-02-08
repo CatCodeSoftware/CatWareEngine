@@ -7,6 +7,7 @@
 #include "CatWare/Core.h"
 #include "Types/Color.h"
 #include "Types/Vector.h"
+#include "Assets/TextureAsset.h"
 
 namespace CatWare
 {
@@ -32,6 +33,9 @@ namespace CatWare
 
 		bool textured;
 		std::string textureID;
+		// this is a lil hacky. Idealy this would be stack allocated
+		// But the new texture refrence system breaks when copying and the texture gets unloaded and loaded way too many times
+		TextureRef* texture;
 
 		void Draw( );
 		void Update( );
@@ -74,8 +78,8 @@ namespace CatWare
 		unsigned int numParticles = 0;
 		unsigned int numParticlesRandomness = 0;
 
-		bool textured = false;  // Not implemented in particle
-		std::vector< std::string > textureIDs;  // Not implemented in particle
+		bool textured = false;
+		std::vector< std::string > textureIDs;
 
 		Color startColor;
 		Color endColor;

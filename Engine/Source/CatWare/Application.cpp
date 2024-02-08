@@ -12,7 +12,7 @@
 #include "Log.h"
 #include "Graphics/Renderer/Renderer.h"
 #include "Graphics/Text.h"
-#include "Assets/Assets.h"
+// #include "Assets/Assets.h"
 #include "Input/Binds.h"
 #include "Random.h"
 #include "CatWare/Debug/DebugUI.h"
@@ -67,7 +67,7 @@ namespace CatWare
 				DrawGUI( );
 			}
 
-			Assets::textures.RunCleanup( );
+			TextureManager::DoCleanup( );
 			// Assets::sounds.RunCleanup( );
 
 
@@ -234,7 +234,7 @@ namespace CatWare
 		Renderer::DeInit( );
 		// AudioEngine::DeInitAudio( );
 
-		Assets::textures.Clear( );
+		// Assets::textures.Clear( );
 		// Assets::sounds.Clear( );
 
 		delete window;

@@ -15,6 +15,3 @@
 [submodule "Engine/Lib/yaml-cpp"]
 	path = Engine/Lib/yaml-cpp
 	url = https://github.com/jbeder/yaml-cpp
-[submodule "Engine/Lib/miniaudio"]
-	path = Engine/Lib/miniaudio
-	url = https://github.com/mackron/miniaudio

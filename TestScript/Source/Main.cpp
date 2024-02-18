@@ -1,5 +1,7 @@
 #include <CatWare.h>
 
+#include "CatWare/UI/Widgets.h"
+
 using namespace CatWare;
 
 int i = 1;
@@ -15,14 +17,11 @@ public:
 
 	TextureRef texture = TextureRef( "gato.jpg" );
 
-	TestEntity( )
-	{
-		className = "testEntity";
-	}
+	TestEntity( ) { className = "testEntity"; }
 
 	void Init( ) override
 	{
-		pBody = new DynamicBody( 10, 1, new AABBCollider( transform.position,  transform.size ) );
+		pBody = new DynamicBody( 10, 1, new AABBCollider( transform.position, transform.size ) );
 		pBody->position = transform.position;
 		SceneManager::GetScene( )->world.physicsWorld.AddBody( pBody );
 
@@ -77,34 +76,29 @@ public:
 		emmiter.Emit( );
 	}
 
-	void Draw( )
-	{
-		Renderer::DrawRectTextured( transform, texture.Get( ) );
-	}
+	void Draw( ) { Renderer::DrawRectTextured( transform, texture.Get( ) ); }
 
-	CW_ENTITY_CREATE( tags )
-	{
-		return new TestEntity( );
-	}
+	CW_ENTITY_CREATE( tags ) { return new TestEntity( ); }
 };
+
+void OnPress( ) { CW_LOG->Error( "Pressed a button" ); }
 
 class InGame : public Scene
 {
 public:
+	UI::Button button = UI::Button( "Hello world", &OnPress );
+
 	InGame( )
 	{
 		world.physicsWorld.gravity = 400;
+
+		button.position = { 20, 20 };
+		button.size = { 300, 100 };
 	}
 
-	void OnEnter( ) override
-	{
-		world.LoadFromMapFile( "testMap.yaml" );
-	}
+	void OnEnter( ) override { world.LoadFromMapFile( "testMap.yaml" ); }
 
-	void Update( ) override
-	{
-
-	}
+	void Update( ) override {}
 
 	void Tick( ) override
 	{
@@ -124,15 +118,17 @@ public:
 		}
 	}
 
-	void Draw( ) override
-	{
-		Renderer::Clear( { 40, 40, 40, 255 } );
-	}
+	void Draw( ) override { Renderer::Clear( { 40, 40, 40, 255 } ); }
 
 	void DrawGUI( ) override
 	{
-		Renderer::DrawString( "FPS: " + std::to_string( 1.0 / Time::GetDeltaTime( ) ), { 22, 22 }, 1, font, { 0, 0, 0, 255 } );
-		Renderer::DrawString( "FPS: " + std::to_string( 1.0 / Time::GetDeltaTime( ) ), { 20, 20 }, 1, font, { 255, 255, 255, 255 } );
+		Renderer::DrawString(
+			"FPS: " + std::to_string( 1.0 / Time::GetDeltaTime( ) ), { 22, 22 }, 1, font, { 0, 0, 0, 255 } );
+		Renderer::DrawString(
+			"FPS: " + std::to_string( 1.0 / Time::GetDeltaTime( ) ), { 20, 20 }, 1, font, { 255, 255, 255, 255 } );
+
+		button.Draw( );
+		button.Update( );
 	}
 };
 
@@ -141,7 +137,7 @@ InGame* inGame;
 class Game : Script
 {
 public:
-	void PreInit(CatWare::InitConfig* initConfig) override
+	void PreInit( CatWare::InitConfig* initConfig ) override
 	{
 		initConfig->windowWidth = 1920;
 		initConfig->windowHeight = 1080;
@@ -151,14 +147,15 @@ public:
 		Time::modifier = 1.0;
 	}
 
-	void Start() override
+	void Start( ) override
 	{
 		font = new Text::Font( "EngineRes/Fonts/Jura-Regular.ttf", 30 );
+		UI::Style::font = font;
 
 		Time::frameRateLimited = false;
 		Time::maxFPS = 240;
 
-		EntityRegistry::RegisterEntity<TestEntity>( "testEntity" );
+		EntityRegistry::RegisterEntity< TestEntity >( "testEntity" );
 
 		TextureManager::AddTexture( "gato.jpg", Rendering::TextureFilter::LINEAR );
 		TextureManager::AddTexture( "whitePuff00.png", Rendering::TextureFilter::LINEAR );
@@ -169,15 +166,9 @@ public:
 		SceneManager::SetScene( inGame );
 	}
 
-	void Activate() override
-	{
+	void Activate( ) override {}
 
-	}
-
-	void Exit() override
-	{
-		delete font;
-	}
+	void Exit( ) override { delete font; }
 };
 
 CW_REGISTER_SCRIPT( Game );

@@ -277,15 +277,15 @@ namespace CatWare
 
 	void Renderer::DrawCharacter( Text::Character* character, Vector2D position, unsigned int size, Color color )
 	{
-		glm::mat4 projectionMatrix = camera2D->GetProjectionMatrix( );
+		// glm::mat4 projectionMatrix = camera2D->GetProjectionMatrix( );
 
 		textShader->Bind( );
 		textShader->SetUniform4f( "u_Color", float( color.r ) / 255.0f, float( color.g ) / 255.0f,
 		                          float( color.b ) / 255.0f, float( color.a ) / 255.0f );
 		textShader->SetUniform1i( "u_Texture", 0 );
 
-		float xpos = position.x + character->bearing.x * size;
-		float ypos = position.y * size;
+		float xpos = ( position.x + character->bearing.x ) * size;
+		float ypos = ( position.y ) * size;
 
 		float w = character->size.x * size;
 		float h = character->size.y * size;

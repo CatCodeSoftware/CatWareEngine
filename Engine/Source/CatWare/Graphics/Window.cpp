@@ -60,8 +60,6 @@ namespace CatWare
 	{
 		SDL_Event e;
 
-		SDL_PumpEvents( );
-
 		while ( SDL_PollEvent( &e ) )
 		{
 			ImGui_ImplSDL2_ProcessEvent( &e );

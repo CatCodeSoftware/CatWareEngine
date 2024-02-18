@@ -3,8 +3,8 @@
 [Engine][Info] Creating 1920x1080 window with title CatWare
 [Engine][Info] Initializing OpenGL
 [Engine][Info] Vendor:   AMD
-[Engine][Info] Renderer: AMD Radeon Graphics (radeonsi, renoir, LLVM 17.0.6, DRM 3.54, 6.6.11-200.fc39.x86_64)
-[Engine][Info] Version:  4.6 (Core Profile) Mesa 23.3.3
+[Engine][Info] Renderer: AMD Radeon Graphics (radeonsi, renoir, LLVM 17.0.6, DRM 3.57, 6.7.4-200.fc39.x86_64)
+[Engine][Info] Version:  4.6 (Core Profile) Mesa 23.3.5
 [Engine][Info] Initializing renderer
 [Engine][Info] Initializing renderer
 [Engine][Info] Loading shader from files:
@@ -19,10 +19,6 @@
 [Engine][Info] Loading map from testMap.yaml
 [Engine][Info] Loading texture gato.jpg
 [Engine][Info] Loading texture whitePuff01.png
-[Engine][Info] Loading texture whitePuff02.png
 [Engine][Info] Loading texture whitePuff00.png
-[Engine][Info] Unloading texture gato.jpg
-[Engine][Info] Unloading texture whitePuff02.png
-[Engine][Info] Unloading texture whitePuff01.png
-[Engine][Info] Unloading texture whitePuff00.png
+[Engine][Info] Loading texture whitePuff02.png
 [Engine][Info] Closing window
